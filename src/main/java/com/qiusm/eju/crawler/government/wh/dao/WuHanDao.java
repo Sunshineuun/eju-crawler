@@ -4,6 +4,7 @@ import com.qiusm.eju.crawler.government.wh.entity.FdWuhanBuilding;
 import com.qiusm.eju.crawler.government.wh.entity.FdWuhanUnit;
 import com.qiusm.eju.crawler.government.wh.entity.FdWuhanUnitExample;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -33,6 +34,13 @@ public class WuHanDao {
 
     @Resource
     private FdWuhanUnitMapper unitMapper;
+
+    @Transactional(rollbackFor = Exception.class)
+    public void batchSave(List<FdWuhanUnit> units) {
+        units.forEach(o -> {
+            unitMapper.insert(o);
+        });
+    }
 
     public Map<String, FdWuhanUnit> selectBuildingIdByHouseUnit(FdWuhanBuilding building) {
         // 查询需要进行处理的unitDb

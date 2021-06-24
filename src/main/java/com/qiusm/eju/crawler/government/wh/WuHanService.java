@@ -178,7 +178,7 @@ public class WuHanService extends GovernmentBaseService {
 
                         // 存储数据
                         buildingMapper.updateByPrimaryKey(building);
-                        batchSave(units);
+                        dao.batchSave(units);
 
                         log.info("id:{}, pname:{}, pId:{}, bId:{}", building.getHouseId(), building.getProjectName(),
                                 building.getProjectId(), building.getId());
@@ -673,12 +673,5 @@ public class WuHanService extends GovernmentBaseService {
 
     private String buildUrl(String url, String href) {
         return url.substring(0, url.lastIndexOf("/") + 1) + StringUtils.encode(href, "GBK");
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public void batchSave(List<FdWuhanUnit> units) {
-        units.forEach(o -> {
-            unitMapper.insert(o);
-        });
     }
 }
