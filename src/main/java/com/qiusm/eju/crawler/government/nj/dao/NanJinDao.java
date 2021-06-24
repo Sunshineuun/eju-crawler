@@ -1,6 +1,7 @@
 package com.qiusm.eju.crawler.government.nj.dao;
 
 import com.google.common.base.CaseFormat;
+import com.qiusm.eju.crawler.constant.SymbolicConstant;
 import com.qiusm.eju.crawler.government.nj.dao.FdNanJinBuildingMapper;
 import com.qiusm.eju.crawler.government.nj.dao.FdNanJinHouseMapper;
 import com.qiusm.eju.crawler.government.nj.dao.FdNanJinPreSaleMapper;
@@ -257,7 +258,7 @@ public class NanJinDao {
     }
 
     public static void buildCode(String field, String template) {
-        for (String s : field.split(",")) {
+        for (String s : field.split(SymbolicConstant.COMMA)) {
             System.out.printf(template,
                     CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, s),
                     s.toUpperCase());

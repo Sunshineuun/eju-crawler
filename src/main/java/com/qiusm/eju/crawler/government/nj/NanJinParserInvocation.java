@@ -1,6 +1,6 @@
 package com.qiusm.eju.crawler.government.nj;
 
-import com.qiusm.eju.crawler.government.utils.CommonUtils;
+import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

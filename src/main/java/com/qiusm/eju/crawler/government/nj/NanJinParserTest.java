@@ -2,7 +2,7 @@ package com.qiusm.eju.crawler.government.nj;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.government.utils.CommonUtils;
+import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 
 import java.lang.reflect.Proxy;
