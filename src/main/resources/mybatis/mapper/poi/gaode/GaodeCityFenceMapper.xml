@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qiusm.eju.crawler.government.wh.dao.FdWuhanGtzMapper">
-  <resultMap id="BaseResultMap" type="com.qiusm.eju.crawler.government.wh.entity.FdWuhanGtz">
+<mapper namespace="com.qiusm.eju.crawler.poi.gaode.dao.GaodeCityFenceMapper">
+  <resultMap id="BaseResultMap" type="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="house_id" jdbcType="BIGINT" property="houseId" />
-    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
-    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
-    <result column="gtz_no" jdbcType="VARCHAR" property="gtzNo" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="version" jdbcType="VARCHAR" property="version" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence">
+    <result column="fence" jdbcType="LONGVARCHAR" property="fence" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,16 +69,21 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, house_id, city_name, project_id, gtz_no, url, status, version, create_time
+    id, name, version, create_time
   </sql>
-  <select id="selectByExample" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanGtzExample" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    fence
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFenceExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from fd_wuhan_gtz
+    ,
+    <include refid="Blob_Column_List" />
+    from gaode_city_fence
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,56 +91,56 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFenceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from gaode_city_fence
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
-    from fd_wuhan_gtz
+    ,
+    <include refid="Blob_Column_List" />
+    from gaode_city_fence
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from fd_wuhan_gtz
+    delete from gaode_city_fence
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanGtzExample">
-    delete from fd_wuhan_gtz
+  <delete id="deleteByExample" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFenceExample">
+    delete from gaode_city_fence
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanGtz">
+  <insert id="insert" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into fd_wuhan_gtz (house_id, city_name, project_id, 
-      gtz_no, url, status, 
-      version, create_time)
-    values (#{houseId,jdbcType=BIGINT}, #{cityName,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
-      #{gtzNo,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{version,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    insert into gaode_city_fence (name, version, create_time, 
+      fence)
+    values (#{name,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{fence,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanGtz">
+  <insert id="insertSelective" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into fd_wuhan_gtz
+    insert into gaode_city_fence
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="houseId != null">
-        house_id,
-      </if>
-      <if test="cityName != null">
-        city_name,
-      </if>
-      <if test="projectId != null">
-        project_id,
-      </if>
-      <if test="gtzNo != null">
-        gtz_no,
-      </if>
-      <if test="url != null">
-        url,
-      </if>
-      <if test="status != null">
-        status,
+      <if test="name != null">
+        name,
       </if>
       <if test="version != null">
         version,
@@ -145,25 +148,13 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="fence != null">
+        fence,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="houseId != null">
-        #{houseId,jdbcType=BIGINT},
-      </if>
-      <if test="cityName != null">
-        #{cityName,jdbcType=VARCHAR},
-      </if>
-      <if test="projectId != null">
-        #{projectId,jdbcType=VARCHAR},
-      </if>
-      <if test="gtzNo != null">
-        #{gtzNo,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=VARCHAR},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="version != null">
         #{version,jdbcType=VARCHAR},
@@ -171,37 +162,25 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="fence != null">
+        #{fence,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanGtzExample" resultType="java.lang.Long">
-    select count(*) from fd_wuhan_gtz
+  <select id="countByExample" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFenceExample" resultType="java.lang.Long">
+    select count(*) from gaode_city_fence
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update fd_wuhan_gtz
+    update gaode_city_fence
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.houseId != null">
-        house_id = #{record.houseId,jdbcType=BIGINT},
-      </if>
-      <if test="record.cityName != null">
-        city_name = #{record.cityName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.projectId != null">
-        project_id = #{record.projectId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.gtzNo != null">
-        gtz_no = #{record.gtzNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.url != null">
-        url = #{record.url,jdbcType=VARCHAR},
-      </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=VARCHAR},
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.version != null">
         version = #{record.version,jdbcType=VARCHAR},
@@ -209,46 +188,40 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.fence != null">
+        fence = #{record.fence,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
-    update fd_wuhan_gtz
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update gaode_city_fence
     set id = #{record.id,jdbcType=BIGINT},
-      house_id = #{record.houseId,jdbcType=BIGINT},
-      city_name = #{record.cityName,jdbcType=VARCHAR},
-      project_id = #{record.projectId,jdbcType=VARCHAR},
-      gtz_no = #{record.gtzNo,jdbcType=VARCHAR},
-      url = #{record.url,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      fence = #{record.fence,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update gaode_city_fence
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
       version = #{record.version,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanGtz">
-    update fd_wuhan_gtz
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence">
+    update gaode_city_fence
     <set>
-      <if test="houseId != null">
-        house_id = #{houseId,jdbcType=BIGINT},
-      </if>
-      <if test="cityName != null">
-        city_name = #{cityName,jdbcType=VARCHAR},
-      </if>
-      <if test="projectId != null">
-        project_id = #{projectId,jdbcType=VARCHAR},
-      </if>
-      <if test="gtzNo != null">
-        gtz_no = #{gtzNo,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=VARCHAR},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="version != null">
         version = #{version,jdbcType=VARCHAR},
@@ -256,17 +229,23 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="fence != null">
+        fence = #{fence,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanGtz">
-    update fd_wuhan_gtz
-    set house_id = #{houseId,jdbcType=BIGINT},
-      city_name = #{cityName,jdbcType=VARCHAR},
-      project_id = #{projectId,jdbcType=VARCHAR},
-      gtz_no = #{gtzNo,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence">
+    update gaode_city_fence
+    set name = #{name,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      fence = #{fence,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence">
+    update gaode_city_fence
+    set name = #{name,jdbcType=VARCHAR},
       version = #{version,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

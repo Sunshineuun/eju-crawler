@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qiusm.eju.crawler.government.wh.dao.FdWuhanKfsMapper">
-  <resultMap id="BaseResultMap" type="com.qiusm.eju.crawler.government.wh.entity.FdWuhanKfs">
+<mapper namespace="com.qiusm.eju.crawler.poi.gaode.dao.GaodeCityPoiInfoMapper">
+  <resultMap id="BaseResultMap" type="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfo">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="house_id" jdbcType="BIGINT" property="houseId" />
-    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
-    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
-    <result column="kfs_contact_number" jdbcType="VARCHAR" property="kfsContactNumber" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="city_code" jdbcType="CHAR" property="cityCode" />
+    <result column="parent_code" jdbcType="CHAR" property="parentCode" />
+    <result column="ad_code" jdbcType="CHAR" property="adCode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="center" jdbcType="VARCHAR" property="center" />
+    <result column="fence_id" jdbcType="BIGINT" property="fenceId" />
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="version" jdbcType="VARCHAR" property="version" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -71,16 +73,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, house_id, city_name, project_id, kfs_contact_number, url, status, version, create_time
+    id, city_code, parent_code, ad_code, name, level, center, fence_id, status, version, 
+    create_time
   </sql>
-  <select id="selectByExample" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanKfsExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from fd_wuhan_kfs
+    from gaode_city_poi_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,50 +94,58 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from fd_wuhan_kfs
+    from gaode_city_poi_info
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from fd_wuhan_kfs
+    delete from gaode_city_poi_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanKfsExample">
-    delete from fd_wuhan_kfs
+  <delete id="deleteByExample" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfoExample">
+    delete from gaode_city_poi_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanKfs">
+  <insert id="insert" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfo">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into fd_wuhan_kfs (house_id, city_name, project_id, 
-      kfs_contact_number, url, status, 
-      version, create_time)
-    values (#{houseId,jdbcType=BIGINT}, #{cityName,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, 
-      #{kfsContactNumber,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{version,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    insert into gaode_city_poi_info (city_code, parent_code, ad_code, 
+      name, level, center, 
+      fence_id, status, version, 
+      create_time)
+    values (#{cityCode,jdbcType=CHAR}, #{parentCode,jdbcType=CHAR}, #{adCode,jdbcType=CHAR}, 
+      #{name,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{center,jdbcType=VARCHAR}, 
+      #{fenceId,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanKfs">
+  <insert id="insertSelective" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfo">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into fd_wuhan_kfs
+    insert into gaode_city_poi_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="houseId != null">
-        house_id,
+      <if test="cityCode != null">
+        city_code,
       </if>
-      <if test="cityName != null">
-        city_name,
+      <if test="parentCode != null">
+        parent_code,
       </if>
-      <if test="projectId != null">
-        project_id,
+      <if test="adCode != null">
+        ad_code,
       </if>
-      <if test="kfsContactNumber != null">
-        kfs_contact_number,
+      <if test="name != null">
+        name,
       </if>
-      <if test="url != null">
-        url,
+      <if test="level != null">
+        level,
+      </if>
+      <if test="center != null">
+        center,
+      </if>
+      <if test="fenceId != null">
+        fence_id,
       </if>
       <if test="status != null">
         status,
@@ -147,20 +158,26 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="houseId != null">
-        #{houseId,jdbcType=BIGINT},
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=CHAR},
       </if>
-      <if test="cityName != null">
-        #{cityName,jdbcType=VARCHAR},
+      <if test="parentCode != null">
+        #{parentCode,jdbcType=CHAR},
       </if>
-      <if test="projectId != null">
-        #{projectId,jdbcType=VARCHAR},
+      <if test="adCode != null">
+        #{adCode,jdbcType=CHAR},
       </if>
-      <if test="kfsContactNumber != null">
-        #{kfsContactNumber,jdbcType=VARCHAR},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
+      <if test="level != null">
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="center != null">
+        #{center,jdbcType=VARCHAR},
+      </if>
+      <if test="fenceId != null">
+        #{fenceId,jdbcType=BIGINT},
       </if>
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
@@ -173,32 +190,38 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanKfsExample" resultType="java.lang.Long">
-    select count(*) from fd_wuhan_kfs
+  <select id="countByExample" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfoExample" resultType="java.lang.Long">
+    select count(*) from gaode_city_poi_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update fd_wuhan_kfs
+    update gaode_city_poi_info
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.houseId != null">
-        house_id = #{record.houseId,jdbcType=BIGINT},
+      <if test="record.cityCode != null">
+        city_code = #{record.cityCode,jdbcType=CHAR},
       </if>
-      <if test="record.cityName != null">
-        city_name = #{record.cityName,jdbcType=VARCHAR},
+      <if test="record.parentCode != null">
+        parent_code = #{record.parentCode,jdbcType=CHAR},
       </if>
-      <if test="record.projectId != null">
-        project_id = #{record.projectId,jdbcType=VARCHAR},
+      <if test="record.adCode != null">
+        ad_code = #{record.adCode,jdbcType=CHAR},
       </if>
-      <if test="record.kfsContactNumber != null">
-        kfs_contact_number = #{record.kfsContactNumber,jdbcType=VARCHAR},
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.url != null">
-        url = #{record.url,jdbcType=VARCHAR},
+      <if test="record.level != null">
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.center != null">
+        center = #{record.center,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fenceId != null">
+        fence_id = #{record.fenceId,jdbcType=BIGINT},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=VARCHAR},
@@ -215,13 +238,15 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update fd_wuhan_kfs
+    update gaode_city_poi_info
     set id = #{record.id,jdbcType=BIGINT},
-      house_id = #{record.houseId,jdbcType=BIGINT},
-      city_name = #{record.cityName,jdbcType=VARCHAR},
-      project_id = #{record.projectId,jdbcType=VARCHAR},
-      kfs_contact_number = #{record.kfsContactNumber,jdbcType=VARCHAR},
-      url = #{record.url,jdbcType=VARCHAR},
+      city_code = #{record.cityCode,jdbcType=CHAR},
+      parent_code = #{record.parentCode,jdbcType=CHAR},
+      ad_code = #{record.adCode,jdbcType=CHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=VARCHAR},
+      center = #{record.center,jdbcType=VARCHAR},
+      fence_id = #{record.fenceId,jdbcType=BIGINT},
       status = #{record.status,jdbcType=VARCHAR},
       version = #{record.version,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
@@ -229,23 +254,29 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanKfs">
-    update fd_wuhan_kfs
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfo">
+    update gaode_city_poi_info
     <set>
-      <if test="houseId != null">
-        house_id = #{houseId,jdbcType=BIGINT},
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=CHAR},
       </if>
-      <if test="cityName != null">
-        city_name = #{cityName,jdbcType=VARCHAR},
+      <if test="parentCode != null">
+        parent_code = #{parentCode,jdbcType=CHAR},
       </if>
-      <if test="projectId != null">
-        project_id = #{projectId,jdbcType=VARCHAR},
+      <if test="adCode != null">
+        ad_code = #{adCode,jdbcType=CHAR},
       </if>
-      <if test="kfsContactNumber != null">
-        kfs_contact_number = #{kfsContactNumber,jdbcType=VARCHAR},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
+      <if test="level != null">
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="center != null">
+        center = #{center,jdbcType=VARCHAR},
+      </if>
+      <if test="fenceId != null">
+        fence_id = #{fenceId,jdbcType=BIGINT},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
@@ -259,13 +290,15 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.qiusm.eju.crawler.government.wh.entity.FdWuhanKfs">
-    update fd_wuhan_kfs
-    set house_id = #{houseId,jdbcType=BIGINT},
-      city_name = #{cityName,jdbcType=VARCHAR},
-      project_id = #{projectId,jdbcType=VARCHAR},
-      kfs_contact_number = #{kfsContactNumber,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfo">
+    update gaode_city_poi_info
+    set city_code = #{cityCode,jdbcType=CHAR},
+      parent_code = #{parentCode,jdbcType=CHAR},
+      ad_code = #{adCode,jdbcType=CHAR},
+      name = #{name,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      center = #{center,jdbcType=VARCHAR},
+      fence_id = #{fenceId,jdbcType=BIGINT},
       status = #{status,jdbcType=VARCHAR},
       version = #{version,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
