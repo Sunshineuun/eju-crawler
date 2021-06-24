@@ -9,6 +9,6 @@ public class GaodeTest {
     static GaodeService service = new GaodeService();
 
     public static void main(String[] args) {
-        service.allCity();
+        service.allCityStart();
     }
 }
