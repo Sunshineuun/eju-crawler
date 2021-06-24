@@ -1,0 +1,19 @@
+###
+# 武汉源-数据采集-启动
+http://localhost:8086/wuhan/start
+
+###
+# 武汉源-数据采集-暂停
+http://localhost:8086/wuhan/stop
+
+###
+# 武汉-楼栋信息缺失补偿抓取
+http://localhost:8086/wuhan/house/start
+
+###
+# 武汉-房屋列表抓取
+http://localhost:8086/wuhan/building/start
+
+###
+# 武汉-房屋明细查询
+http://localhost:8080/wuhan/unit/start

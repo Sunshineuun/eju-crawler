@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <context id="talentTables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--数据库链接地址账号密码  aliyun-->
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+        <!--connectionURL="jdbc:mysql://47.52.163.240:3306/poi?useSSL=false"-->
+        <!--userId="jamie" password="china76!">-->
+
+
+        <!-- 公司开发 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://10.122.139.25:3306/pyspider_db?useSSL=false"
+                        userId="datatech" password="O8dr2ENyRd^7v*&amp;z">
+        </jdbcConnection>
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+        <!--connectionURL="jdbc:mysql://10.122.139.25:3306/house?useSSL=false"-->
+        <!--userId="root" password="eju1314">-->
+        <!--</jdbcConnection>-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--生成Model类存放位置-->
+        <javaModelGenerator targetPackage="com.itvii.model" targetProject="src/main/java">
+            <!--<javaModelGenerator targetPackage="com.itvii.model" targetProject="src/test/java">-->
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--<javaModelGenerator targetPackage="com.itvii.model" targetProject="src//test/java">-->
+        <!--<property name="enableSubPackages" value="true"/>-->
+        <!--<property name="trimStrings" value="true"/>-->
+        <!--</javaModelGenerator>-->
+        <!--生成映射文件存放位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <!--<sqlMapGenerator targetPackage="mapper" targetProject="src/test/resources">-->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--<sqlMapGenerator targetPackage="mapper" targetProject="src//test/resources">-->
+        <!--<property name="enableSubPackages" value="true"/>-->
+        <!--</sqlMapGenerator>-->
+
+
+        <!--生成Dao类存放位置-->
+        <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.itvii.dao" targetProject="src/main/java">
+            <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.itvii.dao" targetProject="src/test/java">-->
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.itvii.dao" targetProject="src//test/java">-->
+        <!--<property name="enableSubPackages" value="true"/>-->
+        <!--</javaClientGenerator>-->
+
+
+        <!--生成对应表及类名-->
+        <table tableName="fd_nanjin_house" domainObjectName="FdNanJinHouse"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+<!--        <table tableName="fd_sz_presell_unit" domainObjectName="FdSzPresellUnit" enableCountByExample="true"-->
+        <!--               enableUpdateByExample="true"-->
+        <!--               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
+        <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--        </table>-->
+
+<!--        <table tableName="fd_sz_presell_no_detail" domainObjectName="FdSzPresellNoDetail" enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="fd_sz_presell_house" domainObjectName="FdszPresellHouse" enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
+
+
+        <!--<table tableName="anjuke_broker_info" domainObjectName="AnjukeBrokerInfo" enableCountByExample="true"-->
+        <!--enableUpdateByExample="true"-->
+        <!--enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
+        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--<columnOverride column="broker_titles" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+        <!--<columnOverride column="master_business_district" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+        <!--<columnOverride column="master_title" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+        <!--</table>-->
+
+
+        <!--        <table tableName="cric_community" domainObjectName="CricCommunity" enableCountByExample="true"-->
+        <!--               enableUpdateByExample="true"-->
+        <!--               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
+        <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--            <columnOverride column="gd_fence" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+        <!--            <columnOverride column="request_body" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+        <!--            &lt;!&ndash;<columnOverride column="bd_fence" javaType="java.lang.String" jdbcType="VARCHAR"/>&ndash;&gt;-->
+        <!--            &lt;!&ndash;<columnOverride column="other_fence" javaType="java.lang.String" jdbcType="VARCHAR"/>&ndash;&gt;-->
+        <!--        </table>-->
+
+
+    </context>
+</generatorConfiguration>
