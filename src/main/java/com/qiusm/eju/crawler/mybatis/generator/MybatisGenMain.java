@@ -13,13 +13,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenMain {
+public class MybatisGenMain {
     public static void main(String[] args) {
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;
         //如果这里出现空指针，直接写绝对路径即可。
         String genCfg = "/mybatis/config/generatorConfig.xml";
-        File configFile = new File(GenMain.class.getResource(genCfg).getFile());
+        File configFile = new File(MybatisGenMain.class.getResource(genCfg).getFile());
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = null;
         try {

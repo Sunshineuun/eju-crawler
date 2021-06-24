@@ -17,7 +17,7 @@
 
 
         <!-- 公司开发 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://10.122.139.25:3306/pyspider_db?useSSL=false"
                         userId="datatech" password="O8dr2ENyRd^7v*&amp;z">
         </jdbcConnection>
@@ -28,18 +28,18 @@
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
-        <!--生成Model类存放位置-->
-        <javaModelGenerator targetPackage="com.itvii.model" targetProject="src/main/java">
-            <!--<javaModelGenerator targetPackage="com.itvii.model" targetProject="src/test/java">-->
+        <!--生成Entity类存放位置-->
+        <javaModelGenerator targetPackage="com.qiusm.eju.crawler.mybatis.entity" targetProject="src/main/java">
+            <!--<javaModelGenerator targetPackage="com.qiusm.eju.crawler.mybatis.entity" targetProject="src/test/java">-->
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
-        <!--<javaModelGenerator targetPackage="com.itvii.model" targetProject="src//test/java">-->
+        <!--<javaModelGenerator targetPackage="com.qiusm.eju.crawler.mybatis.entity" targetProject="src//test/java">-->
         <!--<property name="enableSubPackages" value="true"/>-->
         <!--<property name="trimStrings" value="true"/>-->
         <!--</javaModelGenerator>-->
         <!--生成映射文件存放位置-->
-        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="mybatis/mapper" targetProject="src/main/resources">
             <!--<sqlMapGenerator targetPackage="mapper" targetProject="src/test/resources">-->
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
@@ -55,39 +55,40 @@
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.itvii.dao" targetProject="src/main/java">
-            <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.itvii.dao" targetProject="src/test/java">-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.qiusm.eju.crawler.mybatis.dao"
+                             targetProject="src/main/java">
+            <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.qiusm.eju.crawler.mybatis.dao" targetProject="src/test/java">-->
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.itvii.dao" targetProject="src//test/java">-->
+        <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.qiusm.eju.crawler.mybatis.dao" targetProject="src//test/java">-->
         <!--<property name="enableSubPackages" value="true"/>-->
         <!--</javaClientGenerator>-->
 
 
         <!--生成对应表及类名-->
-        <table tableName="fd_nanjin_house" domainObjectName="FdNanJinHouse"
+        <table tableName="gaode_city_poi_info" domainObjectName="GaodeCityPoiInfo"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
 
-<!--        <table tableName="fd_sz_presell_unit" domainObjectName="FdSzPresellUnit" enableCountByExample="true"-->
+        <!--        <table tableName="fd_sz_presell_unit" domainObjectName="FdSzPresellUnit" enableCountByExample="true"-->
         <!--               enableUpdateByExample="true"-->
         <!--               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
         <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--        </table>-->
 
-<!--        <table tableName="fd_sz_presell_no_detail" domainObjectName="FdSzPresellNoDetail" enableCountByExample="true"-->
-<!--               enableUpdateByExample="true"-->
-<!--               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
-<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-<!--        </table>-->
-<!--        <table tableName="fd_sz_presell_house" domainObjectName="FdszPresellHouse" enableCountByExample="true"-->
-<!--               enableUpdateByExample="true"-->
-<!--               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
-<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-<!--        </table>-->
+        <!--        <table tableName="fd_sz_presell_no_detail" domainObjectName="FdSzPresellNoDetail" enableCountByExample="true"-->
+        <!--               enableUpdateByExample="true"-->
+        <!--               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
+        <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--        </table>-->
+        <!--        <table tableName="fd_sz_presell_house" domainObjectName="FdszPresellHouse" enableCountByExample="true"-->
+        <!--               enableUpdateByExample="true"-->
+        <!--               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
+        <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--        </table>-->
 
 
         <!--<table tableName="anjuke_broker_info" domainObjectName="AnjukeBrokerInfo" enableCountByExample="true"-->
