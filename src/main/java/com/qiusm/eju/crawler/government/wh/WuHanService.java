@@ -1,7 +1,7 @@
 package com.qiusm.eju.crawler.government.wh;
 
 import com.qiusm.eju.crawler.government.GovernmentBaseService;
-import com.qiusm.eju.crawler.government.utils.CommonUtils;
+import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
 import com.qiusm.eju.crawler.government.wh.dao.*;
 import com.qiusm.eju.crawler.government.wh.entity.*;
 import com.qiusm.eju.crawler.utils.FileUtils;
@@ -14,7 +14,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
