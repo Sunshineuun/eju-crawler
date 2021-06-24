@@ -103,7 +103,8 @@ public class GaodeService {
                             // 切割
                             List<String> points = cuttingPoints(fenceStr, longitude, latitude);
 
-                            isInPolygon(points, fenceStr);
+                            List<String> inPoints = isInPolygon(points, fenceStr);
+                            // 存储有效的点 TODO
                         }
                         log.info("{} 切割围栏完毕.", cityFence.getName());
                     } catch (Exception e) {
@@ -128,8 +129,9 @@ public class GaodeService {
      *
      * @param points   切割出来的点
      * @param fenceStr 电子围栏
+     * @return 返回在电子围栏中的点
      */
-    private void isInPolygon(List<String> points, String fenceStr) {
+    private List<String> isInPolygon(List<String> points, String fenceStr) {
         List<Point2D.Double> point2Ds = new ArrayList<>();
         for (String s : fenceStr.split(SEMICOLON)) {
             String[] var1 = s.split(COMMA);
@@ -139,6 +141,7 @@ public class GaodeService {
 
         StringBuilder var3 = new StringBuilder();
         StringBuilder var4 = new StringBuilder();
+        List<String> var5 = new ArrayList<>();
         points.forEach(point -> {
             String[] var1 = point.split(COMMA);
             Point2D.Double var = new Point2D.Double(Double.parseDouble(var1[0]), Double.parseDouble(var1[1]));
@@ -146,6 +149,7 @@ public class GaodeService {
                 var3.append(point).append(";");
             } else {
                 var4.append(point).append(";");
+                var5.add(point);
             }
         });
 
@@ -153,6 +157,7 @@ public class GaodeService {
         System.out.println(var3);
         System.out.println(var4);
         System.out.println("----------------------------------------------\n\n\n\n");
+        return var5;
     }
 
     private void loadCityFence(GaodeCityPoiInfo cityPoiInfo) {
