@@ -16,10 +16,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +29,7 @@ import static com.qiusm.eju.crawler.constant.SymbolicConstant.*;
 import static com.qiusm.eju.crawler.poi.gaode.constant.GaodeField.*;
 import static com.qiusm.eju.crawler.poi.gaode.constant.GaodeUrl.All_CITY_POI_URL;
 import static com.qiusm.eju.crawler.poi.gaode.constant.GaodeUrl.CITY_POI_URL;
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import static java.math.BigDecimal.ROUND_UP;
 
 /**
@@ -122,6 +122,61 @@ public class GaodeService {
         } catch (Exception ignored) {
 
         }
+    }
+
+    /**
+     * 根据切割后的点，获取城市的POI信息
+     * TODO
+     * 具体实现待补充 <br>
+     *
+     * @param cityName 城市名称
+     */
+    public void callCityPoiInfo(String cityName) {
+        final int fixedNum = 3;
+        Semaphore semaphore = new Semaphore(fixedNum);
+        ExecutorService fixedThreadPool = ThreadPoolUtils.newFixedThreadPool("poi_info", fixedNum, 1000);
+        // 请求类型 获取哪些类型的POI需要在这里设定
+        Map<String, String> gdMap = new HashMap<>(1);
+        // 根据城市查询城市的POI点 TODO
+
+        try {
+            /*for (PoiMapLocationGaode poiMapLocation : poiMapLocations) {
+                semaphore.acquire();
+                fixedThreadPool.execute(() -> {
+                    try {
+                        String location_gaode = poiMapLocation.getGaodeLocation();
+                        if (StringUtils.isBlank(location_gaode)) {
+                            return;
+                        }
+
+                        for (Map.Entry<String, String> entry : gdMap.entrySet()) {
+                            String sourceType = entry.getKey();
+                            String sourceDesc = gdMap.get(sourceType);
+                            //高德poi
+                            boolean result = getGdPoi(location_gaode, sourceType, sourceDesc, httpClient);
+
+                            if (result) {
+                                poiMapLocation.setStatus("1");
+                                poiMapLocationGaodeMapper.updateByPrimaryKeySelective(poiMapLocation);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        semaphore.release();
+                    }
+                });
+            }*/
+
+
+            fixedThreadPool.shutdown();
+            while (!fixedThreadPool.awaitTermination(5, TimeUnit.SECONDS)) {
+                Thread.sleep(1000);
+            }
+        } catch (Exception ignored) {
+
+        }
+
     }
 
     /**

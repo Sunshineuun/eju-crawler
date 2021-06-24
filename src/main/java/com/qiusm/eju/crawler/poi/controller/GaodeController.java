@@ -37,4 +37,9 @@ public class GaodeController {
     public void cuttingAllCityElectronicFence(@PathVariable String cityName) {
         service.cuttingAllCityElectronicFence(cityName);
     }
+
+    @GetMapping("/callCityPoiInfo/{cityName}")
+    public void callCityPoiInfo(@PathVariable String cityName) {
+        service.callCityPoiInfo(cityName);
+    }
 }
