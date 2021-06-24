@@ -1,0 +1,11 @@
+###
+# 获取中国区所有城市简要信息
+http://localhost:8080/gaode/callAllCityPoiInfo
+
+###
+# 获取城市
+http://localhost:8080/gaode/callAllCityPoiInfo/上海城区
+
+###
+# 切割城市坐标点
+http://localhost:8080/gaode/cuttingAllCityElectronicFence/上海城区
