@@ -1,7 +1,7 @@
 package com.qiusm.eju.crawler.government;
 
 import com.qiusm.eju.crawler.constant.CharacterSet;
-import com.qiusm.eju.crawler.government.utils.CommonUtils;
+import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;

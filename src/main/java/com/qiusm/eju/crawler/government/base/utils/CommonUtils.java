@@ -1,5 +1,6 @@
-package com.qiusm.eju.crawler.government.utils;
+package com.qiusm.eju.crawler.government.base.utils;
 
+import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
@@ -35,25 +36,7 @@ public class CommonUtils {
      * @return {@link ThreadPoolExecutor}
      */
     public static ThreadPoolExecutor newFixedThreadPool(String poolName, int nThreads, long keepAliveTime) {
-        ThreadFactory basicThreadFactory = new BasicThreadFactory
-                .Builder()
-                .namingPattern(poolName + "-%s ")
-                .build();
-
-        return new ThreadPoolExecutor(nThreads,
-                nThreads * 2,
-                keepAliveTime,
-                TimeUnit.SECONDS,
-                new SynchronousQueue<>(),
-                basicThreadFactory,
-                (r, exe) -> {
-                    if (!exe.isShutdown()) {
-                        try {
-                            exe.getQueue().put(r);
-                        } catch (InterruptedException ignored) {
-                        }
-                    }
-                });
+        return ThreadPoolUtils.newFixedThreadPool(poolName, nThreads, keepAliveTime);
     }
 
     /**
