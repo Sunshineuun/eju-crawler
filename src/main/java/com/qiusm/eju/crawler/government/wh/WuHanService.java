@@ -13,6 +13,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,6 +34,7 @@ import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
  */
 @Slf4j
 @Service
+@EnableConfigurationProperties(WuHanProperties.class)
 public class WuHanService extends GovernmentBaseService {
 
     private static final String CITY_NAME = "武汉";
@@ -50,10 +52,6 @@ public class WuHanService extends GovernmentBaseService {
     private static final String VIEW_STATE = "__VIEWSTATE";
     private static final String VIEW_STATE_VALUE = "/wEPDwUKLTc2NDYxMTc0Ng9kFgICAw9kFgQCDQ8WAh4LXyFJdGVtQ291bnQCFBYoAgEPZBYCZg8VBwrolKEyMTAwNDA0KuWxheS9j+mhueebru+8iOaWsOW6meadkTA3OeWcsOWdl+S6jOacn++8iQM2ODED4oCUAzY1MgPigJQCMjlkAgIPZBYCZg8VBwrolKEyMTAwMzg3HuWxheS9j+mhueebru+8iOaWsOWfjuS9s+iLke+8iQMzODYD4oCUAzM2OQPigJQCMTdkAgMPZBYCZg8VBwrpmLMyMTAwMzg1WOWVhuS4muacjeWKoeS4muiuvuaWveOAgeWxheS9j+mhueebru+8iOWNgemHjOmTuuWfjuS4readkeS6jOacn+aUuemAoEs2LTHlnLDlnZfkuozmnJ/vvIkDMTkwA+KAlAMxNjQD4oCUAjI2ZAIED2QWAmYPFQcK6ZizMjEwMDM3NlLmlrDlu7rlsYXkvY/jgIHllYbkuJrmnI3liqHkuJrorr7mlr3pobnnm67vvIjku5nlsbHmnZHln47kuK3mnZHmlLnpgKBLNy0y5Zyw5Z2X77yJBDEzMDQD4oCUBDEwNzAD4oCUAzIzNGQCBQ9kFgJmDxUHCua5ljIxMDAzODMq5q2m5rGJ5biC5Li65L6o5pyN5Yqh5Lqn5Lia5Zut6aG555uu5LqM5pyfAzE0NgPigJQD4oCUA+KAlAMxNDZkAgYPZBYCZg8VBwrlpI8yMTAwMzcxN+aUv+WSjOiKseWbreS6jOacn0HljLrvvIjkvY/lroXjgIHllYbkuJrlj4rlnLDkuIvnrYnvvIkDNDE2A+KAlAMzNzAD4oCUAjQ2ZAIHD2QWAmYPFQcK56GaMjEwMDM2N4IB5paw5bu65bGF5L2P44CB5ZWG5Lia5pyN5Yqh5Lia6K6+5pa944CB5paw5bu65bGF5L2P5YW85a655ZWG5Lia6aG555uu77yI5Lit5bu65b6h5pmv5pif5Z+OROWcsOWdl+S6jOacn+OAgeebiuW6t+WPiuaJqeWkp+eUqOWcsO+8iQM1MjQD4oCUAzQ0NQPigJQCNzZkAggPZBYCZg8VBwrlpI8yMTAwMzY0M+WkqeS4i+mdkuW5tOWfjumhueebruS6jOacn++8iOWVhuS4muWPiuWcsOS4i+WupO+8iQQxMDA1A+KAlAPigJQD4oCUBDEwMDVkAgkPZBYCZg8VBwrmuZYyMTAwMzYyK+WxheS9j+mhueebru+8iOWFieiwtzE0MOWPt+WcsOWdl++8iULpg6jliIYDMzk1A+KAlAMzODQD4oCUAjExZAIKD2QWAmYPFQcK5bK4MjEwMDM1MxXlpKfmmbrpl6joibrmnK/kuK3lv4MCMTYD4oCUA+KAlAPigJQCMTZkAgsPZBYCZg8VBwrpu4QyMTAwMzUxHuS9j+Wuhemhueebru+8iOi1m+i+vuixquW6nO+8iQM4NjUD4oCUAzc5NwPigJQCNjhkAgwPZBYCZg8VBwrpu4QyMTAwMzQ2WOWVhuS4mumhueebru+8iOaxieaxn+Wuj+i/nMK35oKm6I2f5aSp5Zyw77yJQuWcsOWdl+S6jOacnzEjLTMj5ZWG5Lia44CBNCMtNSPllYbkuJrlip7lhawDMTM2A+KAlAPigJQD4oCUAzEzNmQCDQ9kFgJmDxUHCua0qjIxMDAzNDBA5paw5bu65bGF5L2P6aG555uu77yI6YeR5Zywwrfkv53liKnCt+ikkOefs+WFrOmmhuS4gOOAgeS6jOacn++8iQI1MQPigJQD4oCUA+KAlAI1MWQCDg9kFgJmDxUHCuS4nDIxMDAzMzMvUO+8iDIwMTnvvIkwNTflj7flnLDlnZfvvIjkuIDmnJ/kvY/lroXvvInljZfljLoDMzI2A+KAlAMzMjAD4oCUATZkAg8PZBYCZg8VBwrmuZYyMTAwMzMwLuWVhuWKoeOAgeWxheS9j+mhueebru+8iOehheiwt+Wwj+mVh0HlnLDlnZfvvIkDNDQ5A+KAlAM0NDAD4oCUATlkAhAPZBYCZg8VBwrnu48yMTAwMzI2G+iIquepuuenkeaKgOS6p+S4muWbreS4gOacnwEzA+KAlAPigJQD4oCUATNkAhEPZBYCZg8VBwrmtKoyMTAwMzIyOuatpuS4sOadkeWcsOmTgTTlj7fnur/lm63mnpfot6/nq5nmi4bov4Hov5jlu7rlronnva7pobnnm64DMjQyA+KAlAMyMDgD4oCUAjM0ZAISD2QWAmYPFQcK5rmWMjEwMDMxMyHlsYXkvY/pobnnm67vvIjkuK3mtbfln47vvInkuozmnJ8EMTk1NQPigJQEMTg2MQPigJQCOTNkAhMPZBYCZg8VBwrmuZYyMTAwMzE2HuWxheS9j+mhueebru+8iOaBuuW+t+eGmeWbre+8iQQxMjczA+KAlAQxMjExA+KAlAI1NWQCFA9kFgJmDxUHCumYszIxMDAzMTIw5paw5bu65bGF5L2P6aG555uu77yI5LqM5pyf77yJKOOAkDIwMjHjgJEwMTjlj7cpAzE5MwPigJQDMTYwA+KAlAIzM2QCDw8PFgIeC1JlY29yZGNvdW50AtEuZGRkinf0lsN5GM0jBCT5LQdo9akN4z3g3WYu2+K5JNnaO2U=";
 
-    private static final String ERROR_HTML_FILE_PATH = "D:\\Temp\\CRAWLER\\WU_HAN";
-    private static final String PRIC_IMG_FILE_PATH = "D:\\Temp\\CRAWLER\\WU_HAN\\IMG\\";
-
-    private static final int MAX_CORE_THREAD_COUNT = 4;
     private static final String WU_HAN_DOMAIN_PREFIX = "http://119.97.201.22:8080/";
 
     @Resource
@@ -82,17 +80,9 @@ public class WuHanService extends GovernmentBaseService {
      */
     private final Map<String, String> homePageFlipParams;
 
-    {
-        // 首页翻页
-        homePageFlipParams = new HashMap<>(8);
-        homePageFlipParams.put(EVENT_TARGET, "AspNetPager1");
-        homePageFlipParams.put(VIEW_STATE_GENERATOR, "24525601");
-        homePageFlipParams.put(VIEW_STATE, VIEW_STATE_VALUE);
-    }
-
-    private final ExecutorService executor = CommonUtils.newFixedThreadPool("u_pool", MAX_CORE_THREAD_COUNT, 120L);
-
-    private final ExecutorService unitExecutor = CommonUtils.newFixedThreadPool("ud_pool", MAX_CORE_THREAD_COUNT, 120L);
+    private final ExecutorService executor;
+    private final ExecutorService unitExecutor;
+    private final WuHanProperties properties;
 
     /**
      * 当前采集的页码
@@ -100,6 +90,19 @@ public class WuHanService extends GovernmentBaseService {
     private int nowPage = 1;
 
     private boolean isStop = false;
+
+    public WuHanService(WuHanProperties properties) {
+        this.properties = properties;
+
+        executor = CommonUtils.newFixedThreadPool("u_pool", this.properties.getMaxThreadCoreCount(), 20L);
+        unitExecutor = CommonUtils.newFixedThreadPool("ud_pool", this.properties.getMaxThreadCoreCount(), 20L);
+
+        // 首页翻页
+        homePageFlipParams = new HashMap<>(8);
+        homePageFlipParams.put(EVENT_TARGET, "AspNetPager1");
+        homePageFlipParams.put(VIEW_STATE_GENERATOR, "24525601");
+        homePageFlipParams.put(VIEW_STATE, VIEW_STATE_VALUE);
+    }
 
     public void stop() {
         isStop = true;
@@ -525,7 +528,7 @@ public class WuHanService extends GovernmentBaseService {
             buildingMapper.updateByPrimaryKey(building);
             String fileName = String.format("%s_%s_%s_%s.html",
                     building.getHouseId(), building.getProjectId(), building.getBuildingId(), building.getBuildingName());
-            FileUtils.printFile(htmlStr, ERROR_HTML_FILE_PATH, fileName, false);
+            FileUtils.printFile(htmlStr, properties.getErrorHtmlPath(), fileName, false);
         } else {
             Elements trs = fwxx.select("div>table.tab_style>tbody>tr");
 
@@ -657,7 +660,7 @@ public class WuHanService extends GovernmentBaseService {
 
                             String fileName = unit.getPreBuildingAvgPrice() + ".png";
                             byte[] data = ImageReaderUtils.imageToByte(url);
-                            File file = new File(PRIC_IMG_FILE_PATH + unit.getProjectId() + "/" + fileName);
+                            File file = new File(properties.getPicturePath() + unit.getProjectId() + "/" + fileName);
                             FileOutputStream out = new FileOutputStream(file);
                             out.write(data, 0, data.length);
                             break;
