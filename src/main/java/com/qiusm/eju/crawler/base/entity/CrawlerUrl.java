@@ -17,10 +17,10 @@ public class CrawlerUrl {
 
     }
 
-    public CrawlerUrl(String requestUrl, String type, Integer success) {
+    public CrawlerUrl(String requestUrl, String type, String success) {
         this.url = requestUrl;
         this.type = type;
-        this.success = String.valueOf(success);
+        this.success = success;
     }
 
     public Long getId() {
