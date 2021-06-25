@@ -53,6 +53,9 @@ public class GaodeController {
 
     /**
      * 获取满足 longitude & laitude 经纬度的坐标点
+     * TODO
+     * 需要进行测试。
+     * 测试的坐标121.4,31.2;上海黄浦区
      *
      * @param longitude 经度
      * @param latitude  纬度

@@ -3,6 +3,7 @@ package com.qiusm.eju.crawler.poi.gaode;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.base.CrawlerUrlUtils;
 import com.qiusm.eju.crawler.poi.gaode.dao.GaodeDao;
 import com.qiusm.eju.crawler.poi.gaode.entity.*;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
@@ -45,7 +46,7 @@ public class GaodeService {
      * 结果参考：test/resources/poi/gaode/allCity.json <br>
      */
     public void allCityStart() {
-        String body = httpUtils.proxyGet(All_CITY_POI_URL, UTF8, 10000, 10000, 5, null);
+        String body = httpGetBody(All_CITY_POI_URL, UTF8);
         if (StringUtils.isNotBlank(body)) {
             JSONObject bodyObj = JSONObject.parseObject(body);
             JSONArray districts = bodyObj.getJSONArray("districts");
@@ -220,7 +221,7 @@ public class GaodeService {
                         + "&radius=" + radius
                         + "&offset=" + pageSize
                         + "&extensions=all&page=" + i;
-                String gdBody = httpUtils.get(GaodeUtils.packageUrl(poiUrl), null, 50000, 5000, null);
+                String gdBody = httpGetBody(GaodeUtils.packageUrl(poiUrl));
                 if (StringUtils.isNotBlank(gdBody)) {
                     if (gdBody.contains("strategy:priority_first use up limit")) {
                         try {
@@ -284,7 +285,7 @@ public class GaodeService {
     private void loadCityFence(GaodeCityPoiInfo cityPoiInfo) {
         try {
             String poiUrl = String.format(CITY_POI_URL, cityPoiInfo.getName());
-            String body = httpUtils.proxyGet(poiUrl, "UTF-8", 10000, 10000, 5, null);
+            String body = httpGetBody(poiUrl);
             if (StringUtils.isNotBlank(body)) {
                 JSONObject bodyObj = JSONObject.parseObject(body);
                 JSONArray districts = bodyObj.getJSONArray("districts");
@@ -476,6 +477,15 @@ public class GaodeService {
 
         return var1;
 
+    }
+
+    private String httpGetBody(String requestUrl) {
+        return httpGetBody(requestUrl, null);
+    }
+
+    private String httpGetBody(String requestUrl, String charset) {
+        CrawlerUrlUtils.saveUrl(requestUrl, "gaode_poi", "3");
+        return httpUtils.get(requestUrl, charset, 100_000, 50_000, null);
     }
 
 }
