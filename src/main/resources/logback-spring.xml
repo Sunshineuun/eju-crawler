@@ -90,4 +90,6 @@
         <appender-ref ref="FILE_INFO"/>
         <appender-ref ref="FILE_ERROR"/>
     </root>
+
+    <logger name="com.qiusm.eju.crawler" level="info"/>
 </configuration>
