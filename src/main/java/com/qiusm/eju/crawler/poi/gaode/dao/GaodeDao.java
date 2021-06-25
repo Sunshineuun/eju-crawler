@@ -26,6 +26,9 @@ public class GaodeDao {
     @Resource
     private GaodeCityPointMapper cityPointMapper;
 
+    @Resource
+    private GaodePoiMapper poiMapper;
+
     public List<GaodeCityPoiInfo> selectAllCityInfo() {
         GaodeCityPoiInfoExample example = new GaodeCityPoiInfoExample();
         example.createCriteria().andFenceIdIsNull()
@@ -42,9 +45,17 @@ public class GaodeDao {
         return cityFenceMapper.selectByExampleWithBLOBs(example);
     }
 
+    public List<GaodeCityPoint> selectCityPointByExample(GaodeCityPointExample example) {
+        return cityPointMapper.selectByExample(example);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public void saveCityInfo(List<GaodeCityPoiInfo> infos) {
-        infos.forEach(var -> cityPoiInfoMapper.insert(var));
+        Date now = new Date();
+        infos.forEach(var -> {
+            var.setCreateTime(now);
+            cityPoiInfoMapper.insert(var);
+        });
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -61,8 +72,24 @@ public class GaodeDao {
 
     @Transactional(rollbackFor = Exception.class)
     public void saveCityPoint(List<GaodeCityPoint> cityPoints) {
+        Date now = new Date();
         cityPoints.forEach(var -> {
+            var.setCreateTime(now);
             cityPointMapper.insert(var);
+        });
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void updateCityPointByKey(GaodeCityPoint point) {
+        cityPointMapper.updateByPrimaryKey(point);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void savePoi(List<GaodePoi> pois) {
+        Date now = new Date();
+        pois.forEach(var -> {
+            var.setCreateTime(now);
+            poiMapper.insert(var);
         });
     }
 }

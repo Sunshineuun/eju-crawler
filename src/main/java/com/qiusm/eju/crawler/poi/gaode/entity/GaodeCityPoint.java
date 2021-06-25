@@ -72,4 +72,8 @@ public class GaodeCityPoint {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    public String getLocation() {
+        return String.format("%s,%s", getLongitude(), getLatitude());
+    }
 }

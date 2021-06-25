@@ -1,12 +1,17 @@
 package com.qiusm.eju.crawler.poi.gaode;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.awt.geom.Point2D;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
  * @author qiushengming
  */
 public class GaodeUtils {
+
+    public final static String PRE_FIX = "http://mapdata-api.ejudata.com/inner/map/get?url=";
 
     /**
      * 判断点是否在多边形内。
@@ -84,5 +89,24 @@ public class GaodeUtils {
         }
 
         return boundOrVertex;
+    }
+
+    /**
+     * 高德接口访问需要key，该方法主要对其进行封装。
+     * 样例结果：http://mapdata-api.ejudata.com/inner/map/get?url=http%3A%2F%2Frestapi.amap.com%2Fv3%2Fplace%2Faround%3Flocation%3D121.520873%2C31.477357%26keywords%3D%26types%3D010000%26radius%3D1500%26offset%3D50%26extensions%3Dall%26page%3D1%26limitStrategy%3D1
+     *
+     * @param url url
+     * @return url
+     */
+    public static String packageUrl(String url) {
+        try {
+            if (StringUtils.isNotBlank(url)) {
+                url = URLEncoder.encode(url + "&limitStrategy=1");
+                url = PRE_FIX + url;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return url;
     }
 }

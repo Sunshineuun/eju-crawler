@@ -9,3 +9,7 @@ http://localhost:8080/gaode/callAllCityPoiInfo/上海城区
 ###
 # 切割城市坐标点
 http://localhost:8080/gaode/cuttingAllCityElectronicFence/上海城区
+
+###
+# 获取坐标点的周边信息
+http://localhost:8080/gaode/callCityPoiInfo/上海城区

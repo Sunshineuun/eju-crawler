@@ -15,4 +15,17 @@ public class GaodeField {
     public static final String LEVEL = "level";
     public static final String DISTRICTS = "districts";
 
+    /**
+     * 获取POI信息时的JSON字段名，用于取到响应结果
+     */
+    public static final String RESULT_VO = "resultVo";
+    /**
+     * 获取POI信息时的JSON字段名，用于取到状态码，判断是否请求成功
+     */
+    public static final String INFO_CODE = "infocode";
+    /**
+     * 获取POI信息时的JSON字段名，用于取到poi info array
+     */
+    public static final String POIS = "pois";
+
 }

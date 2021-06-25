@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author qiushengming
@@ -38,8 +40,26 @@ public class GaodeController {
         service.cuttingAllCityElectronicFence(cityName);
     }
 
+    /**
+     * 获取城市内所有坐标点的 poi 信息
+     *
+     * @param cityName 城市名称
+     */
     @GetMapping("/callCityPoiInfo/{cityName}")
     public void callCityPoiInfo(@PathVariable String cityName) {
-        service.callCityPoiInfo(cityName);
+        Map<String, String> tagMap = new HashMap<>(1);
+        service.callCityPoiInfo(cityName, tagMap);
+    }
+
+    /**
+     * 获取满足 longitude & laitude 经纬度的坐标点
+     *
+     * @param longitude 经度
+     * @param latitude  纬度
+     */
+    @GetMapping("/callCityPoiInfo")
+    public void callCityPoiInfo2(String longitude, String latitude) {
+        Map<String, String> tagMap = new HashMap<>(1);
+        service.callCityPoiInfoByLngAndLat(longitude, latitude, tagMap);
     }
 }
