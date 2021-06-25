@@ -47,13 +47,16 @@ public class FileUtils {
         if (!fileDir.exists()) {
             fileDir.mkdirs();
         }
-        File file = new File(filePath + File.separator + fileName); //1、建立连接
+        //1、建立连接
+        File file = new File(filePath + File.separator + fileName);
         OutputStream os = null;
         try {
             //2、选择输出流,以追加形式(在原有内容上追加) 写出文件 必须为true 否则为覆盖
             os = new FileOutputStream(file, append);
-            os.write(data, 0, data.length);    //3、写入文件
-            os.flush();    //将存储在管道中的数据强制刷新出去
+            //3、写入文件
+            os.write(data, 0, data.length);
+            //将存储在管道中的数据强制刷新出去
+            os.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("文件没有找到！");

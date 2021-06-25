@@ -6,6 +6,7 @@ import com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuilding;
 import com.qiusm.eju.crawler.government.nj.entity.FdNanJinHouse;
 import com.qiusm.eju.crawler.government.nj.entity.FdNanJinUnit;
 import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
+import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ImageReaderUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -411,17 +412,7 @@ public class NanJinService extends GovernmentBaseService {
                     String filePath = String.format("%s/%s/%s/",
                             NAN_JIN_IMG_PATH, baseMap.get(PROJECT_ID),
                             baseMap.get(BUILDING_NUM));
-                    File file = new File(filePath);
-                    if (!file.exists()) {
-                        if (!file.mkdirs()) {
-                            System.out.println("文件夹创建失败！！！");
-                        }
-                    }
-                    FileOutputStream out = new FileOutputStream(filePath + fileName);
-                    if (data != null) {
-                        out.write(data, 0, data.length);
-                    }
-                    out.close();
+                    FileUtils.printFile(data, filePath, fileName, false);
                 } else {
                     log.error("缺少 PROJECT_ID & BUILDING_NUM. {}", baseMap);
                 }
@@ -448,14 +439,7 @@ public class NanJinService extends GovernmentBaseService {
                         // /projectId/楼栋号/
                         String filePath = String.format("%s/%s/",
                                 NAN_JIN_IMG_PATH, baseMap.get(PROJECT_ID));
-                        File file = new File(filePath);
-                        if (!file.exists()) {
-                            file.mkdirs();
-                        }
-                        FileOutputStream out = new FileOutputStream(filePath + fileName);
-                        out.write(data, 0, data.length);
-                        out.close();
-
+                        FileUtils.printFile(data, filePath, fileName, false);
                     } catch (Exception e) {
                         log.error("url: {}, 图片下载失败:{}", url, e.getMessage());
                         e.printStackTrace();
@@ -467,22 +451,6 @@ public class NanJinService extends GovernmentBaseService {
                 e.printStackTrace();
             }
         });
-    }
-
-    private boolean checkBody(String requestUrl, String htmlStr, String type) {
-        if (!StringUtils.equals(type, "unitDetails")) {
-            log.info("正在处理：{}, {}", type, requestUrl);
-        }
-
-        try {
-            Thread.sleep(TimeUnit.SECONDS.toMillis(1) / 2);
-        } catch (InterruptedException ignored) {
-        }
-
-        return StringUtils.isNotBlank(htmlStr)
-                && !StringUtils.startsWith(htmlStr, "ejuResponseCode=500")
-                && !StringUtils.startsWith(htmlStr, "ResponseCode=")
-                && !StringUtils.startsWith(htmlStr, "ResponseError=");
     }
 
     /**
