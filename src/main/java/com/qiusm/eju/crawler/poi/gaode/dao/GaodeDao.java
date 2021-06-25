@@ -1,10 +1,7 @@
 package com.qiusm.eju.crawler.poi.gaode.dao;
 
 import com.qiusm.eju.crawler.poi.constant.CityLevel;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFenceExample;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfo;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfoExample;
+import com.qiusm.eju.crawler.poi.gaode.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +22,9 @@ public class GaodeDao {
 
     @Resource
     private GaodeCityFenceMapper cityFenceMapper;
+
+    @Resource
+    private GaodeCityPointMapper cityPointMapper;
 
     public List<GaodeCityPoiInfo> selectAllCityInfo() {
         GaodeCityPoiInfoExample example = new GaodeCityPoiInfoExample();
@@ -57,5 +57,12 @@ public class GaodeDao {
         cityPoiInfo.setFenceId(cityFence.getId());
 
         cityPoiInfoMapper.updateByPrimaryKeySelective(cityPoiInfo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void saveCityPoint(List<GaodeCityPoint> cityPoints) {
+        cityPoints.forEach(var -> {
+            cityPointMapper.insert(var);
+        });
     }
 }

@@ -3,10 +3,7 @@ package com.qiusm.eju.crawler.poi.gaode;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.poi.gaode.dao.GaodeDao;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFenceExample;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfo;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfoExample;
+import com.qiusm.eju.crawler.poi.gaode.entity.*;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +26,6 @@ import static com.qiusm.eju.crawler.constant.SymbolicConstant.*;
 import static com.qiusm.eju.crawler.poi.gaode.constant.GaodeField.*;
 import static com.qiusm.eju.crawler.poi.gaode.constant.GaodeUrl.All_CITY_POI_URL;
 import static com.qiusm.eju.crawler.poi.gaode.constant.GaodeUrl.CITY_POI_URL;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import static java.math.BigDecimal.ROUND_UP;
 
 /**
@@ -96,6 +92,8 @@ public class GaodeService {
                 fixedThreadPool.execute(() -> {
                     try {
                         String[] fenceArr = cityFence.getFence().split(PIPE);
+                        Date nowDate = new Date();
+
                         for (String fenceStr : fenceArr) {
                             // 经度(longitude)：每0.012=1000m，纬度(latitude)：每0.01=1000m
                             BigDecimal longitude = new BigDecimal("0.012");
@@ -104,10 +102,22 @@ public class GaodeService {
                             List<String> points = cuttingPoints(fenceStr, longitude, latitude);
 
                             List<String> inPoints = isInPolygon(points, fenceStr);
-                            // 存储有效的点 TODO
+                            // 存储有效的点
+                            List<GaodeCityPoint> cityPoints = new ArrayList<>();
+                            inPoints.forEach(var -> {
+                                String[] var1 = var.split(COMMA);
+                                GaodeCityPoint point = new GaodeCityPoint();
+                                point.setLongitude(var1[0]);
+                                point.setLatitude(var1[1]);
+                                point.setCityName(cityFence.getName());
+                                point.setCreateTime(nowDate);
+                                cityPoints.add(point);
+                            });
+                            dao.saveCityPoint(cityPoints);
                         }
                         log.info("{} 切割围栏完毕.", cityFence.getName());
                     } catch (Exception e) {
+                        log.error("城市围栏数据切割异常.{}", e.getMessage());
                         e.printStackTrace();
                     } finally {
                         semaphore.release();
@@ -194,24 +204,15 @@ public class GaodeService {
             point2Ds.add(var);
         }
 
-        StringBuilder var3 = new StringBuilder();
-        StringBuilder var4 = new StringBuilder();
         List<String> var5 = new ArrayList<>();
         points.forEach(point -> {
             String[] var1 = point.split(COMMA);
             Point2D.Double var = new Point2D.Double(Double.parseDouble(var1[0]), Double.parseDouble(var1[1]));
-            if (!GaodeUtils.isInPolygon(var, point2Ds)) {
-                var3.append(point).append(";");
-            } else {
-                var4.append(point).append(";");
+            if (GaodeUtils.isInPolygon(var, point2Ds)) {
                 var5.add(point);
             }
         });
 
-        System.out.println(fenceStr);
-        System.out.println(var3);
-        System.out.println(var4);
-        System.out.println("----------------------------------------------\n\n\n\n");
         return var5;
     }
 
