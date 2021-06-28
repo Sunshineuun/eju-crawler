@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiusm.eju.crawler.government.nj.dao.FdNanJinBuildingMapper">
+  <resultMap id="BaseResultMap" type="com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuilding">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="house_id" jdbcType="BIGINT" property="houseId" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="building_num" jdbcType="VARCHAR" property="buildingNum" />
+    <result column="open_time" jdbcType="VARCHAR" property="openTime" />
+    <result column="total_number" jdbcType="VARCHAR" property="totalNumber" />
+    <result column="unsold_total_num" jdbcType="VARCHAR" property="unsoldTotalNum" />
+    <result column="today_subscribe" jdbcType="VARCHAR" property="todaySubscribe" />
+    <result column="today_transaction" jdbcType="VARCHAR" property="todayTransaction" />
+    <result column="subscribe_total_num" jdbcType="VARCHAR" property="subscribeTotalNum" />
+    <result column="transaction_total_num" jdbcType="VARCHAR" property="transactionTotalNum" />
+    <result column="transaction_total_area" jdbcType="VARCHAR" property="transactionTotalArea" />
+    <result column="average_price" jdbcType="VARCHAR" property="averagePrice" />
+    <result column="turnover_ratio" jdbcType="VARCHAR" property="turnoverRatio" />
+    <result column="building_detail_url" jdbcType="VARCHAR" property="buildingDetailUrl" />
+    <result column="price_list_img_url" jdbcType="VARCHAR" property="priceListImgUrl" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, city_name, house_id, project_id, project_name, building_num, open_time, total_number, 
+    unsold_total_num, today_subscribe, today_transaction, subscribe_total_num, transaction_total_num, 
+    transaction_total_area, average_price, turnover_ratio, building_detail_url, price_list_img_url, 
+    status, version, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuildingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fd_nanjin_building
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fd_nanjin_building
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from fd_nanjin_building
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuildingExample">
+    delete from fd_nanjin_building
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuilding">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fd_nanjin_building (city_name, house_id, project_id, 
+      project_name, building_num, open_time, 
+      total_number, unsold_total_num, today_subscribe, 
+      today_transaction, subscribe_total_num, transaction_total_num, 
+      transaction_total_area, average_price, turnover_ratio, 
+      building_detail_url, price_list_img_url, status, 
+      version, create_time)
+    values (#{cityName,jdbcType=VARCHAR}, #{houseId,jdbcType=BIGINT}, #{projectId,jdbcType=VARCHAR}, 
+      #{projectName,jdbcType=VARCHAR}, #{buildingNum,jdbcType=VARCHAR}, #{openTime,jdbcType=VARCHAR}, 
+      #{totalNumber,jdbcType=VARCHAR}, #{unsoldTotalNum,jdbcType=VARCHAR}, #{todaySubscribe,jdbcType=VARCHAR}, 
+      #{todayTransaction,jdbcType=VARCHAR}, #{subscribeTotalNum,jdbcType=VARCHAR}, #{transactionTotalNum,jdbcType=VARCHAR}, 
+      #{transactionTotalArea,jdbcType=VARCHAR}, #{averagePrice,jdbcType=VARCHAR}, #{turnoverRatio,jdbcType=VARCHAR}, 
+      #{buildingDetailUrl,jdbcType=VARCHAR}, #{priceListImgUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuilding">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fd_nanjin_building
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="houseId != null">
+        house_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="buildingNum != null">
+        building_num,
+      </if>
+      <if test="openTime != null">
+        open_time,
+      </if>
+      <if test="totalNumber != null">
+        total_number,
+      </if>
+      <if test="unsoldTotalNum != null">
+        unsold_total_num,
+      </if>
+      <if test="todaySubscribe != null">
+        today_subscribe,
+      </if>
+      <if test="todayTransaction != null">
+        today_transaction,
+      </if>
+      <if test="subscribeTotalNum != null">
+        subscribe_total_num,
+      </if>
+      <if test="transactionTotalNum != null">
+        transaction_total_num,
+      </if>
+      <if test="transactionTotalArea != null">
+        transaction_total_area,
+      </if>
+      <if test="averagePrice != null">
+        average_price,
+      </if>
+      <if test="turnoverRatio != null">
+        turnover_ratio,
+      </if>
+      <if test="buildingDetailUrl != null">
+        building_detail_url,
+      </if>
+      <if test="priceListImgUrl != null">
+        price_list_img_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseId != null">
+        #{houseId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingNum != null">
+        #{buildingNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNumber != null">
+        #{totalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unsoldTotalNum != null">
+        #{unsoldTotalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="todaySubscribe != null">
+        #{todaySubscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="todayTransaction != null">
+        #{todayTransaction,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeTotalNum != null">
+        #{subscribeTotalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionTotalNum != null">
+        #{transactionTotalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionTotalArea != null">
+        #{transactionTotalArea,jdbcType=VARCHAR},
+      </if>
+      <if test="averagePrice != null">
+        #{averagePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverRatio != null">
+        #{turnoverRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingDetailUrl != null">
+        #{buildingDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="priceListImgUrl != null">
+        #{priceListImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuildingExample" resultType="java.lang.Long">
+    select count(*) from fd_nanjin_building
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update fd_nanjin_building
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityName != null">
+        city_name = #{record.cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseId != null">
+        house_id = #{record.houseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectName != null">
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildingNum != null">
+        building_num = #{record.buildingNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openTime != null">
+        open_time = #{record.openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalNumber != null">
+        total_number = #{record.totalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unsoldTotalNum != null">
+        unsold_total_num = #{record.unsoldTotalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todaySubscribe != null">
+        today_subscribe = #{record.todaySubscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todayTransaction != null">
+        today_transaction = #{record.todayTransaction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subscribeTotalNum != null">
+        subscribe_total_num = #{record.subscribeTotalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transactionTotalNum != null">
+        transaction_total_num = #{record.transactionTotalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transactionTotalArea != null">
+        transaction_total_area = #{record.transactionTotalArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.averagePrice != null">
+        average_price = #{record.averagePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.turnoverRatio != null">
+        turnover_ratio = #{record.turnoverRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buildingDetailUrl != null">
+        building_detail_url = #{record.buildingDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceListImgUrl != null">
+        price_list_img_url = #{record.priceListImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update fd_nanjin_building
+    set id = #{record.id,jdbcType=BIGINT},
+      city_name = #{record.cityName,jdbcType=VARCHAR},
+      house_id = #{record.houseId,jdbcType=BIGINT},
+      project_id = #{record.projectId,jdbcType=VARCHAR},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      building_num = #{record.buildingNum,jdbcType=VARCHAR},
+      open_time = #{record.openTime,jdbcType=VARCHAR},
+      total_number = #{record.totalNumber,jdbcType=VARCHAR},
+      unsold_total_num = #{record.unsoldTotalNum,jdbcType=VARCHAR},
+      today_subscribe = #{record.todaySubscribe,jdbcType=VARCHAR},
+      today_transaction = #{record.todayTransaction,jdbcType=VARCHAR},
+      subscribe_total_num = #{record.subscribeTotalNum,jdbcType=VARCHAR},
+      transaction_total_num = #{record.transactionTotalNum,jdbcType=VARCHAR},
+      transaction_total_area = #{record.transactionTotalArea,jdbcType=VARCHAR},
+      average_price = #{record.averagePrice,jdbcType=VARCHAR},
+      turnover_ratio = #{record.turnoverRatio,jdbcType=VARCHAR},
+      building_detail_url = #{record.buildingDetailUrl,jdbcType=VARCHAR},
+      price_list_img_url = #{record.priceListImgUrl,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuilding">
+    update fd_nanjin_building
+    <set>
+      <if test="cityName != null">
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseId != null">
+        house_id = #{houseId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingNum != null">
+        building_num = #{buildingNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        open_time = #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNumber != null">
+        total_number = #{totalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unsoldTotalNum != null">
+        unsold_total_num = #{unsoldTotalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="todaySubscribe != null">
+        today_subscribe = #{todaySubscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="todayTransaction != null">
+        today_transaction = #{todayTransaction,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeTotalNum != null">
+        subscribe_total_num = #{subscribeTotalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionTotalNum != null">
+        transaction_total_num = #{transactionTotalNum,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionTotalArea != null">
+        transaction_total_area = #{transactionTotalArea,jdbcType=VARCHAR},
+      </if>
+      <if test="averagePrice != null">
+        average_price = #{averagePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="turnoverRatio != null">
+        turnover_ratio = #{turnoverRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingDetailUrl != null">
+        building_detail_url = #{buildingDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="priceListImgUrl != null">
+        price_list_img_url = #{priceListImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuilding">
+    update fd_nanjin_building
+    set city_name = #{cityName,jdbcType=VARCHAR},
+      house_id = #{houseId,jdbcType=BIGINT},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      building_num = #{buildingNum,jdbcType=VARCHAR},
+      open_time = #{openTime,jdbcType=VARCHAR},
+      total_number = #{totalNumber,jdbcType=VARCHAR},
+      unsold_total_num = #{unsoldTotalNum,jdbcType=VARCHAR},
+      today_subscribe = #{todaySubscribe,jdbcType=VARCHAR},
+      today_transaction = #{todayTransaction,jdbcType=VARCHAR},
+      subscribe_total_num = #{subscribeTotalNum,jdbcType=VARCHAR},
+      transaction_total_num = #{transactionTotalNum,jdbcType=VARCHAR},
+      transaction_total_area = #{transactionTotalArea,jdbcType=VARCHAR},
+      average_price = #{averagePrice,jdbcType=VARCHAR},
+      turnover_ratio = #{turnoverRatio,jdbcType=VARCHAR},
+      building_detail_url = #{buildingDetailUrl,jdbcType=VARCHAR},
+      price_list_img_url = #{priceListImgUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

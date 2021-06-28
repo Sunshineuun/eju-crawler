@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiusm.eju.crawler.government.nj.dao.FdNanJinPreSaleMapper">
+  <resultMap id="BaseResultMap" type="com.qiusm.eju.crawler.government.nj.entity.FdNanJinPreSale">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="house_id" jdbcType="BIGINT" property="houseId" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="pre_sale_permit_id" jdbcType="VARCHAR" property="preSalePermitId" />
+    <result column="pre_sale_permit_code" jdbcType="VARCHAR" property="preSalePermitCode" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="open_time" jdbcType="VARCHAR" property="openTime" />
+    <result column="project_address" jdbcType="VARCHAR" property="projectAddress" />
+    <result column="land_use_right_permit" jdbcType="VARCHAR" property="landUseRightPermit" />
+    <result column="land_use_period" jdbcType="VARCHAR" property="landUsePeriod" />
+    <result column="house_use" jdbcType="VARCHAR" property="houseUse" />
+    <result column="sales_category" jdbcType="VARCHAR" property="salesCategory" />
+    <result column="sales_unit" jdbcType="VARCHAR" property="salesUnit" />
+    <result column="sales_method" jdbcType="VARCHAR" property="salesMethod" />
+    <result column="pre_sale_license_img_url" jdbcType="VARCHAR" property="preSaleLicenseImgUrl" />
+    <result column="pre_sale_reg_detail_url" jdbcType="VARCHAR" property="preSaleRegDetailUrl" />
+    <result column="pre_sale_plan_url" jdbcType="VARCHAR" property="preSalePlanUrl" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, city_name, house_id, project_id, project_name, pre_sale_permit_id, pre_sale_permit_code, 
+    region, open_time, project_address, land_use_right_permit, land_use_period, house_use, 
+    sales_category, sales_unit, sales_method, pre_sale_license_img_url, pre_sale_reg_detail_url, 
+    pre_sale_plan_url, status, version, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinPreSaleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fd_nanjin_pre_sale
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fd_nanjin_pre_sale
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from fd_nanjin_pre_sale
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinPreSaleExample">
+    delete from fd_nanjin_pre_sale
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinPreSale">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fd_nanjin_pre_sale (city_name, house_id, project_id, 
+      project_name, pre_sale_permit_id, pre_sale_permit_code, 
+      region, open_time, project_address, 
+      land_use_right_permit, land_use_period, house_use, 
+      sales_category, sales_unit, sales_method, 
+      pre_sale_license_img_url, pre_sale_reg_detail_url, 
+      pre_sale_plan_url, status, version, 
+      create_time)
+    values (#{cityName,jdbcType=VARCHAR}, #{houseId,jdbcType=BIGINT}, #{projectId,jdbcType=VARCHAR}, 
+      #{projectName,jdbcType=VARCHAR}, #{preSalePermitId,jdbcType=VARCHAR}, #{preSalePermitCode,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{openTime,jdbcType=VARCHAR}, #{projectAddress,jdbcType=VARCHAR}, 
+      #{landUseRightPermit,jdbcType=VARCHAR}, #{landUsePeriod,jdbcType=VARCHAR}, #{houseUse,jdbcType=VARCHAR}, 
+      #{salesCategory,jdbcType=VARCHAR}, #{salesUnit,jdbcType=VARCHAR}, #{salesMethod,jdbcType=VARCHAR}, 
+      #{preSaleLicenseImgUrl,jdbcType=VARCHAR}, #{preSaleRegDetailUrl,jdbcType=VARCHAR}, 
+      #{preSalePlanUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinPreSale">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fd_nanjin_pre_sale
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="houseId != null">
+        house_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="preSalePermitId != null">
+        pre_sale_permit_id,
+      </if>
+      <if test="preSalePermitCode != null">
+        pre_sale_permit_code,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="openTime != null">
+        open_time,
+      </if>
+      <if test="projectAddress != null">
+        project_address,
+      </if>
+      <if test="landUseRightPermit != null">
+        land_use_right_permit,
+      </if>
+      <if test="landUsePeriod != null">
+        land_use_period,
+      </if>
+      <if test="houseUse != null">
+        house_use,
+      </if>
+      <if test="salesCategory != null">
+        sales_category,
+      </if>
+      <if test="salesUnit != null">
+        sales_unit,
+      </if>
+      <if test="salesMethod != null">
+        sales_method,
+      </if>
+      <if test="preSaleLicenseImgUrl != null">
+        pre_sale_license_img_url,
+      </if>
+      <if test="preSaleRegDetailUrl != null">
+        pre_sale_reg_detail_url,
+      </if>
+      <if test="preSalePlanUrl != null">
+        pre_sale_plan_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseId != null">
+        #{houseId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalePermitId != null">
+        #{preSalePermitId,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalePermitCode != null">
+        #{preSalePermitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAddress != null">
+        #{projectAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="landUseRightPermit != null">
+        #{landUseRightPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="landUsePeriod != null">
+        #{landUsePeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="houseUse != null">
+        #{houseUse,jdbcType=VARCHAR},
+      </if>
+      <if test="salesCategory != null">
+        #{salesCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="salesUnit != null">
+        #{salesUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="salesMethod != null">
+        #{salesMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="preSaleLicenseImgUrl != null">
+        #{preSaleLicenseImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="preSaleRegDetailUrl != null">
+        #{preSaleRegDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalePlanUrl != null">
+        #{preSalePlanUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinPreSaleExample" resultType="java.lang.Long">
+    select count(*) from fd_nanjin_pre_sale
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update fd_nanjin_pre_sale
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityName != null">
+        city_name = #{record.cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseId != null">
+        house_id = #{record.houseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectName != null">
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preSalePermitId != null">
+        pre_sale_permit_id = #{record.preSalePermitId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preSalePermitCode != null">
+        pre_sale_permit_code = #{record.preSalePermitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null">
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openTime != null">
+        open_time = #{record.openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectAddress != null">
+        project_address = #{record.projectAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.landUseRightPermit != null">
+        land_use_right_permit = #{record.landUseRightPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.landUsePeriod != null">
+        land_use_period = #{record.landUsePeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseUse != null">
+        house_use = #{record.houseUse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesCategory != null">
+        sales_category = #{record.salesCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesUnit != null">
+        sales_unit = #{record.salesUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesMethod != null">
+        sales_method = #{record.salesMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preSaleLicenseImgUrl != null">
+        pre_sale_license_img_url = #{record.preSaleLicenseImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preSaleRegDetailUrl != null">
+        pre_sale_reg_detail_url = #{record.preSaleRegDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preSalePlanUrl != null">
+        pre_sale_plan_url = #{record.preSalePlanUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update fd_nanjin_pre_sale
+    set id = #{record.id,jdbcType=BIGINT},
+      city_name = #{record.cityName,jdbcType=VARCHAR},
+      house_id = #{record.houseId,jdbcType=BIGINT},
+      project_id = #{record.projectId,jdbcType=VARCHAR},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      pre_sale_permit_id = #{record.preSalePermitId,jdbcType=VARCHAR},
+      pre_sale_permit_code = #{record.preSalePermitCode,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      open_time = #{record.openTime,jdbcType=VARCHAR},
+      project_address = #{record.projectAddress,jdbcType=VARCHAR},
+      land_use_right_permit = #{record.landUseRightPermit,jdbcType=VARCHAR},
+      land_use_period = #{record.landUsePeriod,jdbcType=VARCHAR},
+      house_use = #{record.houseUse,jdbcType=VARCHAR},
+      sales_category = #{record.salesCategory,jdbcType=VARCHAR},
+      sales_unit = #{record.salesUnit,jdbcType=VARCHAR},
+      sales_method = #{record.salesMethod,jdbcType=VARCHAR},
+      pre_sale_license_img_url = #{record.preSaleLicenseImgUrl,jdbcType=VARCHAR},
+      pre_sale_reg_detail_url = #{record.preSaleRegDetailUrl,jdbcType=VARCHAR},
+      pre_sale_plan_url = #{record.preSalePlanUrl,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinPreSale">
+    update fd_nanjin_pre_sale
+    <set>
+      <if test="cityName != null">
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseId != null">
+        house_id = #{houseId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalePermitId != null">
+        pre_sale_permit_id = #{preSalePermitId,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalePermitCode != null">
+        pre_sale_permit_code = #{preSalePermitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        open_time = #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAddress != null">
+        project_address = #{projectAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="landUseRightPermit != null">
+        land_use_right_permit = #{landUseRightPermit,jdbcType=VARCHAR},
+      </if>
+      <if test="landUsePeriod != null">
+        land_use_period = #{landUsePeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="houseUse != null">
+        house_use = #{houseUse,jdbcType=VARCHAR},
+      </if>
+      <if test="salesCategory != null">
+        sales_category = #{salesCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="salesUnit != null">
+        sales_unit = #{salesUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="salesMethod != null">
+        sales_method = #{salesMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="preSaleLicenseImgUrl != null">
+        pre_sale_license_img_url = #{preSaleLicenseImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="preSaleRegDetailUrl != null">
+        pre_sale_reg_detail_url = #{preSaleRegDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="preSalePlanUrl != null">
+        pre_sale_plan_url = #{preSalePlanUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qiusm.eju.crawler.government.nj.entity.FdNanJinPreSale">
+    update fd_nanjin_pre_sale
+    set city_name = #{cityName,jdbcType=VARCHAR},
+      house_id = #{houseId,jdbcType=BIGINT},
+      project_id = #{projectId,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      pre_sale_permit_id = #{preSalePermitId,jdbcType=VARCHAR},
+      pre_sale_permit_code = #{preSalePermitCode,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      open_time = #{openTime,jdbcType=VARCHAR},
+      project_address = #{projectAddress,jdbcType=VARCHAR},
+      land_use_right_permit = #{landUseRightPermit,jdbcType=VARCHAR},
+      land_use_period = #{landUsePeriod,jdbcType=VARCHAR},
+      house_use = #{houseUse,jdbcType=VARCHAR},
+      sales_category = #{salesCategory,jdbcType=VARCHAR},
+      sales_unit = #{salesUnit,jdbcType=VARCHAR},
+      sales_method = #{salesMethod,jdbcType=VARCHAR},
+      pre_sale_license_img_url = #{preSaleLicenseImgUrl,jdbcType=VARCHAR},
+      pre_sale_reg_detail_url = #{preSaleRegDetailUrl,jdbcType=VARCHAR},
+      pre_sale_plan_url = #{preSalePlanUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
