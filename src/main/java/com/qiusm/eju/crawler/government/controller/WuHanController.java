@@ -76,20 +76,7 @@ public class WuHanController {
 
     @RequestMapping("/unit/start")
     public void unitStart() {
-        synchronized (WuHanController.class) {
-            if (!lock) {
-                lock = true;
-                try {
-                    service.unitStart();
-                } catch (Exception e) {
-                    log.error("{}", e.getMessage());
-                } finally {
-                    lock = false;
-                }
-            } else {
-                log.warn("已经存在运行的实例！");
-            }
-        }
+        service.unitStart();
     }
 
     /**

@@ -3,6 +3,7 @@ package com.qiusm.eju.crawler.government.wh.dao;
 import com.qiusm.eju.crawler.government.wh.entity.FdWuhanBuilding;
 import com.qiusm.eju.crawler.government.wh.entity.FdWuhanUnit;
 import com.qiusm.eju.crawler.government.wh.entity.FdWuhanUnitExample;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 /**
  * @author qiushengming
  */
+@Slf4j
 @Service
 public class WuHanDao {
 
@@ -48,7 +50,8 @@ public class WuHanDao {
         unitExample.createCriteria()
                 .andBuildingIdEqualTo(building.getId())
                 .andDetailsUrlIsNotNull()
-                .andHouseAddressIsNull();
+                .andHouseAddressIsNull()
+                .andStatusNotEqualTo("99");
         List<FdWuhanUnit> unitsDb = unitMapper.selectByExample(unitExample);
         Map<String, FdWuhanUnit> unitMapDb = new HashMap<>(unitsDb.size());
         unitsDb.forEach(o -> {
@@ -57,6 +60,7 @@ public class WuHanDao {
         });
 
         if (unitMapDb.size() != unitsDb.size()) {
+            log.error("去重后。预期数量为：{},实际数量为：{}。两者不符。", unitsDb.size(), unitMapDb.size());
             return null;
         }
 

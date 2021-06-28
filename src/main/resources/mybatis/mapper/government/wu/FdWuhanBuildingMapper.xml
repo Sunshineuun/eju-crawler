@@ -393,7 +393,8 @@
         where id in (select fd_wuhan_unit.building_id
                      from fd_wuhan_unit
                      where details_url is not null
-                       and house_address is null)
+                       and house_address is null
+                       and status != '99')
           and id &gt; #{maxId,jdbcType=BIGINT}
         order by id
             limit 1000

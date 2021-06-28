@@ -198,67 +198,67 @@ public class WuHanService extends GovernmentBaseService {
     }
 
     public void unitStart() {
-        executor.submit(() -> {
-            log.info("线程：{}，开始抓取房屋详情数据。", Thread.currentThread().getName());
-            Long maxId = 0L;
-            while (true) {
-                try {
-                    // 查询需要处理的房屋列表按照楼栋为一个处理单位
-                    List<FdWuhanBuilding> buildingList = buildingMapper.selectByPendLoadHouseDetail(maxId);
-                    maxId = buildingList.get(buildingList.size() - 1).getId();
-                    if (buildingList.isEmpty()) {
-                        break;
+        log.info("1.线程：{}，开始抓取房屋详情数据。", Thread.currentThread().getName());
+        Long maxId = 0L;
+        while (true) {
+            try {
+                // 查询需要处理的房屋列表按照楼栋为一个处理单位
+                List<FdWuhanBuilding> buildingList = buildingMapper.selectByPendLoadHouseDetail(maxId);
+                maxId = buildingList.get(buildingList.size() - 1).getId();
+                if (buildingList.isEmpty()) {
+                    break;
+                }
+
+                for (FdWuhanBuilding building : buildingList) {
+                    log.info("task : bId:{}, projectId:{}", building.getId(), building.getProjectId());
+                    String newReqUrl = building.getUrl();
+
+                    Map<String, FdWuhanUnit> unitMapDb = dao.selectBuildingIdByHouseUnit(building);
+
+                    if (unitMapDb == null) {
+                        continue;
                     }
 
-                    for (FdWuhanBuilding building : buildingList) {
-                        String newReqUrl = building.getUrl();
+                    // 从页面中解析出来的房屋信息
+                    List<FdWuhanUnit> unitsParser = unitList(newReqUrl, building);
 
-                        Map<String, FdWuhanUnit> unitMapDb = dao.selectBuildingIdByHouseUnit(building);
-
-                        if (unitMapDb == null) {
+                    for (FdWuhanUnit unitParser : unitsParser) {
+                        // 判断当前房屋是否需要更新房屋信息
+                        // 1. 当房屋的detailUrl is not null && houseAddress is null时，则需要进行更新
+                        if (StringUtils.isEmpty(unitParser.getDetailsUrl())) {
                             continue;
                         }
 
-                        // 从页面中解析出来的房屋信息
-                        List<FdWuhanUnit> unitsParser = unitList(newReqUrl, building);
-
-                        for (FdWuhanUnit unitParser : unitsParser) {
-                            // 判断当前房屋是否需要更新房屋信息
-                            // 1. 当房屋的detailUrl is not null && houseAddress is null时，则需要进行更新
-                            if (StringUtils.isEmpty(unitParser.getDetailsUrl())) {
-                                continue;
-                            }
-
-                            String key = String.format("%s,%s,%s", unitParser.getUnitId(), unitParser.getNominalFloor(), unitParser.getRoomNo());
-                            FdWuhanUnit unitDb = unitMapDb.get(key);
-                            if (unitDb == null) {
-                                continue;
-                            }
-
-                            unitDb.setDetailsUrl(unitParser.getDetailsUrl());
-                            executor.submit(() -> {
-                                unitDetail(unitDb.getDetailsUrl(), unitDb);
-
-                                // 重试成功则将状态设置为ok.1,否则设置为failure。失败的数据则后续手动处理。
-                                if (!StringUtils.isEmpty(unitDb.getHouseAddress())) {
-                                    unitDb.setStatus("ok.1");
-                                } else {
-                                    unitDb.setStatus("failure");
-                                }
-                                log.info("bid:{}, uid:{}, {}, {}", unitDb.getBuildingId(), unitDb.getId(),
-                                        unitDb.getStatus(), unitDb.getDetailsUrl());
-                                unitMapper.updateByPrimaryKey(unitDb);
-                            });
+                        String key = String.format("%s,%s,%s", unitParser.getUnitId(), unitParser.getNominalFloor(), unitParser.getRoomNo());
+                        FdWuhanUnit unitDb = unitMapDb.get(key);
+                        if (unitDb == null) {
+                            continue;
                         }
-                    }
 
-                    //优先级，运行中资源未满，排队中  更新状态排队中
-                    Thread.sleep(TimeUnit.SECONDS.toMillis(10));
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        unitDb.setDetailsUrl(unitParser.getDetailsUrl());
+                        executor.submit(() -> {
+                            unitDetail(unitDb.getDetailsUrl(), unitDb);
+
+                            // 重试成功则将状态设置为ok.1,否则设置为failure。失败的数据则后续手动处理。
+                            if (!StringUtils.isEmpty(unitDb.getHouseAddress())) {
+                                unitDb.setStatus("ok.1");
+                            } else {
+                                unitDb.setStatus("failure");
+                            }
+                            log.info("bid:{}, uid:{}, {}, {}", unitDb.getBuildingId(), unitDb.getId(),
+                                    unitDb.getStatus(), unitDb.getDetailsUrl());
+                            unitMapper.updateByPrimaryKey(unitDb);
+                        });
+                    }
                 }
+
+                //优先级，运行中资源未满，排队中  更新状态排队中
+                // Thread.sleep(TimeUnit.SECONDS.toMillis(10));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        });
+        }
+        log.info("2.线程：{}，结束抓取房屋详情数据。", Thread.currentThread().getName());
     }
 
     /**
