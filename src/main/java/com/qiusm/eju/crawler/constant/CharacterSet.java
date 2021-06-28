@@ -1,6 +1,9 @@
 package com.qiusm.eju.crawler.constant;
 
+import java.nio.charset.StandardCharsets;
+
 /**
+ * {@link StandardCharsets}
  * @author qiushengming
  */
 public class CharacterSet {

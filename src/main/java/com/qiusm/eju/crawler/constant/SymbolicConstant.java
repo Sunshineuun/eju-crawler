@@ -18,4 +18,14 @@ public class SymbolicConstant {
      * 【\|】
      */
     public static final String PIPE = "\\|";
+
+    /**
+     * 与号【&】
+     */
+    public static final String AMPERSAND = "&";
+
+    /**
+     * 等号【=】
+     */
+    public static final String EQUAL_SIGN = "=";
 }
