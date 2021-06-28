@@ -21,6 +21,7 @@ public class CrawlerUrl {
         this.url = requestUrl;
         this.type = type;
         this.success = success;
+        this.createTime = new Date();
     }
 
     public Long getId() {

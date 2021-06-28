@@ -24,6 +24,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
+import static com.qiusm.eju.crawler.constant.SymbolicConstant.COMMA;
 
 
 /**
@@ -53,6 +54,10 @@ public class WuHanService extends GovernmentBaseService {
     private static final String VIEW_STATE_VALUE = "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";
 
     private static final String WU_HAN_DOMAIN_PREFIX = "http://119.97.201.22:8080/";
+
+    static {
+        ERROR_MSG.addAll(Arrays.asList("<h1>您的网络存在异常！</h1>,<h1>网络存在异常！</h1>".split(COMMA)));
+    }
 
     @Resource
     private FdWuhanHouseMapper houseMapper;
@@ -112,7 +117,6 @@ public class WuHanService extends GovernmentBaseService {
      * 初始启动方法
      */
     public void start() {
-        init();
         String htmlStr = httpGetBody(INITIAL_SEED_URL, null, "xmList1");
         log.info("开始第1页的采集");
         xmListParser(INITIAL_SEED_URL, htmlStr);
@@ -209,10 +213,7 @@ public class WuHanService extends GovernmentBaseService {
                     for (FdWuhanBuilding building : buildingList) {
                         String newReqUrl = building.getUrl();
 
-                        sw.start("unit db load");
                         Map<String, FdWuhanUnit> unitMapDb = dao.selectBuildingIdByHouseUnit(building);
-                        sw.stop();
-                        log.info("db check {}", sw.prettyPrint());
 
                         if (unitMapDb == null) {
                             continue;
@@ -237,14 +238,7 @@ public class WuHanService extends GovernmentBaseService {
                             unitDb.setDetailsUrl(unitParser.getDetailsUrl());
                             executor.submit(() -> {
                                 unitDetail(unitDb.getDetailsUrl(), unitDb);
-                                // 均价是个图片，需要将图片存储起来
-                                if (StringUtils.isEmpty(unitDb.getHouseAddress())
-                                        || StringUtils.isEmpty(unitDb.getPresellNo())
-                                        || StringUtils.isEmpty(unitDb.getMeasuredTotalArea())
-                                        || StringUtils.isEmpty(unitDb.getPreBuildingAvgPrice())
-                                        || StringUtils.isEmpty(unitDb.getHouseTotalPrice())) {
-                                    log.warn("有空数据请注意。");
-                                }
+
                                 // 重试成功则将状态设置为ok.1,否则设置为failure。失败的数据则后续手动处理。
                                 if (!StringUtils.isEmpty(unitDb.getHouseAddress())) {
                                     unitDb.setStatus("ok.1");
@@ -265,9 +259,6 @@ public class WuHanService extends GovernmentBaseService {
                 }
             }
         });
-    }
-
-    private void init() {
     }
 
     /**
@@ -658,15 +649,27 @@ public class WuHanService extends GovernmentBaseService {
                             String url = WU_HAN_DOMAIN_PREFIX + src;
                             unit.setPreBuildingAvgPrice(url.split("price=")[1].replaceAll("/", "") + "_" + UUID.randomUUID());
 
-                            String fileName = unit.getPreBuildingAvgPrice() + ".png";
-                            byte[] data = ImageReaderUtils.imageToByte(url);
-                            File file = new File(properties.getPicturePath() + unit.getProjectId() + "/" + fileName);
-                            FileOutputStream out = new FileOutputStream(file);
-                            out.write(data, 0, data.length);
+                            executor.submit(() -> {
+                                String fileName = unit.getPreBuildingAvgPrice() + ".png";
+                                String filePath = properties.getPicturePath() + unit.getProjectId() + "/";
+                                byte[] data = ImageReaderUtils.imageToByte(url);
+                                FileUtils.printFile(data, filePath, fileName, false);
+                            });
                             break;
                         default:
                     }
                 }
+            }
+
+            if (StringUtils.isEmpty(unit.getHouseAddress())
+                    || StringUtils.isEmpty(unit.getPresellNo())
+                    || StringUtils.isEmpty(unit.getMeasuredTotalArea())
+                    || StringUtils.isEmpty(unit.getPreBuildingAvgPrice())) {
+                /*
+                 * StringUtils.isEmpty(unit.getHouseTotalPrice()
+                 * 实际情况有些地方的总价会是空的。
+                 * */
+                log.warn("有空数据请注意。");
             }
         } catch (Exception ex) {
             log.error("unit 明细处理失败：{}", ex.getMessage());

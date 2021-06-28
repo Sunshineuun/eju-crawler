@@ -1,5 +1,8 @@
 package com.qiusm.eju.crawler.government;
 
+import com.qiusm.eju.crawler.base.CrawlerUrlUtils;
+import com.qiusm.eju.crawler.base.dao.CrawlerUrlMapper;
+import com.qiusm.eju.crawler.base.entity.CrawlerUrl;
 import com.qiusm.eju.crawler.constant.CharacterSet;
 import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
@@ -7,9 +10,11 @@ import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StopWatch;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Resource;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static com.qiusm.eju.crawler.constant.SymbolicConstant.COMMA;
 
 /**
  * @author qiushengming
@@ -21,7 +26,14 @@ public abstract class GovernmentBaseService {
      */
     private static final int TRY_NUM = 5;
 
-    private static final String[] ERROR_MSG = "ejuResponseCode=500,ResponseCode=,ResponseError=,<h1>您的网络存在异常！</h1>".split(",");
+    protected static final List<String> ERROR_MSG = new ArrayList<>();
+
+    @Resource
+    private CrawlerUrlMapper crawlerUrlMapper;
+
+    static {
+        ERROR_MSG.addAll(Arrays.asList("ejuResponseCode=500,ResponseCode=,ResponseError=".split(COMMA)));
+    }
 
     private final OkHttpUtils httpClient = CommonUtils.createHttpClient();
 
@@ -81,6 +93,7 @@ public abstract class GovernmentBaseService {
             }
         }
 
+        CrawlerUrlUtils.saveUrl(requestUrl, type, success ? "1" : "0");
         return success;
     }
 }

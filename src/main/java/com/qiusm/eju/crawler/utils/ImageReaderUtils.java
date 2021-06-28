@@ -138,7 +138,7 @@ public class ImageReaderUtils {
             });
 
             Call call = OkHttpUtils.SingleOkHttpConfig.OK_HTT.newBuilder()
-                    .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxy.getHostName(), proxy.getPort())))
+//                    .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxy.getHostName(), proxy.getPort())))
                     .connectTimeout(6000L, TimeUnit.MILLISECONDS).readTimeout(6000L, TimeUnit.MILLISECONDS)
                     .writeTimeout(6000L, TimeUnit.MILLISECONDS)
                     .build()
