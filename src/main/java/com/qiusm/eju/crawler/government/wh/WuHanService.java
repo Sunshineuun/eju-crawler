@@ -210,7 +210,6 @@ public class WuHanService extends GovernmentBaseService {
                 }
 
                 for (FdWuhanBuilding building : buildingList) {
-                    log.info("task : bId:{}, projectId:{}", building.getId(), building.getProjectId());
                     String newReqUrl = building.getUrl();
 
                     Map<String, FdWuhanUnit> unitMapDb = dao.selectBuildingIdByHouseUnit(building);
@@ -221,6 +220,7 @@ public class WuHanService extends GovernmentBaseService {
 
                     // 从页面中解析出来的房屋信息
                     List<FdWuhanUnit> unitsParser = unitList(newReqUrl, building);
+                    log.info("task : bId:{}, projectId:{}, unit size:{}", building.getId(), building.getProjectId(), unitsParser.size());
 
                     for (FdWuhanUnit unitParser : unitsParser) {
                         // 判断当前房屋是否需要更新房屋信息
@@ -236,7 +236,7 @@ public class WuHanService extends GovernmentBaseService {
                         }
 
                         unitDb.setDetailsUrl(unitParser.getDetailsUrl());
-                        executor.submit(() -> {
+                        unitExecutor.submit(() -> {
                             unitDetail(unitDb.getDetailsUrl(), unitDb);
 
                             // 重试成功则将状态设置为ok.1,否则设置为failure。失败的数据则后续手动处理。
@@ -649,12 +649,10 @@ public class WuHanService extends GovernmentBaseService {
                             String url = WU_HAN_DOMAIN_PREFIX + src;
                             unit.setPreBuildingAvgPrice(url.split("price=")[1].replaceAll("/", "") + "_" + UUID.randomUUID());
 
-                            executor.submit(() -> {
-                                String fileName = unit.getPreBuildingAvgPrice() + ".png";
-                                String filePath = properties.getPicturePath() + unit.getProjectId() + "/";
-                                byte[] data = ImageReaderUtils.imageToByte(url);
-                                FileUtils.printFile(data, filePath, fileName, false);
-                            });
+                            String fileName = unit.getPreBuildingAvgPrice() + ".png";
+                            String filePath = properties.getPicturePath() + unit.getProjectId() + "/";
+                            byte[] data = ImageReaderUtils.imageToByte(url);
+                            FileUtils.printFile(data, filePath, fileName, false);
                             break;
                         default:
                     }
