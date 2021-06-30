@@ -1,9 +1,11 @@
 package com.qiusm.eju.crawler.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -11,9 +13,8 @@ import java.io.*;
  *
  * @author qiushengming
  */
+@Slf4j
 public class FileUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
     public static void printFile(String fileContent, String filePath, String fileName, boolean append) {
         OutputStream os = null;
@@ -27,7 +28,7 @@ public class FileUtils {
             byte[] data = fileContent.getBytes();
             os.write(data, 0, data.length);
             os.flush();
-            LOGGER.info("文件写入" + filePath + File.separator + fileName + "结束");
+            log.info("文件写入" + filePath + File.separator + fileName + "结束");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -73,5 +74,14 @@ public class FileUtils {
                 }
             }
         }
+    }
+
+    public static String readFile(File file) {
+        try {
+            return org.apache.commons.io.FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+        } catch (IOException exception) {
+            log.error(exception.toString());
+        }
+        return null;
     }
 }
