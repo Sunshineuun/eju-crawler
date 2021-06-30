@@ -1,5 +1,6 @@
 package com.qiusm.eju.crawler.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import java.util.concurrent.SynchronousQueue;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author qiushengming
  */
+@Slf4j
 public class ThreadPoolUtils {
     /**
      * 创建线程池
