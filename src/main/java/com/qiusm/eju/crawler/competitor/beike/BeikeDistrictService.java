@@ -94,6 +94,8 @@ public class BeikeDistrictService {
         String maxLat = latSet.last();
 
         district(info, maxLat, minLat, maxLng, minLng);
+
+        log.info("{}-{}-区域商圈围栏数据处理完毕！", info.getName(), info.getAdCode());
     }
 
     /**
@@ -136,7 +138,7 @@ public class BeikeDistrictService {
     /**
      * 商圈获取
      *
-     * @param disFence   区域围栏实体
+     * @param disFence  区域围栏实体
      * @param name      区域名称
      * @param fenceStr  区域围栏数据
      * @param longitude 区域经度

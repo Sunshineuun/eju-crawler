@@ -23,7 +23,6 @@ public class BeikeDistrictController {
     @GetMapping("/city/{cityName}")
     public void city(@PathVariable String cityName) {
         districtService.city(cityName);
-        log.info("{}-区域商圈围栏数据处理完毕！", cityName);
     }
 
     @GetMapping("/testCity/{cityCode}")
