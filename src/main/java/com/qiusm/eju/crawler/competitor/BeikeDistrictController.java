@@ -20,9 +20,12 @@ public class BeikeDistrictController {
     @Resource
     BeikeDistrictService districtService;
 
-    @GetMapping("/city/{cityName}")
-    public void city(@PathVariable String cityName) {
-        districtService.city(cityName);
+    @GetMapping("/city")
+    public void city(String cityName) {
+        String[] cityNameArr = cityName.split(",");
+        for (String name : cityNameArr) {
+            districtService.city(name);
+        }
     }
 
     @GetMapping("/testCity/{cityCode}")
