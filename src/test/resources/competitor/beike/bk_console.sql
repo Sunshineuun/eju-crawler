@@ -16,4 +16,6 @@ create table bk_fence
 
 
 
-select * from bk_fence where type = 'district';
+select city_name from bk_fence where type = 'district' group by city_name;
+
+select * from bk_fence where city_code = '440100' order by id desc;

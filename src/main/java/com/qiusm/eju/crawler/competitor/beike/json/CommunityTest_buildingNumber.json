@@ -1,0 +1,658 @@
+[
+  {
+    "request_id": "10b51095-fc58-4e76-bc32-778c35da8df7",
+    "uniqid": "010ACA160BC3CE615C7A01DBEB9CDE3B",
+    "errno": 0,
+    "error": "",
+    "data": {
+      "total_count": 59,
+      "has_more_data": 0,
+      "list": [
+        {
+          "building_id": "5012063984574",
+          "building_name": "01",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_49013ab7c51feb82a46b893edc954665"
+        },
+        {
+          "building_id": "50000000022209",
+          "building_name": "01号楼底商",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_44515088da492a2523d10fb1849f65ce"
+        },
+        {
+          "building_id": "5012063984575",
+          "building_name": "02",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_5e8974b9fbc5e814f8867eafbb9f3c97"
+        },
+        {
+          "building_id": "5012063984576",
+          "building_name": "03",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_95b437bd2f2086975215f357e8deb29f"
+        },
+        {
+          "building_id": "5012000290300",
+          "building_name": "05",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_d284cc2a95dd4f65ca10f588cf5a9d5a"
+        },
+        {
+          "building_id": "50000000010475",
+          "building_name": "05号楼底商",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_7daa8d3abfd91bfa3ee7bd66ebcb278a"
+        },
+        {
+          "building_id": "5012000290301",
+          "building_name": "06",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_97e5c7cedf1538f6e61e8c4b807f5c4f"
+        },
+        {
+          "building_id": "5012000290302",
+          "building_name": "07",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_82894467e3f6ce4ef0c0c09d0eafee9a"
+        },
+        {
+          "building_id": "5012000290303",
+          "building_name": "08",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_5f8ce4f20d3e5870bd1430e52a8d0a44"
+        },
+        {
+          "building_id": "5012000290304",
+          "building_name": "09",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_35f1577675a631a9c91aa49e92a859b6"
+        },
+        {
+          "building_id": "5012000290305",
+          "building_name": "10",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_dc27ef0bd4366f7faefb0ff329c3bf6c"
+        },
+        {
+          "building_id": "5012000290306",
+          "building_name": "11",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_04c854bf72ec3d8bb5a6301124b01d51"
+        },
+        {
+          "building_id": "5012000252049",
+          "building_name": "12",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_f7c81df0dce93877553b76445c566cfe"
+        },
+        {
+          "building_id": "5012000247876",
+          "building_name": "13",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_f2c16c6375c1138e6cc6d72cc0919698"
+        },
+        {
+          "building_id": "5012000290307",
+          "building_name": "15",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_134ebbc412d0cf3cf6122f73c777646b"
+        },
+        {
+          "building_id": "5012000290308",
+          "building_name": "16",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_80a0c19b6bac46991d6dcafba6172145"
+        },
+        {
+          "building_id": "5012102320673",
+          "building_name": "20",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_a0b4defe79ec9e6c735c4a109325337f"
+        },
+        {
+          "building_id": "5012000290309",
+          "building_name": "23",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_ce9e8dead724918d4225d042f696ca1a"
+        },
+        {
+          "building_id": "5012000245141",
+          "building_name": "25",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_3113799d41ce08da43af2308ba957e77"
+        },
+        {
+          "building_id": "5012000290310",
+          "building_name": "26",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_b315a380d6bd72c0fdd125d31c3eff71"
+        },
+        {
+          "building_id": "5012000290311",
+          "building_name": "27",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_49dc3d72b1e2cd98fa8b8b45b81ebc90"
+        },
+        {
+          "building_id": "5012000290312",
+          "building_name": "28",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_bcced90f44121e355348a9e52c5d96f4"
+        },
+        {
+          "building_id": "5012000249767",
+          "building_name": "29",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_604fda46025bdc88e4c41b8a9115cd45"
+        },
+        {
+          "building_id": "5012000290313",
+          "building_name": "31",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_ec042f9e68e39473a165aa7bd71eb7b0"
+        },
+        {
+          "building_id": "5012000290314",
+          "building_name": "32",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_2c57216f2c3cfd44a53237db0b212438"
+        },
+        {
+          "building_id": "5012000290315",
+          "building_name": "33",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_d23cb71438ceed886e6dec988bc9eb2a"
+        },
+        {
+          "building_id": "5012000264231",
+          "building_name": "35",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_93663c3e9768979deb069361d1e0ce6c"
+        },
+        {
+          "building_id": "5012000290316",
+          "building_name": "36",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_2a5de82e03bf292f8e1ed0257de2b651"
+        },
+        {
+          "building_id": "5012063984577",
+          "building_name": "37",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_4a9db44b1b59f1d12eed5917b35842c9"
+        },
+        {
+          "building_id": "5012063984578",
+          "building_name": "38",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_f6b3b31d4b59cbd4d02a0084c3a7523c"
+        },
+        {
+          "building_id": "5012063984579",
+          "building_name": "39",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_9644e9637fdd8b8914a878fa3b72cb3f"
+        },
+        {
+          "building_id": "5012000290317",
+          "building_name": "40",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_ceb5b687ef2f2e3acd43b708099e3685"
+        },
+        {
+          "building_id": "5012000290318",
+          "building_name": "41",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_fa35bb23c0b8584357180648877875ed"
+        },
+        {
+          "building_id": "5012000252494",
+          "building_name": "42",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_e21ab8678528c80b23f571bbf3892873"
+        },
+        {
+          "building_id": "5012000290319",
+          "building_name": "43",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_b1598757dd2c4579f8bca0dcfcb8e840"
+        },
+        {
+          "building_id": "5012000290320",
+          "building_name": "45",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_75878b94340d8f1a536d0d00369951cf"
+        },
+        {
+          "building_id": "5012000290321",
+          "building_name": "46",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_e721626eec3d6535e58e9738417ae809"
+        },
+        {
+          "building_id": "5012000252710",
+          "building_name": "47",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_1fa65f1fdfd61c8299857eae49d8991c"
+        },
+        {
+          "building_id": "5012000290322",
+          "building_name": "48",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_04b284c3f0105b86774298d5c5e98c57"
+        },
+        {
+          "building_id": "5012000290323",
+          "building_name": "49",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_570f5ce7c52e3889081ebd2dbc82764d"
+        },
+        {
+          "building_id": "5012063984580",
+          "building_name": "50",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_419343bd15012c0de7d0f07717910bfb"
+        },
+        {
+          "building_id": "5012063984581",
+          "building_name": "51",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_ec34e536167c16766262f8d6fb18ba39"
+        },
+        {
+          "building_id": "5012063984582",
+          "building_name": "52",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_95195997dc8aa776d62cc4ac49fb10e6"
+        },
+        {
+          "building_id": "5012063984583",
+          "building_name": "53",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_a682db1ece5218e6fed6481da5b1d296"
+        },
+        {
+          "building_id": "5020035192835814",
+          "building_name": "53\/61底商",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_0b955f691a5932b7ca0d1f1abf19f33d"
+        },
+        {
+          "building_id": "5012063984584",
+          "building_name": "55",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_afb552ae1ff3de924ddcccb3bca0a4d7"
+        },
+        {
+          "building_id": "5012063984585",
+          "building_name": "56",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_ef6ab4640e76904e718ece9b27644626"
+        },
+        {
+          "building_id": "5012063984586",
+          "building_name": "57",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_a34e2aaf5b6c851acc5f1daca0105ab7"
+        },
+        {
+          "building_id": "5012063984587",
+          "building_name": "58",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_459fba3ccd916312f89e24668b650db6"
+        },
+        {
+          "building_id": "5012063984588",
+          "building_name": "59",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_e87e004e1eba6a6b4cc7e3fc25cf4d42"
+        },
+        {
+          "building_id": "5012063984589",
+          "building_name": "61",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_a20698c45e5181566ad88634f798a231"
+        },
+        {
+          "building_id": "5012063984590",
+          "building_name": "62",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_ebeb0883d20ca9449b1c51a6e7e62287"
+        },
+        {
+          "building_id": "5012063984591",
+          "building_name": "63",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_20567eab3858565700104de984002425"
+        },
+        {
+          "building_id": "5012063984592",
+          "building_name": "65",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_5f731536f44f17945978f858b4865820"
+        },
+        {
+          "building_id": "5012063984593",
+          "building_name": "66",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_abc031a6b6e1113bb5750a7c8cda4cc9"
+        },
+        {
+          "building_id": "50000000038333",
+          "building_name": "66号楼底商",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_3c3b064bfa6992016a861a2862a3a879"
+        },
+        {
+          "building_id": "5012063984594",
+          "building_name": "67",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_6535c1923948fd2d6c005dfb603d268b"
+        },
+        {
+          "building_id": "5012063984595",
+          "building_name": "68",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_9ac19c7bcb14740e04d95828068ca0a0"
+        },
+        {
+          "building_id": "50000000030926",
+          "building_name": "车位",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160BC3CE615C7A01DBEB9CDE3B_8164012f02eb8bda09f2686e4e046944"
+        }
+      ],
+      "show_captcha": 0,
+      "captcha_url": "https:\/\/huodong.ke.com\/tools\/validate?scene=hdic_verify_code&redirect=lianjiabeike%3A%2F%2Fsecurity%2Fcaptcha"
+    },
+    "cost": 845
+  }
+]

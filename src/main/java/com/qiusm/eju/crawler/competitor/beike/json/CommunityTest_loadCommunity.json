@@ -1,0 +1,692 @@
+[
+  {
+    "url": "/house/suggestion/index?city_id=310000&query=%s&channel_id=ershoufang",
+    "desc": "根据小区名称关键字，查询小区二手房在售信息，建议性搜索接口。",
+    "request_id": "72a9eea1-e59f-42f9-b2d2-c8431ba6a4d0",
+    "uniqid": "010ACA160EBCE4385C7A0165412F1AD2",
+    "errno": 0,
+    "error": "",
+    "data": {
+      "fbQueryId": "462668936283590656",
+      "groups": [
+        {
+          "items": [
+            {
+              "channel": "ershoufang",
+              "count_str": "暂无房源",
+              "text": "远洋财富中心",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>财富中心",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362816\",\"fb_item_location\":\"0\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5020031418403579:resblock\"}",
+              "fbExpoId": "462668936451362816",
+              "m_url": "\/ershoufang\/c5020031418403579\/",
+              "app_condition": "c5020031418403579",
+              "resblock_alias": "(远洋洲海大厦)",
+              "hls_resblock_alias": "(远洋洲海大厦)",
+              "desc": "浦东 高行",
+              "value": {
+                "communityId": 5020031418403579
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_c3e61ef80dcad9b009ee09b417139b4f"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "7套在售",
+              "text": "远洋7号",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>7号",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362817\",\"fb_item_location\":\"1\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000002700:resblock\"}",
+              "fbExpoId": "462668936451362817",
+              "m_url": "\/ershoufang\/c5011000002700\/",
+              "app_condition": "c5011000002700",
+              "resblock_alias": "(远洋美兰公寓)",
+              "hls_resblock_alias": "(远洋美兰公寓)",
+              "desc": "宝山 罗店",
+              "value": {
+                "communityId": 5011000002700
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_eeded67c5b572b4ba61054962f05df07"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "6套在售",
+              "text": "远洋鸿郡",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>鸿郡",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362818\",\"fb_item_location\":\"2\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000001017:resblock\"}",
+              "fbExpoId": "462668936451362818",
+              "m_url": "\/ershoufang\/c5011000001017\/",
+              "app_condition": "c5011000001017",
+              "resblock_alias": "(远洋博悦花园)",
+              "hls_resblock_alias": "(远洋博悦花园)",
+              "desc": "宝山 罗店",
+              "value": {
+                "communityId": 5011000001017
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_984d1932f9e7ab53c54147667c5dbbdc"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "11套在售",
+              "text": "远洋香奈",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>香奈",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362819\",\"fb_item_location\":\"3\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000010212:resblock\"}",
+              "fbExpoId": "462668936451362819",
+              "m_url": "\/ershoufang\/c5011000010212\/",
+              "app_condition": "c5011000010212",
+              "resblock_alias": "(悦庭, 远洋·悦庭)",
+              "hls_resblock_alias": "(悦庭, 远洋·悦庭)",
+              "desc": "宝山 杨行",
+              "value": {
+                "communityId": 5011000010212
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_ad7d7c40a2ad7e200a0bb7cd0cace23d"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "暂无房源",
+              "text": "远洋博堡雅墅",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>博堡雅墅",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362820\",\"fb_item_location\":\"4\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000009642:resblock\"}",
+              "fbExpoId": "462668936451362820",
+              "m_url": "\/ershoufang\/c5011000009642\/",
+              "app_condition": "c5011000009642",
+              "resblock_alias": "(远洋丽兹堡)",
+              "hls_resblock_alias": "(远洋丽兹堡)",
+              "desc": "宝山 罗店",
+              "value": {
+                "communityId": 5011000009642
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_37ef776e626275674932f9b81b7a71da"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "17套在售",
+              "text": "远洋万和四季",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>万和四季",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362821\",\"fb_item_location\":\"5\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011063202930:resblock\"}",
+              "fbExpoId": "462668936451362821",
+              "m_url": "\/ershoufang\/c5011063202930\/",
+              "app_condition": "c5011063202930",
+              "resblock_alias": "(远洋四季华庭,四季华庭)",
+              "hls_resblock_alias": "(远洋四季华庭,四季华庭)",
+              "desc": "浦东 惠南",
+              "value": {
+                "communityId": 5011063202930
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_6fb3fdacba141101326f42df527374f8"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "暂无房源",
+              "text": "远洋新村",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>新村",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362822\",\"fb_item_location\":\"6\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000004542:resblock\"}",
+              "fbExpoId": "462668936451362822",
+              "m_url": "\/ershoufang\/c5011000004542\/",
+              "app_condition": "c5011000004542",
+              "desc": "虹口 临平路",
+              "value": {
+                "communityId": 5011000004542
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_af42815ec6495563f02fad2e5a604738"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "1套在售",
+              "text": "壹品星汇",
+              "hls_text": "壹品星汇",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362823\",\"fb_item_location\":\"7\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:509821540057370:resblock\"}",
+              "fbExpoId": "462668936451362823",
+              "m_url": "\/ershoufang\/c509821540057370\/",
+              "app_condition": "c509821540057370",
+              "resblock_alias": "(远洋财富中心)",
+              "hls_resblock_alias": "(远洋财富中心)",
+              "desc": "浦东 高行",
+              "value": {
+                "communityId": 509821540057370
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_d623aebdd12dd8a5aac41f81fca113cb"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "暂无房源",
+              "text": "东海商业中心",
+              "hls_text": "东海商业中心",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362824\",\"fb_item_location\":\"8\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000016740:resblock\"}",
+              "fbExpoId": "462668936451362824",
+              "m_url": "\/ershoufang\/c5011000016740\/",
+              "app_condition": "c5011000016740",
+              "resblock_alias": "(远洋商业大厦)",
+              "hls_resblock_alias": "(远洋商业大厦)",
+              "desc": "黄浦 南京东路",
+              "value": {
+                "communityId": 5011000016740
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_dbf3f7d467898ac1d876325d237ff089"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "暂无房源",
+              "text": "远洋广场(郑和大街)",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>广场(郑和大街)",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362825\",\"fb_item_location\":\"9\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5020022337184806:resblock\"}",
+              "fbExpoId": "462668936451362825",
+              "m_url": "\/ershoufang\/c5020022337184806\/",
+              "app_condition": "c5020022337184806",
+              "desc": "上海周边 太仓",
+              "value": {
+                "communityId": 5020022337184806
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_18964b254d5b6f3567b8ed068ad35e5c"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "12套在售",
+              "text": "远洋7号酒店式公寓",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>7号酒店式公寓",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362826\",\"fb_item_location\":\"10\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:509821540057610:resblock\"}",
+              "fbExpoId": "462668936451362826",
+              "m_url": "\/ershoufang\/c509821540057610\/",
+              "app_condition": "c509821540057610",
+              "desc": "宝山 罗店",
+              "value": {
+                "communityId": 509821540057610
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_e862f75e9d4ff9f1ec0fb6f73ee8c024"
+            },
+            {
+              "channel": "ershoufang",
+              "count_str": "暂无房源",
+              "text": "远洋广场(四平路)",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>广场(四平路)",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362827\",\"fb_item_location\":\"11\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000016012:resblock\"}",
+              "fbExpoId": "462668936451362827",
+              "m_url": "\/ershoufang\/c5011000016012\/",
+              "app_condition": "c5011000016012",
+              "desc": "杨浦 鞍山",
+              "value": {
+                "communityId": 5011000016012
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_6a8d5e2526fd9d00d23cb61eea785f4a"
+            },
+            {
+              "channel": "ershoufang",
+              "text": "远洋广场",
+              "hls_text": "远洋广场",
+              "sug_type": "poi",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "地标"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362828\",\"fb_item_location\":\"12\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"a3e6e5cca442e9d786a7ae57a2888903\"}",
+              "fbExpoId": "462668936451362828",
+              "m_url": "\/ershoufang\/poi1234567890\/",
+              "app_condition": "poi1234567890",
+              "desc": "杨浦",
+              "value": {
+                "poiId": "1234567890"
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_e109419314fbfee8e582dcad3eba8523"
+            },
+            {
+              "channel": "ershoufang",
+              "text": "远洋大厦",
+              "hls_text": "远洋大厦",
+              "sug_type": "poi",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "地标"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362829\",\"fb_item_location\":\"13\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"9bbd18e2b5643c7029eb0a19cb30c66a\"}",
+              "fbExpoId": "462668936451362829",
+              "m_url": "\/ershoufang\/poi1234567890\/",
+              "app_condition": "poi1234567890",
+              "desc": "虹口",
+              "value": {
+                "poiId": "1234567890"
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_138ea460480d661f75fcd5b092623d5f"
+            },
+            {
+              "channel": "ershoufang",
+              "text": "上海远洋医院",
+              "hls_text": "上海远洋医院",
+              "sug_type": "poi",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "地标"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462668936283590656\",\"fb_expo_id\":\"462668936451362830\",\"fb_item_location\":\"14\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"5020031342885369\"}",
+              "fbExpoId": "462668936451362830",
+              "m_url": "\/ershoufang\/poi1234567890\/",
+              "app_condition": "poi1234567890",
+              "value": {
+                "poiId": "1234567890"
+              },
+              "eleid": "010ACA160EBCE4385C7A0165412F1AD2_2aed7e6877d07ee6cceabcfaf1d65375"
+            }
+          ],
+          "eleid": "010ACA160EBCE4385C7A0165412F1AD2_397f3298d6b8d7e9bb3bef65f06bbbbc"
+        }
+      ]
+    },
+    "cost": 117
+  },
+  {
+    "url": "/house/suggestion/index?city_id=310000&query=%s&channel_id=xiaoqu",
+    "desc": "根据小区名称关键字，查询小区信息",
+    "request_id": "c768c92b-34cd-4de9-a6d1-b29929d619c5",
+    "uniqid": "010ACA160D83313B5C7A01DFD5D53C4B",
+    "errno": 0,
+    "error": "",
+    "data": {
+      "fbQueryId": "462669568566419456",
+      "groups": [
+        {
+          "items": [
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "远洋博堡雅墅",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>博堡雅墅",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191616\",\"fb_item_location\":\"0\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000009642:resblock\"}",
+              "fbExpoId": "462669568734191616",
+              "m_url": "\/xiaoqu\/c5011000009642\/",
+              "app_condition": "c5011000009642",
+              "resblock_alias": "(远洋丽兹堡)",
+              "hls_resblock_alias": "(远洋丽兹堡)",
+              "desc": "宝山 罗店",
+              "value": {
+                "communityId": 5011000009642
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_d1e951677ba0261c45e27434bf909d66"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "远洋财富中心",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>财富中心",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191617\",\"fb_item_location\":\"1\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5020031418403579:resblock\"}",
+              "fbExpoId": "462669568734191617",
+              "m_url": "\/xiaoqu\/c5020031418403579\/",
+              "app_condition": "c5020031418403579",
+              "resblock_alias": "(远洋洲海大厦)",
+              "hls_resblock_alias": "(远洋洲海大厦)",
+              "desc": "浦东 高行",
+              "value": {
+                "communityId": 5020031418403579
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_4f38f90a714898fc059570b7dfb37c2f"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "7套",
+              "text": "远洋7号",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>7号",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191618\",\"fb_item_location\":\"2\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000002700:resblock\"}",
+              "fbExpoId": "462669568734191618",
+              "m_url": "\/xiaoqu\/c5011000002700\/",
+              "app_condition": "c5011000002700",
+              "resblock_alias": "(远洋美兰公寓)",
+              "hls_resblock_alias": "(远洋美兰公寓)",
+              "desc": "宝山 罗店",
+              "value": {
+                "communityId": 5011000002700
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_d5a2014afeeb00fcc1b502875cc3fe21"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "6套",
+              "text": "远洋鸿郡",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>鸿郡",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191619\",\"fb_item_location\":\"3\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000001017:resblock\"}",
+              "fbExpoId": "462669568734191619",
+              "m_url": "\/xiaoqu\/c5011000001017\/",
+              "app_condition": "c5011000001017",
+              "resblock_alias": "(远洋博悦花园)",
+              "hls_resblock_alias": "(远洋博悦花园)",
+              "desc": "宝山 罗店",
+              "value": {
+                "communityId": 5011000001017
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_82ae68706e6a6f7438e6c7c6ab182601"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "11套",
+              "text": "远洋香奈",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>香奈",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191620\",\"fb_item_location\":\"4\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000010212:resblock\"}",
+              "fbExpoId": "462669568734191620",
+              "m_url": "\/xiaoqu\/c5011000010212\/",
+              "app_condition": "c5011000010212",
+              "resblock_alias": "(悦庭, 远洋·悦庭)",
+              "hls_resblock_alias": "(悦庭, 远洋·悦庭)",
+              "desc": "宝山 杨行",
+              "value": {
+                "communityId": 5011000010212
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_c7f75dc8e3188d6e97d08378fed6fdc8"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "17套",
+              "text": "远洋万和四季",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>万和四季",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191621\",\"fb_item_location\":\"5\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011063202930:resblock\"}",
+              "fbExpoId": "462669568734191621",
+              "m_url": "\/xiaoqu\/c5011063202930\/",
+              "app_condition": "c5011063202930",
+              "resblock_alias": "(远洋四季华庭,四季华庭)",
+              "hls_resblock_alias": "(远洋四季华庭,四季华庭)",
+              "desc": "浦东 惠南",
+              "value": {
+                "communityId": 5011063202930
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_f4002f554a3922f0dd73f118113b7b19"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "远洋新村",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>新村",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191622\",\"fb_item_location\":\"6\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000004542:resblock\"}",
+              "fbExpoId": "462669568734191622",
+              "m_url": "\/xiaoqu\/c5011000004542\/",
+              "app_condition": "c5011000004542",
+              "desc": "虹口 临平路",
+              "value": {
+                "communityId": 5011000004542
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_3f72392b723655b68ad2303f1dbecd8f"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "12套",
+              "text": "远洋7号酒店式公寓",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>7号酒店式公寓",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191623\",\"fb_item_location\":\"7\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:509821540057610:resblock\"}",
+              "fbExpoId": "462669568734191623",
+              "m_url": "\/xiaoqu\/c509821540057610\/",
+              "app_condition": "c509821540057610",
+              "desc": "宝山 罗店",
+              "value": {
+                "communityId": 509821540057610
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_73a3bb2fdfb8fcf416c98bc8b663cefc"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "远洋广场(四平路)",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>广场(四平路)",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191624\",\"fb_item_location\":\"8\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000016012:resblock\"}",
+              "fbExpoId": "462669568734191624",
+              "m_url": "\/xiaoqu\/c5011000016012\/",
+              "app_condition": "c5011000016012",
+              "desc": "杨浦 鞍山",
+              "value": {
+                "communityId": 5011000016012
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_293cadabf8cd872480ac076ae2b2f10d"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "1套",
+              "text": "壹品星汇",
+              "hls_text": "壹品星汇",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191625\",\"fb_item_location\":\"9\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:509821540057370:resblock\"}",
+              "fbExpoId": "462669568734191625",
+              "m_url": "\/xiaoqu\/c509821540057370\/",
+              "app_condition": "c509821540057370",
+              "resblock_alias": "(远洋财富中心)",
+              "hls_resblock_alias": "(远洋财富中心)",
+              "desc": "浦东 高行",
+              "value": {
+                "communityId": 509821540057370
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_75d914efb4adb23b8352929067d4962c"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "东海商业中心",
+              "hls_text": "东海商业中心",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191626\",\"fb_item_location\":\"10\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000016740:resblock\"}",
+              "fbExpoId": "462669568734191626",
+              "m_url": "\/xiaoqu\/c5011000016740\/",
+              "app_condition": "c5011000016740",
+              "resblock_alias": "(远洋商业大厦)",
+              "hls_resblock_alias": "(远洋商业大厦)",
+              "desc": "黄浦 南京东路",
+              "value": {
+                "communityId": 5011000016740
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_0af03cbc8700db122f00cc1cbb3bab26"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "远洋广场(郑和大街)",
+              "hls_text": "<font color='#3072F6'>远洋<\/font>广场(郑和大街)",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"462669568566419456\",\"fb_expo_id\":\"462669568734191627\",\"fb_item_location\":\"11\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-3\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5020022337184806:resblock\"}",
+              "fbExpoId": "462669568734191627",
+              "m_url": "\/xiaoqu\/c5020022337184806\/",
+              "app_condition": "c5020022337184806",
+              "desc": "上海周边 太仓",
+              "value": {
+                "communityId": 5020022337184806
+              },
+              "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_8f19da0ed42863c932ba05b0b40b39a5"
+            }
+          ],
+          "eleid": "010ACA160D83313B5C7A01DFD5D53C4B_b8431cad4041d4f3e8627abe3f4c4eda"
+        }
+      ]
+    },
+    "cost": 143
+  },
+  {
+    "url": "/house/ershoufang/searchv5?fullFilters=1&containerType=1&limitCount=20&refer=ershoulistsearch&condition=c5011000002700&from=sug_click&cityId=310000&limitOffset=0",
+    "desc": "通过小区id查询，该小区相关在售二手房"
+  },
+  {
+    "url": "/house/community/searchv2?limit_offset=0&condition=c%s&city_id=%s&containerType=0&limit_count=20",
+    "desc": "根据小区ID精确的，查询小区信息",
+    "request_id": "1b70861b-ebed-47df-9839-d84bef260e48",
+    "uniqid": "010ACA160CB5AF4B5C7A0132155D9801",
+    "errno": 0,
+    "error": "",
+    "data": {
+      "total_count": 1,
+      "has_more_data": 0,
+      "fb_query_id": "462674102055698432",
+      "list": [
+        {
+          "community_id": "5011000010212",
+          "community_name": "远洋香奈",
+          "cover_pic": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/2e207f89-612a-466d-9cf4-644b82006a9b.jpg.280x210.jpg?from=ke.com",
+          "image": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/2e207f89-612a-466d-9cf4-644b82006a9b.jpg.280x210.jpg?from=ke.com",
+          "district_name": "宝山",
+          "building_finish_year": "2010",
+          "building_type": "板楼",
+          "description": "宝山\/板楼\/2010年建成",
+          "has_strategy": false,
+          "avg_unit_price": 59994,
+          "ershoufang_source_count": 11,
+          "ershoufang_avg_unit_price": 59994,
+          "neo_desc": "在售11套\/在租6套",
+          "schema": "lianjiabeike:\/\/community\/detailv4?communityid=5011000010212&fbExpoId=462674102194110465&parentSceneId=5640686706183469631",
+          "point_lat": 31.402704,
+          "point_lng": 121.437,
+          "city_id": 310000,
+          "has_resblockVideo": 0,
+          "has_resblock_panorama": 1,
+          "cardType": "CARD_TYPE_RESBLOCK_LIST",
+          "fbExpoId": "462674102194110465",
+          "strategy_info": "{\"fb_query_id\":\"462674102055698432\",\"fb_expo_id\":\"462674102194110465\",\"fb_item_location\":\"0\",\"fb_service_id\":\"1014710012\",\"fb_ab_test_flag\":\"\",\"fb_item_id\":\"5011000010212\"}",
+          "isFavorite": 0,
+          "eleid": "010ACA160CB5AF4B5C7A0132155D9801_abe2d6af125e3d7fdcf9704588ba3aa1"
+        }
+      ],
+      "needDemote": false,
+      "recommendInfo": {
+        "cityId": "310000",
+        "recommendExt": "[]",
+        "resblockIds": "5011000010212"
+      },
+      "bangdan": {
+        "title": "上海市人气小区榜",
+        "iconUrl": "https:\/\/img.ljcdn.com\/beike\/bangdan\/1561519441504.png",
+        "actionUrl": "https:\/\/m.ke.com\/sh\/bangdan\/ibd3\/?source=xiaoqu\/liebiao\/bangdan"
+      }
+    },
+    "cost": 123
+  }
+]
