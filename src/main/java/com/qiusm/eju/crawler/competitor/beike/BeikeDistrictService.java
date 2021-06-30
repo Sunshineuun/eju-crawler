@@ -7,6 +7,8 @@ import com.qiusm.eju.crawler.base.CrawlerUrlUtils;
 import com.qiusm.eju.crawler.base.dao.CrawlerUrlMapper;
 import com.qiusm.eju.crawler.competitor.beike.dao.BkFenceMapper;
 import com.qiusm.eju.crawler.competitor.beike.entity.BkFence;
+import com.qiusm.eju.crawler.competitor.beike.entity.BkFenceExample;
+import com.qiusm.eju.crawler.poi.gaode.GaodeService;
 import com.qiusm.eju.crawler.poi.gaode.dao.GaodeCityFenceMapper;
 import com.qiusm.eju.crawler.poi.gaode.dao.GaodeCityPoiInfoMapper;
 import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence;
@@ -45,6 +47,9 @@ public class BeikeDistrictService {
 
     protected static final List<String> ERROR_MSG = new ArrayList<>();
 
+    private static final String BEIKE_FILE_ROOT = "source\\beike\\";
+    private static final String BEIKE_JSON_ROOT = String.format("%s\\json\\", BEIKE_FILE_ROOT);
+
     @Resource
     private GaodeCityFenceMapper cityFenceMapper;
 
@@ -53,6 +58,9 @@ public class BeikeDistrictService {
 
     @Resource
     private BkFenceMapper bkFenceMapper;
+
+    @Resource
+    private GaodeService gaodeService;
 
     static {
         ERROR_MSG.addAll(Arrays.asList("ejuResponseCode=500,ResponseCode=,ResponseError=,枌~怣秙".split(COMMA)));
@@ -65,11 +73,25 @@ public class BeikeDistrictService {
     static String bubble_url = "https://map.ke.com/proxyApi/i.c-pc-webapi.ke.com/map/bubblelist?";
     static String city_url = bubble_url + "cityId=%s&dataSource=ESF&condition=&id=&groupType=%s&maxLatitude=%s&minLatitude=%s&maxLongitude=%s&minLongitude=%s";
 
-    public void city(String cityName) {
+    public void city(String cityCode) {
+
+        BkFenceExample bkFenceExample = new BkFenceExample();
+        bkFenceExample.createCriteria().andCityCodeEqualTo(cityCode);
+        if (bkFenceMapper.countByExample(bkFenceExample) > 0) {
+            log.info("{}-已经抓取过了", cityCode);
+            return;
+        }
+
         GaodeCityPoiInfoExample poiInfoExample = new GaodeCityPoiInfoExample();
-        poiInfoExample.createCriteria().andNameEqualTo(cityName);
+        poiInfoExample.createCriteria().andAdCodeEqualTo(cityCode);
         List<GaodeCityPoiInfo> infos = cityPoiInfoMapper.selectByExample(poiInfoExample);
         GaodeCityPoiInfo info = infos.get(0);
+
+        if (info.getFenceId() == null) {
+            gaodeService.cityFenceStart(info.getName());
+            infos = cityPoiInfoMapper.selectByExample(poiInfoExample);
+            info = infos.get(0);
+        }
 
         GaodeCityFenceExample example = new GaodeCityFenceExample();
         example.createCriteria().andIdEqualTo(info.getFenceId());
@@ -93,6 +115,8 @@ public class BeikeDistrictService {
         String maxLng = lnSet.last();
         String maxLat = latSet.last();
 
+        log.info("{}-{}-区域商圈围栏数据开始处理！", info.getName(), info.getAdCode());
+
         district(info, maxLat, minLat, maxLng, minLng);
 
         log.info("{}-{}-区域商圈围栏数据处理完毕！", info.getName(), info.getAdCode());
@@ -114,7 +138,7 @@ public class BeikeDistrictService {
         }
 
         String fileName = String.format("%s_district.json", cityCode);
-        String filePath = String.format("D:\\Temp\\beike\\json\\%s\\", cityCode);
+        String filePath = String.format("%s\\%s\\", BEIKE_JSON_ROOT, cityCode);
         FileUtils.printFile(jsonObj.toJSONString(), filePath, fileName, false);
         bubbleList.forEach(o -> {
             JSONObject var = (JSONObject) o;
@@ -233,7 +257,7 @@ public class BeikeDistrictService {
     }
 
     public void jsonParser(String cityCode) {
-        String filePath = String.format("D:\\Temp\\beike\\json\\%s\\", cityCode);
+        String filePath = String.format("%s\\%s\\", BEIKE_JSON_ROOT, cityCode);
         File file = new File(filePath);
         File[] jsonFile = file.listFiles();
         assert jsonFile != null;
@@ -266,6 +290,34 @@ public class BeikeDistrictService {
             });
         }
         log.info("共计商圈：{}; 共计套数：{}", name.size(), map.get("countInt").toString());
+    }
+
+    /**
+     * 获取城市编码列表
+     *
+     * @return 城市编码列表
+     */
+    public List<String> cityList() {
+        String filePath = "source\\beike\\bk_city_list.json";
+        File file = new File(filePath);
+        if (!file.exists()) {
+            log.error("城市列表json文件不存在！");
+        }
+        String jsonStr = FileUtils.readFile(file);
+        List<String> cityCodes = new ArrayList<>();
+        JSONObject jsonObj = JSONObject.parseObject(jsonStr);
+        JSONArray cityList = jsonObj.getJSONObject("data").getJSONArray("cityList");
+        cityList.forEach(o -> {
+            JSONObject var = (JSONObject) o;
+            for (Object o1 : var.getJSONArray("list")) {
+                JSONObject var1 = (JSONObject) o1;
+                for (Object o2 : var1.getJSONArray("list")) {
+                    JSONObject var2 = (JSONObject) o2;
+                    cityCodes.add(var2.getString("id"));
+                }
+            }
+        });
+        return cityCodes;
     }
 
     Map<String, String> head() {

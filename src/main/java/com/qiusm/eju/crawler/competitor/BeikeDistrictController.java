@@ -1,6 +1,7 @@
 package com.qiusm.eju.crawler.competitor;
 
 import com.qiusm.eju.crawler.competitor.beike.BeikeDistrictService;
+import com.qiusm.eju.crawler.poi.gaode.GaodeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author qiushengming
@@ -18,14 +20,20 @@ import javax.annotation.Resource;
 public class BeikeDistrictController {
 
     @Resource
-    BeikeDistrictService districtService;
+    private BeikeDistrictService districtService;
 
-    @GetMapping("/city")
-    public void city(String cityName) {
-        String[] cityNameArr = cityName.split(",");
-        for (String name : cityNameArr) {
-            districtService.city(name);
-        }
+    @GetMapping("/cityAll")
+    public void cityAll() {
+        List<String> cityCode = districtService.cityList();
+        cityCode.forEach(o -> {
+            districtService.city(o);
+        });
+        log.info("所有城市跑完！");
+    }
+
+    @GetMapping("/city/{cityCode}")
+    public void city(@PathVariable String cityCode) {
+        districtService.city(cityCode);
     }
 
     @GetMapping("/testCity/{cityCode}")
