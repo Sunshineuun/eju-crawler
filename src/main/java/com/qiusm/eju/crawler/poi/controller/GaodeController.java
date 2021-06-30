@@ -26,7 +26,7 @@ public class GaodeController {
         service.allCityStart();
     }
 
-    @GetMapping("/callAllCityPoiInfo/{cityName}")
+    @GetMapping("/callCityFence/{cityName}")
     public void callCityFence(@PathVariable String cityName) {
         if (StringUtils.equals(cityName, "中国")) {
             service.allCityFenceStart();
