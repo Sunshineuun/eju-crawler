@@ -1,10 +1,7 @@
 package com.qiusm.eju.crawler.competitor.beike;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.base.CrawlerUrlUtils;
-import com.qiusm.eju.crawler.base.dao.CrawlerUrlMapper;
 import com.qiusm.eju.crawler.competitor.beike.dao.BkFenceMapper;
 import com.qiusm.eju.crawler.competitor.beike.entity.BkFence;
 import com.qiusm.eju.crawler.competitor.beike.entity.BkFenceExample;
@@ -26,7 +23,6 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
 import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL;
@@ -72,68 +68,61 @@ public class BeikeDistrictService {
     static String bubble_url = "https://map.ke.com/proxyApi/i.c-pc-webapi.ke.com/map/bubblelist?";
     static String city_url = bubble_url + "cityId=%s&dataSource=ESF&condition=&id=&groupType=%s&maxLatitude=%s&minLatitude=%s&maxLongitude=%s&minLongitude=%s";
 
+    /**
+     * 根据城市ID，获取城市区域板块围栏信息；最大最小经纬度根据高德地图围栏信息计算得出。 <br>
+     *
+     * @param cityCode 城市编码
+     */
     public void city(String cityCode) {
 
-        BkFenceExample bkFenceExample = new BkFenceExample();
-        bkFenceExample.createCriteria().andCityCodeEqualTo(cityCode);
-        if (bkFenceMapper.countByExample(bkFenceExample) > 0) {
-            log.info("{}-已经抓取过了", cityCode);
+        if (isLoadFence(cityCode)) {
             return;
         }
 
-        GaodeCityPoiInfoExample poiInfoExample = new GaodeCityPoiInfoExample();
-        poiInfoExample.createCriteria().andAdCodeEqualTo(cityCode);
-        List<GaodeCityPoiInfo> infos = cityPoiInfoMapper.selectByExample(poiInfoExample);
-        if (infos.size() <= 0) {
-            log.error("没有该编码的城市信息：{}", cityCode);
+        GaodeCityPoiInfo info = loadCityPoiInfo(cityCode);
+        if (info == null) {
             return;
         }
-        GaodeCityPoiInfo info = infos.get(0);
-
-        if (info.getFenceId() == null) {
-            gaodeService.cityFenceStart(info.getName());
-            infos = cityPoiInfoMapper.selectByExample(poiInfoExample);
-            info = infos.get(0);
-        }
-
-        GaodeCityFenceExample example = new GaodeCityFenceExample();
-        example.createCriteria().andIdEqualTo(info.getFenceId());
-
-        List<GaodeCityFence> cityFences = cityFenceMapper.selectByExampleWithBLOBs(example);
-        GaodeCityFence cityFence = cityFences.get(0);
 
         // 根据围栏数据计算最大最小值
-        TreeSet<String> lnSet = new TreeSet<>();
-        TreeSet<String> latSet = new TreeSet<>();
+        // 计算最大最小
+        BigDecimal[][] mm = calculateMaxMin(loadFence(info).getFence());
 
-        for(String var1 : cityFence.getFence().split(PIPE)){
-            for (String singleBorder : var1.split(SEMICOLON)) {
-                String[] var2 = singleBorder.split(COMMA);
-                lnSet.add(var2[0]);
-                latSet.add(var2[1]);
-            }
-        }
+        BigDecimal minLng = mm[0][1];
+        BigDecimal minLat = mm[1][1];
 
-        String minLng = lnSet.first();
-        String minLat = latSet.first();
-
-        String maxLng = lnSet.last();
-        String maxLat = latSet.last();
+        BigDecimal maxLng = mm[0][0];
+        BigDecimal maxLat = mm[1][0];
 
         log.info("{}-{}-区域商圈围栏数据开始处理！", info.getName(), info.getAdCode());
 
-        district(info, maxLat, minLat, maxLng, minLng);
+        districtPrivate(info, maxLat.toString(), minLat.toString(), maxLng.toString(), minLng.toString());
 
         log.info("{}-{}-区域商圈围栏数据处理完毕！", info.getName(), info.getAdCode());
     }
 
     /**
+     * 根据城市ID和给定最大最小经纬度，获取城市区域板块围栏信息 <br>
+     * maxLat, minLat, maxLng, minLng 经纬度顺序 <br>
+     *
+     * @param cityCode 城市编码
+     * @param arg      最大最小经纬度数据
+     */
+    public void district(String cityCode, String... arg) {
+        GaodeCityPoiInfo info = loadCityPoiInfo(cityCode);
+        if (info == null) {
+            return;
+        }
+        districtPrivate(info, arg);
+    }
+
+    /**
      * 获取区域列表
      */
-    public void district(GaodeCityPoiInfo cityPoiInfo, String... arg) {
+    private void districtPrivate(GaodeCityPoiInfo cityPoiInfo, String... arg) {
         String cityCode = cityPoiInfo.getAdCode();
         String url = String.format(city_url, cityCode, "district", arg[0], arg[1], arg[2], arg[3]);
-        String jsonStr = httpUtils.proxyGet(url, head(), (html) -> !checkBody(url, html, "district"));
+        String jsonStr = httpUtils.proxyGet(url, head(), (html) -> check(url, html, "district"));
         JSONObject jsonObj = JSONObject.parseObject(jsonStr);
         JSONObject data = jsonObj.getJSONObject("data");
         JSONArray bubbleList = data.getJSONArray("bubbleList");
@@ -178,22 +167,16 @@ public class BeikeDistrictService {
         BigDecimal longitudeStep = new BigDecimal("0.096");
         BigDecimal latitudeStep = new BigDecimal("0.08");
         // 最多走几步
-        BigDecimal maxStepNum = new BigDecimal("3");
+        BigDecimal maxStepNum = new BigDecimal("2");
 
-        TreeSet<BigDecimal> lnSet = new TreeSet<>();
-        TreeSet<BigDecimal> latSet = new TreeSet<>();
+        // 计算最大最小
+        BigDecimal[][] mm = calculateMaxMin(fenceStr);
 
-        for (String singleBorder : fenceStr.split(SEMICOLON)) {
-            String[] var1 = singleBorder.split(COMMA);
-            lnSet.add(new BigDecimal(var1[0]));
-            latSet.add(new BigDecimal(var1[1]));
-        }
+        BigDecimal minLng = mm[0][1];
+        BigDecimal minLat = mm[1][1];
 
-        BigDecimal minLng = lnSet.first();
-        BigDecimal minLat = latSet.first();
-
-        BigDecimal maxLng = lnSet.last();
-        BigDecimal maxLat = latSet.last();
+        BigDecimal maxLng = mm[0][0];
+        BigDecimal maxLat = mm[1][0];
 
         // 如果按照当前步长，走的步数超过3次，则步长进行调整。步长 = 长度 / 步数(3)
         if (maxLng.subtract(minLng).divide(longitudeStep, ROUND_UP).compareTo(maxStepNum) > 0) {
@@ -222,11 +205,11 @@ public class BeikeDistrictService {
 
                 latStr.append(tempMaxLat).append(",").append(tempMinLat).append(",");
                 lngStr.append(tempMaxLng).append(",").append(minLng).append(",");
-                log.info("{},{},{},{}", tempMaxLat, tempMinLat, tempMaxLng, minLng);
+                log.debug("{},{},{},{}", tempMaxLat, tempMinLat, tempMaxLng, minLng);
 
                 // maxLatitude=%s&minLatitude=%s&maxLongitude=%s&minLongitude=%s
                 String url = String.format(city_url, cityCode, "bizcircle", tempMaxLat, tempMinLat, tempMaxLng, minLng);
-                String jsonStr = httpUtils.proxyGet(url, head(), (html) -> !checkBody(url, html, "bizcircle"));
+                String jsonStr = httpUtils.proxyGet(url, head(), (html) -> check(url, html, "bizcircle"));
 
                 tempMinLat = tempMaxLat;
                 tempMaxLat = tempMinLat.add(latitudeStep);
@@ -259,6 +242,21 @@ public class BeikeDistrictService {
         }
         log.info("纬度列表：{}", latStr);
         log.info("经度列表：{}", lngStr);
+    }
+
+    private BigDecimal[][] calculateMaxMin(String fenceStr) {
+        TreeSet<BigDecimal> lnSet = new TreeSet<>();
+        TreeSet<BigDecimal> latSet = new TreeSet<>();
+
+        for (String singleBorder : fenceStr.split(SEMICOLON)) {
+            String[] var1 = singleBorder.split(COMMA);
+            lnSet.add(new BigDecimal(var1[0]));
+            latSet.add(new BigDecimal(var1[1]));
+        }
+
+        return new BigDecimal[][]{
+                {lnSet.first(), lnSet.last()}, {latSet.first(), latSet.last()}
+        };
     }
 
     public void jsonParser(String cityCode) {
@@ -302,7 +300,7 @@ public class BeikeDistrictService {
      *
      * @return 城市编码列表
      */
-    public List<String> cityList() {
+    public List<String> loadCityList() {
         String filePath = "source\\beike\\bk_city_list.json";
         File file = new File(filePath);
         if (!file.exists()) {
@@ -325,7 +323,35 @@ public class BeikeDistrictService {
         return cityCodes;
     }
 
-    Map<String, String> head() {
+    private GaodeCityPoiInfo loadCityPoiInfo(String cityCode) {
+        GaodeCityPoiInfoExample poiInfoExample = new GaodeCityPoiInfoExample();
+        poiInfoExample.createCriteria().andAdCodeEqualTo(cityCode);
+        List<GaodeCityPoiInfo> infos = cityPoiInfoMapper.selectByExample(poiInfoExample);
+
+        if (infos.size() <= 0) {
+            log.error("没有该编码的城市信息：{}", cityCode);
+            return null;
+        }
+
+        GaodeCityPoiInfo info = infos.get(0);
+
+        if (info.getFenceId() == null) {
+            gaodeService.cityFenceStart(info.getName());
+            return loadCityPoiInfo(cityCode);
+        }
+
+        return info;
+    }
+
+    private GaodeCityFence loadFence(GaodeCityPoiInfo info) {
+        GaodeCityFenceExample example = new GaodeCityFenceExample();
+        example.createCriteria().andIdEqualTo(info.getFenceId());
+
+        List<GaodeCityFence> cityFences = cityFenceMapper.selectByExampleWithBLOBs(example);
+        return cityFences.get(0);
+    }
+
+    private Map<String, String> head() {
         Map<String, String> head = new HashMap<>(16);
         head.put("Accept", "application/json");
         head.put("Accept-Encoding", "utf-8");
@@ -347,7 +373,7 @@ public class BeikeDistrictService {
         return head;
     }
 
-    private boolean checkBody(String requestUrl, String htmlStr, String type) {
+    private boolean check(String requestUrl, String htmlStr, String type) {
 
         boolean success = true;
 
@@ -361,7 +387,22 @@ public class BeikeDistrictService {
             success = false;
         }
 
-        return success;
+        return !success;
+    }
+
+    /**
+     * 是否已经加载了区域板块的围栏数据
+     *
+     * @return 已加载：true;未加载：false
+     */
+    private boolean isLoadFence(String cityCode) {
+        BkFenceExample bkFenceExample = new BkFenceExample();
+        bkFenceExample.createCriteria().andCityCodeEqualTo(cityCode);
+        if (bkFenceMapper.countByExample(bkFenceExample) > 0) {
+            log.info("{}-已经抓取过了", cityCode);
+            return true;
+        }
+        return false;
     }
 
 }

@@ -14,8 +14,8 @@ create table bk_fence
 ) comment '贝壳围栏信息，其中包含城市、区域、商圈';
 
 
+select count(1) from (select city_name from bk_fence where type = 'district' group by city_name) a;
 
+select * from bk_fence where city_name = '海门市';
 
-select city_name from bk_fence where type = 'district' group by city_name;
-
-select * from bk_fence where city_code = '440100' order by id desc;
+select count(1) from bk_fence;
