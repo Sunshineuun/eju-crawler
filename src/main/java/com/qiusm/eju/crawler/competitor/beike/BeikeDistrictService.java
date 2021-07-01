@@ -30,8 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
 import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL;
-import static com.qiusm.eju.crawler.constant.SymbolicConstant.COMMA;
-import static com.qiusm.eju.crawler.constant.SymbolicConstant.SEMICOLON;
+import static com.qiusm.eju.crawler.constant.SymbolicConstant.*;
 import static java.math.BigDecimal.ROUND_UP;
 
 /**
@@ -85,6 +84,10 @@ public class BeikeDistrictService {
         GaodeCityPoiInfoExample poiInfoExample = new GaodeCityPoiInfoExample();
         poiInfoExample.createCriteria().andAdCodeEqualTo(cityCode);
         List<GaodeCityPoiInfo> infos = cityPoiInfoMapper.selectByExample(poiInfoExample);
+        if (infos.size() <= 0) {
+            log.error("没有该编码的城市信息：{}", cityCode);
+            return;
+        }
         GaodeCityPoiInfo info = infos.get(0);
 
         if (info.getFenceId() == null) {
@@ -103,10 +106,12 @@ public class BeikeDistrictService {
         TreeSet<String> lnSet = new TreeSet<>();
         TreeSet<String> latSet = new TreeSet<>();
 
-        for (String singleBorder : cityFence.getFence().split(SEMICOLON)) {
-            String[] var1 = singleBorder.split(COMMA);
-            lnSet.add(var1[0]);
-            latSet.add(var1[1]);
+        for(String var1 : cityFence.getFence().split(PIPE)){
+            for (String singleBorder : var1.split(SEMICOLON)) {
+                String[] var2 = singleBorder.split(COMMA);
+                lnSet.add(var2[0]);
+                latSet.add(var2[1]);
+            }
         }
 
         String minLng = lnSet.first();
@@ -209,7 +214,7 @@ public class BeikeDistrictService {
             BigDecimal tempMinLat = new BigDecimal(minLat.toString());
             while (maxLat.compareTo(tempMinLat) > 0) {
                 String fileName = String.format("%s_%s_%s_%s_biz.json", name, longitude, latitude, i++);
-                String filePath = String.format("D:\\Temp\\beike\\json\\%s\\", cityCode);
+                String filePath = String.format("%s\\%s\\", BEIKE_JSON_ROOT, cityCode);
 
                 if (new File(filePath + fileName).exists()) {
                     continue;
