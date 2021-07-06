@@ -95,7 +95,6 @@ public class OkHttpUtils {
     }
 
     public String proxyPostFrom(String url, Map<String, String> headers, Object params, Predicate<String> testRetry) {
-
         return getBodyByFnRetry(url, POST_FROM, headers, params, testRetry);
     }
 

@@ -8,8 +8,8 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.MessageDigest;
 import java.util.*;
 
-import static com.qiusm.eju.crawler.constant.NumberConstant.ONE;
-import static com.qiusm.eju.crawler.constant.NumberConstant.TWO;
+import static com.qiusm.eju.crawler.constant.NumberConstant.NUM1;
+import static com.qiusm.eju.crawler.constant.NumberConstant.NUM2;
 import static com.qiusm.eju.crawler.constant.SymbolicConstant.AMPERSAND;
 import static com.qiusm.eju.crawler.constant.SymbolicConstant.EQUAL_SIGN;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -37,8 +37,8 @@ public class BeikeUtils {
     public static Map<String, String> urlToParams(String url) {
         Map<String, String> resMap = new HashMap<>(8);
         String[] split = url.split("\\?");
-        if (split.length == TWO) {
-            for (String s : split[ONE].split(AMPERSAND)) {
+        if (split.length == NUM2) {
+            for (String s : split[NUM1].split(AMPERSAND)) {
                 String[] param = s.split(EQUAL_SIGN);
                 String key = param[0];
                 String value = String.join(EQUAL_SIGN, Arrays.copyOfRange(param, 1, param.length));
