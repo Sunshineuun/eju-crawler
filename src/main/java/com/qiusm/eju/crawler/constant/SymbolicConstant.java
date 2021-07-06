@@ -28,4 +28,9 @@ public class SymbolicConstant {
      * 等号【=】
      */
     public static final String EQUAL_SIGN = "=";
+
+    /**
+     * 下划线
+     */
+    public static final String UNDERSCORE = "_";
 }
