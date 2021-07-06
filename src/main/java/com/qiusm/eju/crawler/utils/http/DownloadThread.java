@@ -2,11 +2,8 @@ package com.qiusm.eju.crawler.utils.http;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.qiusm.eju.crawler.annotation.ParserComponent;
-import com.qiusm.eju.crawler.base.entity.Parser;
+import com.qiusm.eju.crawler.annotation.ParserProcessor;
 import com.qiusm.eju.crawler.base.entity.TaskInstance;
-import com.qiusm.eju.crawler.base.dao.ParserMapper;
 import com.qiusm.eju.crawler.base.parser.ParserInterface;
 import com.qiusm.eju.crawler.base.vo.TaskInstanceRequest;
 import com.qiusm.eju.crawler.constant.enums.RequestMethodEnum;
@@ -16,22 +13,14 @@ import com.qiusm.eju.crawler.utils.*;
 import com.qiusm.eju.crawler.utils.spring.SpringContextUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.core.type.ClassMetadata;
-import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
-import org.springframework.core.type.classreading.MetadataReader;
-import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.util.ClassUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -64,7 +53,6 @@ public class DownloadThread extends Thread {
     /**
      * 解析器DAO
      */
-    public ParserMapper parserMapper;
     private String ipProxyUrl;
 
     public CycleAtomicInteger caiIn;
@@ -75,7 +63,6 @@ public class DownloadThread extends Thread {
         this.taskInstance = taskInstance;
         this.valueOperations = SpringContextUtils.getBean("valueOperations");
         this.listOperations = SpringContextUtils.getBean("listOperations");
-        this.parserMapper = SpringContextUtils.getBean(ParserMapper.class);
         this.ipProxyUrl = ipProxyUrl;
         buildCycleAtomicInteger(this.taskInstance);
     }
@@ -84,24 +71,16 @@ public class DownloadThread extends Thread {
     public void run() {
         log.info("正在执行任务：{}", JSONUtils.toJSONString(this.taskInstance));
         try {
-            // 所有解析器 换种方式获取
-            List<Parser> parserList = parserMapper.selectList(new EntityWrapper<>());
-            if (parserList.isEmpty()) {
+
+            Map<String, ParserInterface> parserProcessorMap = loadParserInterFace();
+            if (MapUtils.isEmpty(parserProcessorMap)) {
                 throw new BusinessException("110", taskInstance.getParserConfig());
             }
-
-            //配置转换后的的解析器关系列表
-            List<Parser> currParserList = ParserUtils.convert(taskInstance.getParserConfig(), parserList);
-            if (currParserList.isEmpty()) {
-                throw new BusinessException("111", taskInstance.getParserConfig());
-            }
-
-            Map<String, ParserInterface> parserInterface = loadParserInterFace();
 
             //任务运行线程数
             int threadNum = taskInstance.getThreadNum() <= 0 ? EXECUTE_THREAD_NUM : taskInstance.getThreadNum();
             threadService.executeFutures(IntStream.range(1, threadNum).boxed().collect(Collectors.toList()),
-                    this.downloadLoopFunction(parserInterface), false, EXECUTE_THREAD_NUM);
+                    this.downloadLoopFunction(parserProcessorMap), false, EXECUTE_THREAD_NUM);
         } catch (Exception e) {
             if (!isStop) {
                 log.error("任务执行异常:{},{}", JSONUtils.toJSONString(this.taskInstance), ExceptionUtils.stackTraceInfoToStr(e));
@@ -123,7 +102,7 @@ public class DownloadThread extends Thread {
     private Map<String, ParserInterface> loadParserInterFace() {
         String scanPackage = "com.qiusm.eju.crawler.parser";
         TypeFilter[] typeFilters = new TypeFilter[]{
-                new AnnotationTypeFilter(ParserComponent.class)
+                new AnnotationTypeFilter(ParserProcessor.class)
         };
         List<Class<?>> classes = ClassResourceUtils.scanPackages(typeFilters, scanPackage);
         return classes.stream()
@@ -176,8 +155,8 @@ public class DownloadThread extends Thread {
                 }
 
                 try {
-                    ParserInterface parserInterface = parserInterfaceMap.get(request.getCode());
-                    if (parserInterface == null) {
+                    ParserInterface parserProcessor = parserInterfaceMap.get(request.getCode());
+                    if (parserProcessor == null) {
                         throw new BusinessException("找不到解析器。{}", JSONObject.toJSONString(request));
                     }
 
@@ -201,20 +180,22 @@ public class DownloadThread extends Thread {
 
                         if (request.getMethod() == RequestMethodEnum.GET) {
                             htmlStr = httpClient.proxyGet(
-                                    request.getUrl(), parserInterface.buildingHeader(request), parserInterface.viewTry());
+                                    request.getUrl(), parserProcessor.buildingHeader(request), parserProcessor.viewTry());
                         } else if (request.getMethod() == RequestMethodEnum.POST_FORM) {
                             htmlStr = httpClient.proxyPostFrom(
-                                    request.getUrl(), parserInterface.buildingHeader(request), request.getParams(), parserInterface.viewTry());
+                                    request.getUrl(), parserProcessor.buildingHeader(request), request.getParams(), parserProcessor.viewTry());
                         } else {
-                            htmlStr = httpClient.proxyPostJson(request.getUrl(), parserInterface.buildingHeader(request), JSONUtils.toJSONString(request.getParams()), parserInterface.viewTry());
+                            htmlStr = httpClient.proxyPostJson(
+                                    request.getUrl(), parserProcessor.buildingHeader(request),
+                                    JSONUtils.toJSONString(request.getParams()), parserProcessor.viewTry());
                         }
                     }
 
-                    if (parserInterface.viewTry().test(htmlStr)) {
+                    if (parserProcessor.viewTry().test(htmlStr)) {
                         tryAgain(request, htmlStr, taskInstanceTaskPoolKey);
                     } else {
                         // 是否重新返回队列 true 返回队列
-                        parserInterface.execute(htmlStr, request, httpClient);
+                        parserProcessor.execute(htmlStr, request, httpClient);
                     }
                 } catch (Exception ex) {
                     log.error("任务执行异常{},\n当前种子:{},\n任务:{}", ExceptionUtils.stackTraceInfoToStr(ex), request, JSONUtils.toJSONString(this.taskInstance));
@@ -234,7 +215,6 @@ public class DownloadThread extends Thread {
         this.taskInstance = null;
         this.valueOperations = null;
         this.listOperations = null;
-        this.parserMapper = null;
         this.ipProxyUrl = null;
 
         this.caiIn = null;
