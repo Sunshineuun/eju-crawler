@@ -40,7 +40,6 @@ public class CommunitySearchV1 extends BkBaseSearch {
                 result.put(communityId, communityName);
             }
         });
-
         responseDto.setResult(result);
     }
 }

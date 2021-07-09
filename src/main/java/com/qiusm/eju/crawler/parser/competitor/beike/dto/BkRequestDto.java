@@ -22,6 +22,10 @@ public class BkRequestDto {
      */
     private String charset;
     /**
+     * 判断是否需要登录
+     */
+    private Boolean isLoad = false;
+    /**
      * 请求返回的结果
      */
     private String responseStr;

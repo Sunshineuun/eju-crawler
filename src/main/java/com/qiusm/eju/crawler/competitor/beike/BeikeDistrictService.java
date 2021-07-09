@@ -25,7 +25,7 @@ import java.math.BigInteger;
 import java.util.*;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
-import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL;
+import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 import static com.qiusm.eju.crawler.constant.SymbolicConstant.*;
 import static java.math.BigDecimal.ROUND_UP;
 
@@ -38,7 +38,7 @@ import static java.math.BigDecimal.ROUND_UP;
 @Service
 public class BeikeDistrictService {
 
-    protected static OkHttpUtils httpUtils = OkHttpUtils.Builder().proxyUrl(PROXY_URL).connectTimeout(60000).readTimeout(60000).charset(GBK).builderHttp();
+    protected static OkHttpUtils httpUtils = OkHttpUtils.Builder().proxyUrl(PROXY_URL0).connectTimeout(60000).readTimeout(60000).charset(GBK).builderHttp();
 
     protected static final List<String> ERROR_MSG = new ArrayList<>();
 

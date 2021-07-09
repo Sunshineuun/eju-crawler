@@ -1,25 +1,29 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.competitor.beike.utils.BeikeUtils;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.utils.ExceptionUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
-import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
 import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 
 /**
  * @author qiushengming
  */
+@Slf4j
 public abstract class BkBaseSearch implements HttpSearch {
 
     protected static final String DOMAIN_NAME = "https://app.api.ke.com";
 
     protected OkHttpUtils httpClient = OkHttpUtils.Builder()
-            .proxyUrl(PROXY_URL0).charset(UTF8)
-            .connectTimeout(60000).readTimeout(60000)
+            .proxyUrl(PROXY_URL0)
+            .addProxyRetryTag("ejuResponseCode")
             .builderHttp();
 
     /**
@@ -49,12 +53,34 @@ public abstract class BkBaseSearch implements HttpSearch {
         buildingUrl(requestDto);
         //2. 构建请求头
         buildingHeader(requestDto);
-        //3. 发送请求
-        httpGet(requestDto);
-        //4. 解析结果httpGet
         BkResponseDto responseDto = new BkResponseDto();
-        parser(requestDto, responseDto);
+        try {
+            //3. 发送请求
+            httpGet(requestDto);
+            //4. 判断结果是否符合期望
+            if (viewCheck(requestDto)) {
+                //5. 解析结果httpGet
+                parser(requestDto, responseDto);
+            }
+        } catch (Exception e) {
+            log.error("{}\n{}\n{}", e.getMessage(), requestDto, responseDto);
+            requestDto.setResponseStr(ExceptionUtils.stackTraceInfoToStr(e));
+        }
+        //6. 判断结果状态
+        if (!responseDto.isResultEmpty()) {
+            responseDto.setSuccess(true);
+        } else {
+            responseDto.setSuccess(false);
+            responseDto.setSysErrorMsg(requestDto.getResponseStr());
+            responseDto.setResult(new JSONObject());
+            responseDto.setBkErrorMsg(parserBkErrorMsg(requestDto));
+        }
         return responseDto;
+    }
+
+    protected String parserBkErrorMsg(BkRequestDto requestDto) {
+        JSONObject var = JSONObject.parseObject(requestDto.getResponseStr());
+        return var.getString("error");
     }
 
     /**
@@ -63,6 +89,14 @@ public abstract class BkBaseSearch implements HttpSearch {
     protected void httpGet(BkRequestDto requestDto) {
         String htmlStr = httpClient.get(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead());
         requestDto.setResponseStr(htmlStr);
+    }
+
+    protected boolean viewCheck(BkRequestDto requestDto) {
+        String responseStr = requestDto.getResponseStr();
+        return !(StringUtils.isBlank(responseStr)
+                || responseStr.startsWith("ejuResponseCode")
+                || responseStr.startsWith("ResponseError")
+                || responseStr.startsWith("ResponseCode"));
     }
 
     protected void buildingHeader(BkRequestDto dto) {
@@ -80,5 +114,13 @@ public abstract class BkBaseSearch implements HttpSearch {
         head.put("Lianjia-Im-Version", "2.34.0");
         head.put("Host", "app.api.ke.com");
         head.put("Connection", "Keep-Alive");
+
+        if (dto.getIsLoad()) {
+            buildingCookie(dto);
+        }
+    }
+
+    protected void buildingCookie(BkRequestDto dto) {
+
     }
 }
