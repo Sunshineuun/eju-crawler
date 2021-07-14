@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
 import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
-import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL;
+import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 import static com.qiusm.eju.crawler.constant.SymbolicConstant.*;
 import static com.qiusm.eju.crawler.poi.gaode.constant.GaodeField.*;
 import static com.qiusm.eju.crawler.poi.gaode.constant.GaodeUrl.All_CITY_POI_URL;
@@ -36,7 +36,7 @@ import static java.math.BigDecimal.ROUND_UP;
 @Service
 public class GaodeService {
 
-    protected static OkHttpUtils httpUtils = OkHttpUtils.Builder().proxyUrl(PROXY_URL).connectTimeout(60000).readTimeout(60000).charset(GBK).builderHttp();
+    protected static OkHttpUtils httpUtils = OkHttpUtils.Builder().proxyUrl(PROXY_URL0).connectTimeout(60000).readTimeout(60000).charset(GBK).builderHttp();
 
     @Resource
     private GaodeDao dao;
