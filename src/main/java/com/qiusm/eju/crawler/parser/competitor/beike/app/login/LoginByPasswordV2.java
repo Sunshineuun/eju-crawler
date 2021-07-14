@@ -3,7 +3,7 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.competitor.beike.utils.BeikeUtils;
-import com.qiusm.eju.crawler.constant.enums.RequestMethodEnum;
+import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;

@@ -2,9 +2,12 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.exception.BusinessException;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
+import com.qiusm.eju.crawler.utils.StringUtils;
 
 import java.util.Map;
 
@@ -17,12 +20,20 @@ import java.util.Map;
 public class UnitSearchV1 extends BkBaseSearch {
 
     private static final String URL_TEMPLATE = "%s/yezhu/publish/getUnits?building_id=%s";
+    private static final String BUILDING_ID = "building_id";
 
     @Override
     protected void buildingUrl(BkRequestDto requestDto) {
         Map<String, String> requestParam = requestDto.getRequestParam();
-        String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get("building_id"));
-        requestDto.setUrl(url);
+        if (requestParam.containsKey(BUILDING_ID)) {
+            String buildingId = requestParam.get(BUILDING_ID).trim();
+            if (StringUtils.isNotBlank(buildingId)) {
+                String url = String.format(URL_TEMPLATE, DOMAIN_NAME, buildingId);
+                requestDto.setUrl(url);
+            } else {
+                throw new BusinessException("楼栋ID为空");
+            }
+        }
     }
 
     @Override

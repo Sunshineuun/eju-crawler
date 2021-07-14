@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
+package com.qiusm.eju.crawler.parser.competitor.beike.app;
 
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
@@ -10,8 +10,8 @@ public interface HttpSearch {
     /**
      * 查询
      *
-     * @param requestDto 关键字
-     * @return
+     * @param requestDto 请求DTO
+     * @return BkResponseDto
      */
-    BkResponseDto search(BkRequestDto requestDto);
+    BkResponseDto execute(BkRequestDto requestDto);
 }

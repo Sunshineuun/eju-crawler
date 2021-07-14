@@ -1,6 +1,6 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.dto;
 
-import com.qiusm.eju.crawler.constant.enums.RequestMethodEnum;
+import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import lombok.Data;
 

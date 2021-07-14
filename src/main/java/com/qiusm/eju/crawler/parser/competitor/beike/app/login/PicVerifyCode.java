@@ -1,19 +1,16 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 
-import com.qiusm.eju.crawler.competitor.beike.utils.BeikeUtils;
-import com.qiusm.eju.crawler.constant.enums.RequestMethodEnum;
+import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
-import com.qiusm.eju.crawler.utils.ImageReaderUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
-import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.*;
 import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.HOST;
 
