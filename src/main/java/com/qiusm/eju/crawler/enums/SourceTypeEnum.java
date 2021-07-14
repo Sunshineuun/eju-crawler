@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.constant.enums;
+package com.qiusm.eju.crawler.enums;
 
 /**
  * @author qiushengming

@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.constant.enums;
+package com.qiusm.eju.crawler.enums;
 
 
 import com.qiusm.eju.crawler.utils.http.DownloadThread;
@@ -15,10 +15,11 @@ public enum RequestMethodEnum {
      */
     GET("get"),
     POST_FORM("post-form"),
-    POST_JSON("post-json");
+    POST_JSON("post-json"),
+    CHROME_DRIVE("chrome-drive"),
+    IMG("img");
 
     private final String code;
-
 
     RequestMethodEnum(String code) {
         this.code = code;
