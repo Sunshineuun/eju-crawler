@@ -6,13 +6,13 @@ import com.qiusm.eju.crawler.annotation.ParserProcessor;
 import com.qiusm.eju.crawler.base.entity.TaskInstance;
 import com.qiusm.eju.crawler.base.parser.ParserInterface;
 import com.qiusm.eju.crawler.base.vo.TaskInstanceRequest;
-import com.qiusm.eju.crawler.constant.enums.RequestMethodEnum;
-import com.qiusm.eju.crawler.constant.enums.SourceTypeEnum;
+import com.qiusm.eju.crawler.enums.SourceTypeEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.utils.*;
 import com.qiusm.eju.crawler.utils.spring.SpringContextUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
@@ -59,22 +59,29 @@ public class DownloadThread extends Thread {
     public CycleAtomicInteger caiOut;
     private final static int REDIS_CLUSTER_NODES = 8;
 
-    public DownloadThread(TaskInstance taskInstance, String ipProxyUrl) {
-        this.taskInstance = taskInstance;
+    private Download chromeDriveClient;
+
+    public DownloadThread(TaskInstanceRequest seedRequest, String ipProxyUrl) {
+        this.taskInstance = seedRequest.getTaskInstance();
         this.valueOperations = SpringContextUtils.getBean("valueOperations");
         this.listOperations = SpringContextUtils.getBean("listOperations");
         this.ipProxyUrl = ipProxyUrl;
+        this.chromeDriveClient = new SeleniumDownload();
         buildCycleAtomicInteger(this.taskInstance);
+        // 初始化种子
+        initializeSeed(seedRequest);
     }
 
     @Override
     public void run() {
-        log.info("正在执行任务：{}", JSONUtils.toJSONString(this.taskInstance));
+        log.info("暂停5秒后开始执行任务。任务id:{}", taskInstance.getId());
+        ThreadUtils.sleep(5);
+        log.info("开始执行任务：{}", JSONUtils.toJSONString(this.taskInstance));
         try {
 
             Map<String, ParserInterface> parserProcessorMap = loadParserInterFace();
             if (MapUtils.isEmpty(parserProcessorMap)) {
-                throw new BusinessException("110", taskInstance.getParserConfig());
+                throw new BusinessException("110", taskInstance.getId());
             }
 
             //任务运行线程数
@@ -83,7 +90,7 @@ public class DownloadThread extends Thread {
                     this.downloadLoopFunction(parserProcessorMap), false, EXECUTE_THREAD_NUM);
         } catch (Exception e) {
             if (!isStop) {
-                log.error("任务执行异常:{},{}", JSONUtils.toJSONString(this.taskInstance), ExceptionUtils.stackTraceInfoToStr(e));
+                log.error("任务执行异常:{},{}", JSONUtils.toJSONString(this.taskInstance), StringUtils.stackTraceInfoToStr(e));
                 // warnDetailService.taskExSendEmail(taskInstance, e);
             }
         } finally {
@@ -92,31 +99,6 @@ public class DownloadThread extends Thread {
             super.interrupt();
             clean();
         }
-    }
-
-    /**
-     * 加载指定包中所有的ParserInterface接口的实现，并且将其实例化。
-     *
-     * @return
-     */
-    private Map<String, ParserInterface> loadParserInterFace() {
-        String scanPackage = "com.qiusm.eju.crawler.parser";
-        TypeFilter[] typeFilters = new TypeFilter[]{
-                new AnnotationTypeFilter(ParserProcessor.class)
-        };
-        List<Class<?>> classes = ClassResourceUtils.scanPackages(typeFilters, scanPackage);
-        return classes.stream()
-                .map(clazz -> {
-                    try {
-                        Constructor<?> var = clazz.getDeclaredConstructor();
-                        return (ParserInterface) var.newInstance();
-                    } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                        log.error("实例化失败：{}", e.getMessage());
-                    }
-                    return null;
-                })
-                .filter(var -> !(var == null || StringUtils.isBlank(var.getCode())))
-                .collect(Collectors.toMap(ParserInterface::getCode, (var) -> var));
     }
 
     /**
@@ -178,16 +160,22 @@ public class DownloadThread extends Thread {
                             continue;
                         }
 
-                        if (request.getMethod() == RequestMethodEnum.GET) {
-                            htmlStr = httpClient.proxyGet(
-                                    request.getUrl(), parserProcessor.buildingHeader(request), parserProcessor.viewTry());
-                        } else if (request.getMethod() == RequestMethodEnum.POST_FORM) {
-                            htmlStr = httpClient.proxyPostFrom(
-                                    request.getUrl(), parserProcessor.buildingHeader(request), request.getParams(), parserProcessor.viewTry());
-                        } else {
-                            htmlStr = httpClient.proxyPostJson(
-                                    request.getUrl(), parserProcessor.buildingHeader(request),
-                                    JSONUtils.toJSONString(request.getParams()), parserProcessor.viewTry());
+                        switch (request.getMethod()) {
+                            case GET:
+                                htmlStr = httpClient.proxyGet(
+                                        request.getUrl(), parserProcessor.buildingHeader(request), parserProcessor.viewTry());
+                                break;
+                            case POST_FORM:
+                                htmlStr = httpClient.proxyPostFrom(
+                                        request.getUrl(), parserProcessor.buildingHeader(request), request.getParams(), parserProcessor.viewTry());
+                                break;
+                            case CHROME_DRIVE:
+                                htmlStr = chromeDriveClient.get(request.getUrl());
+                                break;
+                            default:
+                                htmlStr = httpClient.proxyPostJson(
+                                        request.getUrl(), parserProcessor.buildingHeader(request),
+                                        JSONUtils.toJSONString(request.getParams()), parserProcessor.viewTry());
                         }
                     }
 
@@ -196,9 +184,11 @@ public class DownloadThread extends Thread {
                     } else {
                         // 是否重新返回队列 true 返回队列
                         parserProcessor.execute(htmlStr, request, httpClient);
+                        // 拉取新的请求
+                        pullNewRequest(request);
                     }
                 } catch (Exception ex) {
-                    log.error("任务执行异常{},\n当前种子:{},\n任务:{}", ExceptionUtils.stackTraceInfoToStr(ex), request, JSONUtils.toJSONString(this.taskInstance));
+                    log.error("任务执行异常{},\n当前种子:{},\n任务:{}", StringUtils.stackTraceInfoToStr(ex), request, JSONUtils.toJSONString(this.taskInstance));
                     // warnDetailService.parserExSendEmail(request, parser, taskInstance, ex);
                 }
 
@@ -216,6 +206,8 @@ public class DownloadThread extends Thread {
         this.valueOperations = null;
         this.listOperations = null;
         this.ipProxyUrl = null;
+        this.chromeDriveClient.quit();
+        this.chromeDriveClient = null;
 
         this.caiIn = null;
         this.caiOut = null;
@@ -236,16 +228,57 @@ public class DownloadThread extends Thread {
     /**
      * 从队列中获取请求实例
      *
-     * @param taskInstanceTaskPoolKey
+     * @param requestTaskPoolKey
      * @return
      */
-    private TaskInstanceRequest popRequestTask(String taskInstanceTaskPoolKey) {
-        String requestStr = (String) listOperations.leftPop(taskInstanceTaskPoolKey);
+    private TaskInstanceRequest popRequestTask(String requestTaskPoolKey) {
+        String requestStr = (String) listOperations.leftPop(requestTaskPoolKey);
         if (StringUtils.isBlank(requestStr)) {
             return null;
         }
 
-        return JSONObject.parseObject(requestStr, TaskInstanceRequest.class);
+        TaskInstanceRequest request = JSONObject.parseObject(requestStr, TaskInstanceRequest.class);
+        request.setTaskInstance(this.taskInstance);
+        return request;
+    }
+
+    /**
+     * 拉取新的请求实例
+     *
+     * @param request 请求实例
+     */
+    private void pullNewRequest(TaskInstanceRequest request) {
+        if (CollectionUtils.isNotEmpty(request.getNewRequest())) {
+            request.getNewRequest().forEach(var -> {
+                String taskInstanceTaskPoolKey = caiIn.next();
+                listOperations.rightPush(taskInstanceTaskPoolKey, JSONUtils.toJSONString(var));
+            });
+        }
+    }
+
+    /**
+     * 加载指定包中所有的ParserInterface接口的实现，并且将其实例化。
+     *
+     * @return
+     */
+    private Map<String, ParserInterface> loadParserInterFace() {
+        String scanPackage = "com.qiusm.eju.crawler.parser";
+        TypeFilter[] typeFilters = new TypeFilter[]{
+                new AnnotationTypeFilter(ParserProcessor.class)
+        };
+        List<Class<?>> classes = ClassResourceUtils.scanPackages(typeFilters, scanPackage);
+        return classes.stream()
+                .map(clazz -> {
+                    try {
+                        Constructor<?> var = clazz.getDeclaredConstructor();
+                        return (ParserInterface) var.newInstance();
+                    } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                        log.error("实例化失败：{}", e.getMessage());
+                    }
+                    return null;
+                })
+                .filter(var -> !(var == null || StringUtils.isBlank(var.getCode())))
+                .collect(Collectors.toMap(ParserInterface::getCode, (var) -> var));
     }
 
     /**
@@ -294,6 +327,13 @@ public class DownloadThread extends Thread {
         log.info("异常信息存入文件。id:{}", jsonObject.getString("id"));
     }
 
+    /**
+     * 将请求实例和请求结果持久化到磁盘，一般用于出现异常情况是，对齐进行持久化。
+     *
+     * @param request 请求实例
+     * @param htmlStr 响应结果
+     * @return JSON
+     */
     private JSONObject requestToJson(TaskInstanceRequest request, String htmlStr) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", UUID.randomUUID());
@@ -319,5 +359,13 @@ public class DownloadThread extends Thread {
         return jsonObject;
     }
 
-
+    /**
+     * 初始化的种子只要告诉
+     *
+     * @param seedRequest 种子请求
+     */
+    private void initializeSeed(TaskInstanceRequest seedRequest) {
+        String taskInstanceTaskPoolKey = caiIn.next();
+        listOperations.rightPush(taskInstanceTaskPoolKey, JSONUtils.toJSONString(seedRequest));
+    }
 }

@@ -11,6 +11,7 @@ import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.HttpHostConnectException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import javax.net.ssl.*;
 import java.io.IOException;
@@ -39,10 +40,7 @@ public class OkHttpUtils {
 
     static Logger LOG = LoggerFactory.getLogger(OkHttpUtils.class);
 
-    private okhttp3.OkHttpClient okHttp;
-
     private OkHttpUtils() {
-        this.okHttp = new okhttp3.OkHttpClient();
     }
 
     public String get(String url) {
@@ -158,11 +156,11 @@ public class OkHttpUtils {
 
     }
 
-    private final String proxyTagRetry(Integer retry, Map<String, String> headers, Function<HttpHost, String> fn) {
+    private String proxyTagRetry(Integer retry, Map<String, String> headers, Function<HttpHost, String> fn) {
         return proxyTagRetry(retry, null, headers, fn);
     }
 
-    private final String proxyTagRetry(Integer retry, HttpHost hHost, Map<String, String> headers, Function<HttpHost, String> fn) {
+    private String proxyTagRetry(Integer retry, HttpHost hHost, Map<String, String> headers, Function<HttpHost, String> fn) {
         int cnt = retry == null ? BUILDER.retryMax : retry;
         String body = null;
         boolean flag = true;
@@ -179,13 +177,14 @@ public class OkHttpUtils {
             }
             body = fn.apply(httpHost);
             if (BUILDER.proxyRetryTag != null) {
-                if (body.indexOf("ResponseCode=404") != -1) {
-                    flag = false;
-                } else if ("null".equalsIgnoreCase(body)) {
-                    flag = true;
-                } else {
-                    for (int y = 0; y < BUILDER.proxyRetryTag.size(); y++) {
-                        if (body.indexOf(BUILDER.proxyRetryTag.get(y)) != -1) {
+                if (!body.contains("ResponseCode=404")) {
+                    if ("null".equalsIgnoreCase(body)) {
+                        flag = true;
+                    } else {
+                        for (int y = 0; y < BUILDER.proxyRetryTag.size(); y++) {
+                            if (!body.contains(BUILDER.proxyRetryTag.get(y))) {
+                                continue;
+                            }
                             flag = true;
                             break;
                         }
@@ -202,7 +201,7 @@ public class OkHttpUtils {
      * @param header
      * @return
      */
-    private final HttpHost getHttpHost(Map<String, String> header) {
+    private HttpHost getHttpHost(Map<String, String> header) {
         int x = 0;
         HttpHost httpHost = null;
         do {
@@ -275,28 +274,22 @@ public class OkHttpUtils {
      * @param httpHost
      * @return
      */
-    private final String send(String url, String type, String charset, Integer conTimeout, Integer readTimeout, Map<String, String> headers, Object argus, HttpHost httpHost) {
-        String resultBody = null;
+    private String send(String url, String type, String charset, Integer conTimeout, Integer readTimeout, Map<String, String> headers, Object argus, HttpHost httpHost) {
+        String resultBody;
         Response response = null;
         try {
             charset = charset == null ? BUILDER.charset : charset;
             Request.Builder requestBuilder = new Request.Builder().url(url);
             if (headers != null) {
                 headers.remove(RESPONSE_HEADERS);
-                for (Map.Entry<String, String> e : headers.entrySet()) {
-                    if (!RESPONSE_HEADERS.equals(e.getKey())) {
-                        requestBuilder.addHeader(e.getKey(), e.getValue());
-                    }
-                }
+                headers.forEach(requestBuilder::addHeader);
             }
             if (GET.equals(type)) {
             } else if (POST_FROM.equals(type)) {
                 FormBody.Builder builder = new FormBody.Builder(Charset.forName(charset));
-                if (argus != null && argus instanceof Map) {
-                    Map<String, String> map = (Map) argus;
-                    for (Map.Entry<String, String> key : map.entrySet()) {
-                        builder.add(key.getKey(), key.getValue());
-                    }
+                if (argus instanceof Map) {
+                    Map<String, String> map = (Map<String, String>) argus;
+                    map.forEach(builder::add);
                 }
                 requestBuilder.post(builder.build());
             } else if (POST_JSON.equals(type)) {
@@ -318,25 +311,21 @@ public class OkHttpUtils {
                         .connectionPool(new ConnectionPool(1, readTimeout == null ? BUILDER.readTimeout : readTimeout, TimeUnit.MILLISECONDS))
                         .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpHost.getHostName(), httpHost.getPort())))
                         .build();
-                response = okHttp.newCall(requestBuilder.build()).execute();
             } else {
                 okHttp = OK_HTT;
-                response = okHttp.newCall(requestBuilder.build()).execute();
             }
+            response = okHttp.newCall(requestBuilder.build()).execute();
             if (headers != null) {
                 Headers reHeaders = response.headers();
-                if (reHeaders != null) {
-                    Map<String, String> responseHeaders = new HashMap<>();
-                    for (String name : reHeaders.names()) {
-                        responseHeaders.put(name, reHeaders.get(name));
-                    }
-                    if (httpHost != null) {
-                        responseHeaders.put(CURR_PROXY_IP, JSON.toJSONString(httpHost));
-                    }
-                    headers.put(RESPONSE_HEADERS, JSON.toJSONString(responseHeaders));
+                Map<String, String> responseHeaders = new HashMap<>();
+                reHeaders.names().forEach(name -> responseHeaders.put(name, reHeaders.get(name)));
+
+                if (httpHost != null) {
+                    responseHeaders.put(CURR_PROXY_IP, JSON.toJSONString(httpHost));
                 }
+                headers.put(RESPONSE_HEADERS, JSON.toJSONString(responseHeaders));
             }
-            if (response.isSuccessful()) {
+            if (response.isSuccessful() && response.body() != null) {
                 try {
                     resultBody = IOUtils.toString(response.body().byteStream(), charset);
                 } catch (Exception e) {
@@ -362,7 +351,6 @@ public class OkHttpUtils {
             } else {
                 resultBody = String.format(SingleOkHttpConfig.EJU_RESPONSE_CODE_EXCEPTION_PROXY_CODE, response.code(), JSON.toJSONString(httpHost), response.message());
             }
-            requestBuilder = null;
         } catch (ConnectTimeoutException cte) {
             resultBody = String.format(SingleOkHttpConfig.EJU_RESPONSE_CODE_EXCEPTION_PROXY_ERROR, "ConnectTimeoutException", JSON.toJSONString(httpHost), cte.getMessage());
             //LOG.error("connect timeout:" + url);
@@ -432,7 +420,6 @@ public class OkHttpUtils {
                 response = OK_HTT.newCall(requestBuilder.build()).execute();
             }
             resultBody = response.code();
-            requestBuilder = null;
         } catch (ConnectTimeoutException cte) {
             resultBody = SingleOkHttpConfig.INT901;
         } catch (SocketTimeoutException se) {
@@ -464,12 +451,7 @@ public class OkHttpUtils {
         }
     }
 
-    /**
-     * Get Builder
-     *
-     * @return
-     */
-    public static final Builder Builder() {
+    public static Builder Builder() {
         return BUILDER;
     }
 
@@ -485,12 +467,24 @@ public class OkHttpUtils {
         int proxyLessThan;
         int connectTimeout;
         int readTimeout;
+        /**
+         * 重试最大次数：默认3次
+         */
         int retryMax;
+        /**
+         * 是否进行重试：默认是
+         */
         boolean retryEnable;
+        /**
+         * 字符集：默认utf-8
+         */
         String charset;
         String proxyJsonDefault;
         String proxyUrl;
         String proxySeparator;
+        /**
+         * 重试检测标签；只要响应的结果体重包含该列表中的字符，则进行重试操作。
+         */
         List<String> proxyRetryTag;
 
         private Builder() {
@@ -577,23 +571,24 @@ public class OkHttpUtils {
             return this;
         }
 
-        public Builder addProxyRetryTag(String proxyRetryTag) {
+        public Builder addProxyRetryTag(String... proxyRetryTag) {
             if (this.proxyRetryTag == null) {
                 throw new NullPointerException("proxyRetryTag == null");
             }
-            this.proxyRetryTag.add(proxyRetryTag);
+            this.proxyRetryTag.addAll(Arrays.asList(proxyRetryTag));
             return this;
         }
 
         public Builder proxyJsonDefault(String proxyJsonDefault) {
-            if (proxyJsonDefault != null
-                    && (proxyJsonDefault.indexOf("hostname") == -1
-                    || proxyJsonDefault.indexOf("port") == -1
-                    || proxyJsonDefault.indexOf("header") == -1)) {
+            if (proxyJsonDefault == null
+                    || (proxyJsonDefault.contains("hostname")
+                    && proxyJsonDefault.contains("port")
+                    && proxyJsonDefault.contains("header"))) {
+                this.proxyJsonDefault = proxyJsonDefault;
+                return this;
+            } else {
                 throw new IllegalArgumentException("proxyJsonDefault is json , required attribute:hostname、port、header【json】== null");
             }
-            this.proxyJsonDefault = proxyJsonDefault;
-            return this;
         }
 
         public OkHttpUtils builderHttp() {
@@ -694,7 +689,7 @@ public class OkHttpUtils {
         }*/
 
         //获取这个SSLSocketFactory
-        private static final SSLSocketFactory createTrustAllSSLFactory(X509TrustManager trustAllManager) {
+        private static SSLSocketFactory createTrustAllSSLFactory(X509TrustManager trustAllManager) {
             SSLSocketFactory ssfFactory = null;
             try {
                 SSLContext sc = SSLContext.getInstance("TLS");
@@ -708,7 +703,7 @@ public class OkHttpUtils {
         }
 
         //获取TrustManager
-        private static final X509TrustManager getTrustAllManager() {
+        private static X509TrustManager getTrustAllManager() {
             return new X509TrustManager() {
                 @Override
                 public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
@@ -726,7 +721,7 @@ public class OkHttpUtils {
         }
 
         //获取HostnameVerifier
-        private static final HostnameVerifier getHostnameVerifier() {
+        private static HostnameVerifier getHostnameVerifier() {
             return new HostnameVerifier() {
                 @Override
                 public boolean verify(String s, SSLSession sslSession) {
@@ -747,7 +742,6 @@ public class OkHttpUtils {
         }
         return httpHost;
     }
-
 
     public static void main(String[] args) {
         //HttpHost proxy = new HttpHost("transfer.mogumiao.com", 9001, "OK_HTTP_UTILS");
