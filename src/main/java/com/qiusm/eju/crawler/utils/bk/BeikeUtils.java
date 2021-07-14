@@ -1,7 +1,8 @@
-package com.qiusm.eju.crawler.competitor.beike.utils;
+package com.qiusm.eju.crawler.utils.bk;
 
 import android.util.Base64;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -24,7 +25,8 @@ public class BeikeUtils {
 
         // MjAxODAxMTFfYW5kcm9pZDpmYWI1ZmEzNTMwNzYyNWM1ZmY0NDYwNGQ2OGQzMTcyZWQ5ODI3NTE2
         String url = "https://app.api.ke.com/user/account/sendverifycodeforbindmobilev2?mobile_phone_no=13341702682&pic_verify_code=5066";
-        System.out.println(authorization(url));;
+        System.out.println(authorization(url));
+        ;
     }
 
     /**
@@ -48,18 +50,26 @@ public class BeikeUtils {
         return resMap;
     }
 
+    public static String authorization(String url) {
+        return authorization(url, null);
+    }
+
     /**
      * 对 url 进行授权
      *
      * @param url url
      * @return 授权信息
      */
-    public static String authorization(String url) {
+    public static String authorization(String url, Map<String, String> param) {
 
-        Map<String, String> hashMap = urlToParams(url);
+        Map<String, String> paramAll = urlToParams(url);
+
+        if (MapUtils.isNotEmpty(param)) {
+            paramAll.putAll(param);
+        }
 
         // 根据key进行排序
-        List<Map.Entry<String, String>> arrayList = new ArrayList<>(hashMap.entrySet());
+        List<Map.Entry<String, String>> arrayList = new ArrayList<>(paramAll.entrySet());
         arrayList.sort(Map.Entry.comparingByKey());
 
         //JniClient.GetAppSecret(APPConfigHelper.c());
