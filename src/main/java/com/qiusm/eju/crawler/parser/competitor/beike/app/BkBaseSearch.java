@@ -1,16 +1,15 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.competitor.beike.utils.BeikeUtils;
+import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
-import com.qiusm.eju.crawler.utils.ExceptionUtils;
 import com.qiusm.eju.crawler.utils.ImageReaderUtils;
+import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import com.xiaoleilu.hutool.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +78,7 @@ public abstract class BkBaseSearch implements HttpSearch {
                 throw new BusinessException("响应体不合法");
             }
         } catch (Exception e) {
-            log.error("{}\n{}\n{}\n{}", e.getMessage(), requestDto, responseDto, ExceptionUtils.stackTraceInfoToStr(e));
+            log.error("{}\n{}\n{}\n{}", e.getMessage(), requestDto, responseDto, StringUtils.stackTraceInfoToStr(e));
             requestDto.setResponseStr(e.getMessage());
         }
         //7. 判断结果状态

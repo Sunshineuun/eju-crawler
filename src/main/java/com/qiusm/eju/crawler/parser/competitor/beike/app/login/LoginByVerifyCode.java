@@ -1,6 +1,6 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 
-import com.qiusm.eju.crawler.competitor.beike.utils.BeikeUtils;
+import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
