@@ -1,5 +1,6 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.dto;
 
+import com.qiusm.eju.crawler.constant.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import lombok.Data;
 
@@ -22,6 +23,10 @@ public class BkRequestDto {
      */
     private String charset;
     /**
+     * 请求方式
+     */
+    private RequestMethodEnum requestMethod = RequestMethodEnum.GET;
+    /**
      * 判断是否需要登录
      */
     private Boolean isLoad = false;
@@ -30,19 +35,28 @@ public class BkRequestDto {
      */
     private String responseStr;
     /**
+     * 用于传输图片、文件流
+     */
+    private byte[] responseByte;
+    /**
      * 请求使用的参数
      */
-    private Map<String, String> requestParam;
+    private Map<String, String> requestParam = new HashMap<>();
     /**
      * 请求头
      */
-    private Map<String, String> head;
+    private Map<String, String> head = new HashMap<>();
+    /**
+     * 用户信息
+     */
+    private BkUser user;
 
     private BkRequestDto(Builder builder) {
         this.url = builder.url;
         this.charset = builder.charset;
         this.requestParam = builder.requestParam;
         this.head = builder.head;
+        this.user = builder.user;
     }
 
     public static Builder builder() {
@@ -54,6 +68,7 @@ public class BkRequestDto {
         String charset = UTF8;
         Map<String, String> requestParam = new HashMap<>();
         Map<String, String> head = new HashMap<>();
+        BkUser user;
 
         public Builder url(String url) {
             this.url = url;
@@ -84,6 +99,11 @@ public class BkRequestDto {
 
         public Builder head(Map<String, String> head) {
             this.head.putAll(head);
+            return this;
+        }
+
+        public Builder user(BkUser user) {
+            this.user = user;
             return this;
         }
 

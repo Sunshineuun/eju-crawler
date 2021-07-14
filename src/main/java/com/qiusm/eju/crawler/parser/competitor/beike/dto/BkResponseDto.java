@@ -10,6 +10,7 @@ import lombok.Data;
 public class BkResponseDto {
     private Boolean success;
     private JSONObject result;
+    private byte[] resultByte;
     /**
      * 系统内部出现的异常错误
      */
@@ -20,6 +21,6 @@ public class BkResponseDto {
     private String bkErrorMsg;
 
     public Boolean isResultEmpty() {
-        return result == null || result.isEmpty();
+        return (result == null || result.isEmpty()) && (resultByte == null || resultByte.length == 0);
     }
 }

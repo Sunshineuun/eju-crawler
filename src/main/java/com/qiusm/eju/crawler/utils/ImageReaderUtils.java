@@ -104,41 +104,43 @@ public class ImageReaderUtils {
     public static byte[] imageToByte(String path) {
 
         try {
-            return imageToByteV2(path);
+            return imageToByteV2(path, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
+    public static byte[] imageToByteV2(String path) {
+        return imageToByteV2(path, null);
+    }
 
     /**
      * 通过图片的url获取图片的base64字符串
      *
      * @param path 图片url
      * @return 返回图片base64的字符串
-     * @path 图片路径
      */
-    public static byte[] imageToByteV2(String path) throws Exception {
+    public static byte[] imageToByteV2(String path, Map<String, String> headers) {
         InputStream is = null;
         ByteArrayOutputStream outStream = null;
         Response response = null;
         try {
-
             HttpHost proxy = new HttpHost("transfer.mogumiao.com", 9001);
-            HashMap<String, String> headers = new HashMap<>();
+            if (headers == null) {
+                headers = new HashMap<>(8);
+            }
             headers.put("Authorization", "Basic QzNjSEpJMVpXOUVxOGpRQTpGZzZvQmczd05tTjJwc1JO");
 
             Request.Builder requestBuilder = new Request.Builder();
-
-            headers.entrySet().forEach(e -> {
-                if (!"responseHeaders".equals(e.getKey())) {
-                    requestBuilder.addHeader(e.getKey(), e.getValue());
+            headers.forEach((key, value) -> {
+                if (!"responseHeaders" .equals(key)) {
+                    requestBuilder.addHeader(key, value);
                 }
             });
 
             Call call = OkHttpUtils.SingleOkHttpConfig.OK_HTT.newBuilder()
-//                    .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxy.getHostName(), proxy.getPort())))
+                    .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxy.getHostName(), proxy.getPort())))
                     .connectTimeout(6000L, TimeUnit.MILLISECONDS).readTimeout(6000L, TimeUnit.MILLISECONDS)
                     .writeTimeout(6000L, TimeUnit.MILLISECONDS)
                     .build()
@@ -164,6 +166,8 @@ public class ImageReaderUtils {
             outStream.flush();
             return outStream.toByteArray();
 
+        } catch (IOException exception) {
+            exception.printStackTrace();
         } finally {
             if (outStream != null) {
                 try {
@@ -187,6 +191,7 @@ public class ImageReaderUtils {
                 }
             }
         }
+        return null;
     }
 
     public static String imgUrlUpdate(String regex, String replaceStr, String url) {

@@ -2,9 +2,12 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.exception.BusinessException;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
+import com.qiusm.eju.crawler.utils.StringUtils;
 
 import java.util.Map;
 
@@ -14,15 +17,23 @@ import java.util.Map;
  *
  * @author qiushengming
  */
-public class HouseSearchV1  extends BkBaseSearch{
+public class HouseSearchV1 extends BkBaseSearch {
 
     private static final String URL_TEMPLATE = "%s/yezhu/publish/getHouses?unit_id=%s";
+    private static final String UNIT_ID = "unit_id";
 
     @Override
     protected void buildingUrl(BkRequestDto requestDto) {
         Map<String, String> requestParam = requestDto.getRequestParam();
-        String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get("unit_id"));
-        requestDto.setUrl(url);
+        if (requestParam.containsKey(UNIT_ID)) {
+            String unitId = requestParam.get(UNIT_ID).trim();
+            if (StringUtils.isNotBlank(unitId)) {
+                String url = String.format(URL_TEMPLATE, DOMAIN_NAME, unitId);
+                requestDto.setUrl(url);
+            } else {
+                throw new BusinessException("单元ID为空");
+            }
+        }
     }
 
     @Override

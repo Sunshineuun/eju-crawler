@@ -1,31 +1,132 @@
 package com.qiusm.eju.crawler.competitor.beike.community;
 
+import com.qiusm.eju.crawler.competitor.beike.BkTest;
 import com.qiusm.eju.crawler.competitor.beike.utils.BeikeUtils;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.HttpSearch;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByPasswordV2;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByVerifyCode;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PicVerifyCode;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PhoneVerifyCode;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.*;
+import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
+import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkUser;
+import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import com.xiaoleilu.hutool.util.RandomUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
 import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
-import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL;
+import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
+import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
+import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_DEVICE_ID;
 
 /**
  * @author qiushengming
  */
-public class CommunityTest {
+public class CommunityTest extends BkTest {
 
-    static final String DOMAIN_NAME = "https://app.api.ke.com";
 
     protected static OkHttpUtils httpUtils = OkHttpUtils.Builder()
-            .proxyUrl(PROXY_URL).charset(UTF8)
+            .proxyUrl(PROXY_URL0).charset(UTF8)
             .connectTimeout(60000).readTimeout(60000)
             .builderHttp();
 
+    private static final BkUser BK_USER = BkUser.builder()
+            .phoneNo("15958624595")
+            .password("qweasdzxc456")
+            .deviceId("bfaa183c70b47690")
+            .build();
+
+
     public static void main(String[] args) {
-        buildingNumber();
+        /*loadCommunity().getResult().forEach((k, v) -> {
+            buildingNumber(k).getResult().forEach((k1, v1) -> {
+                unitNumber(k1).getResult().forEach((k2, v2) -> {
+                    houseNumber(k2);
+                });
+            });
+        });*/
+        // buildingNumber();
+        // unitNumber();
+        // houseNumber();
+//        imgVerification();
+//        phoneVerification();
+//        loginByVerifyCode();
+        loginByPasswordV2();
+//        System.out.println(RandomUtil.simpleUUID());
+    }
+
+    static String input() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("请输入：");
+        // 等待输入值
+        return input.next();
+    }
+
+    static void loginByPasswordV2() {
+        HttpSearch httpSearch = new LoginByPasswordV2();
+        Map<String, String> params = new HashMap<>(1);
+         params.put("pic_verify_code", "1082");
+        BkRequestDto requestDto = BkRequestDto.builder()
+                .user(BK_USER)
+                .requestParam(params)
+                .head(LIANJIA_CITY_ID, "310000")
+                .build();
+
+        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        System.out.printf("loginByVerifyCode:%s\n", responseDto);
+    }
+
+    static void loginByVerifyCode() {
+        HttpSearch httpSearch = new LoginByVerifyCode();
+        Map<String, String> params = new HashMap<>(1);
+        params.put("pic_verify_code", "3023");
+        params.put("verify_code", "739734");
+        BkRequestDto requestDto = BkRequestDto.builder()
+                .user(BK_USER)
+                .requestParam(params)
+                .head(LIANJIA_CITY_ID, "310000")
+                .build();
+
+        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        System.out.printf("loginByVerifyCode:%s\n", responseDto);
+    }
+
+    static void imgVerification() {
+        HttpSearch httpSearch = new PicVerifyCode();
+        Map<String, String> params = new HashMap<>(1);
+        BkRequestDto requestDto = BkRequestDto.builder()
+                .user(BK_USER)
+                .requestParam(params)
+                .head(LIANJIA_CITY_ID, "310000")
+                .build();
+
+        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        FileUtils.printFile(responseDto.getResultByte(), "source", "1.png", false);
+        System.out.printf("imgVerification:%s\n", responseDto);
+    }
+
+    /**
+     * 发送验证码;
+     * {"request_id":"64083d97-e980-4648-96cf-fe8eecfe79ce","uniqid":"010ACA160D1DDD9B9E7A0194597357AB","errno":0,"error":"操作成功","data":{},"cost":192}
+     */
+    static void phoneVerification() {
+        HttpSearch httpSearch = new PhoneVerifyCode();
+        Map<String, String> params = new HashMap<>();
+        params.put("pic_verify_code", "2070");
+
+        BkRequestDto requestDto = BkRequestDto.builder()
+                .user(BK_USER)
+                .requestParam(params)
+                .head(LIANJIA_CITY_ID, "310000")
+                .build();
+
+        BkResponseDto responseDto = httpSearch.execute(requestDto);
+
+        System.out.printf("phoneVerification:%s\n", requestDto);
+        System.out.printf("phoneVerification:%s\n", responseDto);
     }
 
     /**
@@ -36,7 +137,7 @@ public class CommunityTest {
      * 问题：这个是搜小区的还是搜索什么的？ <br>
      */
     public static void erShouFangSearch() {
-        String url = DOMAIN_NAME + "/house/ershoufang/searchv5?condition=rs安墁西郊&refer=ershoulistsearch&containerType=1&limitCount=20&limitOffset=0&from=hot_click&fullFilters=1&cityId=310000";
+        String url = APP_DOMAIN_NAME + "/house/ershoufang/searchv5?condition=rs安墁西郊&refer=ershoulistsearch&containerType=1&limitCount=20&limitOffset=0&from=hot_click&fullFilters=1&cityId=310000";
         String htmlStr = httpUtils.proxyGet(url, "UTF-8", heads(url));
         System.out.println(htmlStr);
     }
@@ -49,24 +150,19 @@ public class CommunityTest {
      * <p>
      * channel_id=xiaoqu，可能的值xiaoqu\ershoufang。
      */
-    static void loadCommunity() {
-        String cityId = "310000";
-        String communityId = "5011000010212";
-        String communityName = "远洋";
-        String url = String.format("%s/house/community/searchv2?limit_offset=0&condition=c%s&city_id=%s&containerType=0&limit_count=20", DOMAIN_NAME, communityId, cityId);
-//        String url = String.format("%s/house/suggestion/index?city_id=%s&query=%s&channel_id=xiaoqu", DOMAIN_NAME, cityId, communityName);
-        String htmlStr = httpUtils.proxyGet(url, "UTF-8", heads(url));
-        System.out.println(htmlStr);
-    }
+    static BkResponseDto loadCommunity() {
+        HttpSearch httpSearch = new CommunitySearchV1();
+        Map<String, String> params = new HashMap<>();
+        params.put("city_id", "310000");
+        params.put("key", "远洋香奈");
+        BkRequestDto requestDto = BkRequestDto.builder()
+                .requestParam(params)
+                .build();
 
-    /**
-     * 小区详情url:https://app.api.ke.com/house/resblock/detailpart1?id=5011000019793 <br>
-     */
-    static void communityDetails() {
-        String communityId = "5011000010212";
-        String url = String.format("%s/house/resblock/detailpart1?id=%s", DOMAIN_NAME, communityId);
-        String htmlStr = httpUtils.proxyGet(url, "UTF-8", heads(url));
-        System.out.println(htmlStr);
+        BkResponseDto responseDto = httpSearch.execute(requestDto);
+
+        System.out.printf("loadCommunity:%s\n", responseDto);
+        return responseDto;
     }
 
     /**
@@ -76,9 +172,65 @@ public class CommunityTest {
      * 卖房：单元信息接口：/yezhu/publish/getUnits?building_id=5012000243156，取unit_name和unit_id <br>
      * 卖房：房号信息接口：/yezhu/publish/getHouses?unit_id=5013000243156，取
      */
-    static void buildingNumber() {
+    static BkResponseDto buildingNumber(String communityId) {
+        HttpSearch httpSearch = new BuildingSearchV1();
+        Map<String, String> params = new HashMap<>(4);
+        params.put("city_id", "310000");
+        params.put("key", "远洋");
+        params.put("community_id", communityId);
+
+        BkRequestDto requestDto = BkRequestDto.builder()
+                .requestParam(params)
+                .build();
+
+        BkResponseDto responseDto = httpSearch.execute(requestDto);
+
+        System.out.printf("buildingNumber:%s\n", responseDto);
+        return responseDto;
+    }
+
+    static BkResponseDto unitNumber(String buildingId) {
+        HttpSearch httpSearch = new UnitSearchV1();
+        Map<String, String> params = new HashMap<>(4);
+        params.put("city_id", "310000");
+        params.put("key", "远洋");
+        params.put("community_id", "5011000016012");
+        params.put("building_id", buildingId);
+
+        BkRequestDto requestDto = BkRequestDto.builder()
+                .requestParam(params)
+                .build();
+
+        BkResponseDto responseDto = httpSearch.execute(requestDto);
+
+        System.out.printf("unitNumber:%s\n", responseDto);
+        return responseDto;
+    }
+
+    static void houseNumber(String unitId) {
+        HttpSearch httpSearch = new HouseSearchV1();
+        Map<String, String> params = new HashMap<>(4);
+        params.put("city_id", "310000");
+        params.put("key", "远洋");
+        params.put("community_id", "5011000016012");
+        params.put("building_id", "5012000046380");
+        params.put("unit_id", unitId);
+
+        BkRequestDto requestDto = BkRequestDto.builder()
+                .requestParam(params)
+                .build();
+
+        BkResponseDto responseDto = httpSearch.execute(requestDto);
+
+        System.out.printf("houseNumber:%s\n", responseDto);
+    }
+
+    /**
+     * 小区详情url:https://app.api.ke.com/house/resblock/detailpart1?id=5011000019793 <br>
+     */
+    static void communityDetails() {
         String communityId = "5011000010212";
-        String url = "https://app.api.ke.com/yezhu/publish/getBuildings?community_id=" + communityId;
+        String url = String.format("%s/house/resblock/detailpart1?id=%s", APP_DOMAIN_NAME, communityId);
         String htmlStr = httpUtils.proxyGet(url, "UTF-8", heads(url));
         System.out.println(htmlStr);
     }
@@ -105,22 +257,5 @@ public class CommunityTest {
         String htmlStr = httpUtils.get(url, "utf-8", heads);
         System.out.println(htmlStr);
 
-    }
-
-    static Map<String, String> heads(String url) {
-        Map<String, String> heads = new HashMap<>(16);
-        heads.put("Accept", "application/json");
-        heads.put("Accept-Encoding", "utf-8");
-        heads.put("Referer", "ershoulistsearch");
-        heads.put("Cookie", "lianjia_udid=bfaa183c70b47681;lianjia_token=2.0014c2fed773f3c0cf056fd7e6568b1c66;lianjia_ssid=97b3ff8b-cfee-4633-8418-21c3802e2d83;lianjia_uuid=359ab4e2-6e30-4cbe-a300-5c676b76c3ee");
-        heads.put("Lianjia-City-Id", "310000");
-        heads.put("User-Agent", "Beike2.20.1;google Pixel; Android 8.1.0");
-        heads.put("Lianjia-Channel", "Android_ke_wandoujia");
-        heads.put("Lianjia-Version", "2.20.1");
-        heads.put("Authorization", BeikeUtils.authorization(url));
-        heads.put("Lianjia-Im-Version", "2.34.0");
-        heads.put("Host", "app.api.ke.com");
-        heads.put("Connection", "Keep-Alive");
-        return heads;
     }
 }
