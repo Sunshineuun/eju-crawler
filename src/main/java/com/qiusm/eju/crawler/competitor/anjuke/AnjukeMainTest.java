@@ -2,11 +2,15 @@ package com.qiusm.eju.crawler.competitor.anjuke;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.constant.CommunityRackRateConstant;
+import com.qiusm.eju.crawler.constant.EjuConstant;
+import com.qiusm.eju.crawler.constant.SymbolicConstant;
+import com.qiusm.eju.crawler.parser.competitor.anjuke.CommunityRackRateConstant;
 import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.http.Download;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
+import com.qiusm.eju.crawler.utils.http.SeleniumDownload;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,7 +20,7 @@ import org.jsoup.select.Elements;
 import java.io.File;
 import java.util.*;
 
-import static com.qiusm.eju.crawler.constant.CommunityRackRateConstant.*;
+import static com.qiusm.eju.crawler.parser.competitor.anjuke.CommunityRackRateConstant.*;
 import static com.qiusm.eju.crawler.constant.NumberConstant.*;
 
 /**
@@ -25,11 +29,55 @@ import static com.qiusm.eju.crawler.constant.NumberConstant.*;
  * @author qiushengming
  */
 @Slf4j
-public class AnjukeTest {
+public class AnjukeMainTest {
     static final OkHttpUtils HTTP_CLIENT = CommonUtils.createHttpClient();
+    static final Download DOWNLOAD = SeleniumDownload.Builder().proxyUrl(EjuConstant.PROXY_URL1).builder();
+    static final Set<String> PLATE_SET = new HashSet<>();
 
+    /**
+     * 无法访问此网站
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        houseDetailParser();
+        int i = 0;
+        while (i++ < 10) {
+            DOWNLOAD.proxyGet("https://shanghai.anjuke.com/sale/", heads());
+        }
+        DOWNLOAD.quit();
+    }
+
+    public static void countPage() {
+        String fileName = "./source/anjuke/anjuke_01.txt";
+        String fileContent = FileUtils.readFile(new File(fileName));
+        if (fileContent == null) {
+            return;
+        }
+
+        Integer num = 0;
+        for (String var : fileContent.split("\r\n")) {
+            if (!StringUtils.contains(var, ":")) {
+                continue;
+            }
+            for (String var1 : var.split(":")[1].split(SymbolicConstant.COMMA)) {
+                if (StringUtils.equals(var1, "1")) {
+                    continue;
+                }
+                num += Integer.parseInt(var1);
+            }
+        }
+        System.out.println(num);
+    }
+
+    public static void anjukeStart() {
+        String fileName = "./source/anjuke/anjuke_01.txt";
+        String fileContent = FileUtils.readFile(new File(fileName));
+        if (fileContent != null) {
+            for (String var : fileContent.split("\r\n")) {
+                PLATE_SET.add(var.split(":")[0]);
+            }
+        }
+        regionListParser();
     }
 
     /**
@@ -39,8 +87,8 @@ public class AnjukeTest {
      */
     static void regionListParser() {
         String url = "https://shanghai.anjuke.com/sale/";
-        // String htmlStr = httpGetBody(url, UTF8);
-        String htmlStr = FileUtils.readFile(new File("D:\\User\\qiushengming\\EJU\\81_anjuke\\v2021.7.5\\v2021.7.5_界面html代码.html"));
+        String htmlStr = httpGetBody(url);
+//        String htmlStr = FileUtils.readFile(new File("D:\\User\\qiushengming\\EJU\\81_anjuke\\v2021.7.5\\v2021.7.5_界面html代码.html"));
         if (StringUtils.isBlank(htmlStr)) {
             return;
         }
@@ -55,12 +103,12 @@ public class AnjukeTest {
         if (cityTag.size() > 0) {
             city = cityTag.text();
         }
-        data.put(CommunityRackRateConstant.CITY, city);
+        data.put(CITY, city);
 
         // 获取筛选条件中的区域条件
         Elements aTags = document.select("section.filter-content>ul.region-line2 a");
         aTags.forEach(a -> {
-            String regionHref = a.attr("href");
+            String regionHref = a1(a.attr("href"));
             String region = a.text();
 
             if (StringUtils.equals(region, "不限")) {
@@ -68,10 +116,15 @@ public class AnjukeTest {
             }
 
             Map<String, String> map = new LinkedHashMap<>(data);
-            map.put(CommunityRackRateConstant.REGION, region);
-            map.put(CommunityRackRateConstant.REGION_URL, regionHref);
+            map.put(REGION, region);
+            map.put(REGION_URL, regionHref);
 
             list.add(map);
+        });
+        list.forEach(o -> {
+            String htmlStr1 = httpGetBody(o.get(REGION_URL));
+            System.out.printf("%s", o.get(REGION));
+            plateListParser(htmlStr1);
         });
         JSONArray jsonArray = new JSONArray(Collections.singletonList(list));
         System.out.println(jsonArray.toJSONString());
@@ -81,8 +134,8 @@ public class AnjukeTest {
      * 第二步：在区域中解析板块列表 <br>
      * 参考URL:https://shanghai.anjuke.com/sale/pudong/ <br>
      */
-    static void plateListParser() {
-        String htmlStr = FileUtils.readFile(new File("D:\\User\\qiushengming\\EJU\\81_anjuke\\v2021.7.5\\v2021.7.5_plate_界面html代码.html"));
+    static void plateListParser(String htmlStr) {
+        // String htmlStr = FileUtils.readFile(new File("D:\\User\\qiushengming\\EJU\\81_anjuke\\v2021.7.5\\v2021.7.5_plate_界面html代码.html"));
         if (StringUtils.isBlank(htmlStr)) {
             return;
         }
@@ -93,7 +146,7 @@ public class AnjukeTest {
         Elements aTags = document.select("section.filter-content>ul.region-line3 a");
 
         aTags.forEach(a -> {
-            String plateUrl = a.attr("href");
+            String plateUrl = a1(a.attr("href"));
             String plate = a.text();
 
             if (StringUtils.equals(plate, "不限")) {
@@ -101,20 +154,68 @@ public class AnjukeTest {
             }
 
             Map<String, String> map = new LinkedHashMap<>(8);
-            map.put(CommunityRackRateConstant.PLATE, plate);
-            map.put(CommunityRackRateConstant.PLATE_URL, plateUrl);
+            map.put(PLATE, plate);
+            map.put(PLATE_URL, plateUrl);
             list.add(map);
         });
+        String prices = "0_100,100_200,200_300,300_400,400_500,500_600,600_700,700_800,800_900,900_1000,1000_1100,1100_1200,1200_1600,1600_2000,2000_";
+        // 1.https://shanghai.anjuke.com/sale/pudong-q-beicai/
+        // 2.https://shanghai.anjuke.com/sale/pudong-q-beicai/p50/?prices=400_500
+        // 链接1要转换成链接2
+        // 增加优化逻辑，可以先不带查询条件进行查询，查看当前板块是否超50页了，如果超50页了，则增加请求参数。
+        list.forEach(map -> {
+            if (PLATE_SET.contains(map.get(PLATE))) {
+                return;
+            }
 
-        JSONArray jsonArray = new JSONArray(Collections.singletonList(list));
-        System.out.println(jsonArray.toJSONString());
+            StringBuilder sb = new StringBuilder();
+            sb.append(map.get(PLATE)).append(":");
+
+            String htmlStr1 = httpGetBody(map.get(PLATE_URL));
+            Document doc1 = Jsoup.parse(htmlStr1);
+            String lastPageNum = getLastPage(doc1);
+            if (!StringUtils.equals(lastPageNum, "50")) {
+                sb.append(lastPageNum);
+            } else {
+                for (String var : prices.split(SymbolicConstant.COMMA)) {
+                    String url = map.get(PLATE_URL) + "p50/?prices=" + var;
+                    htmlStr1 = httpGetBody(url);
+                    doc1 = Jsoup.parse(htmlStr1);
+                    sb.append(getLastPage(doc1)).append(SymbolicConstant.COMMA);
+                }
+            }
+            log.info(sb.toString());
+        });
+    }
+
+    static String getLastPage(Document doc) {
+        Elements lastPage = doc.select("section.pagination-wrap li.last");
+        if (lastPage.size() > NUM0) {
+            return lastPage.text();
+        } else {
+            return "1";
+        }
+    }
+
+    /**
+     * 如果url中带有参数则截取掉
+     *
+     * @param href url
+     * @return url
+     */
+    private static String a1(String href) {
+        String[] split = href.split("\\?");
+        if (split.length == 2) {
+            return split[0];
+        }
+        return href;
     }
 
     /**
      * 第三步：楼盘列表解析 <br>
      */
-    static void houseListParser() {
-        String htmlStr = FileUtils.readFile(new File("D:\\User\\qiushengming\\EJU\\81_anjuke\\v2021.7.5\\v2021.7.5_plate_界面html代码.html"));
+    static void houseListParser(String htmlStr) {
+        // String htmlStr = FileUtils.readFile(new File("D:\\User\\qiushengming\\EJU\\81_anjuke\\v2021.7.5\\v2021.7.5_plate_界面html代码.html"));
         if (StringUtils.isBlank(htmlStr)) {
             return;
         }
@@ -377,7 +478,18 @@ public class AnjukeTest {
         System.out.println(jsonArray.toJSONString());
     }
 
-    static String httpGetBody(String requestUrl, String charset) {
-        return HTTP_CLIENT.proxyGet(requestUrl, charset, new LinkedHashMap<>(1));
+    static String httpGetBody(String requestUrl) {
+        // return HTTP_CLIENT.proxyGet(requestUrl, UTF8, heads());
+        String htmlStr = DOWNLOAD.get(requestUrl);
+        if (htmlStr.contains("<title>访问验证-安居客")) {
+            return DOWNLOAD.get(requestUrl);
+        }
+        return htmlStr;
+    }
+
+    static Map<String, String> heads() {
+        Map<String, String> head = new HashMap<>(16);
+        head.put("Cookie", "aQQ_ajkguid=1C07AFCE-2D08-6FD9-B32E-19100FB88F00; id58=e87rkF+iQlyX3dROGukwAg==; 58tj_uuid=dd30cc7e-045c-4188-9929-3bb7c51148d5; _ga=GA1.2.303529338.1625127769; als=0; isp=true; wmda_uuid=b3ca69743f4ae3da2596b3a64590ebfc; wmda_new_uuid=1; wmda_visited_projects=%3B6289197098934; new_uv=8; ANJUKE_BUCKET=pc-home%3AErshou_Web_Home_Home-a; twe=2; sessid=228FC6B6-9C98-5674-B4E1-D1505333F3EA; ctid=11; obtain_by=1; xxzl_cid=0bdb92b075a049b3a3d6b926c719c0b1; xzuid=15b87591-d78b-4094-825c-6d7b09ecc5b5");
+        return head;
     }
 }
