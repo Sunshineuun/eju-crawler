@@ -35,9 +35,6 @@ public class TaskInstance extends SuperEntity<TaskInstance> {
     @TableField("task_id")
     private Long taskId;
     /**
-     * 预计总量
-     */
-    /**
      * 任务类型,(beike,fangtianxia,anjuke)
      */
     private String type;
