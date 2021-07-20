@@ -2,6 +2,7 @@ package com.qiusm.eju.crawler.competitor.beike;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.competitor.BeikeBaseService;
 import com.qiusm.eju.crawler.competitor.beike.dao.BkFenceMapper;
 import com.qiusm.eju.crawler.competitor.beike.entity.BkFence;
 import com.qiusm.eju.crawler.competitor.beike.entity.BkFenceExample;
@@ -30,20 +31,15 @@ import static com.qiusm.eju.crawler.constant.SymbolicConstant.*;
 import static java.math.BigDecimal.ROUND_UP;
 
 /**
- * 贝壳区域
+ * 贝壳区域 围栏信息
  *
  * @author qiushengming
  */
 @Slf4j
 @Service
-public class BeikeDistrictService {
+public class BeikeDistrictService extends BeikeBaseService {
 
-    protected static OkHttpUtils httpUtils = OkHttpUtils.Builder().proxyUrl(PROXY_URL0).connectTimeout(60000).readTimeout(60000).charset(GBK).builderHttp();
-
-    protected static final List<String> ERROR_MSG = new ArrayList<>();
-
-    private static final String BEIKE_FILE_ROOT = "source\\beike\\";
-    private static final String BEIKE_JSON_ROOT = String.format("%s\\json\\", BEIKE_FILE_ROOT);
+    private static final String BEIKE_JSON_ROOT = String.format("%s\\json\\district", BEIKE_FILE_ROOT);
 
     @Resource
     private GaodeCityFenceMapper cityFenceMapper;
@@ -57,9 +53,6 @@ public class BeikeDistrictService {
     @Resource
     private GaodeService gaodeService;
 
-    static {
-        ERROR_MSG.addAll(Arrays.asList("ejuResponseCode=500,ResponseCode=,ResponseError=,枌~怣秙".split(COMMA)));
-    }
 
     /**
      * 通过城市编码获取区域列表
