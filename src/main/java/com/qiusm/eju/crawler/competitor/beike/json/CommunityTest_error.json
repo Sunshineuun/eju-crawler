@@ -1,0 +1,459 @@
+[
+  {
+    "request_id": "5357254b-603a-4631-ad7f-4b6a74a3a98f",
+    "uniqid": "010ACA160C92B00A527A0114155E91A7",
+    "errno": 20004,
+    "error": "无效的请求(20004-MT5)",
+    "data": {},
+    "cost": 18
+  },
+  {
+    "request_id": "00ac47e8-a1c0-4bff-abec-3eea68011b9d",
+    "uniqid": "010ACA160B63060C527A01B0EB813211",
+    "errno": 10061,
+    "error": "您目前使用的App版本过低，请升级至最新版本后使用(10061-T69)",
+    "data": {},
+    "cost": 19
+  },
+  {
+    "request_id": "b0c8d870-8764-454f-81b4-fdd18a408c7f",
+    "uniqid": "010ACA160D7A2F0D527A01F3D51FC558",
+    "errno": 10061,
+    "error": "您目前使用的App版本过低，请升级至最新版本后使用(10061-Z27)",
+    "data": {},
+    "cost": 24
+  },
+  {
+    "request_id": "ac37f9e3-84cd-491e-815a-2281e8e6edae",
+    "uniqid": "010ACA160ECBBD14527A01414118A9B4",
+    "errno": 0,
+    "error": "",
+    "data": {
+      "total_count": 38,
+      "has_more_data": 0,
+      "list": [
+        {
+          "building_id": "5012000104222",
+          "building_name": "平型关路1018号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ta",
+            "ch_title": "塔楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_93cac756967a0930a04dedcb5b2b0c1a"
+        },
+        {
+          "building_id": "5012000228663",
+          "building_name": "平型关路1083弄2号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_da2ea674b88f001380a2bdccdf003d94"
+        },
+        {
+          "building_id": "5012000228662",
+          "building_name": "平型关路1083弄3号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_36996c45f0084f091b16a8672d6ee0fc"
+        },
+        {
+          "building_id": "5012000228661",
+          "building_name": "平型关路1083弄5号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_82f50c46899f6629a566979f836ddf57"
+        },
+        {
+          "building_id": "5012000228660",
+          "building_name": "平型关路1083弄6号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_e9462bd62131402a2e3e206ac7539fea"
+        },
+        {
+          "building_id": "5012000228659",
+          "building_name": "平型关路1083弄7号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_883595d6d9bc862ad86e6d948ff8671a"
+        },
+        {
+          "building_id": "5012000228658",
+          "building_name": "平型关路1083弄8号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_1fc6ce9a2a8161e98ba75099d2dc04a1"
+        },
+        {
+          "building_id": "5012000228198",
+          "building_name": "平型关路1083弄9号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_fd4ee9b439fb4a6e851b75fb3b12c7bf"
+        },
+        {
+          "building_id": "5012000228197",
+          "building_name": "平型关路1083弄10号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_0e25e2f9428e063248945cd2583e8f75"
+        },
+        {
+          "building_id": "5012000228201",
+          "building_name": "平型关路1083弄11",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_def3a8f3dd1b7ece2ec944a51e84dd7d"
+        },
+        {
+          "building_id": "5012000228202",
+          "building_name": "平型关路1083弄12号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_79ad39459ed9c9f96476f8e79b0d023e"
+        },
+        {
+          "building_id": "5012000228203",
+          "building_name": "平型关路1083弄15号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_0bf60f9f59d5e66a16d872950a878cad"
+        },
+        {
+          "building_id": "5012000228205",
+          "building_name": "平型关路1083弄16号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_22ccc1b8a0c7f408dc9767f68e676346"
+        },
+        {
+          "building_id": "5012000228204",
+          "building_name": "平型关路1083弄17号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_1a8ba7ae4afc776db8782fa0c0a48d4a"
+        },
+        {
+          "building_id": "5012000228200",
+          "building_name": "平型关路1083弄18号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_ab5a2ddf4681baabc9c27248aa2128ed"
+        },
+        {
+          "building_id": "5012000228196",
+          "building_name": "平型关路1083弄19号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_de8e15b8c0fc2b59b3ecef4a20bd73af"
+        },
+        {
+          "building_id": "5012000228199",
+          "building_name": "平型关路1083弄20号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_932bcdd5bfeec1a1745da18b2e4f433d"
+        },
+        {
+          "building_id": "5012000202080",
+          "building_name": "平型关路1083弄21",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_29ae77519c16ba406dcc1acbf50653f2"
+        },
+        {
+          "building_id": "5012000202082",
+          "building_name": "平型关路1083弄22",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_27c200c92f185952ac4907059eb533df"
+        },
+        {
+          "building_id": "5012000202083",
+          "building_name": "平型关路1083弄23号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_5b5a8c28732aa72deae425e5df3996b0"
+        },
+        {
+          "building_id": "5012000141666",
+          "building_name": "平型关路1083弄25号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_a32fa2bd9734b589d2b0e41e3f34f04f"
+        },
+        {
+          "building_id": "5012000207622",
+          "building_name": "平型关路1083弄26",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_dc57b28a3f59c6d691a5fc5a79565c16"
+        },
+        {
+          "building_id": "5012000202079",
+          "building_name": "平型关路1083弄27",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_de0e484f72751abdc3541f62d1cba052"
+        },
+        {
+          "building_id": "5012000202081",
+          "building_name": "平型关路1083弄28",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_c95bdc5e36994b76408780463439f262"
+        },
+        {
+          "building_id": "5012000202077",
+          "building_name": "平型关路1083弄29",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_0381cecd0ac5db142a993a7f691dce10"
+        },
+        {
+          "building_id": "5012000216095",
+          "building_name": "平型关路1083弄30号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_0092386d7e7ad7a68e59a58d9324eebc"
+        },
+        {
+          "building_id": "5012000202078",
+          "building_name": "平型关路1083弄31号",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_394945b8f7c0203e266692747b4187d9"
+        },
+        {
+          "building_id": "5012000212787",
+          "building_name": "平型关路1083弄32",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_b93b17eafae5f7d1c2da5457f98c8ce7"
+        },
+        {
+          "building_id": "5012000211753",
+          "building_name": "平型关路1083弄33",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_647c8fa37f41fb3fe26bbb0821e5bdd9"
+        },
+        {
+          "building_id": "5012000106958",
+          "building_name": "平型关路1088弄02",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_69f7d298ef77788526ec6617267cf095"
+        },
+        {
+          "building_id": "5012000106957",
+          "building_name": "平型关路1088弄03",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_9b08919f83ddf46f1f0b8de3a8569d98"
+        },
+        {
+          "building_id": "5012000106956",
+          "building_name": "平型关路1088弄05",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_c8908029bd9947437ea44b6981a5bbc3"
+        },
+        {
+          "building_id": "5012000106955",
+          "building_name": "平型关路1088弄06",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_436939167ea3408f34ceab51afd15f82"
+        },
+        {
+          "building_id": "5012000106954",
+          "building_name": "平型关路1088弄07",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_ea22e4c0c759f702264b4acc36ec641d"
+        },
+        {
+          "building_id": "5012000106953",
+          "building_name": "平型关路1088弄08",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_f3f1fd242381ebe1bbfd02d0dfa11b06"
+        },
+        {
+          "building_id": "5012000106952",
+          "building_name": "平型关路1088弄09",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_0f6fdb689619ee652057e7ef60209b15"
+        },
+        {
+          "building_id": "5012000106951",
+          "building_name": "平型关路1088弄10",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_b3a64f7c7c16b7b579569a2e445b7e81"
+        },
+        {
+          "building_id": "5012102751226",
+          "building_name": "车位",
+          "is_zero_unit": 0,
+          "build_year": "0",
+          "build_type": {
+            "en_title": "ban",
+            "ch_title": "板楼"
+          },
+          "eleid": "010ACA160ECBBD14527A01414118A9B4_2ad6acdfa70ef1ada2fd1bcbc1c4e4be"
+        }
+      ],
+      "show_captcha": 0,
+      "captcha_url": "https:\/\/huodong.ke.com\/tools\/validate?scene=hdic_verify_code&redirect=lianjiabeike%3A%2F%2Fsecurity%2Fcaptcha"
+    },
+    "cost": 486
+  }
+]

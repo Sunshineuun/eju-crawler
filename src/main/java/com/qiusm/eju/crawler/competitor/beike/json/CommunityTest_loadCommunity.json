@@ -688,5 +688,510 @@
       }
     },
     "cost": 123
+  },
+  {
+    "request_id": "dbe2c1d2-171c-4931-9a53-9d4db6327891",
+    "uniqid": "010ACA160DD15D32A87A016E59989643",
+    "errno": 0,
+    "error": "",
+    "data": {
+      "fbQueryId": "468015166769377280",
+      "groups": [
+        {
+          "items": [
+            {
+              "channel": "xiaoqu",
+              "count_str": "361套",
+              "text": "大宁",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e",
+              "sug_type": "bizcircle",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "商圈"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424128\",\"fb_item_location\":\"0\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:611900116:bizcircle\"}",
+              "fbExpoId": "468015167029424128",
+              "m_url": "/xiaoqu/daning/",
+              "app_condition": "d310106b611900116",
+              "desc": "静安",
+              "value": {
+                "bizcircleId": 611900116
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_0cde8d9bcde242cccd7939f8919f19ac"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "3套",
+              "text": "大宁新村",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e新村",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424129\",\"fb_item_location\":\"1\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000012161:resblock\"}",
+              "fbExpoId": "468015167029424129",
+              "m_url": "/xiaoqu/c5011000012161/",
+              "app_condition": "c5011000012161",
+              "resblock_alias": "(共宁小区)",
+              "hls_resblock_alias": "(共宁小区)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000012161
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_871dcdf3afbabb6b2992e4179132a24c"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "4套",
+              "text": "大宁金茂府",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e金茂府",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424130\",\"fb_item_location\":\"2\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000001072:resblock\"}",
+              "fbExpoId": "468015167029424130",
+              "m_url": "/xiaoqu/c5011000001072/",
+              "app_condition": "c5011000001072",
+              "resblock_alias": "(金茂雅苑)",
+              "hls_resblock_alias": "(金茂雅苑)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000001072
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_96f268cd7b86243226c982c63866f60b"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "5套",
+              "text": "大宁瑞仕花园",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e瑞仕花园",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424131\",\"fb_item_location\":\"3\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000003997:resblock\"}",
+              "fbExpoId": "468015167029424131",
+              "m_url": "/xiaoqu/c5011000003997/",
+              "app_condition": "c5011000003997",
+              "resblock_alias": "(延长中路727弄)",
+              "hls_resblock_alias": "(延长中路727弄)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000003997
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_ef3c473a4911df7c815babd05e3b986c"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "4套",
+              "text": "大宁龙盛雅苑",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e龙盛雅苑",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424132\",\"fb_item_location\":\"4\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000009029:resblock\"}",
+              "fbExpoId": "468015167029424132",
+              "m_url": "/xiaoqu/c5011000009029/",
+              "app_condition": "c5011000009029",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000009029
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_b827172895fd0e3d94dda57b1aba8d97"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "大宁揽翠艺墅",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e揽翠艺墅",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424133\",\"fb_item_location\":\"5\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011102209161:resblock\"}",
+              "fbExpoId": "468015167029424133",
+              "m_url": "/xiaoqu/c5011102209161/",
+              "app_condition": "c5011102209161",
+              "resblock_alias": "(明园森林都市（二期）)",
+              "hls_resblock_alias": "(明园森林都市（二期）)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011102209161
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_a2a50a22d92bec4bf42e2ad4841f4568"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "13套",
+              "text": "大宁路660弄",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e路660弄",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424134\",\"fb_item_location\":\"6\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000008528:resblock\"}",
+              "fbExpoId": "468015167029424134",
+              "m_url": "/xiaoqu/c5011000008528/",
+              "app_condition": "c5011000008528",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000008528
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_410c58dd36585d00a9d001956ec939e2"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "6套",
+              "text": "大宁北玉兰公馆",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e北玉兰公馆",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424135\",\"fb_item_location\":\"7\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011062711406:resblock\"}",
+              "fbExpoId": "468015167029424135",
+              "m_url": "/xiaoqu/c5011062711406/",
+              "app_condition": "c5011062711406",
+              "resblock_alias": "(融创紫荆园)",
+              "hls_resblock_alias": "(融创紫荆园)",
+              "desc": "宝山 共富",
+              "value": {
+                "communityId": 5011062711406
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_13f7f07273ea0e4856f7bc3c082b591d"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "6套",
+              "text": "大宁北玉兰公馆",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e北玉兰公馆",
+              "sug_type": "shequ",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "社区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424136\",\"fb_item_location\":\"8\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:2472:shequ\"}",
+              "fbExpoId": "468015167029424136",
+              "m_url": "/xiaoqu/sq2472/",
+              "app_condition": "sq2472",
+              "desc": " ",
+              "value": {
+                "primaryCommunityId": 2472
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_f120599cf702416b1f8774657dfb7267"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "大宁路538弄",
+              "hls_text": "\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e路538弄",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424137\",\"fb_item_location\":\"9\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000003245:resblock\"}",
+              "fbExpoId": "468015167029424137",
+              "m_url": "/xiaoqu/c5011000003245/",
+              "app_condition": "c5011000003245",
+              "resblock_alias": "(宁和小区)",
+              "hls_resblock_alias": "(宁和小区)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000003245
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_fe7fa1ef67c9fb7997b78fc4ed381a57"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "4套",
+              "text": "东方明珠大宁公寓",
+              "hls_text": "东方明珠\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e公寓",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424138\",\"fb_item_location\":\"10\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000016508:resblock\"}",
+              "fbExpoId": "468015167029424138",
+              "m_url": "/xiaoqu/c5011000016508/",
+              "app_condition": "c5011000016508",
+              "resblock_alias": "(大宁公寓)",
+              "hls_resblock_alias": "(大宁公寓)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000016508
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_75b87984888e132e96a154c8878e1c9d"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "上海滩大宁城",
+              "hls_text": "上海滩\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e城",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424139\",\"fb_item_location\":\"11\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011102208429:resblock\"}",
+              "fbExpoId": "468015167029424139",
+              "m_url": "/xiaoqu/c5011102208429/",
+              "app_condition": "c5011102208429",
+              "resblock_alias": "(上海滩·大宁城)",
+              "hls_resblock_alias": "(上海滩·大宁城)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011102208429
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_8dbea841af607639a5370181a80dea72"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "3套",
+              "text": "象屿大宁悦府",
+              "hls_text": "象屿\u003cfont color\u003d\u0027#3072F6\u0027\u003e大宁\u003c/font\u003e悦府",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424140\",\"fb_item_location\":\"12\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000001588:resblock\"}",
+              "fbExpoId": "468015167029424140",
+              "m_url": "/xiaoqu/c5011000001588/",
+              "app_condition": "c5011000001588",
+              "resblock_alias": "(象屿名邸, 象屿·大宁悦府)",
+              "hls_resblock_alias": "(象屿名邸, 象屿·大宁悦府)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000001588
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_eb2f63c9292c00f0524295ff6cc284fa"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "暂无房源",
+              "text": "宁泰馨苑",
+              "hls_text": "宁泰馨苑",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424141\",\"fb_item_location\":\"13\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000013870:resblock\"}",
+              "fbExpoId": "468015167029424141",
+              "m_url": "/xiaoqu/c5011000013870/",
+              "app_condition": "c5011000013870",
+              "resblock_alias": "(大宁绿湾)",
+              "hls_resblock_alias": "(大宁绿湾)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000013870
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_813e907c25c0cbd7e4a94938b1e7fd79"
+            },
+            {
+              "channel": "xiaoqu",
+              "count_str": "15套",
+              "text": "宁和小区",
+              "hls_text": "宁和小区",
+              "sug_type": "resblock",
+              "sug_type_name": {
+                "bg_color": "#F5F5F5",
+                "color": "#A0A3A5",
+                "text": "小区"
+              },
+              "strategyInfo": "{\"fb_query_id\":\"468015166769377280\",\"fb_expo_id\":\"468015167029424142\",\"fb_item_location\":\"14\",\"fb_service_id\":\"2011710009\",\"fb_ab_test_flag\":\"[\\\"ab-test-exp-602-group-1\\\",\\\"ab-test-exp-999-group-1\\\"]\",\"fb_item_id\":\"310000:5011000013544:resblock\"}",
+              "fbExpoId": "468015167029424142",
+              "m_url": "/xiaoqu/c5011000013544/",
+              "app_condition": "c5011000013544",
+              "resblock_alias": "(大宁路540弄)",
+              "hls_resblock_alias": "(大宁路540弄)",
+              "desc": "静安 大宁",
+              "value": {
+                "communityId": 5011000013544
+              },
+              "eleid": "010ACA160DD15D32A87A016E59989643_c331e1d31eae2709e591a6f7c7814f13"
+            }
+          ],
+          "eleid": "010ACA160DD15D32A87A016E59989643_08276c4c4a5685f2166ec72f2c836e99"
+        }
+      ]
+    },
+    "cost": 149
+  },
+  {
+    "request_id": "3ce90131-2fb6-42f3-a57b-8963c5e9593e",
+    "uniqid": "010ACA160D618F3AA87A016A59C2EE57",
+    "errno": 0,
+    "error": "",
+    "data": {
+      "list": [
+        {
+          "community_id": "5011000012161",
+          "community_name": "大宁新村",
+          "community_alias": "共宁小区",
+          "current_sell_count": 3,
+          "current_rent_count": 1,
+          "build_year": "1989",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_21b822fcba7a2bbba94d3923f341761f"
+        },
+        {
+          "community_id": "5011000001072",
+          "community_name": "大宁金茂府",
+          "community_alias": "金茂雅苑",
+          "current_sell_count": 4,
+          "current_rent_count": 12,
+          "build_year": "2019",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_b7409e32c48072bdcef4fac4f7a943ea"
+        },
+        {
+          "community_id": "5011000003997",
+          "community_name": "大宁瑞仕花园",
+          "community_alias": "延长中路727弄",
+          "current_sell_count": 5,
+          "current_rent_count": 0,
+          "build_year": "2014",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_e3a65ad522b3febf2e4637f2a2d2ef58"
+        },
+        {
+          "community_id": "5011000009029",
+          "community_name": "大宁龙盛雅苑",
+          "current_sell_count": 4,
+          "current_rent_count": 1,
+          "build_year": "2012",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_29e138d7374dc525bd722ccb33b816eb"
+        },
+        {
+          "community_id": "5011102209161",
+          "community_name": "大宁揽翠艺墅",
+          "community_alias": "明园森林都市（二期）",
+          "current_sell_count": 0,
+          "current_rent_count": 0,
+          "build_year": "2015",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_888205f1dc61531a221fb81620f82949"
+        },
+        {
+          "community_id": "5011000008528",
+          "community_name": "大宁路660弄",
+          "current_sell_count": 13,
+          "current_rent_count": 2,
+          "build_year": "2003",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_ad458ccba9a6ca6bae834fab9d2c1628"
+        },
+        {
+          "community_id": "5011062711406",
+          "community_name": "大宁北玉兰公馆",
+          "community_alias": "融创紫荆园",
+          "current_sell_count": 6,
+          "current_rent_count": 1,
+          "build_year": "2016",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_8c0641e88cf5cbd69cf137381c2ea9ec"
+        },
+        {
+          "community_id": "5011000003245",
+          "community_name": "大宁路538弄",
+          "community_alias": "宁和小区",
+          "current_sell_count": 0,
+          "current_rent_count": 0,
+          "build_year": "1999",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_7bf094ca721db0a283e640331ec7d703"
+        },
+        {
+          "community_id": "5011000016508",
+          "community_name": "东方明珠大宁公寓",
+          "community_alias": "大宁公寓",
+          "current_sell_count": 4,
+          "current_rent_count": 1,
+          "build_year": "2002",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_b500a7c6c8a46b9b23ea9300a8f8379e"
+        },
+        {
+          "community_id": "5011102208429",
+          "community_name": "上海滩大宁城",
+          "community_alias": "上海滩·大宁城",
+          "current_sell_count": 0,
+          "current_rent_count": 0,
+          "build_year": "2011",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_7b7d4c20fc2104363c791a4077fb876f"
+        },
+        {
+          "community_id": "5011000001588",
+          "community_name": "象屿大宁悦府",
+          "community_alias": "象屿名邸, 象屿·大宁悦府",
+          "current_sell_count": 3,
+          "current_rent_count": 4,
+          "build_year": "2016",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_c20cb53d5f9286e1285aeceeac15f8fa"
+        },
+        {
+          "community_id": "5011000013870",
+          "community_name": "宁泰馨苑",
+          "community_alias": "大宁绿湾",
+          "current_sell_count": 0,
+          "current_rent_count": 0,
+          "build_year": "2003",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_0fd741f1623e8642885219aef422f0dc"
+        },
+        {
+          "community_id": "5011000013544",
+          "community_name": "宁和小区",
+          "community_alias": "大宁路540弄",
+          "current_sell_count": 15,
+          "current_rent_count": 4,
+          "build_year": "1995",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_6f6b40850bef4c3bca4063dcbda58119"
+        },
+        {
+          "community_id": "5011000010670",
+          "community_name": "上海滩大宁城(公寓)",
+          "current_sell_count": 12,
+          "current_rent_count": 3,
+          "build_year": "2012",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_62dc8187215af984428884cd75beb30b"
+        },
+        {
+          "community_id": "5011000003697",
+          "community_name": "上海滩大宁城(别墅)",
+          "current_sell_count": 1,
+          "current_rent_count": 0,
+          "build_year": "2012",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_ec1868d99dabe424c0855a6255cb18b5"
+        },
+        {
+          "community_id": "5011000018365",
+          "community_name": "歌林春天馨园",
+          "community_alias": "大宁路883弄，万荣路388弄",
+          "current_sell_count": 18,
+          "current_rent_count": 3,
+          "build_year": "2007",
+          "eleid": "010ACA160D618F3AA87A016A59C2EE57_4afda558dac0ca67029f06bfe423c4c4"
+        }
+      ]
+    },
+    "cost": 776
   }
 ]

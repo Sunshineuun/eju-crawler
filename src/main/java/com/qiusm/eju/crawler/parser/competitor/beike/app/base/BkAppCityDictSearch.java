@@ -8,16 +8,18 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 贝壳城市区域板块地铁线路基本信息
- * 面向URL:https://m.ke.com/sh/dict/city?city_id=310000
+ * 贝壳城市区域板块地铁线路基本信息 <br>
+ * 面向URL:https://m.ke.com/sh/dict/city?city_id=310000 <br>
  *
  * @author qiushengming
  */
+@Service
 public class BkAppCityDictSearch extends BkAppBaseSearch {
 
     private static final String CITY = "city";
@@ -69,7 +71,7 @@ public class BkAppCityDictSearch extends BkAppBaseSearch {
                                     String bizcircleId = biz.getString("bizcircleId");
 
                                     JSONObject data = new JSONObject();
-                                    data.put("city_ID", cityId);
+                                    data.put("city_id", cityId);
                                     data.put("city_name", cityName);
                                     data.put("region", districtName);
                                     data.put("district_id", districtId);
@@ -95,16 +97,6 @@ public class BkAppCityDictSearch extends BkAppBaseSearch {
     @Override
     protected void buildingHeader(BkRequestDto dto) {
         Map<String, String> baseHead = new HashMap<>(16);
-        /*baseHead.put(AUTHORIZATION, BeikeUtils.authorization(dto.getUrl()));
-        baseHead.put(ACCEPT, "application/json");
-        baseHead.put(ACCEPT_ENCODING, "utf-8");
-        baseHead.put(USER_AGENT, "Beike2.20.1;google Pixel; Android 8.1.0");
-        baseHead.put(HOST, "app.api.ke.com");
-        baseHead.put(CONNECTION, "Keep-Alive");
-        baseHead.put(LIANJIA_CHANNEL, "Android_ke_wandoujia");
-        baseHead.put(LIANJIA_VERSION, "2.20.1");
-        baseHead.put(LIANJIA_IM_VERSION, "2.34.0");*/
-
         baseHead.putAll(dto.getHead());
 
         dto.setHead(baseHead);

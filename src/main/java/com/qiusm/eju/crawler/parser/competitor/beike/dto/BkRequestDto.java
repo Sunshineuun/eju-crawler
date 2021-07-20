@@ -1,5 +1,6 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.dto;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import lombok.Data;
@@ -41,11 +42,13 @@ public class BkRequestDto {
     /**
      * 请求使用的参数
      */
-    private Map<String, String> requestParam = new HashMap<>();
+    private Map<String, String> requestParam;
     /**
      * 请求头
      */
-    private Map<String, String> head = new HashMap<>();
+    private Map<String, String> head;
+
+    private Map<String, Object> data;
     /**
      * 用户信息
      */
@@ -56,6 +59,7 @@ public class BkRequestDto {
         this.charset = builder.charset;
         this.requestParam = builder.requestParam;
         this.head = builder.head;
+        this.data = builder.data;
         this.user = builder.user;
     }
 
@@ -68,6 +72,7 @@ public class BkRequestDto {
         String charset = UTF8;
         Map<String, String> requestParam = new HashMap<>();
         Map<String, String> head = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         BkUser user;
 
         public Builder url(String url) {
@@ -112,6 +117,15 @@ public class BkRequestDto {
         }
 
 
+        public Builder data(Map<String, Object> data) {
+            this.data.putAll(data);
+            return this;
+        }
+
+        public Builder data(JSONObject data) {
+            this.data.putAll(data);
+            return this;
+        }
     }
 
 }

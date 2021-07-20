@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author qiushengming
  */
-public class CommunitySearchV1App extends BkAppBaseSearch {
+public class CommunitySearchV1 extends BkAppBaseSearch {
 
     private static final String URL_TEMPLATE = "%s/house/suggestion/index?city_id=%s&query=%s&channel_id=xiaoqu";
     private static final String KEY = "key";

@@ -8,18 +8,30 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
+import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_IM_VERSION;
+import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.*;
+import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 
 /**
  * deal page list <br>
+ * 面向URL: /house/chengjiao/searchV2?limit_offset=%s&condition=%s&city_id=%s&containerType=0&limit_count=100 <br>
  * 成交页面列表，主要得到页面的请求列表 <br>
+ * 必要入参：district_id(区域id) & bizcircle_id(商圈id) & city_id(城市id)<br>
+ * 次要入参：limit_offset(偏移位，默认0)；price_bp(价格上限)&price_eq(价格下限)；<br>
  *
  * @author qiushengming
  */
 @Slf4j
-public class BkAppDealPageListSearch extends BkAppBaseSearch {
+@Service("bkAppDealPageListSearch")
+public class BkAppDealPageListSearch extends BkAppDealBaseSearch {
     /**
      * 区域id
      */
@@ -72,56 +84,52 @@ public class BkAppDealPageListSearch extends BkAppBaseSearch {
     @Override
     protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
         Map<String, Object> data = requestDto.getData();
-        Map<String, String> requestParam = requestDto.getRequestParam();
         JSONArray arrayResult = new JSONArray();
 
         JSONObject mainJson = JSON.parseObject(requestDto.getResponseStr());
-        if (checkJsonError(mainJson)) {
-            JSONObject dataJson = mainJson.getJSONObject("data");
 
-            Integer totalCount = dataJson.getInteger("total_count");
+        if (!checkJsonError(mainJson)) {
+            log.warn("{}", mainJson);
+            return;
+        }
 
-            // 总数小于2100
-            if (totalCount < 2100) {
-                log.info("{},{}板块下数据小于2100", data.get("region"), data.get("plate"));
+        JSONObject dataJson = mainJson.getJSONObject("data");
 
-                // 翻页
-                int pageNum = totalCount % 100 == 0 ? totalCount / 100 : totalCount / 100 + 1;
-                for (int m = 0; m <= pageNum; m++) {
-                    JSONObject resultJson = new JSONObject();
-                    resultJson.putAll(data);
-                    resultJson.put(LIMIT_OFFSET, m * 100);
-                    arrayResult.add(resultJson);
+        Integer totalCount = dataJson.getInteger("total_count");
+
+        // 总数小于2100
+        if (totalCount < 2100) {
+            log.info("{},{}板块下数据小于2100", data.get("region"), data.get("plate"));
+
+            // 翻页
+            int pageNum = totalCount % 100 == 0 ? totalCount / 100 : totalCount / 100 + 1;
+            for (int m = 0; m <= pageNum; m++) {
+                JSONObject resultJson = new JSONObject();
+                resultJson.putAll(data);
+                resultJson.put(LIMIT_OFFSET, m * 100);
+                arrayResult.add(resultJson);
+            }
+        } else {
+            //价格区间 分割
+            // 总价格是2000w 间隔20w
+            log.info("{},{}板块下数据大于2100，进行价格区间切割", data.get("region"), data.get("plate"));
+            int priceSize = 50;
+            int priceCount = 21;
+            for (int bp = 0; bp < priceCount; bp++) {
+                int eq = bp + 1;
+                if (bp == priceCount - 1) {
+                    eq = bp * 20;
                 }
-            } else {
-                //价格区间 分割
-                // 总价格是2000w 间隔20w
-                log.info("{},{}板块下数据大于2100，进行价格区间切割", data.get("region"), data.get("plate"));
-                int priceSize = 50;
-                int priceCount = 21;
-                for (int bp = 0; bp < priceCount; bp++) {
-                    int eq = bp + 1;
-                    if (bp == priceCount - 1) {
-                        eq = bp * 20;
-                    }
 
-                    JSONObject resultJson = new JSONObject();
-                    resultJson.putAll(data);
-                    resultJson.put(LIMIT_OFFSET, "0");
-                    resultJson.put(PRICE_BP, bp);
-                    resultJson.put(PRICE_EQ, eq);
-                    arrayResult.add(resultJson);
-                }
+                JSONObject resultJson = new JSONObject();
+                resultJson.putAll(data);
+                resultJson.put(LIMIT_OFFSET, "0");
+                resultJson.put(PRICE_BP, bp * priceSize);
+                resultJson.put(PRICE_EQ, eq * priceSize);
+                arrayResult.add(resultJson);
             }
         }
 
-        responseDto.getResult().put("request_list", arrayResult);
-    }
-
-    protected boolean checkJsonError(JSONObject jsonObject) {
-        return jsonObject != null && jsonObject.containsKey("errno")
-                && StringUtils.equals(jsonObject.getString("errno"), "0")
-                && jsonObject.containsKey("data")
-                && jsonObject.get("data") != null;
+        responseDto.getResult().put("list", arrayResult);
     }
 }

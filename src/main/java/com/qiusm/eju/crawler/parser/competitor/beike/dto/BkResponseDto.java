@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class BkResponseDto {
     private Boolean success;
-    private JSONObject result;
+    private JSONObject result = new JSONObject();
     private byte[] resultByte;
     /**
      * 系统内部出现的异常错误

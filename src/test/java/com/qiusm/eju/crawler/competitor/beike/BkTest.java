@@ -2,13 +2,14 @@ package com.qiusm.eju.crawler.competitor.beike;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.competitor.beike.utils.BeikeUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
+import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -28,6 +29,8 @@ public class BkTest {
     protected static OkHttpUtils httpUtils = OkHttpUtils.Builder()
             .proxyUrl(PROXY_URL0).charset(UTF8)
             .connectTimeout(60000).readTimeout(60000)
+            .retryMax(10)
+            .proxyRetryTag(Arrays.asList("ejuResponseCode=500,ResponseCode=,ResponseError=,枌~怣秙".split(COMMA)))
             .builderHttp();
 
     protected static final String APP_DOMAIN_NAME = "https://app.api.ke.com";

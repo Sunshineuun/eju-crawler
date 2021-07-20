@@ -2,14 +2,13 @@ package com.qiusm.eju.crawler.government.base.utils;
 
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
-import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.concurrent.*;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
-import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL;
+import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 
 /**
  * 在政府源数据采集过程中，常用的工具方法 <br>
@@ -20,7 +19,7 @@ import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL;
 public class CommonUtils {
     public static OkHttpUtils createHttpClient() {
         return OkHttpUtils.Builder()
-                .proxyUrl(PROXY_URL)
+                .proxyUrl(PROXY_URL0)
                 .connectTimeout(60000)
                 .readTimeout(60000)
                 .charset(GBK)

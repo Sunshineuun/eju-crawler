@@ -1,0 +1,121 @@
+{
+  "request_list": [
+    {
+      "limit_offset": 0,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 100,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 200,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 300,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 400,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 500,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 600,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 700,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 800,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 900,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 1000,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 1100,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    },
+    {
+      "limit_offset": 1200,
+      "city": "sh",
+      "plate": "打浦桥",
+      "district_id": "310101",
+      "region": "黄浦",
+      "city_id": "310000",
+      "bizcircle_id": "611100441"
+    }
+  ]
+}

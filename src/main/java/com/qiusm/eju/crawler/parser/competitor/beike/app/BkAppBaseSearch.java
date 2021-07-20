@@ -1,6 +1,7 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
@@ -78,7 +79,9 @@ public abstract class BkAppBaseSearch implements HttpSearch {
                 throw new BusinessException("响应体不合法");
             }
         } catch (Exception e) {
-            log.error("{}\n{}\n{}\n{}", e.getMessage(), requestDto, responseDto, StringUtils.stackTraceInfoToStr(e));
+            log.error("{},{}", e.getMessage(), requestDto.getUrl());
+            String msg = String.format("%s\n%s\n%s\n%s\n\n\n\n", e.getMessage(), requestDto, responseDto, StringUtils.stackTraceInfoToStr(e));
+            FileUtils.printFile(msg, "source\\beike\\logs\\", "bk_msg.log", true);
             requestDto.setResponseStr(e.getMessage());
         }
         //7. 判断结果状态
@@ -138,8 +141,6 @@ public abstract class BkAppBaseSearch implements HttpSearch {
         if (htmlStr != null) {
             requestDto.setResponseStr(htmlStr);
         }
-
-
     }
 
     protected boolean viewCheck(BkRequestDto requestDto) {
@@ -162,7 +163,9 @@ public abstract class BkAppBaseSearch implements HttpSearch {
         baseHead.put(LIANJIA_CHANNEL, "Android_ke_wandoujia");
         baseHead.put(LIANJIA_VERSION, "2.20.1");
         baseHead.put(LIANJIA_IM_VERSION, "2.34.0");
-        baseHead.put(LIANJIA_DEVICE_ID, dto.getUser().getDeviceId());
+        if (dto.getUser() != null) {
+            baseHead.put(LIANJIA_DEVICE_ID, dto.getUser().getDeviceId());
+        }
 
         baseHead.putAll(dto.getHead());
 

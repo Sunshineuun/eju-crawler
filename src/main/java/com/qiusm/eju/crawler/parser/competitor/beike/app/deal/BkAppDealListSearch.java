@@ -8,11 +8,13 @@ import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 /**
  * @author qiushengming
  */
 @Slf4j
+@Service
 public class BkAppDealListSearch
         extends BkAppDealPageListSearch {
 
@@ -62,10 +64,9 @@ public class BkAppDealListSearch
                     jsonResult.put("area", area);
                 }
             }
-
             arrayResult.add(jsonResult);
-
         });
 
+        responseDto.getResult().put("list", arrayResult);
     }
 }

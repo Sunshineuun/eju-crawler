@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author qiushengming
  */
-public class HouseSearchV1App extends BkAppBaseSearch {
+public class HouseSearchV1 extends BkAppBaseSearch {
 
     private static final String URL_TEMPLATE = "%s/yezhu/publish/getHouses?unit_id=%s";
     private static final String UNIT_ID = "unit_id";

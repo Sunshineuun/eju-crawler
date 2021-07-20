@@ -1,7 +1,6 @@
-package com.qiusm.eju.crawler.competitor.beike.community;
+package com.qiusm.eju.crawler.competitor.beike;
 
-import com.qiusm.eju.crawler.competitor.beike.BkTest;
-import com.qiusm.eju.crawler.competitor.beike.utils.BeikeUtils;
+import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.HttpSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByPasswordV2;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByVerifyCode;
@@ -20,9 +19,10 @@ import java.util.*;
 import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
 import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_DEVICE_ID;
 
 /**
+ * 贝壳骨架数据抓取 test
+ *
  * @author qiushengming
  */
 public class CommunityTest extends BkTest {
@@ -54,7 +54,7 @@ public class CommunityTest extends BkTest {
 //        imgVerification();
 //        phoneVerification();
 //        loginByVerifyCode();
-        loginByPasswordV2();
+        erShouFangSearch();
 //        System.out.println(RandomUtil.simpleUUID());
     }
 
@@ -68,7 +68,7 @@ public class CommunityTest extends BkTest {
     static void loginByPasswordV2() {
         HttpSearch httpSearch = new LoginByPasswordV2();
         Map<String, String> params = new HashMap<>(1);
-         params.put("pic_verify_code", "1082");
+        params.put("pic_verify_code", "1082");
         BkRequestDto requestDto = BkRequestDto.builder()
                 .user(BK_USER)
                 .requestParam(params)
@@ -137,7 +137,8 @@ public class CommunityTest extends BkTest {
      * 问题：这个是搜小区的还是搜索什么的？ <br>
      */
     public static void erShouFangSearch() {
-        String url = APP_DOMAIN_NAME + "/house/ershoufang/searchv5?condition=rs安墁西郊&refer=ershoulistsearch&containerType=1&limitCount=20&limitOffset=0&from=hot_click&fullFilters=1&cityId=310000";
+        // String url = APP_DOMAIN_NAME + "/house/ershoufang/searchv5?condition=rs安墁西郊&refer=ershoulistsearch&containerType=1&limitCount=20&limitOffset=0&from=hot_click&fullFilters=1&cityId=310000";
+        String url = "https://app.api.ke.com/house/house/moreinfo?house_code=107103747153";
         String htmlStr = httpUtils.proxyGet(url, "UTF-8", heads(url));
         System.out.println(htmlStr);
     }
