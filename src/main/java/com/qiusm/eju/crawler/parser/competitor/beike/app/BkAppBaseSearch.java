@@ -22,9 +22,9 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
  * @author qiushengming
  */
 @Slf4j
-public abstract class BkBaseSearch implements HttpSearch {
+public abstract class BkAppBaseSearch implements HttpSearch {
 
-    private static final String CITY_ID = "city_id";
+    protected static final String CITY_ID = "city_id";
 
     protected static final String DOMAIN_NAME = "https://app.api.ke.com";
 

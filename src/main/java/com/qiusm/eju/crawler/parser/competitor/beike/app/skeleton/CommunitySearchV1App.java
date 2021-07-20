@@ -3,7 +3,7 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author qiushengming
  */
-public class CommunitySearchV1 extends BkBaseSearch {
+public class CommunitySearchV1App extends BkAppBaseSearch {
 
     private static final String URL_TEMPLATE = "%s/house/suggestion/index?city_id=%s&query=%s&channel_id=xiaoqu";
     private static final String KEY = "key";

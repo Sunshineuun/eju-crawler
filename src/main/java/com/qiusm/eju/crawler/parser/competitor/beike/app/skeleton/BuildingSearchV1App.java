@@ -3,7 +3,7 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
@@ -12,26 +12,26 @@ import com.qiusm.eju.crawler.utils.StringUtils;
 import java.util.Map;
 
 /**
- * 贝壳app端：单元查询v1版本. 入参：楼栋id <br>
- * 面向URL:/yezhu/publish/getUnits?building_id=5012000243156{楼栋ID} <br>
+ * 贝壳app端: 楼栋查询v1版本。入参，小区id；<br>
+ * 面向URL:/yezhu/publish/getBuildings?community_id=5011000002700{小区id} <br>
  *
  * @author qiushengming
  */
-public class UnitSearchV1 extends BkBaseSearch {
+public class BuildingSearchV1App extends BkAppBaseSearch {
 
-    private static final String URL_TEMPLATE = "%s/yezhu/publish/getUnits?building_id=%s";
-    private static final String BUILDING_ID = "building_id";
+    private static final String URL_TEMPLATE = "%s/yezhu/publish/getBuildings?community_id=%s";
+    private static final String COMMUNITY_ID = "community_id";
 
     @Override
     protected void buildingUrl(BkRequestDto requestDto) {
         Map<String, String> requestParam = requestDto.getRequestParam();
-        if (requestParam.containsKey(BUILDING_ID)) {
-            String buildingId = requestParam.get(BUILDING_ID).trim();
-            if (StringUtils.isNotBlank(buildingId)) {
-                String url = String.format(URL_TEMPLATE, DOMAIN_NAME, buildingId);
+        if (requestParam.containsKey(COMMUNITY_ID)) {
+            String communityId = requestParam.get(COMMUNITY_ID).trim();
+            if (StringUtils.isNotBlank(communityId)) {
+                String url = String.format(URL_TEMPLATE, DOMAIN_NAME, communityId);
                 requestDto.setUrl(url);
             } else {
-                throw new BusinessException("楼栋ID为空");
+                throw new BusinessException("小区ID为空");
             }
         }
     }
@@ -43,9 +43,9 @@ public class UnitSearchV1 extends BkBaseSearch {
         JSONObject result = new JSONObject();
         list.forEach(o -> {
             JSONObject var = (JSONObject) o;
-            String id = var.getString("unit_id");
-            String name = var.getString("unit_name");
-            result.put(id, name);
+            String buildingId = var.getString("building_id");
+            String buildingName = var.getString("building_name");
+            result.put(buildingId, buildingName);
         });
         responseDto.setResult(result);
     }

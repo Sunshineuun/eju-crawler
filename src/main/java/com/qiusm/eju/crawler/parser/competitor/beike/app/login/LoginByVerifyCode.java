@@ -3,7 +3,7 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
@@ -18,7 +18,7 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
  * @author qiushengming
  */
 @Slf4j
-public class LoginByVerifyCode extends BkBaseSearch {
+public class LoginByVerifyCode extends BkAppBaseSearch {
     private static final String URL_TEMPLATE = "https://app.api.ke.com/user/account/loginbyverifycode";
     private static final String MOBILE_PHONE_NO = "mobile_phone_no";
     private static final String PIC_VERIFY_CODE = "pic_verify_code";

@@ -3,7 +3,7 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
@@ -18,7 +18,7 @@ import java.util.Map;
  * @author qiushengming
  */
 @Slf4j
-public class PhoneVerifyCode extends BkBaseSearch {
+public class PhoneVerifyCode extends BkAppBaseSearch {
     private static final String URL_TEMPLATE = "%s/user/account/sendverifycodeforbindmobilev2?mobile_phone_no=%s";
     private static final String MOBILE_PHONE_NO = "mobile_phone_no";
     private static final String PIC_VERIFY_CODE = "pic_verify_code";

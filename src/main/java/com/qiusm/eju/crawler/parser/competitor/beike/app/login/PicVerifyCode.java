@@ -2,7 +2,7 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkBaseSearch;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
@@ -20,7 +20,7 @@ import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.HOST;
  *
  * @author qiushengming
  */
-public class PicVerifyCode extends BkBaseSearch {
+public class PicVerifyCode extends BkAppBaseSearch {
     private static final String URL_TEMPLATE = "%s/user/VerifyCode/GeneratePicture?device_id=%s&radom=%s";
     private static final String DEVICE_ID = "device_id";
 
