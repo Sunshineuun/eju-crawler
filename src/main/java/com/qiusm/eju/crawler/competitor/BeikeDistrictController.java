@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/bk")
+@RequestMapping("/bk/district")
 public class BeikeDistrictController {
 
     @Resource
