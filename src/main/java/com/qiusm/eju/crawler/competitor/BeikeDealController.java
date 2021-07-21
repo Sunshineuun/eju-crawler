@@ -58,7 +58,7 @@ public class BeikeDealController extends BeiKeBaseController{
                 JSONArray detailList = pageHandler((JSONObject) o2);
                 for (Object o3 : detailList) {
                     if (count++ % 100 == 0) {
-                        log.info("处理的数量：count={}。-----------------------------------------------",
+                        log.info("成交数据，处理的数量：count={}。",
                                 count);
                     }
                     bkDealExecutor.submit(() -> {

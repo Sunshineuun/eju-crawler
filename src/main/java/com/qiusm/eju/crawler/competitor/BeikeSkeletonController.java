@@ -78,7 +78,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 JSONArray communityList = pageHandler((JSONObject) o2);
                 for (Object o3 : communityList) {
                     if (count++ % 10 == 0) {
-                        log.info("处理的数量：count={}。-----------------------------------------------",
+                        log.info("骨架数据，处理的数量：count={}。",
                                 count);
                     }
 
