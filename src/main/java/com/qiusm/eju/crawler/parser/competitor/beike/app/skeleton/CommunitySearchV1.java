@@ -8,6 +8,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import java.util.Map;
  *
  * @author qiushengming
  */
+@Service
 public class CommunitySearchV1 extends BkAppSkeletonBaseSearch {
 
     private static final String URL_TEMPLATE = "%s/house/suggestion/index?city_id=%s&query=%s&channel_id=xiaoqu";
@@ -42,14 +44,21 @@ public class CommunitySearchV1 extends BkAppSkeletonBaseSearch {
         JSONArray items = JSONUtils.getJsonArrayByKey(var0, "data.groups.items");
 
         JSONObject result = new JSONObject();
+        JSONArray array = new JSONArray();
         items.forEach(o -> {
             if (o instanceof JSONObject) {
                 JSONObject var = (JSONObject) o;
-                String communityId = JSONUtils.getStringByKey(var, "value.communityId");
-                String communityName = JSONUtils.getStringByKey(var, "text");
-                result.put(communityId, communityName);
+                String communityId = var.getString("community_id");
+                String communityName = var.getString("community_name");
+                String communityAlias = var.getString("community_alias");
+                JSONObject jsonVar = new JSONObject();
+                jsonVar.put("community_name", communityName);
+                jsonVar.put("community_Id", communityId);
+                jsonVar.put("community_alias", communityAlias);
+                array.add(jsonVar);
             }
         });
+        result.put("list", array);
         responseDto.setResult(result);
     }
 }

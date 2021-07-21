@@ -8,6 +8,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import java.util.Map;
  *
  * @author qiushengming
  */
+@Service
 public class BuildingSearchV1 extends BkAppSkeletonBaseSearch {
 
     private static final String URL_TEMPLATE = "%s/yezhu/publish/getBuildings?community_id=%s";
@@ -41,12 +43,17 @@ public class BuildingSearchV1 extends BkAppSkeletonBaseSearch {
         JSONObject var0 = JSONObject.parseObject(requestDto.getResponseStr());
         JSONArray list = JSONUtils.getJsonArrayByKey(var0, "data.list");
         JSONObject result = new JSONObject();
+        JSONArray array = new JSONArray();
         list.forEach(o -> {
             JSONObject var = (JSONObject) o;
             String buildingId = var.getString("building_id");
             String buildingName = var.getString("building_name");
-            result.put(buildingId, buildingName);
+            JSONObject jsonVar = new JSONObject();
+            jsonVar.put("building_name", buildingName);
+            jsonVar.put("building_id", buildingId);
+            array.add(jsonVar);
         });
+        result.put("list", array);
         responseDto.setResult(result);
     }
 }

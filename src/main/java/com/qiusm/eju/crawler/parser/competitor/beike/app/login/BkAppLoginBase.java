@@ -1,12 +1,10 @@
-package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
+package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 
 import com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory;
-import com.qiusm.eju.crawler.competitor.beike.service.BkDealUrlHistoryService;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,10 +16,12 @@ import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 /**
  * @author qiushengming
  */
-public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
+public abstract class BkAppLoginBase extends BkAppBaseSearch {
 
-    @Autowired
-    protected BkDealUrlHistoryService historyService;
+    @Override
+    protected void httpGet(BkRequestDto requestDto) {
+        httpGetA(requestDto);
+    }
 
     @Override
     protected void buildingHeader(BkRequestDto dto) {

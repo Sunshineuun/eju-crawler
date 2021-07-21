@@ -32,7 +32,7 @@ public interface IBkRedisService {
      *
      * @return 用户
      */
-    BkUser popUser();
+    BkUser getUser();
 
     /**
      * 将用户推入用户队列中
@@ -47,4 +47,9 @@ public interface IBkRedisService {
      * @param user BkUser
      */
     void updateToken(BkUser user);
+
+    /**
+     * 备份用户
+     */
+    void userBack();
 }

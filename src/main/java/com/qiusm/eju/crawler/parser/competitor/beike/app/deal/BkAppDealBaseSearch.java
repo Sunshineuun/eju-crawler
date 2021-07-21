@@ -52,28 +52,4 @@ public abstract class BkAppDealBaseSearch extends BkAppBaseSearch {
                 && jsonObject.get("data") != null;
     }
 
-    /**
-     * 1.发送请求钱先去数据库中查找下，是否有相应的结果，如果有，就使用数据库中的；
-     * 2.如果查找的是空的那么删除再进行请求
-     * 3.请求成功后进行存储，存储之前判断结果是否为空的，为空则不进行存储
-     *
-     * @param requestDto requestDto
-     */
-    @Override
-    protected void httpGet(BkRequestDto requestDto) {
-        BkDealUrlHistory his = historyService.getHistoryByUrl(requestDto.getUrl());
-
-        if (his != null) {
-            requestDto.setResponseStr(his.getResult());
-        } else {
-            his = new BkDealUrlHistory();
-        }
-
-        if (!viewCheck(requestDto)) {
-            super.httpGet(requestDto);
-            his.setResult(requestDto.getResponseStr());
-            his.setUrl(requestDto.getUrl());
-            historyService.upHis(his);
-        }
-    }
 }

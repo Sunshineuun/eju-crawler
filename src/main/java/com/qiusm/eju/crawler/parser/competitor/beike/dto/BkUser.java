@@ -31,6 +31,10 @@ public class BkUser {
      */
     private String password;
 
+    public BkUser() {
+
+    }
+
     private BkUser(Builder builder) {
         this.phoneNo = builder.phoneNo;
         this.password = builder.password;

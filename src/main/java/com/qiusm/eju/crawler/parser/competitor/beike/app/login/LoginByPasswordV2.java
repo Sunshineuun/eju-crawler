@@ -10,6 +10,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,8 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.AUTHORIZATI
 /**
  * @author qiushengming
  */
-public class LoginByPasswordV2 extends BkAppBaseSearch {
+@Service
+public class LoginByPasswordV2 extends BkAppLoginBase {
     private static final String URL_TEMPLATE = "https://app.api.ke.com/user/account/loginByPasswordV2";
     private static final String MOBILE_PHONE_NO = "mobile_phone_no";
     private static final String PIC_VERIFY_CODE = "pic_verify_code";
@@ -58,7 +60,7 @@ public class LoginByPasswordV2 extends BkAppBaseSearch {
     @Override
     protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
         JSONObject json = JSON.parseObject(requestDto.getResponseStr());
-        String accessToken = JSONUtils.getStringByKey(json, "access_token");
+        String accessToken = JSONUtils.getStringByKey(json, "data.access_token");
         requestDto.getUser().setToken(accessToken);
         responseDto.setResult(json);
     }

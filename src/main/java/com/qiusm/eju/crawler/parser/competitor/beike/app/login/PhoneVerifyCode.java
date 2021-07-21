@@ -8,6 +8,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -18,7 +19,8 @@ import java.util.Map;
  * @author qiushengming
  */
 @Slf4j
-public class PhoneVerifyCode extends BkAppBaseSearch {
+@Service
+public class PhoneVerifyCode extends BkAppLoginBase {
     private static final String URL_TEMPLATE = "%s/user/account/sendverifycodeforbindmobilev2?mobile_phone_no=%s";
     private static final String MOBILE_PHONE_NO = "mobile_phone_no";
     private static final String PIC_VERIFY_CODE = "pic_verify_code";

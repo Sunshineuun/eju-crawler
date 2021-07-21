@@ -28,7 +28,7 @@ public class FileUtils {
             byte[] data = fileContent.getBytes();
             os.write(data, 0, data.length);
             os.flush();
-            log.info("文件写入" + filePath + File.separator + fileName + "结束");
+            // log.info("文件写入" + filePath + File.separator + fileName + "结束");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

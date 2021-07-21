@@ -6,6 +6,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,8 @@ import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.HOST;
  *
  * @author qiushengming
  */
-public class PicVerifyCode extends BkAppBaseSearch {
+@Service
+public class PicVerifyCode extends BkAppLoginBase {
     private static final String URL_TEMPLATE = "%s/user/VerifyCode/GeneratePicture?device_id=%s&radom=%s";
     private static final String DEVICE_ID = "device_id";
 

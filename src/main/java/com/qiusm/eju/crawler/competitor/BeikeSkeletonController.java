@@ -11,10 +11,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.UnitSearchV1;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkUser;
-import com.qiusm.eju.crawler.utils.DateUtils;
-import com.qiusm.eju.crawler.utils.FileUtils;
-import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
-import com.qiusm.eju.crawler.utils.ThreadUtils;
+import com.qiusm.eju.crawler.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,7 +55,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     @Resource
     private IBkRedisService bkRedisService;
 
-    private final ThreadPoolExecutor bkSkeletonExecutor = ThreadPoolUtils.newFixedThreadPool("bk-skeleton", 8, 20L);
+    private final ThreadPoolExecutor bkSkeletonExecutor = ThreadPoolUtils.newFixedThreadPool("bk-skeleton", 4, 20L);
 
     /**
      * 获取板块信息
@@ -80,37 +77,37 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 // 小区列表
                 JSONArray communityList = pageHandler((JSONObject) o2);
                 for (Object o3 : communityList) {
-                    if (count++ % 1000 == 0) {
+                    if (count++ % 10 == 0) {
                         log.info("处理的数量：count={}。-----------------------------------------------",
                                 count);
                     }
+
                     // 按照小区为单位抓取骨架数据
                     bkSkeletonExecutor.submit(() -> {
-                        // 随机获取用户信息
-                        BkUser user = bkRedisService.popUser();
-                        while (true) {
-                            if (user == null) {
-                                ThreadUtils.sleep(10);
-                            } else {
-                                break;
-                            }
-                            user = bkRedisService.popUser();
-                        }
+                        BkUser user = bkRedisService.getUser();
 
                         // 小区楼栋信息抓取
                         JSONArray buildingList = buildingHandler((JSONObject) o3, user);
+                        if (buildingList == null) {
+                            return;
+                        }
                         for (Object building : buildingList) {
                             // 小区单元信息抓取
                             JSONArray unitList = unitHandler((JSONObject) building, user);
+                            if (unitList == null) {
+                                continue;
+                            }
                             for (Object unit : unitList) {
                                 JSONArray houseList = houseHandler((JSONObject) unit, user);
+                                if (houseList == null) {
+                                    continue;
+                                }
                                 houseList.forEach(house -> {
                                     FileUtils.printFile(((JSONObject) house).toJSONString() + "\n",
                                             filePath, Thread.currentThread().getName() + ".txt", true);
                                 });
                             }
                         }
-                        bkRedisService.pushUser(user);
                     });
                 }
             }
@@ -167,10 +164,12 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 .build();
         BkResponseDto responseDto = buildingSearchV1.execute(requestDto);
         JSONArray array = responseDto.getResult().getJSONArray("list");
-        array.forEach(o -> {
-            ((JSONObject) o).put("city_id", community.getString("city_id"));
-            ((JSONObject) o).put("community_id", community.getString("community_id"));
-        });
+        if (array != null) {
+            array.forEach(o -> {
+                ((JSONObject) o).put("city_id", community.getString("city_id"));
+                ((JSONObject) o).put("community_id", community.getString("community_id"));
+            });
+        }
         return array;
     }
 
@@ -183,10 +182,12 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 .build();
         BkResponseDto responseDto = unitSearchV1.execute(requestDto);
         JSONArray array = responseDto.getResult().getJSONArray("list");
-        array.forEach(o -> {
-            JSONObject var = ((JSONObject) o);
-            var.putAll(building);
-        });
+        if (array != null) {
+            array.forEach(o -> {
+                JSONObject var = ((JSONObject) o);
+                var.putAll(building);
+            });
+        }
         return array;
     }
 
@@ -199,10 +200,13 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 .build();
         BkResponseDto responseDto = houseSearchV1.execute(requestDto);
         JSONArray array = responseDto.getResult().getJSONArray("list");
-        array.forEach(o -> {
-            JSONObject var = ((JSONObject) o);
-            var.putAll(unit);
-        });
+
+        if (array != null) {
+            array.forEach(o -> {
+                JSONObject var = ((JSONObject) o);
+                var.putAll(unit);
+            });
+        }
         return array;
     }
 }

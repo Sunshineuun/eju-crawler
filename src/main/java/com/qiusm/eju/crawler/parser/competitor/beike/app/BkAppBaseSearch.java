@@ -1,6 +1,8 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory;
+import com.qiusm.eju.crawler.competitor.beike.service.BkDealUrlHistoryService;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.exception.BusinessException;
@@ -11,6 +13,7 @@ import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import com.xiaoleilu.hutool.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +27,9 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
  */
 @Slf4j
 public abstract class BkAppBaseSearch implements HttpSearch {
+
+    @Autowired
+    protected BkDealUrlHistoryService historyService;
 
     protected static final String CITY_ID = "city_id";
 
@@ -76,7 +82,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
                 //6. 解析结果httpGet
                 parser(requestDto, responseDto);
             } else {
-                throw new BusinessException("响应体不合法");
+                log.error("{},{}", requestDto.getResponseStr(), requestDto.getUrl());
             }
         } catch (Exception e) {
             log.error("{},{}", e.getMessage(), requestDto.getUrl());
@@ -115,15 +121,39 @@ public abstract class BkAppBaseSearch implements HttpSearch {
         return null;
     }
 
+
+    /**
+     * 1.发送请求钱先去数据库中查找下，是否有相应的结果，如果有，就使用数据库中的；
+     * 2.如果查找的是空的那么删除再进行请求
+     * 3.请求成功后进行存储，存储之前判断结果是否为空的，为空则不进行存储
+     *
+     * @param requestDto requestDto
+     */
+    protected void httpGet(BkRequestDto requestDto) {
+        BkDealUrlHistory his = historyService.getHistoryByUrl(requestDto.getUrl());
+
+        if (his != null) {
+            requestDto.setResponseStr(his.getResult());
+        } else {
+            his = new BkDealUrlHistory();
+        }
+
+        if (!viewCheck(requestDto)) {
+            httpGetA(requestDto);
+            his.setResult(requestDto.getResponseStr());
+            his.setUrl(requestDto.getUrl());
+            historyService.upHis(his);
+        }
+    }
     /**
      * 通过httpclinet获取请求
      */
-    protected void httpGet(BkRequestDto requestDto) {
+    protected void httpGetA(BkRequestDto requestDto) {
         String htmlStr = null;
         byte[] imgByte = null;
         switch (requestDto.getRequestMethod()) {
             case GET:
-                htmlStr = httpClient.get(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead());
+                htmlStr = httpClient.proxyGet(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead());
                 break;
             case IMG:
                 imgByte = ImageReaderUtils.imageToByteV2(requestDto.getUrl(), requestDto.getHead());

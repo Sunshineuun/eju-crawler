@@ -74,7 +74,7 @@ public class BkAppCommunityPageListSearch extends BkAppCommunityBaseSearch {
         if (totalCount > 0) {
             // 翻页
             int pageNum = totalCount % 100 == 0 ? totalCount / 100 : totalCount / 100 + 1;
-            for (int m = 0; m <= pageNum; m++) {
+            for (int m = 0; m < pageNum; m++) {
                 JSONObject resultJson = new JSONObject();
                 resultJson.putAll(data);
                 resultJson.put(LIMIT_OFFSET, m * 100);

@@ -57,7 +57,7 @@ public class BeikeDealController extends BeiKeBaseController{
             for (Object o2 : pageListArray) {
                 JSONArray detailList = pageHandler((JSONObject) o2);
                 for (Object o3 : detailList) {
-                    if (count++ % 1000 == 0) {
+                    if (count++ % 100 == 0) {
                         log.info("处理的数量：count={}。-----------------------------------------------",
                                 count);
                     }

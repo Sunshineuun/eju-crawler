@@ -9,6 +9,9 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author qiushengming
+ */
 public abstract class BeiKeBaseController {
 
     @Resource
