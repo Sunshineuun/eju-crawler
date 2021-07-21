@@ -8,6 +8,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import java.util.Map;
  *
  * @author qiushengming
  */
+@Service
 public class UnitSearchV1 extends BkAppSkeletonBaseSearch {
 
     private static final String URL_TEMPLATE = "%s/yezhu/publish/getUnits?building_id=%s";
@@ -40,13 +42,16 @@ public class UnitSearchV1 extends BkAppSkeletonBaseSearch {
     protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
         JSONObject var0 = JSONObject.parseObject(requestDto.getResponseStr());
         JSONArray list = JSONUtils.getJsonArrayByKey(var0, "data.list");
-        JSONObject result = new JSONObject();
+        JSONArray array = new JSONArray();
         list.forEach(o -> {
             JSONObject var = (JSONObject) o;
             String id = var.getString("unit_id");
             String name = var.getString("unit_name");
-            result.put(id, name);
+            JSONObject jsonVar = new JSONObject();
+            jsonVar.put("unit_name", name);
+            jsonVar.put("unit_id", id);
+            array.add(jsonVar);
         });
-        responseDto.setResult(result);
+        responseDto.getResult().put("list", array);
     }
 }

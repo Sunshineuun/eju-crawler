@@ -37,7 +37,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
 
     protected OkHttpUtils httpClient = OkHttpUtils.Builder()
             .proxyUrl(PROXY_URL0)
-            .addProxyRetryTag("ejuResponseCode")
+            .addProxyRetryTag("ejuResponseCode", "<h1>人机认证</h1>")
             .builderHttp();
 
     /**
@@ -145,6 +145,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
             historyService.upHis(his);
         }
     }
+
     /**
      * 通过httpclinet获取请求
      */
@@ -178,7 +179,8 @@ public abstract class BkAppBaseSearch implements HttpSearch {
         return !(StringUtils.isBlank(responseStr)
                 || responseStr.startsWith("ejuResponseCode")
                 || responseStr.startsWith("ResponseError")
-                || responseStr.startsWith("ResponseCode"));
+                || responseStr.startsWith("ResponseCode")
+                || responseStr.contains("<h1>人机认证</h1>"));
     }
 
     protected void buildingHeader(BkRequestDto dto) {
