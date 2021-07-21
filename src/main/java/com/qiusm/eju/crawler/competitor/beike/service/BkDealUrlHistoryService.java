@@ -7,6 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class BkDealUrlHistoryService {
     }
 
     public void upHis(BkDealUrlHistory his) {
+        his.setCreateTime(new Date());
         if (his.getId() == null) {
             historyMapper.insert(his);
         } else {

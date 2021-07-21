@@ -61,6 +61,7 @@ public class BkRequestDto {
         this.head = builder.head;
         this.data = builder.data;
         this.user = builder.user;
+        this.isLoad = builder.isLoad;
     }
 
     public static Builder builder() {
@@ -74,6 +75,7 @@ public class BkRequestDto {
         Map<String, String> head = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
         BkUser user;
+        Boolean isLoad = false;
 
         public Builder url(String url) {
             this.url = url;
@@ -124,6 +126,11 @@ public class BkRequestDto {
 
         public Builder data(JSONObject data) {
             this.data.putAll(data);
+            return this;
+        }
+
+        public Builder isLoad(boolean isLoad) {
+            this.isLoad = isLoad;
             return this;
         }
     }

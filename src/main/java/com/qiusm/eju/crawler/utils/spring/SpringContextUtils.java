@@ -1,6 +1,5 @@
 package com.qiusm.eju.crawler.utils.spring;
 
-import com.sun.istack.internal.NotNull;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.Assert;
-import reactor.util.annotation.NonNullApi;
 
 import javax.annotation.Nullable;
 import java.util.Locale;

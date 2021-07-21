@@ -163,16 +163,6 @@ public abstract class BkAppBaseSearch implements HttpSearch {
         baseHead.put(LIANJIA_CHANNEL, "Android_ke_wandoujia");
         baseHead.put(LIANJIA_VERSION, "2.20.1");
         baseHead.put(LIANJIA_IM_VERSION, "2.34.0");
-        if (dto.getUser() != null) {
-            baseHead.put(LIANJIA_DEVICE_ID, dto.getUser().getDeviceId());
-        }
-
-        baseHead.putAll(dto.getHead());
-
-        if (!baseHead.containsKey(LIANJIA_CITY_ID)) {
-            throw new BusinessException("请求头缺少【LIANJIA_CITY_ID】");
-        }
-
         dto.setHead(baseHead);
 
     }

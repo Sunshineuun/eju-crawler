@@ -32,10 +32,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Slf4j
 @RestController
 @RequestMapping("/bk/deal")
-public class BeikeDealController {
+public class BeikeDealController extends BeiKeBaseController{
 
-    @Resource
-    BkAppCityDictSearch bkAppCityDictSearch;
     @Resource(name = "bkAppDealPageListSearch")
     BkAppDealPageListSearch bkAppDealPageListSearch;
     @Resource
@@ -72,25 +70,6 @@ public class BeikeDealController {
                 }
             }
         }
-    }
-
-    /**
-     * 获取城市下板块和区域的信息
-     *
-     * @param cityId 城市id
-     * @param city   城市拼音简写
-     * @return JSONArray
-     */
-    JSONArray cityHandler(String cityId, String city) {
-        Map<String, String> params = new HashMap<>(8);
-        params.put("city_id", cityId);
-        params.put("city", city);
-        BkRequestDto requestDto = BkRequestDto.builder()
-                .requestParam(params)
-                .build();
-
-        BkResponseDto responseDto = bkAppCityDictSearch.execute(requestDto);
-        return responseDto.getResult().getJSONArray("list");
     }
 
     JSONArray pageListHandler(JSONObject biz) {

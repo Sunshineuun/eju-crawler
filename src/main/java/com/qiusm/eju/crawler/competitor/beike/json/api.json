@@ -1,0 +1,14 @@
+[
+  {
+    "url": "/house/resblock/detailpart1?id=5011000010212",
+    "desc": "小区详情信息；小区均价；小区周边；在售；在租；历史成交；"
+  },
+  {
+    "url": "/house/community/searchv2?limit_offset=0&condition=c5011000010212&city_id=310000&containerType=1&limit_count=20",
+    "desc": "小区查询"
+  },
+  {
+    "url": "/house/community/filters?city_id=310000",
+    "desc": "小区筛选条件"
+  }
+]
