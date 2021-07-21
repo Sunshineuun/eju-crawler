@@ -2,7 +2,6 @@ package com.qiusm.eju.crawler.competitor;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.HttpSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.base.BkAppCityDictSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailPartSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailSearch;
@@ -12,6 +11,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
+import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 成交
@@ -44,20 +45,30 @@ public class BeikeDealController {
     @Resource
     BkAppDealDetailPartSearch bkAppDealDetailPartSearch;
 
+    private final ThreadPoolExecutor bkDealExecutor = ThreadPoolUtils.newFixedThreadPool("bk-deal", 8, 20L);
+
     @GetMapping("/start/{city}/{cityId}")
     public void start(
             @PathVariable String cityId,
             @PathVariable String city) {
         JSONArray bizArray = cityHandler(cityId, city);
-        String fileName = DateUtils.formatDate(new Date(),"yyyy.MM.ddHHmmss");
+        String filePath = "source\\beike\\deal\\" + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
+        int count = 0;
         for (Object o1 : bizArray) {
             JSONArray pageListArray = pageListHandler((JSONObject) o1);
             for (Object o2 : pageListArray) {
                 JSONArray detailList = pageHandler((JSONObject) o2);
                 for (Object o3 : detailList) {
-                    JSONObject detail = detailHandler((JSONObject) o3);
-                    JSONObject detailPart = detailPartHandler(detail);
-                    FileUtils.printFile(detailPart.toJSONString() + "\n", "source\\beike\\deal\\", fileName + ".txt", true);
+                    if (count++ % 1000 == 0) {
+                        log.info("处理的数量：count={}。-----------------------------------------------",
+                                count);
+                    }
+                    bkDealExecutor.submit(() -> {
+                        JSONObject detail = detailHandler((JSONObject) o3);
+                        JSONObject detailPart = detailPartHandler(detail);
+                        FileUtils.printFile(detailPart.toJSONString() + "\n", filePath,
+                                Thread.currentThread().getName() + ".txt", true);
+                    });
                 }
             }
         }
