@@ -142,6 +142,8 @@ public abstract class BkAppBaseSearch implements HttpSearch {
             httpGetA(requestDto);
             his.setResult(requestDto.getResponseStr());
             his.setUrl(requestDto.getUrl());
+            his.setClassHandler(this.getClass().getSimpleName());
+            his.setUrlBase64(BeikeUtils.authorization(requestDto.getUrl()));
             historyService.upHis(his);
         }
     }
