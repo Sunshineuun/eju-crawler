@@ -9,6 +9,12 @@ public class BkDealUrlHistory {
 
     private Date createTime;
 
+    private String classHandler;
+
+    private String urlBase64;
+
+    private Integer isSuccess;
+
     private String result;
 
     public Long getId() {
@@ -33,6 +39,30 @@ public class BkDealUrlHistory {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getClassHandler() {
+        return classHandler;
+    }
+
+    public void setClassHandler(String classHandler) {
+        this.classHandler = classHandler == null ? null : classHandler.trim();
+    }
+
+    public String getUrlBase64() {
+        return urlBase64;
+    }
+
+    public void setUrlBase64(String urlBase64) {
+        this.urlBase64 = urlBase64 == null ? null : urlBase64.trim();
+    }
+
+    public Integer getIsSuccess() {
+        return isSuccess;
+    }
+
+    public void setIsSuccess(Integer isSuccess) {
+        this.isSuccess = isSuccess;
     }
 
     public String getResult() {

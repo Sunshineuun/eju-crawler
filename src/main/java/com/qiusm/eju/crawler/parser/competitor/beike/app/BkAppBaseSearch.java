@@ -37,7 +37,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
 
     protected OkHttpUtils httpClient = OkHttpUtils.Builder()
             .proxyUrl(PROXY_URL0)
-            .addProxyRetryTag("ejuResponseCode", "<h1>人机认证</h1>")
+            .addProxyRetryTag("ejuResponseCode", "<h1>人机认证</h1>", "<title>人机认证</title>")
             .builderHttp();
 
     /**
@@ -114,7 +114,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
     }
 
     protected String parserBkErrorMsg(BkRequestDto requestDto) {
-        if (StringUtils.isNotBlank(requestDto.getResponseStr())) {
+        if (viewCheck(requestDto)) {
             JSONObject var = JSONObject.parseObject(requestDto.getResponseStr());
             return var.getString("error");
         }
@@ -130,7 +130,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
      * @param requestDto requestDto
      */
     protected void httpGet(BkRequestDto requestDto) {
-        BkDealUrlHistory his = historyService.getHistoryByUrl(requestDto.getUrl());
+        BkDealUrlHistory his = historyService.getBkHistoryByUrl(requestDto.getUrl());
 
         if (his != null) {
             requestDto.setResponseStr(his.getResult());
@@ -144,6 +144,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
             his.setUrl(requestDto.getUrl());
             his.setClassHandler(this.getClass().getSimpleName());
             his.setUrlBase64(BeikeUtils.authorization(requestDto.getUrl()));
+            his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
             historyService.upHis(his);
         }
     }
@@ -182,7 +183,18 @@ public abstract class BkAppBaseSearch implements HttpSearch {
                 || responseStr.startsWith("ejuResponseCode")
                 || responseStr.startsWith("ResponseError")
                 || responseStr.startsWith("ResponseCode")
-                || responseStr.contains("<h1>人机认证</h1>"));
+                || responseStr.contains("<h1>人机认证</h1>")
+                || responseStr.contains("<title>人机认证</title>"))
+                &&
+                (StringUtils.contains(responseStr, "\"errno\": 0,")
+                        || StringUtils.contains(responseStr, "\"errno\":0,"));
+    }
+
+    protected boolean checkJsonError(JSONObject jsonObject) {
+        return jsonObject != null && jsonObject.containsKey("errno")
+                && StringUtils.equals(jsonObject.getString("errno"), "0")
+                && jsonObject.containsKey("data")
+                && jsonObject.get("data") != null;
     }
 
     protected void buildingHeader(BkRequestDto dto) {

@@ -99,11 +99,11 @@ public class BkAppDealPageListSearch extends BkAppDealBaseSearch {
 
         // 总数小于2100
         if (totalCount < 2100) {
-            log.info("{},{}板块下数据小于2100", data.get("region"), data.get("plate"));
+            log.debug("{},{}板块下数据小于2100", data.get("region"), data.get("plate"));
 
             // 翻页
             int pageNum = totalCount % 100 == 0 ? totalCount / 100 : totalCount / 100 + 1;
-            for (int m = 0; m <= pageNum; m++) {
+            for (int m = 0; m < pageNum; m++) {
                 JSONObject resultJson = new JSONObject();
                 resultJson.putAll(data);
                 resultJson.put(LIMIT_OFFSET, m * 100);
@@ -112,7 +112,7 @@ public class BkAppDealPageListSearch extends BkAppDealBaseSearch {
         } else {
             //价格区间 分割
             // 总价格是2000w 间隔20w
-            log.info("{},{}板块下数据大于2100，进行价格区间切割", data.get("region"), data.get("plate"));
+            log.debug("{},{}板块下数据大于2100，进行价格区间切割", data.get("region"), data.get("plate"));
             int priceSize = 50;
             int priceCount = 21;
             for (int bp = 0; bp < priceCount; bp++) {

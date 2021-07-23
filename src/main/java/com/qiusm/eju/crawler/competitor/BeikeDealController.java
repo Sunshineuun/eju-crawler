@@ -43,7 +43,7 @@ public class BeikeDealController extends BeiKeBaseController{
     @Resource
     BkAppDealDetailPartSearch bkAppDealDetailPartSearch;
 
-    private final ThreadPoolExecutor bkDealExecutor = ThreadPoolUtils.newFixedThreadPool("bk-deal", 8, 20L);
+    private final ThreadPoolExecutor bkDealExecutor = ThreadPoolUtils.newFixedThreadPool("bk-deal", 16, 20L);
 
     @GetMapping("/start/{city}/{cityId}")
     public void start(
@@ -54,18 +54,28 @@ public class BeikeDealController extends BeiKeBaseController{
         int count = 0;
         for (Object o1 : bizArray) {
             JSONArray pageListArray = pageListHandler((JSONObject) o1);
+            if (pageListArray == null) {
+                continue;
+            }
             for (Object o2 : pageListArray) {
                 JSONArray detailList = pageHandler((JSONObject) o2);
+                if (detailList == null) {
+                    continue;
+                }
                 for (Object o3 : detailList) {
-                    if (count++ % 100 == 0) {
+                    if (count++ % 1000 == 0) {
                         log.info("成交数据，处理的数量：count={}。",
                                 count);
                     }
                     bkDealExecutor.submit(() -> {
                         JSONObject detail = detailHandler((JSONObject) o3);
-                        JSONObject detailPart = detailPartHandler(detail);
-                        FileUtils.printFile(detailPart.toJSONString() + "\n", filePath,
-                                Thread.currentThread().getName() + ".txt", true);
+                        JSONObject detailPart = detail;
+                        // detailPartHandler(detail);
+
+                        if (detailPart != null) {
+                            FileUtils.printFile(detailPart.toJSONString() + "\n", filePath,
+                                    Thread.currentThread().getName() + ".txt", true);
+                        }
                     });
                 }
             }
@@ -128,6 +138,10 @@ public class BeikeDealController extends BeiKeBaseController{
     }
 
     JSONObject detailPartHandler(JSONObject detail) {
+        if (detail == null) {
+            return null;
+        }
+
         Map<String, String> params = new HashMap<>();
         params.put("house_code", detail.getString("house_code"));
         BkRequestDto requestDto = BkRequestDto.builder()

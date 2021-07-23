@@ -5,6 +5,9 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CLASS_HANDLER" jdbcType="VARCHAR" property="classHandler" />
+    <result column="URL_BASE64" jdbcType="VARCHAR" property="urlBase64" />
+    <result column="IS_SUCCESS" jdbcType="INTEGER" property="isSuccess" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory">
     <result column="result" jdbcType="LONGVARCHAR" property="result" />
@@ -68,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, url, create_time
+    id, url, create_time, CLASS_HANDLER, URL_BASE64, IS_SUCCESS
   </sql>
   <sql id="Blob_Column_List">
     result
@@ -127,9 +130,11 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into bk_deal_url_history (url, create_time, result
+    insert into bk_deal_url_history (url, create_time, CLASS_HANDLER, 
+      URL_BASE64, IS_SUCCESS, result
       )
-    values (#{url,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{result,jdbcType=LONGVARCHAR}
+    values (#{url,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{classHandler,jdbcType=VARCHAR}, 
+      #{urlBase64,jdbcType=VARCHAR}, #{isSuccess,jdbcType=INTEGER}, #{result,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory">
@@ -144,6 +149,15 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="classHandler != null">
+        CLASS_HANDLER,
+      </if>
+      <if test="urlBase64 != null">
+        URL_BASE64,
+      </if>
+      <if test="isSuccess != null">
+        IS_SUCCESS,
+      </if>
       <if test="result != null">
         result,
       </if>
@@ -154,6 +168,15 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classHandler != null">
+        #{classHandler,jdbcType=VARCHAR},
+      </if>
+      <if test="urlBase64 != null">
+        #{urlBase64,jdbcType=VARCHAR},
+      </if>
+      <if test="isSuccess != null">
+        #{isSuccess,jdbcType=INTEGER},
       </if>
       <if test="result != null">
         #{result,jdbcType=LONGVARCHAR},
@@ -178,6 +201,15 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.classHandler != null">
+        CLASS_HANDLER = #{record.classHandler,jdbcType=VARCHAR},
+      </if>
+      <if test="record.urlBase64 != null">
+        URL_BASE64 = #{record.urlBase64,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSuccess != null">
+        IS_SUCCESS = #{record.isSuccess,jdbcType=INTEGER},
+      </if>
       <if test="record.result != null">
         result = #{record.result,jdbcType=LONGVARCHAR},
       </if>
@@ -191,6 +223,9 @@
     set id = #{record.id,jdbcType=BIGINT},
       url = #{record.url,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      CLASS_HANDLER = #{record.classHandler,jdbcType=VARCHAR},
+      URL_BASE64 = #{record.urlBase64,jdbcType=VARCHAR},
+      IS_SUCCESS = #{record.isSuccess,jdbcType=INTEGER},
       result = #{record.result,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -200,7 +235,10 @@
     update bk_deal_url_history
     set id = #{record.id,jdbcType=BIGINT},
       url = #{record.url,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      CLASS_HANDLER = #{record.classHandler,jdbcType=VARCHAR},
+      URL_BASE64 = #{record.urlBase64,jdbcType=VARCHAR},
+      IS_SUCCESS = #{record.isSuccess,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -214,6 +252,15 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="classHandler != null">
+        CLASS_HANDLER = #{classHandler,jdbcType=VARCHAR},
+      </if>
+      <if test="urlBase64 != null">
+        URL_BASE64 = #{urlBase64,jdbcType=VARCHAR},
+      </if>
+      <if test="isSuccess != null">
+        IS_SUCCESS = #{isSuccess,jdbcType=INTEGER},
+      </if>
       <if test="result != null">
         result = #{result,jdbcType=LONGVARCHAR},
       </if>
@@ -224,13 +271,19 @@
     update bk_deal_url_history
     set url = #{url,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
+      CLASS_HANDLER = #{classHandler,jdbcType=VARCHAR},
+      URL_BASE64 = #{urlBase64,jdbcType=VARCHAR},
+      IS_SUCCESS = #{isSuccess,jdbcType=INTEGER},
       result = #{result,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory">
     update bk_deal_url_history
     set url = #{url,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      CLASS_HANDLER = #{classHandler,jdbcType=VARCHAR},
+      URL_BASE64 = #{urlBase64,jdbcType=VARCHAR},
+      IS_SUCCESS = #{isSuccess,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

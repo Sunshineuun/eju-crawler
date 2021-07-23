@@ -41,11 +41,4 @@ public abstract class BkAppCommunityBaseSearch extends BkAppBaseSearch {
         dto.setHead(baseHead);
 
     }
-
-    protected boolean checkJsonError(JSONObject jsonObject) {
-        return jsonObject != null && jsonObject.containsKey("errno")
-                && StringUtils.equals(jsonObject.getString("errno"), "0")
-                && jsonObject.containsKey("data")
-                && jsonObject.get("data") != null;
-    }
 }
