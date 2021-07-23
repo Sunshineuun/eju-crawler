@@ -122,7 +122,7 @@ public class BeikeLoginController {
         BkUser user = redisService.getUserByPhoneNo(phoneNo);
 
         if (StringUtils.isBlank(user.getPassword())) {
-            throw new BusinessException("缓存密码为空，无法登录");
+            throw new BusinessException(10000, "缓存密码为空，无法登录");
         }
         BkRequestDto requestDto = BkRequestDto.builder()
                 .user(user)

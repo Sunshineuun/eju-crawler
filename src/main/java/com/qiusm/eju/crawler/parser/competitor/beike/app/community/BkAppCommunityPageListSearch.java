@@ -35,7 +35,7 @@ public class BkAppCommunityPageListSearch extends BkAppCommunityBaseSearch {
      */
     private static final String LIMIT_OFFSET = "limit_offset";
 
-    private static final String URL_TEMPLATE = "%s/house/community/searchV2?limit_offset=%s&condition=%s&city_id=%s&containerType=0&limit_count=100";
+    private static final String URL_TEMPLATE = "%s/house/community/searchv2?limit_offset=%s&condition=%s&city_id=%s&containerType=0&limit_count=100";
 
     @Override
     protected void buildingUrl(BkRequestDto requestDto) {

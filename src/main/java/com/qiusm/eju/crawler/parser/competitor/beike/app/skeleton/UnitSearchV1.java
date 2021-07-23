@@ -29,7 +29,7 @@ public class UnitSearchV1 extends BkAppSkeletonBaseSearch {
         Map<String, String> requestParam = requestDto.getRequestParam();
         if (!requestParam.containsKey(BUILDING_ID)
                 || StringUtils.isBlank(requestParam.get(BUILDING_ID))) {
-            throw new BusinessException("楼栋ID为空");
+            throw new BusinessException(10000, "楼栋ID为空");
         }
 
         String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get(BUILDING_ID));

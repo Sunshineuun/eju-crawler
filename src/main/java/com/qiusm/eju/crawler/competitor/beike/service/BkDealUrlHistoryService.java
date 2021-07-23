@@ -3,6 +3,7 @@ package com.qiusm.eju.crawler.competitor.beike.service;
 import com.qiusm.eju.crawler.competitor.beike.dao.BkDealUrlHistoryMapper;
 import com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory;
 import com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistoryExample;
+import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author qiushengming
@@ -22,9 +24,11 @@ public class BkDealUrlHistoryService {
     @Resource
     private BkDealUrlHistoryMapper historyMapper;
 
+    private final ThreadPoolExecutor executor = ThreadPoolUtils.newFixedThreadPool("his-url", 2, 20L);
+
     public BkDealUrlHistory getBkHistoryByUrl(String url) {
         BkDealUrlHistoryExample example = new BkDealUrlHistoryExample();
-        example.createCriteria().andUrlBase64EqualTo(BeikeUtils.authorization(url));
+        example.createCriteria().andUrlBase64EqualTo(BeikeUtils.toBase64(url));
         List<BkDealUrlHistory> histories = historyMapper.selectByExampleWithBLOBs(example);
         if (CollectionUtils.isNotEmpty(histories)) {
             return histories.get(0);
@@ -55,29 +59,31 @@ public class BkDealUrlHistoryService {
         clazz.put("HouseSearchV1", "/yezhu/publish/getHouses?unit_id=");
         clazz.put("BuildingSearchV1", "/yezhu/publish/getBuildings?community_id=");
 
-        Long step = 10000L;
+        Long step = 20000L;
         Long start = 1L;
         int index = 0;
         while (true) {
             BkDealUrlHistoryExample example = new BkDealUrlHistoryExample();
-            example.createCriteria().andIdBetween(start, start + step)
-                    .andClassHandlerIsNull();
+            example.createCriteria().andIdBetween(start, start + step);
             List<BkDealUrlHistory> list = historyMapper.selectByExample(example);
 
             if (CollectionUtils.isEmpty(list)) {
                 break;
             }
             for (BkDealUrlHistory var : list) {
-                var.setUrlBase64(BeikeUtils.authorization(var.getUrl()));
-                clazz.forEach((k, v) -> {
-                    if (StringUtils.isBlank(var.getClassHandler())
-                            && StringUtils.contains(var.getUrl(), v)) {
-                        var.setClassHandler(k);
-                    }
+                executor.submit(() -> {
+                    var.setUrlBase64(BeikeUtils.toBase64(var.getUrl()));
+                    clazz.forEach((k, v) -> {
+                        if (StringUtils.isBlank(var.getClassHandler())
+                                && StringUtils.contains(var.getUrl(), v)) {
+                            var.setClassHandler(k);
+                        }
+                    });
+
+                    historyMapper.updateByPrimaryKey(var);
                 });
 
-                historyMapper.updateByPrimaryKey(var);
-                if (index++ % 100 == 0) {
+                if (index++ % 10000 == 0) {
                     log.info("已经更新的数据量：{}", index);
                 }
             }

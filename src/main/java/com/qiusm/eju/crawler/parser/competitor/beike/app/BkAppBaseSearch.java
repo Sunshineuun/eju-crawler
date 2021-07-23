@@ -87,7 +87,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
                 log.error("{},{}", requestDto.getResponseStr(), requestDto.getUrl());
             }
         } catch (Exception e) {
-            log.error("{},{}", e.getMessage(), requestDto.getUrl());
+            log.error("{},url:{}", e.getMessage(), requestDto.getUrl());
             String msg = String.format("%s\n%s\n%s\n%s\n%s\n\n\n\n", DateUtils.formatDateTime(new Date()),
                     e.getMessage(), requestDto, responseDto, StringUtils.stackTraceInfoToStr(e));
             FileUtils.printFile(msg, "source\\beike\\logs\\", "bk_msg.log", true);
@@ -146,7 +146,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
             his.setResult(requestDto.getResponseStr());
             his.setUrl(requestDto.getUrl());
             his.setClassHandler(this.getClass().getSimpleName());
-            his.setUrlBase64(BeikeUtils.authorization(requestDto.getUrl()));
+            his.setUrlBase64(BeikeUtils.toBase64(requestDto.getUrl()));
             his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
             historyService.upHis(his);
         }

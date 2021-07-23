@@ -95,6 +95,51 @@ public class BeikeUtils {
         return url;
     }
 
+    public static String toBase64(String url) {
+        return toBase64(url, null);
+    }
+
+    /**
+     * 对 url 进行授权
+     *
+     * @param url url
+     * @return 授权信息
+     */
+    public static String toBase64(String url, Map<String, String> param) {
+
+        Map<String, String> paramAll = urlToParams(url);
+
+        paramAll.put("domain", url.split("\\?")[0]);
+
+        if (MapUtils.isNotEmpty(param)) {
+            paramAll.putAll(param);
+        }
+
+        // 根据key进行排序
+        List<Map.Entry<String, String>> arrayList = new ArrayList<>(paramAll.entrySet());
+        arrayList.sort(Map.Entry.comparingByKey());
+
+        //JniClient.GetAppSecret(APPConfigHelper.c());
+        String appSecret = "d5e343d453aecca8b14b2dc687c381ca";
+        //JniClient.GetAppId(APPConfigHelper.c());
+        String appId = "20180111_android";
+        StringBuilder paramsSb = new StringBuilder(appSecret);
+        for (Map.Entry<String, String> entry : arrayList) {
+            paramsSb.append(String.format("%s=%s", entry.getKey(), entry.getValue()));
+        }
+        StringBuilder signOriginSb = new StringBuilder("sign origin=");
+        signOriginSb.append(paramsSb);
+
+        url = digestSha1(paramsSb.toString());
+        signOriginSb = new StringBuilder();
+        signOriginSb.append(appId);
+        signOriginSb.append(":");
+        signOriginSb.append(url);
+
+        url = Base64.encodeToString(signOriginSb.toString().getBytes(), 2);
+        return url;
+    }
+
     /**
      * 将字符串已SHA-1，进行加密
      *

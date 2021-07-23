@@ -168,6 +168,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
             array.forEach(o -> {
                 ((JSONObject) o).put("city_id", community.getString("city_id"));
                 ((JSONObject) o).put("community_id", community.getString("community_id"));
+                ((JSONObject) o).put("community_name", community.getString("community_name"));
             });
         }
         return array;
