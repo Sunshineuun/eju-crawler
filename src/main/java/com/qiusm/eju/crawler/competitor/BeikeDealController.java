@@ -32,7 +32,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Slf4j
 @RestController
 @RequestMapping("/bk/deal")
-public class BeikeDealController extends BeiKeBaseController{
+public class BeikeDealController extends BeiKeBaseController {
 
     @Resource(name = "bkAppDealPageListSearch")
     BkAppDealPageListSearch bkAppDealPageListSearch;
@@ -98,6 +98,22 @@ public class BeikeDealController extends BeiKeBaseController{
     }
 
     JSONArray pageHandler(JSONObject page) {
+        BkResponseDto responseDto = pageHandler1(page);
+        JSONArray list = responseDto.getResult().getJSONArray("list");
+        JSONArray requestList = responseDto.getResult().getJSONArray("request_list");
+        if (requestList != null) {
+            for (Object o : requestList) {
+                BkResponseDto responseDto1 = pageHandler1((JSONObject) o);
+                JSONArray list1 = responseDto1.getResult().getJSONArray("list");
+                if (list1 != null) {
+                    list.addAll(list1);
+                }
+            }
+        }
+        return list;
+    }
+
+    BkResponseDto pageHandler1(JSONObject page) {
         Map<String, String> params = new HashMap<>(8);
         params.put("city_id", page.getString("city_id"));
         params.put("city", page.getString("city"));
@@ -118,9 +134,7 @@ public class BeikeDealController extends BeiKeBaseController{
                 .data(page)
                 .build();
 
-        BkResponseDto responseDto = bkAppDealListSearch.execute(requestDto);
-
-        return responseDto.getResult().getJSONArray("list");
+        return bkAppDealListSearch.execute(requestDto);
     }
 
     JSONObject detailHandler(JSONObject detail) {

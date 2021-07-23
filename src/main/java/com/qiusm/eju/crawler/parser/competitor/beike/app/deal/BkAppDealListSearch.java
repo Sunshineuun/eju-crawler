@@ -11,12 +11,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
+ * 如果当前请求响应结果中的【total_count】是否大于100，如果大于100则需要进行分页。
+ *
  * @author qiushengming
  */
 @Slf4j
 @Service
 public class BkAppDealListSearch
         extends BkAppDealPageListSearch {
+
+    private static final Integer TOTAL_COUNT_LIMIT = 100;
 
     @Override
     protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
@@ -38,7 +42,7 @@ public class BkAppDealListSearch
 
             JSONObject jsonResult = new JSONObject();
             jsonResult.putAll(requestDto.getData());
-            jsonResult.put("house_code", jsonObject.getString("house_code"));
+            jsonResult.put("house_code", code);
             jsonResult.put("title", title);
             jsonResult.put("desc", desc);
             jsonResult.put("resblock_id", resblockId);
@@ -68,5 +72,26 @@ public class BkAppDealListSearch
         });
 
         responseDto.getResult().put("list", arrayResult);
+
+        // 解析新的请求
+        if (StringUtils.contains(requestDto.getUrl(), "limit_offset=0")) {
+            responseDto.getResult().put("request_list", parseNewRequest(requestDto, mainJson));
+        }
+    }
+
+    private JSONArray parseNewRequest(BkRequestDto requestDto, JSONObject mainJson) {
+        String totalCountStr = JSONUtils.getStringByKey(mainJson, "data.total_count");
+        Integer totalCount = Integer.valueOf(totalCountStr);
+        JSONArray arrayResult = new JSONArray();
+        if (totalCount > TOTAL_COUNT_LIMIT) {
+            int pageNum = totalCount % TOTAL_COUNT_LIMIT == 0 ? totalCount / TOTAL_COUNT_LIMIT : totalCount / TOTAL_COUNT_LIMIT + 1;
+            for (int m = 0; m < pageNum; m++) {
+                JSONObject resultJson = new JSONObject();
+                resultJson.putAll(requestDto.getData());
+                resultJson.put(LIMIT_OFFSET, m * 100);
+                arrayResult.add(resultJson);
+            }
+        }
+        return arrayResult;
     }
 }

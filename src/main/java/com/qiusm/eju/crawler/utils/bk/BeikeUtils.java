@@ -24,9 +24,11 @@ public class BeikeUtils {
     public static void main(String[] args) {
 
         // MjAxODAxMTFfYW5kcm9pZDpmYWI1ZmEzNTMwNzYyNWM1ZmY0NDYwNGQ2OGQzMTcyZWQ5ODI3NTE2
-        String url = "https://app.api.ke.com/user/account/sendverifycodeforbindmobilev2?mobile_phone_no=13341702682&pic_verify_code=5066";
+        // MjAxODAxMTFfYW5kcm9pZDozODdkY2YxZTVjYTU5NjViZWYyYWM4ZDVkN2RjMzZmY2E2MDU1OTMw
+        // MjAxODAxMTFfYW5kcm9pZDozMGE1NmU3ZmM2ZmI4YjEzMWRkNTM0ZmQzNjgyZTMxMDVjMzQ0OGVm
+        // MjAxODAxMTFfYW5kcm9pZDowYmNhMGQ1ZDg1ZTIzZjc1MDA5M2NjNjkyYjgyNWVkYWQ0OGE4MzVh
+        String url = "https://app.api.ke.com/house/chengjiao/detailpart1?house_code=107103773896&strategy_info={\"fb_query_id\":\"469903616162762753\",\"fb_expo_id\":\"469903616250843137\",\"fb_item_location\":\"0\",\"fb_service_id\":\"1011710018\",\"fb_ab_test_flag\":\"\",\"fb_item_id\":\"107103773896\"}";
         System.out.println(authorization(url));
-        ;
     }
 
     /**

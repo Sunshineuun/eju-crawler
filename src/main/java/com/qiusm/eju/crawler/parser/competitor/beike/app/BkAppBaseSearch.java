@@ -3,6 +3,7 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory;
 import com.qiusm.eju.crawler.competitor.beike.service.BkDealUrlHistoryService;
+import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.exception.BusinessException;
@@ -15,6 +16,7 @@ import com.xiaoleilu.hutool.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -86,7 +88,8 @@ public abstract class BkAppBaseSearch implements HttpSearch {
             }
         } catch (Exception e) {
             log.error("{},{}", e.getMessage(), requestDto.getUrl());
-            String msg = String.format("%s\n%s\n%s\n%s\n\n\n\n", e.getMessage(), requestDto, responseDto, StringUtils.stackTraceInfoToStr(e));
+            String msg = String.format("%s\n%s\n%s\n%s\n%s\n\n\n\n", DateUtils.formatDate(new Date()),
+                    e.getMessage(), requestDto, responseDto, StringUtils.stackTraceInfoToStr(e));
             FileUtils.printFile(msg, "source\\beike\\logs\\", "bk_msg.log", true);
             requestDto.setResponseStr(e.getMessage());
         }
