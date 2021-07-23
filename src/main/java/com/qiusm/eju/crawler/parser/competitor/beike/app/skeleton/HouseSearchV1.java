@@ -27,15 +27,13 @@ public class HouseSearchV1 extends BkAppSkeletonBaseSearch {
     @Override
     protected void buildingUrl(BkRequestDto requestDto) {
         Map<String, String> requestParam = requestDto.getRequestParam();
-        if (requestParam.containsKey(UNIT_ID)) {
-            String unitId = requestParam.get(UNIT_ID).trim();
-            if (StringUtils.isNotBlank(unitId)) {
-                String url = String.format(URL_TEMPLATE, DOMAIN_NAME, unitId);
-                requestDto.setUrl(url);
-            } else {
-                throw new BusinessException("单元ID为空");
-            }
+        if (!requestParam.containsKey(UNIT_ID)
+                || StringUtils.isBlank(requestParam.get(UNIT_ID))) {
+            throw new BusinessException("单元ID为空.");
         }
+
+        String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get(UNIT_ID));
+        requestDto.setUrl(url);
     }
 
     @Override

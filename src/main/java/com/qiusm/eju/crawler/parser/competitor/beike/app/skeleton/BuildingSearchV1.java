@@ -27,15 +27,13 @@ public class BuildingSearchV1 extends BkAppSkeletonBaseSearch {
     @Override
     protected void buildingUrl(BkRequestDto requestDto) {
         Map<String, String> requestParam = requestDto.getRequestParam();
-        if (requestParam.containsKey(COMMUNITY_ID)) {
-            String communityId = requestParam.get(COMMUNITY_ID).trim();
-            if (StringUtils.isNotBlank(communityId)) {
-                String url = String.format(URL_TEMPLATE, DOMAIN_NAME, communityId);
-                requestDto.setUrl(url);
-            } else {
-                throw new BusinessException("小区ID为空");
-            }
+        if (!requestParam.containsKey(COMMUNITY_ID)
+                || StringUtils.isBlank(requestParam.get(COMMUNITY_ID))) {
+            throw new BusinessException("小区ID为空");
         }
+
+        String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get(COMMUNITY_ID));
+        requestDto.setUrl(url);
     }
 
     @Override
