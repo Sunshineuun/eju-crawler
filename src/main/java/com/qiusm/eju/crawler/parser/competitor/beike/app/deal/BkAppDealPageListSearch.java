@@ -65,8 +65,8 @@ public class BkAppDealPageListSearch extends BkAppDealBaseSearch {
         // 如果存在价格区间则加入价格区间
         if (requestParam.containsKey(PRICE_BP)
                 && requestParam.containsKey(PRICE_EP)) {
-            // d%sb%sbp%seq%s
-            condition += String.format("bp%seq%s", requestParam.get(PRICE_BP), requestParam.get(PRICE_EP));
+            // d%sb%sbp%sep%s
+            condition += String.format("bp%sep%s", requestParam.get(PRICE_BP), requestParam.get(PRICE_EP));
         }
 
         String url = String.format(URL_TEMPLATE, DOMAIN_NAME, limitOffset, condition, requestParam.get(CITY_ID));

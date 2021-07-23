@@ -125,8 +125,8 @@ public class BeikeDealController extends BeiKeBaseController {
         if (page.containsKey("price_bp")) {
             params.put("price_bp", page.getString("price_bp"));
         }
-        if (page.containsKey("price_eq")) {
-            params.put("price_eq", page.getString("price_eq"));
+        if (page.containsKey("price_ep")) {
+            params.put("price_ep", page.getString("price_ep"));
         }
 
         BkRequestDto requestDto = BkRequestDto.builder()
