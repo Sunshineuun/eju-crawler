@@ -43,7 +43,7 @@ public class BkAppDealDetailSearch extends BkAppDealBaseSearch {
         Map<String, String> requestParam = requestDto.getRequestParam();
         if (!requestParam.containsKey(HOUSE_CODE)
                 || !requestParam.containsKey(STRATEGY_INFO)) {
-            throw new BusinessException("house_code or strategy_info is null");
+            throw new BusinessException(10000, "house_code or strategy_info is null");
         }
         String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get(HOUSE_CODE), requestParam.get(STRATEGY_INFO));
         requestDto.setUrl(url);

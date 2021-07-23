@@ -41,7 +41,7 @@ public class PhoneVerifyCode extends BkAppLoginBase {
             }
             requestDto.setUrl(url);
         } else {
-            throw new BusinessException("手机号码验证不通过.手机号码(不可为空 && 长度必须等于11位 && 必须为纯数字)", mpn);
+            throw new BusinessException(10000, "手机号码验证不通过.手机号码(不可为空 && 长度必须等于11位 && 必须为纯数字)" + mpn);
         }
 
     }

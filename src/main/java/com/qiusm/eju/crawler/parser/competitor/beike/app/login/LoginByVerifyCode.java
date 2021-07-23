@@ -41,7 +41,7 @@ public class LoginByVerifyCode extends BkAppLoginBase {
             if (requestParam.containsKey(key)) {
                 String value = requestParam.get(key).trim();
                 if (!StringUtils.isNotBlank(value)) {
-                    throw new BusinessException("关键数据存在为空。", key);
+                    throw new BusinessException(10000, "关键数据存在为空。" + key);
                 }
             }
         }

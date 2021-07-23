@@ -43,7 +43,7 @@ public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
         baseHead.putAll(dto.getHead());
 
         if (!baseHead.containsKey(LIANJIA_CITY_ID)) {
-            throw new BusinessException("请求头缺少【LIANJIA_CITY_ID】");
+            throw new BusinessException(10000, "请求头缺少【LIANJIA_CITY_ID】");
         }
 
         dto.setHead(baseHead);

@@ -139,7 +139,7 @@ public class DownloadThread extends Thread {
                 try {
                     ParserInterface parserProcessor = parserInterfaceMap.get(request.getCode());
                     if (parserProcessor == null) {
-                        throw new BusinessException("找不到解析器。{}", JSONObject.toJSONString(request));
+                        throw new BusinessException(10000, "找不到解析器。{}" + JSONObject.toJSONString(request));
                     }
 
                     OkHttpUtils httpClient = null;

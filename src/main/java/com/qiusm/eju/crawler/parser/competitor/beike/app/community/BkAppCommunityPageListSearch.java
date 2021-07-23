@@ -44,7 +44,7 @@ public class BkAppCommunityPageListSearch extends BkAppCommunityBaseSearch {
         if (!requestParam.containsKey(DISTRICT_ID)
                 || !requestParam.containsKey(BIZCIRCLE_ID)
                 || !requestParam.containsKey(CITY_ID)) {
-            throw new BusinessException("city_id or district_id or bizcircle_id is null");
+            throw new BusinessException(10000, "city_id or district_id or bizcircle_id is null");
         }
         String limitOffset = requestParam.get(LIMIT_OFFSET);
         if (StringUtils.isBlank(limitOffset)) {

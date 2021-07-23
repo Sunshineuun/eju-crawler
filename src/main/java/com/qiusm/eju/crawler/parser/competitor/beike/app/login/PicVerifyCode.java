@@ -35,7 +35,7 @@ public class PicVerifyCode extends BkAppLoginBase {
             String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestDto.getUser().getDeviceId(), System.currentTimeMillis());
             requestDto.setUrl(url);
         } else {
-            throw new BusinessException("请求体缺失关键参数{deviceId}.");
+            throw new BusinessException(10000, "请求体缺失关键参数{deviceId}.");
         }
 
         requestDto.setRequestMethod(RequestMethodEnum.IMG);

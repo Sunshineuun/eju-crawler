@@ -36,7 +36,7 @@ public class BkAppDealDetailPartSearch extends BkAppDealBaseSearch {
         if (!requestParam.containsKey(HOUSE_CODE)
                 || requestParam.get(HOUSE_CODE) == null
                 || StringUtils.equals(requestParam.get(HOUSE_CODE), "null")) {
-            throw new BusinessException("house_code is null");
+            throw new BusinessException(10000, "house_code is null");
         }
         String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get(HOUSE_CODE));
         if (StringUtils.equals(url, "https://app.api.ke.com/house/house/moreinfo?house_code=null")) {

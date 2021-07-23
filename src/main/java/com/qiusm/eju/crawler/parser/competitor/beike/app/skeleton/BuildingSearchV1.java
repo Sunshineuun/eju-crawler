@@ -29,7 +29,7 @@ public class BuildingSearchV1 extends BkAppSkeletonBaseSearch {
         Map<String, String> requestParam = requestDto.getRequestParam();
         if (!requestParam.containsKey(COMMUNITY_ID)
                 || StringUtils.isBlank(requestParam.get(COMMUNITY_ID))) {
-            throw new BusinessException("小区ID为空");
+            throw new BusinessException(10000, "小区ID为空");
         }
 
         String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get(COMMUNITY_ID));

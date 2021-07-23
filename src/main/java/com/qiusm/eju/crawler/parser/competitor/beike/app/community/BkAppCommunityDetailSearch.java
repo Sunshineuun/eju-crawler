@@ -34,7 +34,7 @@ public class BkAppCommunityDetailSearch extends BkAppCommunityBaseSearch {
         Map<String, String> requestParam = requestDto.getRequestParam();
 
         if (!requestParam.containsKey(COMMUNITY_ID)) {
-            throw new BusinessException("community_id null");
+            throw new BusinessException(10000, "community_id null");
         }
 
         String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get(COMMUNITY_ID));

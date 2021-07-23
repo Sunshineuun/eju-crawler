@@ -32,7 +32,7 @@ public class BkAppCityDictSearch extends BkAppBaseSearch {
         Map<String, String> requestParam = requestDto.getRequestParam();
         if (!requestParam.containsKey(CITY)
                 || !requestParam.containsKey(CITY_ID)) {
-            throw new BusinessException("city or cityCode is null");
+            throw new BusinessException(10000, "city or cityCode is null");
         }
 
         String url = String.format(URL_TEMPLATE, requestParam.get(CITY), requestParam.get(CITY_ID));

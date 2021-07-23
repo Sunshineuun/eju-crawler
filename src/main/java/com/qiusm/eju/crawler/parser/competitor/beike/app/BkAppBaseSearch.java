@@ -88,7 +88,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
             }
         } catch (Exception e) {
             log.error("{},{}", e.getMessage(), requestDto.getUrl());
-            String msg = String.format("%s\n%s\n%s\n%s\n%s\n\n\n\n", DateUtils.formatDate(new Date()),
+            String msg = String.format("%s\n%s\n%s\n%s\n%s\n\n\n\n", DateUtils.formatDateTime(new Date()),
                     e.getMessage(), requestDto, responseDto, StringUtils.stackTraceInfoToStr(e));
             FileUtils.printFile(msg, "source\\beike\\logs\\", "bk_msg.log", true);
             requestDto.setResponseStr(e.getMessage());
@@ -111,7 +111,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
             String mpn = requestParam.get(CITY_ID).trim();
             // 手机号码不为空 && 手机号码必须等于12位
             if (!(StringUtils.isNotBlank(mpn) && StringUtils.length(mpn) == 6)) {
-                throw new BusinessException("手机号码验证不通过. {}", mpn);
+                throw new BusinessException(10000, "手机号码验证不通过." + mpn);
             }
         }
     }
@@ -223,7 +223,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
             if (StringUtils.isNotBlank(dto.getUser().getToken())) {
                 cookie += "lianjia_token=" + dto.getUser().getToken();
             } else {
-                throw new BusinessException("无效的cookie");
+                throw new BusinessException(10000, "无效的cookie");
             }
         }
         dto.getHead().put(COOKIE, cookie);

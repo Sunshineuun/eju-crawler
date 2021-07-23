@@ -29,7 +29,7 @@ public class CommunitySearchV1 extends BkAppSkeletonBaseSearch {
         Map<String, String> requestParam = requestDto.getRequestParam();
         if (!requestParam.containsKey(KEY)
                 || StringUtils.isBlank(requestParam.get(KEY))) {
-            throw new BusinessException("检索关键字为空，请重新输入.");
+            throw new BusinessException(10000, "检索关键字为空，请重新输入.");
         }
 
         String url = String.format(URL_TEMPLATE, DOMAIN_NAME, requestParam.get("city_id"), requestParam.get(KEY));
