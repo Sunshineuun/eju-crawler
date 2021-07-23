@@ -1,6 +1,7 @@
 package com.qiusm.eju.crawler.competitor;
 
 import com.alibaba.fastjson.JSONArray;
+import com.qiusm.eju.crawler.base.CrawlerTaskSchedulingBaseController;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.base.BkAppCityDictSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
@@ -12,7 +13,7 @@ import java.util.Map;
 /**
  * @author qiushengming
  */
-public abstract class BeiKeBaseController {
+public abstract class BeiKeBaseController extends CrawlerTaskSchedulingBaseController {
 
     @Resource
     BkAppCityDictSearch bkAppCityDictSearch;

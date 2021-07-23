@@ -9,6 +9,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealListSearc
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealPageListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.task.entity.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
@@ -45,8 +46,15 @@ public class BeikeDealController extends BeiKeBaseController {
 
     private final ThreadPoolExecutor bkDealExecutor = ThreadPoolUtils.newFixedThreadPool("bk-deal", 16, 20L);
 
+    private CrawlerTaskInstance nowTask;
+
+    @Override
+    public void start(CrawlerTaskInstance crawlerTaskInstance) {
+        this.nowTask = crawlerTaskInstance;
+    }
+
     @GetMapping("/start/{city}/{cityId}")
-    public void start(
+    public void startA(
             @PathVariable String cityId,
             @PathVariable String city) {
         JSONArray bizArray = cityHandler(cityId, city);
