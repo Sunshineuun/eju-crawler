@@ -5,7 +5,9 @@ import com.qiusm.eju.crawler.competitor.beike.service.BkDealUrlHistoryService;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
+import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -18,6 +20,7 @@ import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 /**
  * @author qiushengming
  */
+@Slf4j
 public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
 
     @Autowired
@@ -48,5 +51,14 @@ public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
 
         dto.setHead(baseHead);
 
+    }
+
+    @Override
+    protected boolean viewCheck(BkRequestDto requestDto) {
+        String responseStr = requestDto.getResponseStr();
+        if (StringUtils.contains(responseStr, "请重新登录")) {
+            log.warn("{}", requestDto.getUser());
+        }
+        return super.viewCheck(requestDto);
     }
 }
