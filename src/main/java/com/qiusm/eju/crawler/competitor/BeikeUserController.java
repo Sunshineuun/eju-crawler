@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 /**
  * @author qiushengming
  */
-@Api(value = "bk用户管理列表")
+@Api(tags = {"BeikeUser", "bk用户管理列表"})
 @Slf4j
 @Controller
 @RequestMapping("/bk/user")

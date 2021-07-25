@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author qiushengming
  */
-@Api(value = "URL请求记录")
+@Api(tags = {"BeikeUrlHistory", "URL请求记录"})
 @Slf4j
 @RestController
 @RequestMapping("/bk/urlHistory")

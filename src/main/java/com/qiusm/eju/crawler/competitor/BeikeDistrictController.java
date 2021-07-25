@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author qiushengming
  */
-@Api(value = "bk城市&区域&板块，围栏数据")
+@Api(tags = {"BeikeDistrict", "bk城市&区域&板块，围栏数据"})
 @Slf4j
 @RestController
 @RequestMapping("/bk/district")

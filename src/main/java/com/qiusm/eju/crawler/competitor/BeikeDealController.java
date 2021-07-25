@@ -31,7 +31,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author qiushengming
  */
-@Api(value = "bk成交数据")
+@Api(tags = {"BeikeDeal", "bk成交数据"})
 @Slf4j
 @RestController
 @RequestMapping("/bk/deal")

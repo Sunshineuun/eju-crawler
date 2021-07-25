@@ -34,7 +34,7 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CIT
 /**
  * @author qiushengming
  */
-@Api(value = "bk用户登录")
+@Api(tags = {"BeikeLogin", "bk用户登录"})
 @Slf4j
 @RestController
 @RequestMapping("/bk/login")

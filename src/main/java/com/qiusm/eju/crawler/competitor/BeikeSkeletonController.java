@@ -34,7 +34,7 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CIT
  *
  * @author qiushengming
  */
-@Api(value = "bk骨架数据抓取")
+@Api(tags = {"BeikeSkeleton", "bk骨架数据抓取"})
 @Slf4j
 @RestController
 @RequestMapping("/bk/skeleton")
