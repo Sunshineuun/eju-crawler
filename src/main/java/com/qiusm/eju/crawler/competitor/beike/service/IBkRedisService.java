@@ -3,6 +3,9 @@ package com.qiusm.eju.crawler.competitor.beike.service;
 
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkUser;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * 贝壳redis支持
  *
@@ -52,4 +55,12 @@ public interface IBkRedisService {
      * 备份用户
      */
     void userBack();
+
+    /**
+     * 获取用户列表
+     *
+     * @param startIndex 开始的位置
+     * @return 用户列表
+     */
+    List<? extends BkUser> getUserList(int startIndex);
 }

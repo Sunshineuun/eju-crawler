@@ -1,5 +1,6 @@
 package com.qiusm.eju.crawler.competitor;
 
+import com.qiusm.eju.crawler.competitor.beike.service.IBeikeLoginService;
 import com.qiusm.eju.crawler.competitor.beike.service.IBkRedisService;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByPasswordV2;
@@ -13,15 +14,19 @@ import com.qiusm.eju.crawler.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
 
@@ -36,7 +41,7 @@ public class BeikeLoginController {
     private IBkRedisService bkRedisService;
 
     @Resource
-    private PicVerifyCode picVerifyCodeService;
+    private IBeikeLoginService beikeLoginService;
 
     @Resource
     private PhoneVerifyCode phoneVerifyCodeService;
@@ -51,20 +56,13 @@ public class BeikeLoginController {
     private IBkRedisService redisService;
 
     @GetMapping("/get/picVerifyCodeByPhone")
-    public void getPicVerifyCodeByPhone(HttpServletResponse response,
-                                        HttpServletRequest request,
-                                        String phoneNo, String cityId) {
-        request.getSession().setAttribute("phoneNo", phoneNo);
-
-        BkUser user = redisService.getUserByPhoneNo(phoneNo);
-        BkRequestDto requestDto = BkRequestDto.builder()
-                .user(user)
-                .head(LIANJIA_CITY_ID, cityId)
-                .build();
-        BkResponseDto responseDto = picVerifyCodeService.execute(requestDto);
+    public void getPicVerifyCodeByPhone(
+            HttpServletResponse response,
+            String phoneNo,
+            @RequestParam(required = false, defaultValue = "310000") String cityId) {
         try {
             response.setContentType(MediaType.IMAGE_PNG_VALUE);
-            IOUtils.write(responseDto.getResultByte(), response.getOutputStream());
+            IOUtils.write(beikeLoginService.getPicVerifyCodeByPhone(phoneNo, cityId), response.getOutputStream());
         } catch (IOException exception) {
             log.error("{}", exception.getMessage());
         }
@@ -104,7 +102,8 @@ public class BeikeLoginController {
 
     @GetMapping("/loginByPasswordV2")
     public BkResponseDto loginByPasswordV2(
-            String phoneNo, String password, String picVerifyCode, String cityId) {
+            String phoneNo, String password, String picVerifyCode,
+            @RequestParam(required = false, defaultValue = "310000") String cityId) {
         BkUser user = redisService.getUserByPhoneNo(phoneNo, password);
         BkRequestDto requestDto = BkRequestDto.builder()
                 .user(user)
@@ -136,6 +135,11 @@ public class BeikeLoginController {
     @GetMapping("/userBack")
     public void userBack() {
         bkRedisService.userBack();
+    }
+
+    @GetMapping("/user/list/{startIndex}")
+    public ResponseEntity<List<? extends BkUser>> userList(@PathVariable Integer startIndex) {
+        return ResponseEntity.ok(bkRedisService.getUserList(startIndex));
     }
 
     public BkUser getUserByPhoneNo(String phoneNo) {

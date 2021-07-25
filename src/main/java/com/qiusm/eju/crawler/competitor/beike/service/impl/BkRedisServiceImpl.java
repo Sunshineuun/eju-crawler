@@ -4,6 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.competitor.beike.service.IBkRedisService;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkUser;
+import com.qiusm.eju.crawler.utils.EmailUtil;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.ThreadUtils;
 import org.springframework.data.redis.core.ListOperations;
@@ -11,6 +12,9 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -31,6 +35,9 @@ public class BkRedisServiceImpl implements IBkRedisService {
 
     @Resource
     private ListOperations<String, String> listOperations;
+
+    @Resource
+    private EmailUtil emailUtil;
 
     @Override
     public BkUser getUserByPhoneNo(String phoneNo) {
@@ -64,8 +71,9 @@ public class BkRedisServiceImpl implements IBkRedisService {
     @Override
     public BkUser getUser() {
         String userKey = BK_USER_RKEY + "list";
-
+        int count = 0;
         while (true) {
+            count++;
             String userStr = listOperations.index(userKey, bkUserIndex);
             bkUserIndex++;
             Long maxIndex = listOperations.size(userKey);
@@ -82,6 +90,11 @@ public class BkRedisServiceImpl implements IBkRedisService {
                 ThreadUtils.sleep(10);
             } else {
                 return user;
+            }
+
+            if (count > 100) {
+                // 发送邮件
+                emailUtil.sendSimpleMail("583853240@qq.com", "bk用户池异常，用户池可能耗尽！");
             }
         }
     }
@@ -112,5 +125,21 @@ public class BkRedisServiceImpl implements IBkRedisService {
             }
         }
 
+    }
+
+    @Override
+    public List<? extends BkUser> getUserList(int startIndex) {
+        return getUserList(startIndex, 50);
+    }
+
+    private List<? extends BkUser> getUserList(int startIndex, int limit) {
+        String userKey = BK_USER_RKEY + "list";
+        List<BkUser> bkUsers = new ArrayList<>();
+        for (int i = 0; i < limit; i++) {
+            String userStr = listOperations.index(userKey, startIndex + i);
+            bkUsers.add(JSONObject.parseObject(userStr, BkUser.class));
+        }
+
+        return bkUsers;
     }
 }

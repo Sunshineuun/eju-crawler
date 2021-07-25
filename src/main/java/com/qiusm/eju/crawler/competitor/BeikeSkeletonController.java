@@ -56,7 +56,8 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     @Resource
     private IBkRedisService bkRedisService;
 
-    private final ThreadPoolExecutor bkSkeletonExecutor = ThreadPoolUtils.newFixedThreadPool("bk-skeleton", 4, 20L);
+    private final ThreadPoolExecutor bkSkeletonExecutor = ThreadPoolUtils
+            .newFixedThreadPool("bk-skeleton", 4, 20L);
 
     private CrawlerTaskInstance nowTask;
 
@@ -81,9 +82,15 @@ public class BeikeSkeletonController extends BeiKeBaseController {
         for (Object o1 : bizArray) {
             // 小区页面列表
             JSONArray pageListArray = pageListHandler((JSONObject) o1);
+            if (pageListArray == null) {
+                continue;
+            }
             for (Object o2 : pageListArray) {
                 // 小区列表
                 JSONArray communityList = pageHandler((JSONObject) o2);
+                if (communityList == null) {
+                    continue;
+                }
                 for (Object o3 : communityList) {
                     if (count++ % 10 == 0) {
                         log.info("骨架数据，处理的数量：count={}。",

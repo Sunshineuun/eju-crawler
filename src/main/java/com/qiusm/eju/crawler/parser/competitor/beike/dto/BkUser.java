@@ -31,6 +31,12 @@ public class BkUser {
      */
     private String password;
 
+    /**
+     * 账号的状态。
+     * 1：可用；99：需要重新登录
+     */
+    private String state = "1";
+
     public BkUser() {
 
     }

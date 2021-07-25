@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="java">
+<head>
+    <meta charset="UTF-8">
+    <title>数据表格页面</title>
+    <style type="text/css">
+        cloume_width {
+            width: 1px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<!--
+    TODO:
+    1. 加载图片的时候最好有个进度展示
+-->
+<script type="text/javascript">
+    function load_img(phoneNo, index) {
+        console.log(phoneNo);
+        //var ctxPath = ${#servletContext.contextPath};  //获取项目根路径
+        $("#picImg" + index).attr("src", '/bk/login/get/picVerifyCodeByPhone?phoneNo=' + phoneNo);
+    }
+
+    function submit_verify_code(phoneNo, index) {
+        //var ctxPath = ${#servletContext.contextPath};  //获取项目根路径
+        var code = $("#input" + index).val();
+        console.log(code);
+        $.ajax({
+            url: "[[@{loginByPasswordV2}]]",
+            type: "get",
+            // dataType:"json",
+            data: {
+                phoneNo: phoneNo,
+                picVerifyCode: code,
+                password: "a123456789"
+            },
+            success: function (data1) {
+                console.log(data1);
+                alert('new token:' + data1["token"]);
+            },
+            // 失败
+            failure: function (data) {
+                console.log(data);
+                alert(data);
+            }
+        });
+    }
+
+    //赋值src属性
+</script>
+<div class="alert alert-success" role="alert">...</div>
+<div class="container-fluid">
+    <!--导航栏-->
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+                <li role="presentation"><a href="#">Profile</a></li>
+                <li role="presentation"><a href="#">Messages</a></li>
+            </ul>
+        </div>
+        <!--<div class="col-md-6">
+            <ul class="nav nav-pills" style="float: right">
+                <li role="presentation" class="active"><a href="#">登录</a></li>
+                <li role="presentation"><a href="#">注册</a></li>
+            </ul>
+        </div>-->
+    </div>
+    <!--for循环绑定到表格上-->
+    <div class="row">
+        <table class="table table-hover">
+            <thead>
+            <tr class="success">
+                <th style="width: 1px;"><label>
+                    <input type="checkbox"/>
+                </label></th>
+                <th style="width: 25px;" class="cloume_width">序号</th>
+                <th style="width: 1px;" class="cloume_width">手机号码</th>
+                <!--<th style="width: 1px;" class="cloume_width">设备号</th>-->
+                <th style="width: 1px;" class="cloume_width">Token</th>
+                <th>状态</th>
+                <th>图片验证码</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tr th:each="user,iterStat : ${users}">
+                <td><input type="checkbox" class="check"></td>
+                <td th:text="${iterStat.index}"/>
+                <td th:text="${user.phoneNo}"></td>
+                <!--<td th:text="${user.deviceId}"></td>-->
+                <td th:text="${user.token}"></td>
+                <!--值转换显示-->
+                <td th:text="${user.state}==99?'无效':'有效'"></td>
+                <!--日期转换-->
+                <!--<td th:text="${#dates.format(table_item.birth, 'yyyy-MM-dd HH:mm')}"></td>-->
+                <td>
+                    <img th:id="picImg+${iterStat.index}" alt="验证码"
+                         style="width: 140px;height: 80px;">
+                    <br>
+                    <input type="text" th:id="input+${iterStat.index}" name="name" class="form-control1">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default"
+                            th:onclick="load_img([[${user.phoneNo}]],[[${iterStat.index}]]);">
+                        load img
+                    </button>
+                    <button type="button" class="btn btn-default"
+                            th:onclick="submit_verify_code([[${user.phoneNo}]],[[${iterStat.index}]]);">
+                        submit
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="Page navigation">
+                <ul class="pagination" style="float: right">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>

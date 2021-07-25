@@ -57,6 +57,7 @@ public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
     protected boolean viewCheck(BkRequestDto requestDto) {
         String responseStr = requestDto.getResponseStr();
         if (StringUtils.contains(responseStr, "请重新登录")) {
+            requestDto.getUser().setState("99");
             log.warn("{}", requestDto.getUser());
         }
         return super.viewCheck(requestDto);
