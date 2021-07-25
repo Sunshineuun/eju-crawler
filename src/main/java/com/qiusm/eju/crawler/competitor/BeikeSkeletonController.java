@@ -13,6 +13,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkUser;
 import com.qiusm.eju.crawler.task.entity.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.utils.*;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CIT
  *
  * @author qiushengming
  */
+@Api(value = "bk骨架数据抓取")
 @Slf4j
 @RestController
 @RequestMapping("/bk/skeleton")

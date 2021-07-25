@@ -11,6 +11,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkUser;
 import com.qiusm.eju.crawler.utils.StringUtils;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
@@ -33,6 +34,7 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CIT
 /**
  * @author qiushengming
  */
+@Api(value = "bk用户登录")
 @Slf4j
 @RestController
 @RequestMapping("/bk/login")

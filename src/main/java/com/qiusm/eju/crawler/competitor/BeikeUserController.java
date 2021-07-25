@@ -3,6 +3,7 @@ package com.qiusm.eju.crawler.competitor;
 import com.qiusm.eju.crawler.competitor.beike.service.IBeikeLoginService;
 import com.qiusm.eju.crawler.competitor.beike.service.IBkRedisService;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkUser;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 /**
  * @author qiushengming
  */
+@Api(value = "bk用户管理列表")
 @Slf4j
 @Controller
 @RequestMapping("/bk/user")

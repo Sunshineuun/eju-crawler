@@ -1,6 +1,7 @@
 package com.qiusm.eju.crawler.competitor;
 
 import com.qiusm.eju.crawler.competitor.beike.BeikeDistrictService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * @author qiushengming
  */
+@Api(value = "bk城市&区域&板块，围栏数据")
 @Slf4j
 @RestController
 @RequestMapping("/bk/district")

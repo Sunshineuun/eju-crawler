@@ -13,6 +13,7 @@ import com.qiusm.eju.crawler.task.entity.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author qiushengming
  */
+@Api(value = "bk成交数据")
 @Slf4j
 @RestController
 @RequestMapping("/bk/deal")
