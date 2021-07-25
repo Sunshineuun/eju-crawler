@@ -85,12 +85,15 @@ public class BkAppDealListSearch
         JSONArray arrayResult = new JSONArray();
         if (totalCount > TOTAL_COUNT_LIMIT) {
             int pageNum = totalCount % TOTAL_COUNT_LIMIT == 0 ? totalCount / TOTAL_COUNT_LIMIT : totalCount / TOTAL_COUNT_LIMIT + 1;
-            for (int m = 0; m < pageNum; m++) {
+            for (int m = 1; m < pageNum; m++) {
                 JSONObject resultJson = new JSONObject();
                 resultJson.putAll(requestDto.getData());
                 resultJson.put(LIMIT_OFFSET, m * 100);
                 arrayResult.add(resultJson);
             }
+        }
+        if (totalCount > 2100) {
+            log.info("totalCount:{}, requestParams:{}", totalCount, requestDto.getRequestParam());
         }
         return arrayResult;
     }

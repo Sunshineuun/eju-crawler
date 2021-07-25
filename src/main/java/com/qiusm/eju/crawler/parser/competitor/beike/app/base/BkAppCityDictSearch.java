@@ -81,11 +81,6 @@ public class BkAppCityDictSearch extends BkAppBaseSearch {
                                     data.put("bizcircle_id", bizcircleId);
                                     data.put("limit_offset", "0");
                                     resultArray.add(data);
-
-                                    // 通过价格区间，细分请求url（总数大于2100，分页只能到21页）
-                                    String condition = String.format("d%sb%s", districtId, bizcircleId);
-                                    String url = String.format("%s/house/chengjiao/searchV2?limit_offset=0&condition=%s&city_id=%s&containerType=0&limit_count=100",
-                                            DOMAIN_NAME, condition, cityId);
                                 }
                             });
                         }

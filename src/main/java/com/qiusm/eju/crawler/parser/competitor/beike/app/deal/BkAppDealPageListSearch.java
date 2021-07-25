@@ -19,6 +19,7 @@ import java.util.Map;
  * 必要入参：district_id(区域id) & bizcircle_id(商圈id) & city_id(城市id)<br>
  * 次要入参：limit_offset(偏移位，默认0)；price_bp(价格上限)&price_eq(价格下限)；<br>
  * 主要处理：根据区域板块分割之后，是否还存在大于2100条记录的，如果大于，则需要再按照价格进行分割 <br>
+ *
  * @author qiushengming
  */
 @Slf4j
@@ -91,20 +92,16 @@ public class BkAppDealPageListSearch extends BkAppDealBaseSearch {
 
         // 总数小于2100
         if (totalCount < 2100) {
-            /*log.debug("{},{}板块下数据小于2100", data.get("region"), data.get("plate"));
+            log.info("{},{}:板块下总成交数量{}", data.get("region"), data.get("plate"), totalCount);
 
-            // 翻页
-            int pageNum = totalCount % 100 == 0 ? totalCount / 100 : totalCount / 100 + 1;
-            for (int m = 0; m < pageNum; m++) {
-                JSONObject resultJson = new JSONObject();
-                resultJson.putAll(data);
-                resultJson.put(LIMIT_OFFSET, m * 100);
-                arrayResult.add(resultJson);
-            }*/
+            JSONObject resultJson = new JSONObject();
+            resultJson.putAll(data);
+            resultJson.put(LIMIT_OFFSET, "0");
+            arrayResult.add(resultJson);
         } else {
             //价格区间 分割
             // 总价格是2000w 间隔10w
-            log.debug("{},{}板块下数据大于2100，进行价格区间切割", data.get("region"), data.get("plate"));
+            log.info("{},{}:板块下总成交数量{}，进行价格区间切割", data.get("region"), data.get("plate"), totalCount);
             int priceSize = 50;
             int priceCount = 21;
             for (int bp = 0; bp < priceCount; bp++) {

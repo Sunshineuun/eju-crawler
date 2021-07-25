@@ -65,7 +65,8 @@ public class BkDealUrlHistoryService {
         while (true) {
             BkDealUrlHistoryExample example = new BkDealUrlHistoryExample();
             example.createCriteria().andIdBetween(start, start + step);
-            List<BkDealUrlHistory> list = historyMapper.selectByExample(example);
+            List<BkDealUrlHistory> list = new ArrayList<>();
+                    // historyMapper.selectByExample(example);
 
             if (CollectionUtils.isEmpty(list)) {
                 break;
