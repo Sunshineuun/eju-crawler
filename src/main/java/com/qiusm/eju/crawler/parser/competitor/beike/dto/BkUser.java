@@ -33,9 +33,13 @@ public class BkUser {
 
     /**
      * 账号的状态。
-     * 1：可用；99：需要重新登录
+     * 1：可用；
+     * 91:登录失败的；
+     * 99：需要重新登录；
      */
     private String state = "1";
+
+    private String stateDesc;
 
     public BkUser() {
 
@@ -45,6 +49,23 @@ public class BkUser {
         this.phoneNo = builder.phoneNo;
         this.password = builder.password;
         this.deviceId = builder.deviceId;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+        switch (this.state) {
+            case "1":
+                this.stateDesc = "有效";
+                break;
+            case "91":
+                this.stateDesc = "登录失败";
+                break;
+            case "99":
+                this.stateDesc = "需要重新登录";
+                break;
+            default:
+                break;
+        }
     }
 
     public static BkUser.Builder builder() {

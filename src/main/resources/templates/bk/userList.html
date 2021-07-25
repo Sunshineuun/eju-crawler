@@ -17,6 +17,9 @@
 <!--
     TODO:
     1. 加载图片的时候最好有个进度展示
+    2. 增加查询功能
+    3. 增加一键所有账号登录
+    4. 登录需要验证码，增加提示
 -->
 <script type="text/javascript">
     function load_img(phoneNo, index) {
@@ -82,7 +85,7 @@
                 <th style="width: 1px;" class="cloume_width">手机号码</th>
                 <!--<th style="width: 1px;" class="cloume_width">设备号</th>-->
                 <th style="width: 1px;" class="cloume_width">Token</th>
-                <th>状态</th>
+                <th>状态描述</th>
                 <th>图片验证码</th>
                 <th>操作</th>
             </tr>
@@ -94,7 +97,7 @@
                 <!--<td th:text="${user.deviceId}"></td>-->
                 <td th:text="${user.token}"></td>
                 <!--值转换显示-->
-                <td th:text="${user.state}==99?'无效':'有效'"></td>
+                <td th:text="${user.stateDesc}"></td>
                 <!--日期转换-->
                 <!--<td th:text="${#dates.format(table_item.birth, 'yyyy-MM-dd HH:mm')}"></td>-->
                 <td>

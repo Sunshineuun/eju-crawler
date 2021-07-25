@@ -52,6 +52,9 @@ public class BeikeLoginServiceImpl
                 .head(LIANJIA_CITY_ID, cityId)
                 .build();
         BkResponseDto responseDto = loginByPasswordV2Service.execute(requestDto);
+        if (!responseDto.getSuccess()) {
+            user.setState("91");
+        }
         redisService.pushUser(user);
         log.info("{}", user);
         return user;
