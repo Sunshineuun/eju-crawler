@@ -97,9 +97,32 @@ spring:
         principalSessionName: session_user_key
         # 使druid只当当前的user是谁,cookie_user_key是你保存在cookie中的cookieName
         principalCookieName: cookie_user_key
+  redis:
+    database: 10
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 100
+        max-wait: 5000ms
+        max-idle: 20
+        min-idle: 8
+    timeout: 5000
+  mail:
+    username: qiushengming@aliyun.com
+    subject: 爬虫异常通知
+    password: Sunshine&0625
+    host: smtp.aliyun.com
+  thymeleaf:
+    cache: false
+    encoding: utf-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+    servlet:
+      content-type: text/html
 server:
   port: 8888
-
 # 爬虫配置
 eju:
   crawler:
