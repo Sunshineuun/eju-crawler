@@ -2,13 +2,13 @@ package com.qiusm.eju.crawler.controller.bk;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.entity.task.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailPartSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealPageListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
-import com.qiusm.eju.crawler.task.entity.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;

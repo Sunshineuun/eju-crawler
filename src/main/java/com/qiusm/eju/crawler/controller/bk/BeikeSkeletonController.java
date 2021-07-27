@@ -2,6 +2,7 @@ package com.qiusm.eju.crawler.controller.bk;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.entity.task.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunityListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunityPageListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.BuildingSearchV1;
@@ -10,7 +11,6 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.UnitSearchV1;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.service.bk.IBkRedisService;
-import com.qiusm.eju.crawler.task.entity.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;

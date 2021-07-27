@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.qiusm.eju.crawler.entity.bk.BkFence;
 import com.qiusm.eju.crawler.entity.poi.gaode.GaodeCityFence;
 import com.qiusm.eju.crawler.entity.poi.gaode.GaodeCityPoiInfo;
-import com.qiusm.eju.crawler.poi.gaode.GaodeCrawlerService;
+import com.qiusm.eju.crawler.service.poi.gaode.impl.GaodeCrawlerService;
 import com.qiusm.eju.crawler.service.bk.BeikeBaseService;
 import com.qiusm.eju.crawler.service.bk.IBeikeDistrictService;
 import com.qiusm.eju.crawler.service.bk.IBkFenceService;

@@ -1,7 +1,8 @@
 package com.qiusm.eju.crawler.controller.base;
 
-import com.qiusm.eju.crawler.task.entity.CrawlerTaskInstance;
-import com.qiusm.eju.crawler.task.service.ICrawlerTaskService;
+import com.qiusm.eju.crawler.entity.task.CrawlerTaskInstance;
+import com.qiusm.eju.crawler.service.task.ICrawlerTaskInstanceService;
+import com.qiusm.eju.crawler.service.task.ICrawlerTaskService;
 import com.qiusm.eju.crawler.utils.ThreadUtils;
 
 import javax.annotation.Resource;
@@ -12,7 +13,7 @@ import javax.annotation.Resource;
 public abstract class CrawlerTaskSchedulingBaseController {
 
     @Resource
-    protected ICrawlerTaskService crawlerTaskService;
+    protected ICrawlerTaskInstanceService crawlerTaskInstanceService;
 
     /**
      * 任务调度
@@ -20,7 +21,7 @@ public abstract class CrawlerTaskSchedulingBaseController {
     public void scheduling() {
         Thread taskSchedulingThread = new Thread(() -> {
             while (true) {
-                CrawlerTaskInstance var = crawlerTaskService.getInstanceByHandlerType(this.getClass().getSimpleName());
+                CrawlerTaskInstance var = crawlerTaskInstanceService.getInstanceByHandlerType(this.getClass().getSimpleName());
                 if (var != null) {
                     start(var);
                 }

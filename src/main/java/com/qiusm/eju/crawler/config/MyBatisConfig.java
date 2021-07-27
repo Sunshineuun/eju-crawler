@@ -21,9 +21,9 @@ import javax.sql.DataSource;
 /**
  * @author qiushengming
  */
-@Configuration
-@EnableTransactionManagement
-@MapperScan(basePackages = {"com.qiusm.eju.crawler.**.dao"}, sqlSessionFactoryRef = "sqlSessionFactory")
+//@Configuration
+//@EnableTransactionManagement
+//@MapperScan(basePackages = {"com.qiusm.eju.crawler.**.dao"}, sqlSessionFactoryRef = "sqlSessionFactory")
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
     @Resource
@@ -33,12 +33,12 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     public SqlSessionFactory sqlSessionFactoryBean() {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setTypeAliasesPackage("com.qiusm.eju.crawler.**.entity");
+        bean.setTypeAliasesPackage("com.qiusm.eju.crawler.entity");
 
         //添加XML目录
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
-            bean.setMapperLocations(resolver.getResources("classpath:mybatis/mapper/**/*Mapper.xml"));
+            // bean.setMapperLocations(resolver.getResources("classpath:mybatis/mapper/**/*Mapper.xml"));
             return bean.getObject();
         } catch (Exception e) {
             e.printStackTrace();

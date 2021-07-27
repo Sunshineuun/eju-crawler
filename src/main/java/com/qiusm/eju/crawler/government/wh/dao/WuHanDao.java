@@ -1,8 +1,9 @@
 package com.qiusm.eju.crawler.government.wh.dao;
 
-import com.qiusm.eju.crawler.government.wh.entity.FdWuhanBuilding;
-import com.qiusm.eju.crawler.government.wh.entity.FdWuhanUnit;
-import com.qiusm.eju.crawler.government.wh.entity.FdWuhanUnitExample;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.qiusm.eju.crawler.entity.government.wh.FdWuhanBuilding;
+import com.qiusm.eju.crawler.entity.government.wh.FdWuhanUnit;
+import com.qiusm.eju.crawler.mapper.government.wh.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,13 +47,13 @@ public class WuHanDao {
 
     public Map<String, FdWuhanUnit> selectBuildingIdByHouseUnit(FdWuhanBuilding building) {
         // 查询需要进行处理的unitDb
-        FdWuhanUnitExample unitExample = new FdWuhanUnitExample();
-        unitExample.createCriteria()
-                .andBuildingIdEqualTo(building.getId())
-                .andDetailsUrlIsNotNull()
-                .andHouseAddressIsNull()
-                .andStatusNotEqualTo("99");
-        List<FdWuhanUnit> unitsDb = unitMapper.selectByExample(unitExample);
+        EntityWrapper<FdWuhanUnit> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("building_id", building.getId())
+                .ne("state", "99")
+                .isNotNull("details_url")
+                .isNull("house_address");
+
+        List<FdWuhanUnit> unitsDb = unitMapper.selectList(entityWrapper);
         Map<String, FdWuhanUnit> unitMapDb = new HashMap<>(unitsDb.size());
         unitsDb.forEach(o -> {
             String key = String.format("%s,%s,%s", o.getUnitId(), o.getNominalFloor(), o.getRoomNo());

@@ -1,12 +1,16 @@
 package com.qiusm.eju.crawler.government.nj.dao;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.google.common.base.CaseFormat;
 import com.qiusm.eju.crawler.constant.SymbolicConstant;
-import com.qiusm.eju.crawler.government.nj.dao.FdNanJinBuildingMapper;
-import com.qiusm.eju.crawler.government.nj.dao.FdNanJinHouseMapper;
-import com.qiusm.eju.crawler.government.nj.dao.FdNanJinPreSaleMapper;
-import com.qiusm.eju.crawler.government.nj.dao.FdNanJinUnitMapper;
-import com.qiusm.eju.crawler.government.nj.entity.*;
+import com.qiusm.eju.crawler.entity.government.nj.FdNanJinBuilding;
+import com.qiusm.eju.crawler.entity.government.nj.FdNanJinHouse;
+import com.qiusm.eju.crawler.entity.government.nj.FdNanJinPreSale;
+import com.qiusm.eju.crawler.entity.government.nj.FdNanJinUnit;
+import com.qiusm.eju.crawler.mapper.government.nj.FdNanJinBuildingMapper;
+import com.qiusm.eju.crawler.mapper.government.nj.FdNanJinHouseMapper;
+import com.qiusm.eju.crawler.mapper.government.nj.FdNanJinPreSaleMapper;
+import com.qiusm.eju.crawler.mapper.government.nj.FdNanJinUnitMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -44,7 +48,7 @@ public class NanJinDao {
      * @return FdNanJinHouse
      */
     public FdNanJinHouse saveXmLp(Map<String, Object> xmLpDetail) {
-        FdNanJinHouseWithBLOBs house = new FdNanJinHouseWithBLOBs();
+        FdNanJinHouse house = new FdNanJinHouse();
         house.setCityName(CITY_NAME);
         house.setProjectId((String) xmLpDetail.get(PROJECT_ID));
         house.setProjectName((String) xmLpDetail.get(PROJECT_NAME));
@@ -200,7 +204,7 @@ public class NanJinDao {
 
     public void updateXmUnit(Map<String, Object> unitDetail) {
         FdNanJinUnit unit = conversionToHouseUnit(null, unitDetail);
-        unitMapper.updateByPrimaryKeySelective(unit);
+        unit.updateById();
     }
 
     private FdNanJinUnit conversionToHouseUnit(FdNanJinBuilding building, Map<String, Object> unitDetail) {
@@ -268,19 +272,18 @@ public class NanJinDao {
     public List<FdNanJinHouse> selectHouseByProjectIdAndProjectName(Map<String, Object> xmLpBriefInfo) {
         if (xmLpBriefInfo.containsKey(PROJECT_ID)
                 && xmLpBriefInfo.containsKey(PROJECT_NAME)) {
-            FdNanJinHouseExample example = new FdNanJinHouseExample();
-            example.createCriteria()
-                    .andProjectIdEqualTo((String) xmLpBriefInfo.get(PROJECT_ID))
-                    .andProjectNameEqualTo((String) xmLpBriefInfo.get(PROJECT_NAME));
-            return houseMapper.selectByExample(example);
+            EntityWrapper<FdNanJinHouse> entityWrapper = new EntityWrapper<>();
+            entityWrapper.eq("project_id", xmLpBriefInfo.get(PROJECT_ID))
+                    .eq("project_name", xmLpBriefInfo.get(PROJECT_NAME));
+            return houseMapper.selectList(entityWrapper);
         } else {
             throw new NullPointerException("PROJECT_ID & PROJECT_NAME 空值");
         }
     }
 
     public List<FdNanJinUnit> selectHouseDetailByPendingRequest() {
-        FdNanJinUnitExample example = new FdNanJinUnitExample();
-        example.createCriteria().andHouseSetAreaIsNull();
-        return unitMapper.selectByExample(example);
+        EntityWrapper<FdNanJinUnit> entityWrapper = new EntityWrapper<>();
+        entityWrapper.isNull("house_set_area");
+        return unitMapper.selectList(entityWrapper);
     }
 }

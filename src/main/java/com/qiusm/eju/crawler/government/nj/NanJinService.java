@@ -1,11 +1,11 @@
 package com.qiusm.eju.crawler.government.nj;
 
+import com.qiusm.eju.crawler.entity.government.nj.FdNanJinBuilding;
+import com.qiusm.eju.crawler.entity.government.nj.FdNanJinHouse;
+import com.qiusm.eju.crawler.entity.government.nj.FdNanJinUnit;
 import com.qiusm.eju.crawler.government.GovernmentBaseService;
-import com.qiusm.eju.crawler.government.nj.dao.NanJinDao;
-import com.qiusm.eju.crawler.government.nj.entity.FdNanJinBuilding;
-import com.qiusm.eju.crawler.government.nj.entity.FdNanJinHouse;
-import com.qiusm.eju.crawler.government.nj.entity.FdNanJinUnit;
 import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
+import com.qiusm.eju.crawler.government.nj.dao.NanJinDao;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ImageReaderUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -13,14 +13,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.lang.reflect.Proxy;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
 import static com.qiusm.eju.crawler.government.nj.constant.NanJinConstant.NAN_JIN_IMG_PATH;

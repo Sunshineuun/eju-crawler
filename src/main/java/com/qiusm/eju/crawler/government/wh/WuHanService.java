@@ -1,9 +1,11 @@
 package com.qiusm.eju.crawler.government.wh;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.qiusm.eju.crawler.entity.government.wh.*;
 import com.qiusm.eju.crawler.government.GovernmentBaseService;
 import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
-import com.qiusm.eju.crawler.government.wh.dao.*;
-import com.qiusm.eju.crawler.government.wh.entity.*;
+import com.qiusm.eju.crawler.government.wh.dao.WuHanDao;
+import com.qiusm.eju.crawler.mapper.government.wh.*;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ImageReaderUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
@@ -17,11 +19,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
 import static com.qiusm.eju.crawler.constant.SymbolicConstant.COMMA;
@@ -142,15 +141,16 @@ public class WuHanService extends GovernmentBaseService {
      * 楼栋缺失补偿
      */
     public void houseStart() {
-        List<FdWuhanHouse> houseList = houseMapper.selectByExample(null);
+        List<FdWuhanHouse> houseList = houseMapper.selectList(null);
         houseList.forEach(house -> {
             unitExecutor.submit(() -> {
                 if (StringUtils.endsWith(house.getProjectId(), "back")) {
                     return;
                 }
-                FdWuhanBuildingExample buildingExample = new FdWuhanBuildingExample();
-                buildingExample.createCriteria().andHouseIdEqualTo(house.getId());
-                long buildingSize = buildingMapper.countByExample(buildingExample);
+                EntityWrapper<FdWuhanBuilding> entityWrapper = new EntityWrapper<>();
+                entityWrapper.eq("house_id", house.getId());
+
+                long buildingSize = buildingMapper.selectCount(entityWrapper);
                 if (buildingSize > 0) {
                     return;
                 }
@@ -183,7 +183,7 @@ public class WuHanService extends GovernmentBaseService {
                         List<FdWuhanUnit> units = unitList(newReqUrl, building);
 
                         // 存储数据
-                        buildingMapper.updateByPrimaryKey(building);
+                        building.updateById();
                         dao.batchSave(units);
 
                         log.info("id:{}, pname:{}, pId:{}, bId:{}", building.getHouseId(), building.getProjectName(),
@@ -247,7 +247,7 @@ public class WuHanService extends GovernmentBaseService {
                             }
                             log.info("bid:{}, uid:{}, {}, {}", unitDb.getBuildingId(), unitDb.getId(),
                                     unitDb.getStatus(), unitDb.getDetailsUrl());
-                            unitMapper.updateByPrimaryKey(unitDb);
+                            unitDb.updateById();
                         });
                     }
                 }
@@ -349,11 +349,10 @@ public class WuHanService extends GovernmentBaseService {
      * @return
      */
     private boolean checkHouse(FdWuhanHouse house) {
-        FdWuhanHouseExample example = new FdWuhanHouseExample();
-        example.createCriteria()
-                .andProjectIdEqualTo(house.getProjectId())
-                .andProjectNameEqualTo(house.getProjectName());
-        return houseMapper.countByExample(example) > 0;
+        EntityWrapper<FdWuhanHouse> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("project_id", house.getProjectId())
+                .eq("project_name", house.getProjectName());
+        return houseMapper.selectCount(entityWrapper) > 0;
     }
 
     private void xmDetail(String requestUrl, FdWuhanHouse house) {
@@ -516,7 +515,7 @@ public class WuHanService extends GovernmentBaseService {
         Element fwxx = doc.getElementById("fwxx");
         if (null == fwxx) {
             building.setStatus("try");
-            buildingMapper.updateByPrimaryKey(building);
+            building.updateById();
             String fileName = String.format("%s_%s_%s_%s.html",
                     building.getHouseId(), building.getProjectId(), building.getBuildingId(), building.getBuildingName());
             FileUtils.printFile(htmlStr, properties.getErrorHtmlPath(), fileName, false);

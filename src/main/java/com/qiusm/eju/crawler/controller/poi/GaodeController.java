@@ -1,6 +1,6 @@
 package com.qiusm.eju.crawler.controller.poi;
 
-import com.qiusm.eju.crawler.poi.gaode.GaodeCrawlerService;
+import com.qiusm.eju.crawler.service.poi.gaode.impl.GaodeCrawlerService;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
