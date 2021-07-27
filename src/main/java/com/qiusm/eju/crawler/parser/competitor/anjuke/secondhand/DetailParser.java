@@ -1,11 +1,9 @@
-/*
 package com.qiusm.eju.crawler.parser.competitor.anjuke.secondhand;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeParserBase;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,13 +18,6 @@ import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.AJK_
 import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.AJK_PC_SECONDHAND_LISTING_PLATE_CODE;
 import static com.qiusm.eju.crawler.parser.competitor.anjuke.CommunityRackRateConstant.*;
 
-*/
-/**
- * 安居客挂牌案例-首页-挂牌详情
- *
- * @author 赵乐
- * @date 2019/7/19 15:20
- *//*
 
 @Slf4j
 public class DetailParser extends AnjukeParserBase {
@@ -42,21 +33,14 @@ public class DetailParser extends AnjukeParserBase {
     }
 
     @Override
-    public ParserResult parser(String htmlStr, TaskInstanceRequest taskInstanceRequest, OkHttpUtils okHttpUtils) {
-        ParserResult parserResult = new ParserResult();
-        Map<String, Object> data = taskInstanceRequest.getData();
-        String city = (String) data.get("city");
+    public JSONObject parser(String htmlStr, OkHttpUtils okHttpUtils) {
 
-        String detailUrl = taskInstanceRequest.getUrl();
         Document document = Jsoup.parse(htmlStr);
         if (document != null) {
-            if (StringUtils.isBlank(city)) {
-                city = document.select("div#switch_apf_id_6>span.city").text();
-            }
+            String city = document.select("div#switch_apf_id_6>span.city").text();
 
             Map<String, Object> map = new HashMap<>(32);
-            map.putAll(data);
-            map.put(RACK_RATE_DETAIL_URL, detailUrl);
+            map.put(RACK_RATE_DETAIL_URL, "detailUrl");
 
             // 解析房源信息
             Elements houseInfo = document.getElementById("houseInfo").select("td");
@@ -105,7 +89,7 @@ public class DetailParser extends AnjukeParserBase {
             // 房屋编码
             String houseCode = document.select("div.props-main>div.banner>div.banner-title>div.banner-title-code").text();
             map.put(GOODS_CODE, houseCode.replace("房屋编码：", ""));
-            log.info("房屋编码: {}， url: {}", map.get(GOODS_CODE), detailUrl);
+            log.info("房屋编码: {}， url: {}", map.get(GOODS_CODE), "detailUrl");
             // 户型图右侧信息解析
             Elements div = document.select("div.maininfo");
             // 价格信息 单价、总价
@@ -197,19 +181,17 @@ public class DetailParser extends AnjukeParserBase {
             });
 
             //存放到图片的kafka中
-            List<PictureKey> picKeyList = new ArrayList<>();
             //图片链接
             List<Map<String, Object>> housePictureList = new ArrayList<>();
-            houseImageParser(document, picKeyList, housePictureList, city);
             map.put("housing_pictures", housePictureList);
 
-            parserResult.setResultJson(new JSONObject(map));
-            parserResult.setPictureList(picKeyList);
+            /*parserResult.setResultJson(new JSONObject(map));
+            parserResult.setPictureList(picKeyList);*/
         }
-        return parserResult;
+        return null;
     }
 
-    private void houseImageParser(Document document, List<PictureKey> picKeyList, List<Map<String, Object>> housePictureList, String city) {
+    /*private void houseImageParser(Document document, List<PictureKey> picKeyList, List<Map<String, Object>> housePictureList, String city) {
         //存放到图片的kafka中
         // List<PictureKey> picKeylist = new ArrayList<>();
         // 第0\1是VR和视频图片，第2是户型图，后面都是室内图
@@ -231,23 +213,20 @@ public class DetailParser extends AnjukeParserBase {
     }
 
     private Map<String, Object> imgUpload(String imgSrc, List<PictureKey> picKeyList, String type, String city) {
-        */
-/*String path = "fang/" + CityTagLoading.getCityCode(PlateformTypeEnum.PLATEFORM_TYPE_BEIKE, city, PlateformTypeEnum.COMMUNITYKETAG_TYPE_CITYID) + "/community/";
+        String path = "fang/" + CityTagLoading.getCityCode(PlateformTypeEnum.PLATEFORM_TYPE_BEIKE, city, PlateformTypeEnum.COMMUNITYKETAG_TYPE_CITYID) + "/community/";
         String picKey = tranformPic(imgSrc, path, picKeyList);
-        String picUrl = ParserConstans.KE_APP_ESS_URL_PRE + path + picKey + ParserConstans.KE_APP_ESS_PIC_FIX;*//*
+        String picUrl = ParserConstans.KE_APP_ESS_URL_PRE + path + picKey + ParserConstans.KE_APP_ESS_PIC_FIX;
 
 
         Map<String, Object> map = new HashMap<>(4);
         //上传图片
         map.put("pic_src", imgSrc);
-        */
-/*map.put("pic_src_local", picUrl);
-        map.put("pic_key", picKey);*//*
+        map.put("pic_src_local", picUrl);
+        map.put("pic_key", picKey);
 
         map.put("pic_type", type);
         return map;
     }
-
+*/
 
 }
-*/

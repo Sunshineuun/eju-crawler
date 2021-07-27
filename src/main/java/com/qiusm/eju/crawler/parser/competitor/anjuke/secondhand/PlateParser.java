@@ -1,8 +1,6 @@
-/*
 package com.qiusm.eju.crawler.parser.competitor.anjuke.secondhand;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeParserBase;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -16,15 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.*;
+import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.AJK_PC_SECONDHAND_LISTING_PLATE_CODE;
+import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.AJK_PC_SECONDHAND_LISTING_REGION_CODE;
 import static com.qiusm.eju.crawler.parser.competitor.anjuke.CommunityRackRateConstant.*;
 
-*/
-/**
- * 安居客挂牌案例-首页-板块信息
- * @author 赵乐
- * @date 2019/7/19 14:35
- *//*
 
 @Slf4j
 public class PlateParser extends AnjukeParserBase {
@@ -39,27 +32,26 @@ public class PlateParser extends AnjukeParserBase {
     }
 
     @Override
-    public ParserResult parser(String htmlStr, TaskInstanceRequest taskInstanceRequest, OkHttpUtils okHttpUtils) {
-        ParserResult parserResult = new ParserResult();
+    public JSONObject parser(String htmlStr, OkHttpUtils okHttpUtils) {
+        /*ParserResult parserResult = new ParserResult();
 
-        Map<String, Object> data = taskInstanceRequest.getData();
-        final String city = (String) data.get("city");
+        Map<String, Object> data = taskInstanceRequest.getData();*/
+        /*final String city = (String) data.get("city");*/
 
         Document document = Jsoup.parse(htmlStr);
 
-        List<TaskInstanceRequest> taskInstanceRequests = new ArrayList<>();
+        /*List<TaskInstanceRequest> taskInstanceRequests = new ArrayList<>();*/
         List<JSONObject> resultList = new ArrayList<>();
 
         //存放到图片的kafka中
-        List<PictureKey> picKeyList = new ArrayList<>();
+        /*List<PictureKey> picKeyList = new ArrayList<>();*/
 
         //获取当前页的列表信息
         Elements houseTagList = document.select("section.list>div>a");
         houseTagList.forEach(a -> {
-            TaskInstanceRequest request = new TaskInstanceRequest();
+            /*TaskInstanceRequest request = new TaskInstanceRequest();*/
 
             Map<String, Object> map = new HashMap<>(16);
-            map.putAll(data);
 
             //缩略图
             Elements imgs = a.select("a>div.property-image>img.lazy-img");
@@ -105,26 +97,26 @@ public class PlateParser extends AnjukeParserBase {
             // 均价
             map.put(AVG_PRICE, a.select("p.property-price-average").text());
 
-            request.setData(map);
+            /*request.setData(map);
             request.setUrl(currentUrl);
             request.setCode(AJK_PC_SECONDHAND_LISTING_DETAIL_CODE);
 
-            taskInstanceRequests.add(request);
+            taskInstanceRequests.add(request);*/
             resultList.add(new JSONObject(map));
 
         });
         // 获取下一页链接
-        taskInstanceRequests.add(nextActiveParser(document, data));
+        /*taskInstanceRequests.add(nextActiveParser(document, data));
 
         parserResult.setRequests(taskInstanceRequests);
         parserResult.setResultList(resultList);
-        parserResult.setPictureList(picKeyList);
+        parserResult.setPictureList(picKeyList);*/
 
 
-        return parserResult;
+        return null;
     }
 
-    private TaskInstanceRequest nextActiveParser(Document document, Map<String, Object> data) {
+    /*private TaskInstanceRequest nextActiveParser(Document document, Map<String, Object> data) {
         Elements nextActive = document.select("section.pagination-wrap a.next-active");
         if (nextActive.size() > 0) {
             String nextHref = nextActive.attr("href");
@@ -138,8 +130,7 @@ public class PlateParser extends AnjukeParserBase {
             }
         }
         return null;
-    }
+    }*/
 
 
 }
-*/
