@@ -49,7 +49,7 @@ public class WuHanDao {
         // 查询需要进行处理的unitDb
         EntityWrapper<FdWuhanUnit> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("building_id", building.getId())
-                .ne("state", "99")
+                .ne("status", "99")
                 .isNotNull("details_url")
                 .isNull("house_address");
 

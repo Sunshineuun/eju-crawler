@@ -3,14 +3,11 @@ package com.qiusm.eju.crawler.config;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.annotation.Resource;
@@ -19,9 +16,8 @@ import javax.sql.DataSource;
 /**
  * @author qiushengming
  */
-@Configuration
-@EnableTransactionManagement
-@MapperScan(basePackages = {"com.qiusm.eju.crawler.mapper"}, sqlSessionFactoryRef = "sqlSessionFactory")
+//@Configuration
+//@EnableTransactionManagement
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
     @Resource

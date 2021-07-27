@@ -131,4 +131,5 @@ eju:
         picture-path: D:\Temp\CRAWLER\WU_HAN\IMG\
         error-html-path: D:\Temp\CRAWLER\WU_HAN
         max-thread-core-count: 16
-
+mybatis-plus:
+  mapper-locations: classpath:mybatis/mapper/**/*Mapper.xml
