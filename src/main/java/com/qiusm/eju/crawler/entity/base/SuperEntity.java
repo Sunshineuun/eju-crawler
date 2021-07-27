@@ -22,7 +22,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class SuperEntity<T extends Model<?>>
-        extends Model<T> {
+        extends Model<T>
+        implements Serializable {
 
     /**
      * 主键ID

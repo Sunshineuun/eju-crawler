@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONObject;
  * @author qiushengming
  */
 public class GaodeTest {
-    static GaodeService service = new GaodeService();
+    static GaodeCrawlerService service = new GaodeCrawlerService();
 
     public static void main(String[] args) {
         poiUrl();

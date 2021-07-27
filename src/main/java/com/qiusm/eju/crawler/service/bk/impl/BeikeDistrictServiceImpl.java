@@ -4,16 +4,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.qiusm.eju.crawler.entity.bk.BkFence;
-import com.qiusm.eju.crawler.poi.gaode.GaodeService;
-import com.qiusm.eju.crawler.poi.gaode.dao.GaodeCityFenceMapper;
-import com.qiusm.eju.crawler.poi.gaode.dao.GaodeCityPoiInfoMapper;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFence;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityFenceExample;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfo;
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfoExample;
+import com.qiusm.eju.crawler.entity.poi.gaode.GaodeCityFence;
+import com.qiusm.eju.crawler.entity.poi.gaode.GaodeCityPoiInfo;
+import com.qiusm.eju.crawler.poi.gaode.GaodeCrawlerService;
 import com.qiusm.eju.crawler.service.bk.BeikeBaseService;
 import com.qiusm.eju.crawler.service.bk.IBeikeDistrictService;
 import com.qiusm.eju.crawler.service.bk.IBkFenceService;
+import com.qiusm.eju.crawler.service.poi.gaode.IGaodeCityFenceService;
+import com.qiusm.eju.crawler.service.poi.gaode.IGaodeCityPoiInfoService;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -43,16 +41,16 @@ public class BeikeDistrictServiceImpl
     private static final String BEIKE_JSON_ROOT = String.format("%s\\json\\district", BEIKE_FILE_ROOT);
 
     @Resource
-    private GaodeCityFenceMapper cityFenceMapper;
+    private IGaodeCityFenceService cityFenceService;
 
     @Resource
-    private GaodeCityPoiInfoMapper cityPoiInfoMapper;
+    private IGaodeCityPoiInfoService cityPoiInfoService;
 
     @Resource
     private IBkFenceService bkFenceService;
 
     @Resource
-    private GaodeService gaodeService;
+    private GaodeCrawlerService gaodeCrawlerService;
 
 
     /**
@@ -323,9 +321,9 @@ public class BeikeDistrictServiceImpl
     }
 
     private GaodeCityPoiInfo loadCityPoiInfo(String cityCode) {
-        GaodeCityPoiInfoExample poiInfoExample = new GaodeCityPoiInfoExample();
-        poiInfoExample.createCriteria().andAdCodeEqualTo(cityCode);
-        List<GaodeCityPoiInfo> infos = cityPoiInfoMapper.selectByExample(poiInfoExample);
+        EntityWrapper<GaodeCityPoiInfo> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("adcode", cityCode);
+        List<GaodeCityPoiInfo> infos = cityPoiInfoService.selectList(entityWrapper);
 
         if (infos.size() <= 0) {
             log.error("没有该编码的城市信息：{}", cityCode);
@@ -335,7 +333,7 @@ public class BeikeDistrictServiceImpl
         GaodeCityPoiInfo info = infos.get(0);
 
         if (info.getFenceId() == null) {
-            gaodeService.cityFenceStart(info.getName());
+            gaodeCrawlerService.cityFenceStart(info.getName());
             return loadCityPoiInfo(cityCode);
         }
 
@@ -343,11 +341,8 @@ public class BeikeDistrictServiceImpl
     }
 
     private GaodeCityFence loadFence(GaodeCityPoiInfo info) {
-        GaodeCityFenceExample example = new GaodeCityFenceExample();
-        example.createCriteria().andIdEqualTo(info.getFenceId());
-
-        List<GaodeCityFence> cityFences = cityFenceMapper.selectByExampleWithBLOBs(example);
-        return cityFences.get(0);
+        GaodeCityFence cityFences = cityFenceService.selectById(info.getFenceId());
+        return cityFences;
     }
 
     private Map<String, String> head() {

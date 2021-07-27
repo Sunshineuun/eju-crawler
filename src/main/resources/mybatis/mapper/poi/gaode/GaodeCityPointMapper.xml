@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qiusm.eju.crawler.poi.gaode.dao.GaodeCityPointMapper">
+<mapper namespace="com.qiusm.eju.crawler.mapper.poi.gaode.GaodeCityPointMapper">
   <resultMap id="BaseResultMap" type="com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoint">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="city_name" jdbcType="VARCHAR" property="cityName" />

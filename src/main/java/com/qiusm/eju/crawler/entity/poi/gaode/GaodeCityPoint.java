@@ -1,33 +1,32 @@
-package com.qiusm.eju.crawler.entity.bk;
+package com.qiusm.eju.crawler.entity.poi.gaode;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.qiusm.eju.crawler.entity.base.SuperEntity;
+import com.qiusm.eju.crawler.entity.bk.BkUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
-
 /**
  * @author qiushengming
  */
 @Data
-@TableName("bk_url_history")
+@TableName("gaode_city_point")
 @EqualsAndHashCode(callSuper = true)
-public class BkUrlHistory
-        extends SuperEntity<BkUrlHistory> {
-    private String url;
+public class GaodeCityPoint
+        extends SuperEntity<GaodeCityPoint> {
 
-    @TableField("class_handler")
-    private String classHandler;
+    @TableField("city_name")
+    private String cityName;
 
-    @TableField("url_base64")
-    private String urlBase64;
+    private String longitude;
 
-    @TableField("is_success")
-    private Integer isSuccess;
+    private String latitude;
 
-    private String result;
+    private String version;
+
+    private String status;
 
     @TableField("create_time")
     private Date createTime;

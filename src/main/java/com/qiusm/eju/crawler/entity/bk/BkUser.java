@@ -1,5 +1,6 @@
 package com.qiusm.eju.crawler.entity.bk;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.qiusm.eju.crawler.entity.base.SuperEntity;
 import lombok.Data;
@@ -14,16 +15,19 @@ import lombok.EqualsAndHashCode;
 public class BkUser
         extends SuperEntity<BkUser> {
 
+    @TableField("phone_no")
     private String phoneNo;
 
     private String password;
 
+    @TableField("device_id")
     private String deviceId;
 
     private String token;
 
     private Integer state;
 
+    @TableField("state_desc")
     private String stateDesc;
 
     public BkUser() {

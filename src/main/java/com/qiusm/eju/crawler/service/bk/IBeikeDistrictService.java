@@ -1,6 +1,6 @@
 package com.qiusm.eju.crawler.service.bk;
 
-import com.qiusm.eju.crawler.poi.gaode.entity.GaodeCityPoiInfo;
+import com.qiusm.eju.crawler.entity.poi.gaode.GaodeCityPoiInfo;
 
 import java.util.List;
 

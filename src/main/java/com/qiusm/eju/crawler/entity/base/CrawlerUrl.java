@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,8 +13,7 @@ import java.util.Date;
 @TableName("crawler_url")
 @EqualsAndHashCode(callSuper = true)
 public class CrawlerUrl
-        extends SuperEntity<CrawlerUrl>
-        implements Serializable {
+        extends SuperEntity<CrawlerUrl>{
     private Long id;
 
     private String url;
