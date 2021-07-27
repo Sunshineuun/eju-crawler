@@ -1,10 +1,9 @@
 package com.qiusm.eju.crawler.government;
 
-import com.qiusm.eju.crawler.base.CrawlerUrlUtils;
-import com.qiusm.eju.crawler.base.dao.CrawlerUrlMapper;
-import com.qiusm.eju.crawler.base.entity.CrawlerUrl;
 import com.qiusm.eju.crawler.constant.CharacterSet;
+import com.qiusm.eju.crawler.entity.base.CrawlerUrl;
 import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
+import com.qiusm.eju.crawler.service.base.ICrawlerUrlService;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,7 @@ public abstract class GovernmentBaseService {
     protected static final List<String> ERROR_MSG = new ArrayList<>();
 
     @Resource
-    private CrawlerUrlMapper crawlerUrlMapper;
+    private ICrawlerUrlService crawlerUrlService;
 
     static {
         ERROR_MSG.addAll(Arrays.asList("ejuResponseCode=500,ResponseCode=,ResponseError=".split(COMMA)));
@@ -93,7 +92,8 @@ public abstract class GovernmentBaseService {
             }
         }
 
-        CrawlerUrlUtils.saveUrl(requestUrl, type, success ? "1" : "0");
+        CrawlerUrl crawlerUrl = new CrawlerUrl(requestUrl, type, success ? "1" : "0");
+        crawlerUrl.insert();
         return success;
     }
 }

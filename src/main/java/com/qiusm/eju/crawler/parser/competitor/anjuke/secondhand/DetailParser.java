@@ -1,9 +1,7 @@
+/*
 package com.qiusm.eju.crawler.parser.competitor.anjuke.secondhand;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.base.entity.ParserResult;
-import com.qiusm.eju.crawler.base.entity.PictureKey;
-import com.qiusm.eju.crawler.base.vo.TaskInstanceRequest;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeParserBase;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +20,14 @@ import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.AJK_
 import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.AJK_PC_SECONDHAND_LISTING_PLATE_CODE;
 import static com.qiusm.eju.crawler.parser.competitor.anjuke.CommunityRackRateConstant.*;
 
+*/
 /**
  * 安居客挂牌案例-首页-挂牌详情
  *
  * @author 赵乐
  * @date 2019/7/19 15:20
- */
+ *//*
+
 @Slf4j
 public class DetailParser extends AnjukeParserBase {
 
@@ -231,18 +231,23 @@ public class DetailParser extends AnjukeParserBase {
     }
 
     private Map<String, Object> imgUpload(String imgSrc, List<PictureKey> picKeyList, String type, String city) {
-        /*String path = "fang/" + CityTagLoading.getCityCode(PlateformTypeEnum.PLATEFORM_TYPE_BEIKE, city, PlateformTypeEnum.COMMUNITYKETAG_TYPE_CITYID) + "/community/";
+        */
+/*String path = "fang/" + CityTagLoading.getCityCode(PlateformTypeEnum.PLATEFORM_TYPE_BEIKE, city, PlateformTypeEnum.COMMUNITYKETAG_TYPE_CITYID) + "/community/";
         String picKey = tranformPic(imgSrc, path, picKeyList);
-        String picUrl = ParserConstans.KE_APP_ESS_URL_PRE + path + picKey + ParserConstans.KE_APP_ESS_PIC_FIX;*/
+        String picUrl = ParserConstans.KE_APP_ESS_URL_PRE + path + picKey + ParserConstans.KE_APP_ESS_PIC_FIX;*//*
+
 
         Map<String, Object> map = new HashMap<>(4);
         //上传图片
         map.put("pic_src", imgSrc);
-        /*map.put("pic_src_local", picUrl);
-        map.put("pic_key", picKey);*/
+        */
+/*map.put("pic_src_local", picUrl);
+        map.put("pic_key", picKey);*//*
+
         map.put("pic_type", type);
         return map;
     }
 
 
 }
+*/

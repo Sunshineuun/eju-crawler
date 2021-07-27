@@ -3,7 +3,7 @@ package com.qiusm.eju.crawler.poi.gaode;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.base.CrawlerUrlUtils;
+import com.qiusm.eju.crawler.entity.base.CrawlerUrl;
 import com.qiusm.eju.crawler.poi.gaode.dao.GaodeDao;
 import com.qiusm.eju.crawler.poi.gaode.entity.*;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
@@ -484,7 +484,8 @@ public class GaodeService {
     }
 
     private String httpGetBody(String requestUrl, String charset) {
-        CrawlerUrlUtils.saveUrl(requestUrl, "gaode_poi", "3");
+        CrawlerUrl crawlerUrl = new CrawlerUrl(requestUrl, "gaode_poi", "3");
+        crawlerUrl.insert();
         return httpUtils.get(requestUrl, charset, 100_000, 50_000, null);
     }
 

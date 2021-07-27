@@ -1,6 +1,5 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 
-import com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;

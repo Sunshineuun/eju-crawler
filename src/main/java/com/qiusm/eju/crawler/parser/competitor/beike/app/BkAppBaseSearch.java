@@ -1,8 +1,8 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory;
-import com.qiusm.eju.crawler.competitor.beike.service.BkDealUrlHistoryService;
+import com.qiusm.eju.crawler.entity.bk.BkUrlHistory;
+import com.qiusm.eju.crawler.service.bk.IBkUrlHistoryService;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
@@ -31,7 +31,7 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
 public abstract class BkAppBaseSearch implements HttpSearch {
 
     @Autowired
-    protected BkDealUrlHistoryService historyService;
+    protected IBkUrlHistoryService historyService;
 
     protected static final String CITY_ID = "city_id";
 
@@ -133,12 +133,12 @@ public abstract class BkAppBaseSearch implements HttpSearch {
      * @param requestDto requestDto
      */
     protected void httpGet(BkRequestDto requestDto) {
-        BkDealUrlHistory his = historyService.getBkHistoryByUrl(requestDto.getUrl());
+        BkUrlHistory his = historyService.getBkHistoryByUrl(requestDto.getUrl());
 
         if (his != null) {
             requestDto.setResponseStr(his.getResult());
         } else {
-            his = new BkDealUrlHistory();
+            his = new BkUrlHistory();
         }
 
         if (!viewCheck(requestDto)) {
@@ -146,7 +146,7 @@ public abstract class BkAppBaseSearch implements HttpSearch {
             his.setResult(requestDto.getResponseStr());
             his.setUrl(requestDto.getUrl());
             his.setClassHandler(this.getClass().getSimpleName());
-            his.setUrlBase64(BeikeUtils.toBase64(requestDto.getUrl()));
+
             his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
             historyService.upHis(his);
         }

@@ -1,8 +1,6 @@
 package com.qiusm.eju.crawler.enums;
 
 
-import com.qiusm.eju.crawler.utils.http.DownloadThread;
-
 /**
  * httpclient请求的类型定义，不同类型请求方式不同。
  * {@link DownloadThread#run()}

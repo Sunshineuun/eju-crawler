@@ -1,7 +1,5 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 
-import com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory;
-import com.qiusm.eju.crawler.competitor.beike.service.BkDealUrlHistoryService;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
@@ -22,9 +20,6 @@ import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
  */
 @Slf4j
 public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
-
-    @Autowired
-    protected BkDealUrlHistoryService historyService;
 
     @Override
     protected void buildingHeader(BkRequestDto dto) {
@@ -57,8 +52,8 @@ public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
     protected boolean viewCheck(BkRequestDto requestDto) {
         String responseStr = requestDto.getResponseStr();
         if (StringUtils.contains(responseStr, "请重新登录")) {
-            requestDto.getUser().setState("99");
-            log.warn("{}", requestDto.getUser());
+            requestDto.getUser().setState(99);
+            log.warn("需要重新登录：{}", requestDto.getUser());
         }
         return super.viewCheck(requestDto);
     }

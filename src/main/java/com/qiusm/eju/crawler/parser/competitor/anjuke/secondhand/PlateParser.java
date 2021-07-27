@@ -1,9 +1,7 @@
+/*
 package com.qiusm.eju.crawler.parser.competitor.anjuke.secondhand;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.base.entity.ParserResult;
-import com.qiusm.eju.crawler.base.entity.PictureKey;
-import com.qiusm.eju.crawler.base.vo.TaskInstanceRequest;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeParserBase;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
@@ -21,11 +19,13 @@ import java.util.Map;
 import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.*;
 import static com.qiusm.eju.crawler.parser.competitor.anjuke.CommunityRackRateConstant.*;
 
+*/
 /**
  * 安居客挂牌案例-首页-板块信息
  * @author 赵乐
  * @date 2019/7/19 14:35
- */
+ *//*
+
 @Slf4j
 public class PlateParser extends AnjukeParserBase {
     @Override
@@ -142,3 +142,4 @@ public class PlateParser extends AnjukeParserBase {
 
 
 }
+*/

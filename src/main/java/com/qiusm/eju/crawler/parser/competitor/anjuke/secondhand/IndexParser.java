@@ -1,7 +1,6 @@
+/*
 package com.qiusm.eju.crawler.parser.competitor.anjuke.secondhand;
 
-import com.qiusm.eju.crawler.base.entity.ParserResult;
-import com.qiusm.eju.crawler.base.vo.TaskInstanceRequest;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeParserBase;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.CommunityRackRateConstant;
@@ -20,11 +19,13 @@ import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.AJK_
 import static com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeConstant.AJK_PC_SECONDHAND_LISTING_REGION_CODE;
 import static com.qiusm.eju.crawler.parser.competitor.anjuke.CommunityRackRateConstant.CITY;
 
+*/
 /**
  * 安居客挂牌案例-首页
  * @author 赵乐
  * @date 2019/7/19 11:20
- */
+ *//*
+
 public class IndexParser extends AnjukeParserBase {
 
     @Override
@@ -91,3 +92,4 @@ public class IndexParser extends AnjukeParserBase {
 
 
 }
+*/

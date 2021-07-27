@@ -1,16 +1,19 @@
+/*
 package com.qiusm.eju.crawler.parser.competitor.anjuke;
 
 
-import com.qiusm.eju.crawler.base.parser.ParserBaseAbstract;
+import com.qiusm.eju.crawler.controller.base.parser.ParserBaseAbstract;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.function.Predicate;
 
+*/
 /**
  * @author 赵乐
  * @date 2019/1/3 10:11
- */
+ *//*
+
 @Slf4j
 public abstract class AnjukeParserBase extends ParserBaseAbstract {
 
@@ -26,3 +29,4 @@ public abstract class AnjukeParserBase extends ParserBaseAbstract {
                 || html.contains("<title>验证码</title>");
     }
 }
+*/

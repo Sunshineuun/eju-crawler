@@ -1,17 +1,10 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app.deal;
 
-import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.competitor.beike.dao.BkDealUrlHistoryMapper;
-import com.qiusm.eju.crawler.competitor.beike.entity.BkDealUrlHistory;
-import com.qiusm.eju.crawler.competitor.beike.service.BkDealUrlHistoryService;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,9 +16,6 @@ import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
  * @author qiushengming
  */
 public abstract class BkAppDealBaseSearch extends BkAppBaseSearch {
-
-    @Autowired
-    protected BkDealUrlHistoryService historyService;
 
     @Override
     protected void buildingHeader(BkRequestDto dto) {

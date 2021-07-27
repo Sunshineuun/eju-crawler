@@ -2,10 +2,8 @@ package com.qiusm.eju.crawler.utils.http;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.base.dao.CrawlerUrlMapper;
-import com.qiusm.eju.crawler.base.entity.CrawlerUrl;
-import com.qiusm.eju.crawler.constant.EjuConstant;
 import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
+import com.qiusm.eju.crawler.service.base.ICrawlerUrlService;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import org.apache.commons.lang3.StringUtils;
@@ -48,9 +46,6 @@ public class SeleniumDownload implements Download {
     private static final OkHttpUtils HTTP_CLIENT = CommonUtils.createHttpClient();
 
     private final ChromeDriverService driverService;
-
-    @Resource
-    private CrawlerUrlMapper urlMapper;
 
     /**
      * 驱动 driver存在重复创建的可能性
