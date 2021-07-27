@@ -1,3 +1,4 @@
+-- 区域、板块围栏数据
 drop table bk_fence;
 create table bk_fence
 (
@@ -13,9 +14,36 @@ create table bk_fence
     version   varchar(35)
 ) comment '贝壳围栏信息，其中包含城市、区域、商圈';
 
+-- 小区、楼栋、单元、房号数据
+/*
+21,贝壳板块,community_plate,secondhandhouse.BeikeBankuaiUrlParser,ke_plate_app_url_code,BK,
+22,贝壳小区列表,"",secondhandhouse.BeikeXiaoquListAppParser,ke_xiaoqu_app_list_code,BK,21
+23,贝壳小区信息,community_base_info_list,secondhandhouse.BeikeXiaoquAppParser,ke_xiaoqu_app_code,BK,22
+24,贝壳小区m端详情,"",secondhandhouse.BeikeXiaoquMDetailParser,ke_xiaoqu_m_detail_code,BK,23
+25,贝壳小区pc详情,"",secondhandhouse.BeikeXiaoquPcDetailParser,ke_xiaoqu_pc_detail_code,BK,24
+26,贝壳小区链家m详情,"",secondhandhouse.BeikeXiaoquLianjiaMDetailParser,ke_xiaoqu_lianjia_m_detail_code,BK,25
+27,贝壳小区楼栋,community_building_base,secondhandhouse.BeikeBuildingParser,ke_building_app_code,BK,
+28,贝壳楼栋集合,,secondhandhouse.BeikeBuildingListParser,ke_building_list_app_code,BK,
+29,贝壳单元,community_unit,secondhandhouse.BeikeUnitParser,ke_unit_app_code,BK,
+30,贝壳room,community_room,secondhandhouse.BeikeRoomParser,ke_room_app_code,BK,
+*/
 
-select count(1) from (select city_name from bk_fence where type = 'district' group by city_name) a;
+/*
+逻辑，发送请求钱先去数据库中查找下，是否有相应的结果，如果有，就使用数据库中的；
+如果查找的是空的那么删除再进行请求，请求成功后进行存储，存储之前判断结果是否为空的，为空则不进行存储
+*/
+create table bk_deal_url_history
+(
+    id          bigint auto_increment primary key,
+    url         varchar(1000) not null,
+    result      longtext comment 'json结果',
+    create_time datetime
+) comment '存储已经采集过的url';
 
-select * from bk_fence where city_name = '海门市';
-
-select count(1) from bk_fence;
+alter table bk_deal_url_history
+    add column CLASS_HANDLER VARCHAR(255) COMMENT '类名。哪个类处理的';
+alter table bk_deal_url_history
+    add column URL_BASE64 VARCHAR(255) COMMENT '将URL通过BASE64加密得到的结果';
+alter table bk_deal_url_history
+    add column IS_SUCCESS int COMMENT '当前请求是否成功';
+create index bk_deal_history_index on bk_deal_url_history (URL_BASE64);

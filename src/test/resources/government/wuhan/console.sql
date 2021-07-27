@@ -13,10 +13,10 @@
 /*
     fd_house,fd_gtz,fd_ghxkz,fd_building,fd_unit
 */
-create table fd_wuhan_house···
+create table fd_wuhan_house
 (
     id                                  bigint auto_increment
-    primary key,
+        primary key,
     city_name                           varchar(255) null,
     project_id                          varchar(50)  null,
     project_name                        varchar(255) null comment '项目名称',
@@ -31,7 +31,7 @@ create table fd_wuhan_house···
     status                              varchar(255) null comment '操作状态',
     version                             varchar(255) null comment '版本号',
     create_time                         datetime     null on update CURRENT_TIMESTAMP comment '创建时间'
-    )
+)
     comment '武汉-政府源-基础信息';
 create table fd_wuhan_gtz
 (
@@ -271,8 +271,13 @@ where details_url is null;
 -- url时间分布
 select count(1) c, a
 from (SELECT date_format(create_time, '%y-%m-%d %H') a
-      FROM fd_wuhan_url
-      where create_time between '2021-06-22' and '2021-06-30') url
+      FROM crawler_url
+      where create_time between '2021-07-01' and '2021-07-30') url
+group by a;
+select count(1) c, a
+from (SELECT date_format(create_time, '%y-%m-%d') a
+      FROM crawler_url
+      where create_time between '2021-07-01' and '2021-07-30') url
 group by a;
 -- 楼栋待加载房屋信息列表
 select *
@@ -288,10 +293,18 @@ from (
 where (state = 0 or state is null)
   and id > 10000
 order by id
-    limit 1000;
+limit 1000;
 /*
 异常情况记录：1061，预计套数36，实际套数52。已核实。
 */
+-- 数据备份
+create table fd_wuhan_unit_20210621 as
+select *
+from fd_wuhan_unit;
+create table fd_wuhan_building_20210621 as
+select *
+from fd_wuhan_building;
+
 -- 可以删除的SQL
 -- 楼栋预计套数与房屋实际套数比较
 select *
@@ -314,47 +327,88 @@ where state = 0
    or state is null
 order by id;
 
-create table fd_wuhan_unit_20210621 as
-select *
-from fd_wuhan_unit;
-create table fd_wuhan_building_20210621 as
-select *
-from fd_wuhan_building;
+select count(1) c1
+from (select id,
+             building_id,
+             project_id,
+             unit_id,
+             room_no,
+             nominal_floor,
+             house_address,
+             presell_no,
+             measured_total_area,
+             pre_building_avg_price,
+             house_total_price,
+             status,
+             details_url,
+             url,
+             create_time
+      from fd_wuhan_unit
+      where building_id = 3728
+        and details_url is not null
+        and status != '99') a;
 
+select max(id)
+from fd_wuhan_unit
+where status = '99';
 
-select *
-from fd_wuhan_building
-where building_id = 26;
-select *
-from fd_wuhan_unit
-where building_id = 2774;
-select *
-from fd_wuhan_unit
-where details_url is not null
-order by create_time desc;
 
 
 /*
 楼盘列表：http://119.97.201.22:8083/search/spfxmcx/spfcx_lpb.aspx?DengJH=%D0%C22100431
 房屋列表：http://119.97.201.22:8083/search/spfxmcx/spfcx_fang.aspx?dengJH=%D0%C22100431&houseDengJh=%D0%C20004024
 */
-select url
-from fd_wuhan_building_20210621;
 
-select id,
-       building_id,
-       house_address,
-       presell_no,
-       measured_total_area,
-       pre_building_avg_price,
-       house_total_price
-from fd_wuhan_unit
-where building_id = 458
-  and details_url is not null;
+/*
+日期：2021年6月25日 10点44分
+1450645,有明细.待处理
+22663,有明细.已处理
+2686490,无明细
 
+日期：2021年6月25日 13点44分
+1445445,有明细.待处理
+27863,有明细.已处理
+2686490,无明细
+结论：
+    27863 - 22663 = 5200 / 3h = 1733.33条/h; 线程数量：核心线程8; 最大线程16;
+    预计：41,600/天
+    再观测一段时间，如果还稳定，增加线程数量
 
-show OPEN TABLES where In_use > 0;
+日期：2021年6月28日 19点02分
+1437974,有明细.待处理
+35334,有明细.已处理
+2686490,无明细
 
-show processlist;
-kill 661365;
+日期：2021年6月29日 09点47分
+1411619,有明细.待处理
+61689,有明细.已处理
+2686490,无明细
 
+日期：2021年6月29日 17点01分
+1398188,有明细.待处理
+75120,有明细.已处理
+2686490,无明细
+
+日期：2021年6月30日 13点42分
+1375104,有明细.待处理
+98204,有明细.已处理
+2686490,无明细
+
+*/
+
+select *
+from fd_wuhan_building building
+where id in (select fd_wuhan_unit.building_id
+             from fd_wuhan_unit
+             where details_url is not null
+               and house_address is null
+               and status != '99')
+  and id > 0
+order by id
+limit 1000;
+
+select *
+from crawler_url
+where create_time is not null
+  and success = '0'
+order by create_time desc;
