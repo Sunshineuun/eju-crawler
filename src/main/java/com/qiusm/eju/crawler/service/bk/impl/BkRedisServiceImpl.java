@@ -9,7 +9,7 @@ import com.qiusm.eju.crawler.service.bk.IBkRedisService;
 import com.qiusm.eju.crawler.service.bk.IBkUserService;
 import com.qiusm.eju.crawler.utils.EmailUtil;
 import com.qiusm.eju.crawler.utils.StringUtils;
-import com.qiusm.eju.crawler.utils.ThreadUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,7 @@ import java.util.List;
 /**
  * @author qiushengming
  */
+@Slf4j
 @Service
 public class BkRedisServiceImpl implements IBkRedisService {
 
@@ -74,7 +75,7 @@ public class BkRedisServiceImpl implements IBkRedisService {
     }
 
     @Override
-    public BkUser getUser() {
+    public synchronized BkUser getUser() {
         String userKey = BK_USER_RKEY + "list";
         int count = 0;
         BkUser user = null;
@@ -90,6 +91,7 @@ public class BkRedisServiceImpl implements IBkRedisService {
             if (count++ > 100) {
                 // 发送邮件
                 emailUtil.sendSimpleMail("583853240@qq.com", "bk用户池异常，用户池可能耗尽！");
+                log.error("bk用户池耗尽！！！");
                 break;
             }
 
