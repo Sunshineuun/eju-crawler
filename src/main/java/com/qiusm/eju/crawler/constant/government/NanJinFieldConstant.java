@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.government.nj.constant;
+package com.qiusm.eju.crawler.constant.government;
 
 import java.util.*;
 

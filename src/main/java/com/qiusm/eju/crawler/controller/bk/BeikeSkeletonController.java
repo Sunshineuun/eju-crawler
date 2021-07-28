@@ -176,18 +176,11 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 .user(bkRedisService.getUser())
                 .requestParam("community_id", community.getString("community_id"))
                 .head(LIANJIA_CITY_ID, community.getString("city_id"))
+                .data(community)
                 .isLoad(true)
                 .build();
         BkResponseDto responseDto = buildingSearchV1.execute(requestDto);
-        JSONArray array = responseDto.getResult().getJSONArray("list");
-        if (array != null) {
-            array.forEach(o -> {
-                ((JSONObject) o).put("city_id", community.getString("city_id"));
-                ((JSONObject) o).put("community_id", community.getString("community_id"));
-                ((JSONObject) o).put("community_name", community.getString("community_name"));
-            });
-        }
-        return array;
+        return responseDto.getResult().getJSONArray("list");
     }
 
     private JSONArray unitHandler(JSONObject building) {
@@ -195,17 +188,11 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 .user(bkRedisService.getUser())
                 .requestParam("building_id", building.getString("building_id"))
                 .head(LIANJIA_CITY_ID, building.getString("city_id"))
+                .data(building)
                 .isLoad(true)
                 .build();
         BkResponseDto responseDto = unitSearchV1.execute(requestDto);
-        JSONArray array = responseDto.getResult().getJSONArray("list");
-        if (array != null) {
-            array.forEach(o -> {
-                JSONObject var = ((JSONObject) o);
-                var.putAll(building);
-            });
-        }
-        return array;
+        return responseDto.getResult().getJSONArray("list");
     }
 
     private JSONArray houseHandler(JSONObject unit) {
@@ -213,17 +200,10 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 .user(bkRedisService.getUser())
                 .requestParam("unit_id", unit.getString("unit_id"))
                 .head(LIANJIA_CITY_ID, unit.getString("city_id"))
+                .data(unit)
                 .isLoad(true)
                 .build();
         BkResponseDto responseDto = houseSearchV1.execute(requestDto);
-        JSONArray array = responseDto.getResult().getJSONArray("list");
-
-        if (array != null) {
-            array.forEach(o -> {
-                JSONObject var = ((JSONObject) o);
-                var.putAll(unit);
-            });
-        }
-        return array;
+        return responseDto.getResult().getJSONArray("list");
     }
 }

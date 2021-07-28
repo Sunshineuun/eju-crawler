@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.government.controller;
+package com.qiusm.eju.crawler.controller.government;
 
 /**
  * 政府源头

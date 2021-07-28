@@ -1,8 +1,9 @@
 package com.qiusm.eju.crawler.controller.bk;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.qiusm.eju.crawler.entity.bk.BkUser;
 import com.qiusm.eju.crawler.service.bk.IBeikeLoginService;
-import com.qiusm.eju.crawler.service.bk.IBkRedisService;
+import com.qiusm.eju.crawler.service.bk.IBkUserService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ import javax.annotation.Resource;
 public class BeikeUserController {
 
     @Resource
-    private IBkRedisService bkRedisService;
+    private IBkUserService bkUserService;
 
     @Resource
     private IBeikeLoginService beikeLoginService;
@@ -29,7 +30,9 @@ public class BeikeUserController {
     @GetMapping("/{startIndex}")
     public ModelAndView userList(@PathVariable Integer startIndex) {
         ModelAndView model = new ModelAndView("bk/userList");
-        model.addObject("users", bkRedisService.getUserList(startIndex));
+        EntityWrapper<BkUser> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("state", 99);
+        model.addObject("users", bkUserService.selectList(entityWrapper));
         return model;
     }
 

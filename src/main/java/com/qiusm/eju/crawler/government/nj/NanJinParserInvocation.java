@@ -9,8 +9,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinConstant.ERROR_HTML_PATH;
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinConstant.FORMAT_FOURTEEN;
+import static com.qiusm.eju.crawler.constant.government.NanJinConstant.ERROR_HTML_PATH;
+import static com.qiusm.eju.crawler.constant.government.NanJinConstant.FORMAT_FOURTEEN;
 
 /**
  * @author qiushengming

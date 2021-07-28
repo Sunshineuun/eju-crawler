@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinFieldConstant.*;
+import static com.qiusm.eju.crawler.constant.government.NanJinFieldConstant.*;
 
 
 /**

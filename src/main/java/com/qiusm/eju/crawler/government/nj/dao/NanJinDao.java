@@ -19,9 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinConstant.CITY_NAME;
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinConstant.URL_JOIN_SPLIT;
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinFieldConstant.*;
+import static com.qiusm.eju.crawler.constant.government.NanJinConstant.CITY_NAME;
+import static com.qiusm.eju.crawler.constant.government.NanJinConstant.URL_JOIN_SPLIT;
+import static com.qiusm.eju.crawler.constant.government.NanJinFieldConstant.*;
 
 /**
  * @author qiushengming

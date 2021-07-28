@@ -20,9 +20,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinConstant.NAN_JIN_IMG_PATH;
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinFieldConstant.*;
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinUrlTemplate.*;
+import static com.qiusm.eju.crawler.constant.government.NanJinConstant.NAN_JIN_IMG_PATH;
+import static com.qiusm.eju.crawler.constant.government.NanJinFieldConstant.*;
+import static com.qiusm.eju.crawler.constant.government.NanJinUrlTemplate.*;
 
 /**
  * @author qiushengming

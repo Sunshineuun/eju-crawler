@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.government.controller;
+package com.qiusm.eju.crawler.controller.government;
 
 import com.qiusm.eju.crawler.government.wh.WuHanService;
 import lombok.extern.slf4j.Slf4j;

@@ -13,8 +13,8 @@ import java.util.Map;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
 import static com.qiusm.eju.crawler.government.nj.NanJinService.loadHouseAreaAndPriceImg;
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinFieldConstant.*;
-import static com.qiusm.eju.crawler.government.nj.constant.NanJinUrlTemplate.*;
+import static com.qiusm.eju.crawler.constant.government.NanJinFieldConstant.*;
+import static com.qiusm.eju.crawler.constant.government.NanJinUrlTemplate.*;
 
 
 /**

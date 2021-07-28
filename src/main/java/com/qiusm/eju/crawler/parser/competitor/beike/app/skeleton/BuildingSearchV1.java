@@ -3,7 +3,6 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
@@ -42,6 +41,8 @@ public class BuildingSearchV1 extends BkAppSkeletonBaseSearch {
         JSONArray list = JSONUtils.getJsonArrayByKey(var0, "data.list");
         JSONObject result = new JSONObject();
         JSONArray array = new JSONArray();
+        Map<String, Object> data = requestDto.getData();
+        String keys = "city_id,community_id,community_name,district_name,";
         list.forEach(o -> {
             JSONObject var = (JSONObject) o;
             String buildingId = var.getString("building_id");
@@ -49,6 +50,11 @@ public class BuildingSearchV1 extends BkAppSkeletonBaseSearch {
             JSONObject jsonVar = new JSONObject();
             jsonVar.put("building_name", buildingName);
             jsonVar.put("building_id", buildingId);
+            for (String key : keys.split(",")) {
+                if (data.containsKey(key)) {
+                    jsonVar.put(key, data.get(key));
+                }
+            }
             array.add(jsonVar);
         });
         result.put("list", array);

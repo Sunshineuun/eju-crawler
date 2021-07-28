@@ -3,7 +3,6 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
@@ -49,6 +48,7 @@ public class HouseSearchV1 extends BkAppSkeletonBaseSearch {
             JSONObject jsonVar = new JSONObject();
             jsonVar.put("house_name", name);
             jsonVar.put("house_id", id);
+            jsonVar.putAll(requestDto.getData());
             array.add(jsonVar);
         });
         result.put("list", array);
