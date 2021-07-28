@@ -14,14 +14,15 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
 
@@ -125,17 +126,6 @@ public class BeikeLoginController {
                 .head(LIANJIA_CITY_ID, cityId)
                 .build();
         return loginByPasswordV2Service.execute(requestDto);
-    }
-
-
-    @GetMapping("/userBack")
-    public void userBack() {
-        bkRedisService.userBack();
-    }
-
-    @GetMapping("/user/list/{startIndex}")
-    public ResponseEntity<List<? extends BkUser>> userList(@PathVariable Integer startIndex) {
-        return ResponseEntity.ok(bkRedisService.getUserList(startIndex));
     }
 
     public BkUser getUserByPhoneNo(String phoneNo) {

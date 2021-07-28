@@ -52,23 +52,19 @@ public class BkRedisServiceImpl implements IBkRedisService {
 
     @Override
     public BkUser getUserByPhoneNo(String phoneNo, String pw) {
-        String userKey = BK_USER_RKEY + phoneNo;
-        String userStr = valueOperations.get(userKey);
-        BkUser user;
+        EntityWrapper<BkUser> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("phone_no", phoneNo);
+        BkUser user = bkUserService.selectOne(entityWrapper);
 
-        if (StringUtils.isBlank(userStr)) {
+        if (user == null) {
             user = BkUser.builder()
                     .phoneNo(phoneNo)
                     .deviceId(IdUtil.simpleUUID())
                     .build();
-            valueOperations.set(userKey, JSONObject.toJSONString(user));
-        } else {
-            user = JSONObject.parseObject(userStr, BkUser.class);
         }
 
         if (StringUtils.isNotBlank(pw)) {
             user.setPassword(pw);
-            valueOperations.set(userKey, JSONObject.toJSONString(user));
         }
 
         return user;
@@ -124,9 +120,11 @@ public class BkRedisServiceImpl implements IBkRedisService {
 
     @Override
     public void pushUser(BkUser user) {
-        String userKey = BK_USER_RKEY + "list";
-        listOperations.leftPush(userKey, JSONObject.toJSONString(user));
-        user.insert();
+        if (user.getId() != null) {
+            user.updateById();
+        } else {
+            user.insert();
+        }
     }
 
     @Override

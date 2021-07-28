@@ -42,7 +42,7 @@ public class BuildingSearchV1 extends BkAppSkeletonBaseSearch {
         JSONObject result = new JSONObject();
         JSONArray array = new JSONArray();
         Map<String, Object> data = requestDto.getData();
-        String keys = "city_id,community_id,community_name,district_name,";
+        String keys = "city_id,community_id,community_name,district_name";
         list.forEach(o -> {
             JSONObject var = (JSONObject) o;
             String buildingId = var.getString("building_id");

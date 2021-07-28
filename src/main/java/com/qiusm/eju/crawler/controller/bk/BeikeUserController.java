@@ -31,7 +31,7 @@ public class BeikeUserController {
     public ModelAndView userList(@PathVariable Integer startIndex) {
         ModelAndView model = new ModelAndView("bk/userList");
         EntityWrapper<BkUser> entityWrapper = new EntityWrapper<>();
-        entityWrapper.eq("state", 99);
+        entityWrapper.ne("state", 1);
         model.addObject("users", bkUserService.selectList(entityWrapper));
         return model;
     }

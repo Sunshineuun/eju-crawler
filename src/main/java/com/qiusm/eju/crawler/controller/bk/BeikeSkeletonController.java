@@ -22,9 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
@@ -64,6 +62,11 @@ public class BeikeSkeletonController extends BeiKeBaseController {
 
     private CrawlerTaskInstance nowTask;
 
+    /**
+     * 用于存储cityId，如果运行中的任务存在列表中，则表示已经在执行了。
+     */
+    private final Set<String> cityIdSet = new HashSet<>();
+
     @Override
     public void start(CrawlerTaskInstance crawlerTaskInstance) {
         this.nowTask = crawlerTaskInstance;
@@ -79,6 +82,16 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     public void start(
             @PathVariable String cityId,
             @PathVariable String city) {
+
+        synchronized (cityIdSet) {
+            if (!cityIdSet.contains(cityId)) {
+                cityIdSet.add(cityId);
+            } else {
+                log.info("{},{},已经在抓取了。", city, cityId);
+                return;
+            }
+        }
+
         JSONArray bizArray = cityHandler(cityId, city);
         String filePath = "source\\beike\\skeleton\\" + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
         int count = 0;
@@ -96,8 +109,8 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 }
                 for (Object o3 : communityList) {
                     if (count++ % 10 == 0) {
-                        log.info("骨架数据，处理的数量：count={}。",
-                                count);
+                        log.info("{}:{},骨架数据，处理的数量：count={}。",
+                                city, cityId, count);
                     }
 
                     // 按照小区为单位抓取骨架数据
@@ -127,6 +140,10 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                     });
                 }
             }
+        }
+
+        synchronized (cityIdSet) {
+            cityIdSet.remove(cityId);
         }
     }
 
@@ -172,6 +189,8 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     }
 
     JSONArray buildingHandler(JSONObject community) {
+        log.info("区域：{},小区名：{},小区id：{}",
+                community.get("district_name"), community.get("community_name"), community.get("community_id"));
         BkRequestDto requestDto = BkRequestDto.builder()
                 .user(bkRedisService.getUser())
                 .requestParam("community_id", community.getString("community_id"))

@@ -54,6 +54,8 @@ public class BeikeLoginServiceImpl
         BkResponseDto responseDto = loginByPasswordV2Service.execute(requestDto);
         if (!responseDto.getSuccess()) {
             user.setState(91);
+        }else{
+            user.setState(1);
         }
         redisService.pushUser(user);
         log.info("{}", user);
