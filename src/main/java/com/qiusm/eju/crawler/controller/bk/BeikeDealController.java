@@ -89,6 +89,8 @@ public class BeikeDealController extends BeiKeBaseController {
                 }
             }
         }
+
+        log.info("city:{},cityId:{},总计数量:{}", city, cityId, count);
     }
 
     JSONArray pageListHandler(JSONObject biz) {
