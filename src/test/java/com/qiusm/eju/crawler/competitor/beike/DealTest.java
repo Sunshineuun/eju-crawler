@@ -8,7 +8,9 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealListSearc
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealPageListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.utils.FileUtils;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +23,7 @@ public class DealTest extends BkTest {
 
 
     public static void main(String[] args) {
-        detailPart();
+        statisticalData();
     }
 
     static void city() {
@@ -127,5 +129,27 @@ public class DealTest extends BkTest {
         BkResponseDto responseDto = httpSearch.execute(requestDto);
 
         System.out.printf("detailPart:%s\n", responseDto);
+    }
+
+    /**
+     * 统计数据
+     */
+    static void statisticalData() {
+        String filePath = "source\\beike\\deal\\2021.07.29100240";
+        File file = new File(filePath);
+        File[] files = file.listFiles();
+        int count = 0;
+        for (File file1 : files) {
+            String str = FileUtils.readFile(file1);
+            try {
+                LineNumberReader lnr = new LineNumberReader(new FileReader(file1));
+                lnr.skip(Long.MAX_VALUE);
+                count += lnr.getLineNumber() + 1;
+                lnr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(count);
     }
 }

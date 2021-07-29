@@ -1,5 +1,6 @@
 package com.qiusm.eju.crawler.competitor.beike;
 
+import com.qiusm.eju.crawler.entity.bk.BkUser;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.HttpSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByPasswordV2;
@@ -9,7 +10,6 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PhoneVerifyCode;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.*;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkUser;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import com.xiaoleilu.hutool.util.RandomUtil;
