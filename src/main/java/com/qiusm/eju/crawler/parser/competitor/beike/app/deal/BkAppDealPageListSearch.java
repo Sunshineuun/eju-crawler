@@ -90,33 +90,37 @@ public class BkAppDealPageListSearch extends BkAppDealBaseSearch {
 
         Integer totalCount = dataJson.getInteger("total_count");
 
-        // 总数小于2100
-        if (totalCount < 2100) {
-            log.info("{},{}:板块下总成交数量{}", data.get("region"), data.get("plate"), totalCount);
-
-            JSONObject resultJson = new JSONObject();
-            resultJson.putAll(data);
-            resultJson.put(LIMIT_OFFSET, "0");
-            arrayResult.add(resultJson);
-        } else {
-            //价格区间 分割
-            // 总价格是2000w 间隔10w
-            log.info("{},{}:板块下总成交数量{}，进行价格区间切割", data.get("region"), data.get("plate"), totalCount);
-            int priceSize = 50;
-            int priceCount = 21;
-            for (int bp = 0; bp < priceCount; bp++) {
-                int ep = bp + 1;
-                if (bp == priceCount - 1) {
-                    ep = bp * 20;
-                }
+        if (totalCount != null) {
+            // 总数小于2100
+            if (totalCount < 2100) {
+                log.info("{},{}:板块下总成交数量{}", data.get("region"), data.get("plate"), totalCount);
 
                 JSONObject resultJson = new JSONObject();
                 resultJson.putAll(data);
                 resultJson.put(LIMIT_OFFSET, "0");
-                resultJson.put(PRICE_BP, bp * priceSize);
-                resultJson.put(PRICE_EP, ep * priceSize);
                 arrayResult.add(resultJson);
+            } else {
+                //价格区间 分割
+                // 总价格是2000w 间隔10w
+                log.info("{},{}:板块下总成交数量{}，进行价格区间切割", data.get("region"), data.get("plate"), totalCount);
+                int priceSize = 50;
+                int priceCount = 21;
+                for (int bp = 0; bp < priceCount; bp++) {
+                    int ep = bp + 1;
+                    if (bp == priceCount - 1) {
+                        ep = bp * 20;
+                    }
+
+                    JSONObject resultJson = new JSONObject();
+                    resultJson.putAll(data);
+                    resultJson.put(LIMIT_OFFSET, "0");
+                    resultJson.put(PRICE_BP, bp * priceSize);
+                    resultJson.put(PRICE_EP, ep * priceSize);
+                    arrayResult.add(resultJson);
+                }
             }
+        } else {
+            log.info("{},{}:板块下无成交", data.get("region"), data.get("plate"));
         }
 
         responseDto.getResult().put("list", arrayResult);
