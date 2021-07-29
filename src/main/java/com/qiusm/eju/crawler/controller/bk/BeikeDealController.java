@@ -7,8 +7,8 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailPar
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealPageListSearch;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
@@ -99,22 +99,22 @@ public class BeikeDealController extends BeiKeBaseController {
         params.put("city", biz.getString("city"));
         params.put("district_id", biz.getString("district_id"));
         params.put("bizcircle_id", biz.getString("bizcircle_id"));
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(biz)
                 .build();
 
-        BkResponseDto responseDto = bkAppDealPageListSearch.execute(requestDto);
+        ResponseDto responseDto = bkAppDealPageListSearch.execute(requestDto);
         return responseDto.getResult().getJSONArray("list");
     }
 
     JSONArray pageHandler(JSONObject page) {
-        BkResponseDto responseDto = pageHandler1(page);
+        ResponseDto responseDto = pageHandler1(page);
         JSONArray list = responseDto.getResult().getJSONArray("list");
         JSONArray requestList = responseDto.getResult().getJSONArray("request_list");
         if (requestList != null) {
             for (Object o : requestList) {
-                BkResponseDto responseDto1 = pageHandler1((JSONObject) o);
+                ResponseDto responseDto1 = pageHandler1((JSONObject) o);
                 JSONArray list1 = responseDto1.getResult().getJSONArray("list");
                 if (list1 != null) {
                     list.addAll(list1);
@@ -124,7 +124,7 @@ public class BeikeDealController extends BeiKeBaseController {
         return list;
     }
 
-    BkResponseDto pageHandler1(JSONObject page) {
+    ResponseDto pageHandler1(JSONObject page) {
         Map<String, String> params = new HashMap<>(8);
         params.put("city_id", page.getString("city_id"));
         params.put("city", page.getString("city"));
@@ -140,7 +140,7 @@ public class BeikeDealController extends BeiKeBaseController {
             params.put("price_ep", page.getString("price_ep"));
         }
 
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(page)
                 .build();
@@ -152,12 +152,12 @@ public class BeikeDealController extends BeiKeBaseController {
         Map<String, String> params = new HashMap<>(8);
         params.put("house_code", detail.getString("house_code"));
         params.put("strategy_info", detail.getString("strategy_info"));
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(detail)
                 .build();
 
-        BkResponseDto responseDto = bkAppDealDetailSearch.execute(requestDto);
+        ResponseDto responseDto = bkAppDealDetailSearch.execute(requestDto);
 
         return responseDto.getResult();
     }
@@ -169,12 +169,12 @@ public class BeikeDealController extends BeiKeBaseController {
 
         Map<String, String> params = new HashMap<>();
         params.put("house_code", detail.getString("house_code"));
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(detail)
                 .build();
 
-        BkResponseDto responseDto = bkAppDealDetailPartSearch.execute(requestDto);
+        ResponseDto responseDto = bkAppDealDetailPartSearch.execute(requestDto);
         return responseDto.getResult();
     }
 }

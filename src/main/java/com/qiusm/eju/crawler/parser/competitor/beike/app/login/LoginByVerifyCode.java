@@ -3,9 +3,8 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class LoginByVerifyCode extends BkAppLoginBase {
     private static final String REQUEST_TS = "request_ts";
 
     @Override
-    protected void buildingUrl(BkRequestDto requestDto) {
+    protected void buildingUrl(RequestDto requestDto) {
         requestDto.setUrl(URL_TEMPLATE);
         requestDto.setRequestMethod(RequestMethodEnum.POST_FORM);
 
@@ -48,12 +47,12 @@ public class LoginByVerifyCode extends BkAppLoginBase {
     }
 
     @Override
-    protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
+    protected void parser(RequestDto requestDto, ResponseDto responseDto) {
         log.info("{}", requestDto);
     }
 
     @Override
-    protected void buildingHeader(BkRequestDto dto) {
+    protected void buildingHeader(RequestDto dto) {
         super.buildingHeader(dto);
         Map<String, String> baseHead = new HashMap<>(16);
         baseHead.put(AUTHORIZATION, BeikeUtils.authorization(dto.getUrl(), dto.getRequestParam()));

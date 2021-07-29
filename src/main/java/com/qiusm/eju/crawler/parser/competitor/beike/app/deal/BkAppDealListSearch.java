@@ -3,8 +3,8 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.deal;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +23,7 @@ public class BkAppDealListSearch
     private static final Integer TOTAL_COUNT_LIMIT = 100;
 
     @Override
-    protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
+    protected void parser(RequestDto requestDto, ResponseDto responseDto) {
         JSONObject mainJson = JSON.parseObject(requestDto.getResponseStr());
         JSONArray arrayResult = new JSONArray();
         if (!checkJsonError(mainJson)) {
@@ -79,7 +79,7 @@ public class BkAppDealListSearch
         }
     }
 
-    private JSONArray parseNewRequest(BkRequestDto requestDto, JSONObject mainJson) {
+    private JSONArray parseNewRequest(RequestDto requestDto, JSONObject mainJson) {
         String totalCountStr = JSONUtils.getStringByKey(mainJson, "data.total_count");
         Integer totalCount = Integer.valueOf(totalCountStr);
         JSONArray arrayResult = new JSONArray();

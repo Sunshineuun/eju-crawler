@@ -3,8 +3,8 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.utils.JSONUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class HouseSearchV1 extends BkAppSkeletonBaseSearch {
     private static final String UNIT_ID = "unit_id";
 
     @Override
-    protected void buildingUrl(BkRequestDto requestDto) {
+    protected void buildingUrl(RequestDto requestDto) {
         Map<String, String> requestParam = requestDto.getRequestParam();
         if (!requestParam.containsKey(UNIT_ID)
                 || StringUtils.isBlank(requestParam.get(UNIT_ID))) {
@@ -36,7 +36,7 @@ public class HouseSearchV1 extends BkAppSkeletonBaseSearch {
     }
 
     @Override
-    protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
+    protected void parser(RequestDto requestDto, ResponseDto responseDto) {
         JSONObject var0 = JSONObject.parseObject(requestDto.getResponseStr());
         JSONArray list = JSONUtils.getJsonArrayByKey(var0, "data.list");
         JSONObject result = new JSONObject();

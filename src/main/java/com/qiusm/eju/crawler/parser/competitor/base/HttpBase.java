@@ -1,9 +1,9 @@
-package com.qiusm.eju.crawler.parser.competitor.anjuke;
+package com.qiusm.eju.crawler.parser.competitor.base;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.HttpSearch;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.IHttpSearch;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ImageReaderUtils;
@@ -12,16 +12,11 @@ import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 
-/**
- * @author qiushengming
- */
 @Slf4j
-public abstract class AjkBaseSearch implements HttpSearch {
+public abstract class HttpBase implements IHttpSearch {
 
     protected OkHttpUtils httpClient = OkHttpUtils.Builder()
             .proxyUrl(PROXY_URL0)
@@ -33,7 +28,7 @@ public abstract class AjkBaseSearch implements HttpSearch {
      *
      * @param requestDto 请求dto
      */
-    protected abstract void buildingUrl(BkRequestDto requestDto);
+    protected abstract void buildingUrl(RequestDto requestDto);
 
     /**
      * 解析响应结果
@@ -41,7 +36,7 @@ public abstract class AjkBaseSearch implements HttpSearch {
      * @param requestDto  request
      * @param responseDto response
      */
-    protected abstract void parser(BkRequestDto requestDto, BkResponseDto responseDto);
+    protected abstract void parser(RequestDto requestDto, ResponseDto responseDto);
 
     /**
      * 整体流程的管控
@@ -50,8 +45,8 @@ public abstract class AjkBaseSearch implements HttpSearch {
      * @return BkResponseDto response
      */
     @Override
-    public BkResponseDto execute(BkRequestDto requestDto) {
-        BkResponseDto responseDto = new BkResponseDto();
+    public ResponseDto execute(RequestDto requestDto) {
+        ResponseDto responseDto = new ResponseDto();
         try {
             //0. 检验主要参数
             checkRequestParam(requestDto);
@@ -86,19 +81,44 @@ public abstract class AjkBaseSearch implements HttpSearch {
             responseDto.setSuccess(false);
             responseDto.setSysErrorMsg(requestDto.getResponseStr());
             responseDto.setResult(new JSONObject());
-            responseDto.setBkErrorMsg(parserBkErrorMsg(requestDto));
+            responseDto.setBkErrorMsg(parserErrorMsg(requestDto));
         }
         return responseDto;
     }
 
-    protected void checkRequestParam(BkRequestDto requestDto) {}
+    /**
+     * 检查参数是否符合要求
+     *
+     * @param requestDto dto
+     */
+    protected void checkRequestParam(RequestDto requestDto) {
 
-    protected String parserBkErrorMsg(BkRequestDto requestDto) {
-        if (viewCheck(requestDto)) {
-            JSONObject var = JSONObject.parseObject(requestDto.getResponseStr());
-            return var.getString("error");
-        }
-        return null;
+    }
+
+    /**
+     * 当请求失败的时候会尝试进行解析错误
+     *
+     * @param requestDto dto
+     * @return String
+     */
+    protected String parserErrorMsg(RequestDto requestDto) {
+        return requestDto.getResponseStr();
+    }
+
+    /**
+     * 构建请求头
+     *
+     * @param dto dto
+     */
+    protected void buildingHeader(RequestDto dto) {
+    }
+
+    /**
+     * 构建cookie
+     *
+     * @param dto dto
+     */
+    protected void buildingCookie(RequestDto dto) {
     }
 
 
@@ -109,30 +129,14 @@ public abstract class AjkBaseSearch implements HttpSearch {
      *
      * @param requestDto requestDto
      */
-    protected void httpGet(BkRequestDto requestDto) {/*
-        BkUrlHistory his = historyService.getBkHistoryByUrl(requestDto.getUrl());
-
-        if (his != null) {
-            requestDto.setResponseStr(his.getResult());
-        } else {
-            his = new BkUrlHistory();
-        }
-
-        if (!viewCheck(requestDto)) {
-            httpGetA(requestDto);
-            his.setResult(requestDto.getResponseStr());
-            his.setUrl(requestDto.getUrl());
-            his.setClassHandler(this.getClass().getSimpleName());
-
-            his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
-            historyService.upHis(his);
-        }
-    */}
+    protected void httpGet(RequestDto requestDto) {
+        httpGetA(requestDto);
+    }
 
     /**
      * 通过httpclinet获取请求
      */
-    protected void httpGetA(BkRequestDto requestDto) {
+    protected void httpGetA(RequestDto requestDto) {
         String htmlStr = null;
         byte[] imgByte = null;
         switch (requestDto.getRequestMethod()) {
@@ -157,22 +161,12 @@ public abstract class AjkBaseSearch implements HttpSearch {
         }
     }
 
-    protected boolean viewCheck(BkRequestDto requestDto) {
+    protected boolean viewCheck(RequestDto requestDto) {
         String responseStr = requestDto.getResponseStr();
         return !(StringUtils.isBlank(responseStr)
                 || responseStr.startsWith("ejuResponseCode")
                 || responseStr.startsWith("ResponseError")
                 || responseStr.startsWith("ResponseCode"));
-    }
-
-
-    protected void buildingHeader(BkRequestDto dto) {
-        Map<String, String> baseHead = new HashMap<>(16);
-        dto.setHead(baseHead);
-    }
-
-    protected void buildingCookie(BkRequestDto dto) {
-
     }
 
     /**
@@ -183,4 +177,5 @@ public abstract class AjkBaseSearch implements HttpSearch {
     protected String[] getProxyRetryTag() {
         return new String[]{"ejuResponseCode"};
     }
+
 }

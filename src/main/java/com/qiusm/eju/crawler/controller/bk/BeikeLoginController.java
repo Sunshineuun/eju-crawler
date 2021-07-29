@@ -5,8 +5,8 @@ import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByPasswordV2;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByVerifyCode;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PhoneVerifyCode;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.service.bk.IBeikeLoginService;
 import com.qiusm.eju.crawler.service.bk.IBkRedisService;
 import com.qiusm.eju.crawler.utils.StringUtils;
@@ -66,61 +66,61 @@ public class BeikeLoginController {
     }
 
     @GetMapping("/get/phoneVerifyCodeByPhone")
-    public BkResponseDto getPhoneVerifyCodeByPhone(
+    public ResponseDto getPhoneVerifyCodeByPhone(
             HttpSession session, String phoneNo, String picVerifyCode, String cityId) {
         session.setAttribute("phoneNo", phoneNo);
 
         BkUser user = redisService.getUserByPhoneNo(phoneNo);
 
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(user)
                 .requestParam("pic_verify_code", picVerifyCode)
                 .head(LIANJIA_CITY_ID, cityId)
                 .build();
-        BkResponseDto responseDto = phoneVerifyCodeService.execute(requestDto);
+        ResponseDto responseDto = phoneVerifyCodeService.execute(requestDto);
         return responseDto;
     }
 
     @GetMapping("/loginByVerifyCode")
-    public BkResponseDto loginByVerifyCode(
+    public ResponseDto loginByVerifyCode(
             HttpSession session, String phoneNo, String verifyCode, String picVerifyCode, String cityId) {
 
         BkUser user = redisService.getUserByPhoneNo(phoneNo);
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(user)
                 .requestParam("verify_code", verifyCode)
                 .requestParam("pic_verify_code", picVerifyCode)
                 .head(LIANJIA_CITY_ID, cityId)
                 .build();
-        BkResponseDto responseDto = loginByVerifyCodeService.execute(requestDto);
+        ResponseDto responseDto = loginByVerifyCodeService.execute(requestDto);
         bkRedisService.pushUser(user);
         return responseDto;
     }
 
     @GetMapping("/loginByPasswordV2")
-    public BkResponseDto loginByPasswordV2(
+    public ResponseDto loginByPasswordV2(
             String phoneNo, String password, String picVerifyCode,
             @RequestParam(required = false, defaultValue = "310000") String cityId) {
         BkUser user = redisService.getUserByPhoneNo(phoneNo, password);
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(user)
                 .requestParam("pic_verify_code", picVerifyCode)
                 .head(LIANJIA_CITY_ID, cityId)
                 .build();
-        BkResponseDto responseDto = loginByPasswordV2Service.execute(requestDto);
+        ResponseDto responseDto = loginByPasswordV2Service.execute(requestDto);
         bkRedisService.pushUser(user);
         return responseDto;
     }
 
     @GetMapping("/oneClickLogin")
-    public BkResponseDto oneClickLogin(String phoneNo, String picVerifyCode, String cityId) {
+    public ResponseDto oneClickLogin(String phoneNo, String picVerifyCode, String cityId) {
 
         BkUser user = redisService.getUserByPhoneNo(phoneNo);
 
         if (StringUtils.isBlank(user.getPassword())) {
             throw new BusinessException(10000, "缓存密码为空，无法登录");
         }
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(user)
                 .requestParam("pic_verify_code", picVerifyCode)
                 .head(LIANJIA_CITY_ID, cityId)

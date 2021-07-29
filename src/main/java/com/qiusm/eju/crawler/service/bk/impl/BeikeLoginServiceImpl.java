@@ -3,8 +3,8 @@ package com.qiusm.eju.crawler.service.bk.impl;
 import com.qiusm.eju.crawler.entity.bk.BkUser;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByPasswordV2;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PicVerifyCode;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.service.bk.IBeikeLoginService;
 import com.qiusm.eju.crawler.service.bk.IBkRedisService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,11 +34,11 @@ public class BeikeLoginServiceImpl
     public byte[] getPicVerifyCodeByPhone(String phoneNo, String cityId) {
 
         BkUser user = redisService.getUserByPhoneNo(phoneNo);
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(user)
                 .head(LIANJIA_CITY_ID, cityId)
                 .build();
-        BkResponseDto responseDto = picVerifyCodeService.execute(requestDto);
+        ResponseDto responseDto = picVerifyCodeService.execute(requestDto);
         return responseDto.getResultByte();
     }
 
@@ -46,12 +46,12 @@ public class BeikeLoginServiceImpl
     public BkUser loginByPasswordV2(
             String phoneNo, String password, String picVerifyCode, String cityId) {
         BkUser user = redisService.getUserByPhoneNo(phoneNo, password);
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(user)
                 .requestParam("pic_verify_code", picVerifyCode)
                 .head(LIANJIA_CITY_ID, cityId)
                 .build();
-        BkResponseDto responseDto = loginByPasswordV2Service.execute(requestDto);
+        ResponseDto responseDto = loginByPasswordV2Service.execute(requestDto);
         if (!responseDto.getSuccess()) {
             user.setState(91);
         }else{

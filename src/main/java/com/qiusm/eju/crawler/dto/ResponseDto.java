@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.parser.competitor.beike.dto;
+package com.qiusm.eju.crawler.dto;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.Data;
  * @author qiushengming
  */
 @Data
-public class BkResponseDto {
+public class ResponseDto {
     private Boolean success;
     private JSONObject result = new JSONObject();
     private byte[] resultByte;

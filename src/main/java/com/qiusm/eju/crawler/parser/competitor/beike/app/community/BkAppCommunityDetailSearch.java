@@ -3,10 +3,8 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.community;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -29,7 +27,7 @@ public class BkAppCommunityDetailSearch extends BkAppCommunityBaseSearch {
     private static final String URL_TEMPLATE = "%s/house/resblock/detailpart1?id=%s";
 
     @Override
-    protected void buildingUrl(BkRequestDto requestDto) {
+    protected void buildingUrl(RequestDto requestDto) {
 
         Map<String, String> requestParam = requestDto.getRequestParam();
 
@@ -42,7 +40,7 @@ public class BkAppCommunityDetailSearch extends BkAppCommunityBaseSearch {
     }
 
     @Override
-    protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
+    protected void parser(RequestDto requestDto, ResponseDto responseDto) {
         JSONObject mainJson = JSON.parseObject(requestDto.getResponseStr());
         responseDto.setResult(mainJson.getJSONObject("data"));
     }

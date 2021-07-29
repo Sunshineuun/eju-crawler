@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.parser.competitor.beike.dto;
+package com.qiusm.eju.crawler.dto;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.entity.bk.BkUser;
@@ -15,7 +15,7 @@ import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
  * @author qiushengming
  */
 @Data
-public class BkRequestDto {
+public class RequestDto {
     /**
      * 请求地址
      */
@@ -55,7 +55,7 @@ public class BkRequestDto {
      */
     private BkUser user;
 
-    private BkRequestDto(Builder builder) {
+    private RequestDto(Builder builder) {
         this.url = builder.url;
         this.charset = builder.charset;
         this.requestParam = builder.requestParam;
@@ -115,8 +115,8 @@ public class BkRequestDto {
             return this;
         }
 
-        public BkRequestDto build() {
-            return new BkRequestDto(this);
+        public RequestDto build() {
+            return new RequestDto(this);
         }
 
 

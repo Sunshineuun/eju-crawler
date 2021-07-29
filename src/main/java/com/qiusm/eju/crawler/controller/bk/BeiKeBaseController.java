@@ -3,8 +3,8 @@ package com.qiusm.eju.crawler.controller.bk;
 import com.alibaba.fastjson.JSONArray;
 import com.qiusm.eju.crawler.controller.base.CrawlerTaskSchedulingBaseController;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.base.BkAppCityDictSearch;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -29,11 +29,11 @@ public abstract class BeiKeBaseController extends CrawlerTaskSchedulingBaseContr
         Map<String, String> params = new HashMap<>(8);
         params.put("city_id", cityId);
         params.put("city", city);
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .build();
 
-        BkResponseDto responseDto = bkAppCityDictSearch.execute(requestDto);
+        ResponseDto responseDto = bkAppCityDictSearch.execute(requestDto);
         return responseDto.getResult().getJSONArray("list");
     }
 }

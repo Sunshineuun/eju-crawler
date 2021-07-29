@@ -2,7 +2,7 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 
 import java.util.HashMap;
@@ -18,12 +18,12 @@ import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 public abstract class BkAppLoginBase extends BkAppBaseSearch {
 
     @Override
-    protected void httpGet(BkRequestDto requestDto) {
+    protected void httpGet(RequestDto requestDto) {
         httpGetA(requestDto);
     }
 
     @Override
-    protected void buildingHeader(BkRequestDto dto) {
+    protected void buildingHeader(RequestDto dto) {
         Map<String, String> baseHead = new HashMap<>(16);
         baseHead.put(AUTHORIZATION, BeikeUtils.authorization(dto.getUrl()));
         baseHead.put(ACCEPT, "application/json");

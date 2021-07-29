@@ -3,9 +3,8 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class PhoneVerifyCode extends BkAppLoginBase {
     private static final int PHONE_NO_LENGTH = 11;
 
     @Override
-    protected void buildingUrl(BkRequestDto requestDto) {
+    protected void buildingUrl(RequestDto requestDto) {
         Map<String, String> requestParam = requestDto.getRequestParam();
 
         // 手机号码不为空 && 手机号码必须等于12位 && 且必须为纯数字
@@ -54,7 +53,7 @@ public class PhoneVerifyCode extends BkAppLoginBase {
      * @param responseDto response
      */
     @Override
-    protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
+    protected void parser(RequestDto requestDto, ResponseDto responseDto) {
         JSONObject result = JSON.parseObject(requestDto.getResponseStr());
         responseDto.setResult(result);
         String mobilePhoneNo = requestDto.getRequestParam().get("mobile_phone_no");

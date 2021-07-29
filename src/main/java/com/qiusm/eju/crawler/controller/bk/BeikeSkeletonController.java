@@ -8,8 +8,8 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunit
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.BuildingSearchV1;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.HouseSearchV1;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.UnitSearchV1;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.service.bk.IBkRedisService;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
@@ -153,12 +153,12 @@ public class BeikeSkeletonController extends BeiKeBaseController {
         params.put("city", biz.getString("city"));
         params.put("district_id", biz.getString("district_id"));
         params.put("bizcircle_id", biz.getString("bizcircle_id"));
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(biz)
                 .build();
 
-        BkResponseDto responseDto = communityPageListSearch.execute(requestDto);
+        ResponseDto responseDto = communityPageListSearch.execute(requestDto);
         return responseDto.getResult().getJSONArray("list");
     }
 
@@ -178,12 +178,12 @@ public class BeikeSkeletonController extends BeiKeBaseController {
             params.put("price_eq", page.getString("price_eq"));
         }
 
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(page)
                 .build();
 
-        BkResponseDto responseDto = communityListSearch.execute(requestDto);
+        ResponseDto responseDto = communityListSearch.execute(requestDto);
 
         return responseDto.getResult().getJSONArray("list");
     }
@@ -191,38 +191,38 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     JSONArray buildingHandler(JSONObject community) {
         log.info("区域：{},小区名：{},小区id：{}",
                 community.get("district_name"), community.get("community_name"), community.get("community_id"));
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(bkRedisService.getUser())
                 .requestParam("community_id", community.getString("community_id"))
                 .head(LIANJIA_CITY_ID, community.getString("city_id"))
                 .data(community)
                 .isLoad(true)
                 .build();
-        BkResponseDto responseDto = buildingSearchV1.execute(requestDto);
+        ResponseDto responseDto = buildingSearchV1.execute(requestDto);
         return responseDto.getResult().getJSONArray("list");
     }
 
     private JSONArray unitHandler(JSONObject building) {
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(bkRedisService.getUser())
                 .requestParam("building_id", building.getString("building_id"))
                 .head(LIANJIA_CITY_ID, building.getString("city_id"))
                 .data(building)
                 .isLoad(true)
                 .build();
-        BkResponseDto responseDto = unitSearchV1.execute(requestDto);
+        ResponseDto responseDto = unitSearchV1.execute(requestDto);
         return responseDto.getResult().getJSONArray("list");
     }
 
     private JSONArray houseHandler(JSONObject unit) {
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(bkRedisService.getUser())
                 .requestParam("unit_id", unit.getString("unit_id"))
                 .head(LIANJIA_CITY_ID, unit.getString("city_id"))
                 .data(unit)
                 .isLoad(true)
                 .build();
-        BkResponseDto responseDto = houseSearchV1.execute(requestDto);
+        ResponseDto responseDto = houseSearchV1.execute(requestDto);
         return responseDto.getResult().getJSONArray("list");
     }
 }

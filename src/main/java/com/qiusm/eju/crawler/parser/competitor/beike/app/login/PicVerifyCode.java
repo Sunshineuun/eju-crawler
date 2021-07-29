@@ -2,9 +2,8 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,7 @@ public class PicVerifyCode extends BkAppLoginBase {
     private static final String DEVICE_ID = "device_id";
 
     @Override
-    protected void buildingUrl(BkRequestDto requestDto) {
+    protected void buildingUrl(RequestDto requestDto) {
         Map<String, String> requestParam = requestDto.getRequestParam();
 
         requestParam.put(DEVICE_ID, requestDto.getUser().getDeviceId());
@@ -42,12 +41,12 @@ public class PicVerifyCode extends BkAppLoginBase {
     }
 
     @Override
-    protected void parser(BkRequestDto requestDto, BkResponseDto responseDto) {
+    protected void parser(RequestDto requestDto, ResponseDto responseDto) {
         responseDto.setResultByte(requestDto.getResponseByte());
     }
 
     @Override
-    protected void buildingHeader(BkRequestDto dto) {
+    protected void buildingHeader(RequestDto dto) {
         Map<String, String> baseHead = new HashMap<>(16);
         baseHead.put(ACCEPT, "gzip");
         baseHead.put(USER_AGENT, "Dalvik/2.1.0 (Linux; U; Android 8.1.0; Pixel Build/OPM1.171019.011)");
@@ -59,7 +58,7 @@ public class PicVerifyCode extends BkAppLoginBase {
     }
 
     @Override
-    protected boolean viewCheck(BkRequestDto requestDto) {
+    protected boolean viewCheck(RequestDto requestDto) {
         return requestDto.getResponseByte().length > 0;
     }
 }

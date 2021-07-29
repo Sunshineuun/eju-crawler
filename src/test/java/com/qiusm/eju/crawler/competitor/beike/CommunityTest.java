@@ -2,14 +2,14 @@ package com.qiusm.eju.crawler.competitor.beike;
 
 import com.qiusm.eju.crawler.entity.bk.BkUser;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.HttpSearch;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.IHttpSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByPasswordV2;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByVerifyCode;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PicVerifyCode;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PhoneVerifyCode;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.*;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkRequestDto;
-import com.qiusm.eju.crawler.parser.competitor.beike.dto.BkResponseDto;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import com.xiaoleilu.hutool.util.RandomUtil;
@@ -66,44 +66,44 @@ public class CommunityTest extends BkTest {
     }
 
     static void loginByPasswordV2() {
-        HttpSearch httpSearch = new LoginByPasswordV2();
+        IHttpSearch httpSearch = new LoginByPasswordV2();
         Map<String, String> params = new HashMap<>(1);
         params.put("pic_verify_code", "1082");
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(BK_USER)
                 .requestParam(params)
                 .head(LIANJIA_CITY_ID, "310000")
                 .build();
 
-        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = httpSearch.execute(requestDto);
         System.out.printf("loginByVerifyCode:%s\n", responseDto);
     }
 
     static void loginByVerifyCode() {
-        HttpSearch httpSearch = new LoginByVerifyCode();
+        IHttpSearch httpSearch = new LoginByVerifyCode();
         Map<String, String> params = new HashMap<>(1);
         params.put("pic_verify_code", "3023");
         params.put("verify_code", "739734");
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(BK_USER)
                 .requestParam(params)
                 .head(LIANJIA_CITY_ID, "310000")
                 .build();
 
-        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = httpSearch.execute(requestDto);
         System.out.printf("loginByVerifyCode:%s\n", responseDto);
     }
 
     static void imgVerification() {
-        HttpSearch httpSearch = new PicVerifyCode();
+        IHttpSearch httpSearch = new PicVerifyCode();
         Map<String, String> params = new HashMap<>(1);
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(BK_USER)
                 .requestParam(params)
                 .head(LIANJIA_CITY_ID, "310000")
                 .build();
 
-        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = httpSearch.execute(requestDto);
         FileUtils.printFile(responseDto.getResultByte(), "source", "1.png", false);
         System.out.printf("imgVerification:%s\n", responseDto);
     }
@@ -113,17 +113,17 @@ public class CommunityTest extends BkTest {
      * {"request_id":"64083d97-e980-4648-96cf-fe8eecfe79ce","uniqid":"010ACA160D1DDD9B9E7A0194597357AB","errno":0,"error":"操作成功","data":{},"cost":192}
      */
     static void phoneVerification() {
-        HttpSearch httpSearch = new PhoneVerifyCode();
+        IHttpSearch httpSearch = new PhoneVerifyCode();
         Map<String, String> params = new HashMap<>();
         params.put("pic_verify_code", "2070");
 
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .user(BK_USER)
                 .requestParam(params)
                 .head(LIANJIA_CITY_ID, "310000")
                 .build();
 
-        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = httpSearch.execute(requestDto);
 
         System.out.printf("phoneVerification:%s\n", requestDto);
         System.out.printf("phoneVerification:%s\n", responseDto);
@@ -151,16 +151,16 @@ public class CommunityTest extends BkTest {
      * <p>
      * channel_id=xiaoqu，可能的值xiaoqu\ershoufang。
      */
-    static BkResponseDto loadCommunity() {
-        HttpSearch httpSearch = new CommunitySearchV1();
+    static ResponseDto loadCommunity() {
+        IHttpSearch httpSearch = new CommunitySearchV1();
         Map<String, String> params = new HashMap<>();
         params.put("city_id", "310000");
         params.put("key", "远洋香奈");
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .build();
 
-        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = httpSearch.execute(requestDto);
 
         System.out.printf("loadCommunity:%s\n", responseDto);
         return responseDto;
@@ -173,43 +173,43 @@ public class CommunityTest extends BkTest {
      * 卖房：单元信息接口：/yezhu/publish/getUnits?building_id=5012000243156，取unit_name和unit_id <br>
      * 卖房：房号信息接口：/yezhu/publish/getHouses?unit_id=5013000243156，取
      */
-    static BkResponseDto buildingNumber(String communityId) {
-        HttpSearch httpSearch = new BuildingSearchV1();
+    static ResponseDto buildingNumber(String communityId) {
+        IHttpSearch httpSearch = new BuildingSearchV1();
         Map<String, String> params = new HashMap<>(4);
         params.put("city_id", "310000");
         params.put("key", "远洋");
         params.put("community_id", communityId);
 
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .build();
 
-        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = httpSearch.execute(requestDto);
 
         System.out.printf("buildingNumber:%s\n", responseDto);
         return responseDto;
     }
 
-    static BkResponseDto unitNumber(String buildingId) {
-        HttpSearch httpSearch = new UnitSearchV1();
+    static ResponseDto unitNumber(String buildingId) {
+        IHttpSearch httpSearch = new UnitSearchV1();
         Map<String, String> params = new HashMap<>(4);
         params.put("city_id", "310000");
         params.put("key", "远洋");
         params.put("community_id", "5011000016012");
         params.put("building_id", buildingId);
 
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .build();
 
-        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = httpSearch.execute(requestDto);
 
         System.out.printf("unitNumber:%s\n", responseDto);
         return responseDto;
     }
 
     static void houseNumber(String unitId) {
-        HttpSearch httpSearch = new HouseSearchV1();
+        IHttpSearch httpSearch = new HouseSearchV1();
         Map<String, String> params = new HashMap<>(4);
         params.put("city_id", "310000");
         params.put("key", "远洋");
@@ -217,11 +217,11 @@ public class CommunityTest extends BkTest {
         params.put("building_id", "5012000046380");
         params.put("unit_id", unitId);
 
-        BkRequestDto requestDto = BkRequestDto.builder()
+        RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .build();
 
-        BkResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = httpSearch.execute(requestDto);
 
         System.out.printf("houseNumber:%s\n", responseDto);
     }
