@@ -5,6 +5,7 @@ import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.entity.bk.BkUrlHistory;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.base.HttpBase;
+import com.qiusm.eju.crawler.parser.competitor.base.IHttpSearch;
 import com.qiusm.eju.crawler.service.bk.IBkUrlHistoryService;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;

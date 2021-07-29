@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.parser.competitor.beike.app;
+package com.qiusm.eju.crawler.parser.competitor.base;
 
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;

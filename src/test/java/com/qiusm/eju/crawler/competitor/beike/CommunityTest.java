@@ -2,7 +2,7 @@ package com.qiusm.eju.crawler.competitor.beike;
 
 import com.qiusm.eju.crawler.entity.bk.BkUser;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.IHttpSearch;
+import com.qiusm.eju.crawler.parser.competitor.base.IHttpSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByPasswordV2;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByVerifyCode;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PicVerifyCode;

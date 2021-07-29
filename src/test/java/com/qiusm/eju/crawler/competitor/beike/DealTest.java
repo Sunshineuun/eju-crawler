@@ -1,6 +1,6 @@
 package com.qiusm.eju.crawler.competitor.beike;
 
-import com.qiusm.eju.crawler.parser.competitor.beike.app.IHttpSearch;
+import com.qiusm.eju.crawler.parser.competitor.base.IHttpSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.base.BkAppCityDictSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailPartSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailSearch;
