@@ -25,6 +25,7 @@ import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_BK_SKELETON;
 import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
 
 
@@ -93,7 +94,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
         }
 
         JSONArray bizArray = cityHandler(cityId, city);
-        String filePath = "source\\beike\\skeleton\\" + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
+        String filePath = SOURCE_BK_SKELETON + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
         int count = 0;
         for (Object o1 : bizArray) {
             // 小区页面列表

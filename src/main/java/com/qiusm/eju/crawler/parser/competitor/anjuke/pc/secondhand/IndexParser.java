@@ -1,7 +1,7 @@
-package com.qiusm.eju.crawler.parser.competitor.anjuke.secondhand;
+package com.qiusm.eju.crawler.parser.competitor.anjuke.pc.secondhand;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.parser.competitor.anjuke.AnjukeParserBase;
+import com.qiusm.eju.crawler.parser.competitor.anjuke.pc.AnjukeParserBase;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.CommunityRackRateConstant;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import org.apache.commons.lang3.StringUtils;

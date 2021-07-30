@@ -148,6 +148,9 @@ public abstract class HttpBase implements IHttpSearch {
             case POST_FORM:
                 htmlStr = httpClient.postFrom(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead(), requestDto.getRequestParam());
                 break;
+            case POST_JSON:
+                htmlStr = httpClient.proxyPostJson(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead(), JSONObject.toJSONString(requestDto.getRequestParam()));
+                break;
             default:
                 log.error("未知请求类型{}", requestDto.getRequestMethod());
         }

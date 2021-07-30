@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_BK_DEAL;
+
 /**
  * 成交
  *
@@ -59,7 +61,7 @@ public class BeikeDealController extends BeiKeBaseController {
             @PathVariable String cityId,
             @PathVariable String city) {
         JSONArray bizArray = cityHandler(cityId, city);
-        String filePath = "source\\beike\\deal\\" + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
+        String filePath = SOURCE_BK_DEAL + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
         int count = 0;
         for (Object o1 : bizArray) {
             JSONArray pageListArray = pageListHandler((JSONObject) o1);

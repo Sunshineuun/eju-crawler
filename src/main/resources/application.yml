@@ -99,7 +99,7 @@ spring:
         principalCookieName: cookie_user_key
   redis:
     database: 10
-    host: 127.0.0.1
+    host: 172.30.4.124
     port: 6379
     jedis:
       pool:

@@ -1,0 +1,32 @@
+[
+  {
+    "area_name": "静安",
+    "community_id": 100043064,
+    "address": "平型关路1083弄",
+    "community_number_type": 3,
+    "name": "慧芝湖花园(一二期)",
+    "area_id": 1403,
+    "forbid_publish": "0",
+    "city_id": 11
+  },
+  {
+    "area_name": "静安",
+    "community_id": 100508588,
+    "address": "平型关路1018号",
+    "community_number_type": 4,
+    "name": "嘉悦轩(慧芝湖花园三期)",
+    "area_id": 1403,
+    "forbid_publish": "0",
+    "city_id": 11
+  },
+  {
+    "area_name": "静安",
+    "community_id": 100179990,
+    "address": "平型关路1088弄",
+    "community_number_type": 3,
+    "name": "嘉悦天地(慧芝湖花园三期)",
+    "area_id": 1403,
+    "forbid_publish": "0",
+    "city_id": 11
+  }
+]

@@ -3,7 +3,6 @@ package com.qiusm.eju.crawler.utils.http;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import okhttp3.*;
-import okhttp3.OkHttpClient;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
@@ -11,7 +10,6 @@ import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.HttpHostConnectException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
 
 import javax.net.ssl.*;
 import java.io.IOException;
@@ -293,7 +291,7 @@ public class OkHttpUtils {
                 }
                 requestBuilder.post(builder.build());
             } else if (POST_JSON.equals(type)) {
-                RequestBody body = RequestBody.create(MediaType.parse(SingleOkHttpConfig.APPLICATION_JSON_CHARSET + charset), argus + "");
+                RequestBody body = FormBody.create(MediaType.parse(SingleOkHttpConfig.APPLICATION_JSON_CHARSET + charset), argus + "");
                 requestBuilder.post(body);
             } else {
                 throw new UnsupportedOperationException(SingleOkHttpConfig.NO_SUPPORT_REQUEST_OK_HTTP_UTILS_TYPE + type);

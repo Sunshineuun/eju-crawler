@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.parser.competitor.anjuke;
+package com.qiusm.eju.crawler.parser.competitor.anjuke.pc;
 
 
 import com.alibaba.fastjson.JSONObject;

@@ -27,11 +27,11 @@ public class RequestDto {
     /**
      * 请求方式
      */
-    private RequestMethodEnum requestMethod = RequestMethodEnum.GET;
+    private RequestMethodEnum requestMethod;
     /**
      * 判断是否需要登录
      */
-    private Boolean isLoad = false;
+    private Boolean isLoad;
     /**
      * 请求返回的结果
      */
@@ -63,6 +63,7 @@ public class RequestDto {
         this.data = builder.data;
         this.user = builder.user;
         this.isLoad = builder.isLoad;
+        this.requestMethod = builder.requestMethod;
     }
 
     public static Builder builder() {
@@ -70,6 +71,7 @@ public class RequestDto {
     }
 
     public static final class Builder {
+        RequestMethodEnum requestMethod = RequestMethodEnum.GET;
         String url;
         String charset = UTF8;
         Map<String, String> requestParam = new HashMap<>();
@@ -132,6 +134,11 @@ public class RequestDto {
 
         public Builder isLoad(boolean isLoad) {
             this.isLoad = isLoad;
+            return this;
+        }
+
+        public Builder requestMethod(RequestMethodEnum requestMethod) {
+            this.requestMethod = requestMethod;
             return this;
         }
     }
