@@ -133,3 +133,4 @@ eju:
         max-thread-core-count: 16
 mybatis-plus:
   mapper-locations: classpath:mybatis/mapper/**/*Mapper.xml
+  type-handlers-package: com.qiusm.eju.crawler.mybatis.typehandlerspackage

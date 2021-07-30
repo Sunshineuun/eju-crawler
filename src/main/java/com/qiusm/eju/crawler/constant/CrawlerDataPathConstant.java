@@ -6,5 +6,6 @@ package com.qiusm.eju.crawler.constant;
 public class CrawlerDataPathConstant {
     public static final String SOURCE_BK_SKELETON = "source/beike/skeleton/";
     public static final String SOURCE_BK_DEAL = "source/beike/deal/";
+    public static final String SOURCE_LOG = "source/logs/";
 
 }

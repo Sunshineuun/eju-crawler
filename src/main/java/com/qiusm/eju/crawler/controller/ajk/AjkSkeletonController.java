@@ -9,6 +9,7 @@ import com.qiusm.eju.crawler.parser.competitor.anjuke.app.community.AjkAppCommun
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppFloor;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppHouse;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppUnit;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import static com.qiusm.eju.crawler.constant.ajk.AjkFieldConstant.*;
 /**
  * @author qiushengming
  */
+@Slf4j
 @RestController
 @RequestMapping("/ajk/skeleton")
 public class AjkSkeletonController {
@@ -45,26 +47,42 @@ public class AjkSkeletonController {
 //        String cityId = "11";
         // 查询小区
         JSONArray communityArray = communitySearch(key, cityId);
+        if (communityArray == null) {
+            log.info("{},{},小区列表抓取失败.", cityId, key);
+            return;
+        }
         for (Object o : communityArray) {
             JSONObject community = (JSONObject) o;
             // 查询单元列表
             JSONArray unitArray = unitSearch(community);
             community.put("unit", unitArray);
+            if (unitArray == null) {
+                log.info("{},{},单元抓取失败,{}", cityId, key, community);
+                continue;
+            }
             for (Object o1 : unitArray) {
                 JSONObject unit = (JSONObject) o1;
                 unit.put(COMMUNITY_TYPE, community.get(COMMUNITY_TYPE));
                 // 查询楼层好
                 JSONArray floorArray = floorSearch(unit);
                 unit.put("floor", floorArray);
+                if (floorArray == null) {
+                    log.info("{},{},楼层列表抓取失败 or 为空.{}", cityId, key, unit);
+                    continue;
+                }
                 for (Object o2 : floorArray) {
                     JSONObject floor = (JSONObject) o2;
                     floor.put(COMMUNITY_TYPE, unit.get(COMMUNITY_TYPE));
                     floor.put(UNIT_ID, unit.getString(UNIT_ID));
                     JSONArray houseArray = houseSearch(floor);
                     floor.put("house", houseArray);
+                    if (houseArray == null) {
+                        log.info("{},{},楼层抓取失败 or 为空.{}", cityId, key, floor);
+                    }
                 }
             }
         }
+        log.info("{},{},小区列表抓取结束.", cityId, key);
     }
 
     /**
@@ -81,7 +99,6 @@ public class AjkSkeletonController {
                 .build();
 
         ResponseDto responseDto = communitySearch.execute(requestDto);
-        System.out.printf("communitySearch:%s\n", responseDto.getResult());
         return responseDto.getResult().getJSONArray("list");
     }
 
@@ -106,7 +123,6 @@ public class AjkSkeletonController {
                 .build();
 
         ResponseDto responseDto = unitService.execute(requestDto);
-        System.out.printf("buildingSearch:%s\n", responseDto);
         return responseDto.getResult().getJSONArray("list");
     }
 
@@ -124,7 +140,6 @@ public class AjkSkeletonController {
                 .build();
 
         ResponseDto responseDto = floorService.execute(requestDto);
-        System.out.printf("unitSearch:%s\n", responseDto);
         return responseDto.getResult().getJSONArray("list");
     }
 
@@ -143,7 +158,6 @@ public class AjkSkeletonController {
                 .build();
 
         ResponseDto responseDto = houseService.execute(requestDto);
-        System.out.printf("houseSearch:%s\n", responseDto);
         return responseDto.getResult().getJSONArray("list");
     }
 }

@@ -3,6 +3,7 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.entity.bk.BkUrlHistory;
+import com.qiusm.eju.crawler.enums.SourceTypeEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.base.HttpBase;
 import com.qiusm.eju.crawler.parser.competitor.base.IHttpSearch;
@@ -34,6 +35,11 @@ public abstract class BkAppBaseSearch
     protected static final String CITY_ID = "city_id";
 
     protected static final String DOMAIN_NAME = "https://app.api.ke.com";
+
+    @Override
+    protected String getSourceType() {
+        return SourceTypeEnum.BK.getCode();
+    }
 
     @Override
     protected void checkRequestParam(RequestDto requestDto) {

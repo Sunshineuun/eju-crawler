@@ -96,6 +96,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
         JSONArray bizArray = cityHandler(cityId, city);
         String filePath = SOURCE_BK_SKELETON + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
         int count = 0;
+
         for (Object o1 : bizArray) {
             // 小区页面列表
             JSONArray pageListArray = pageListHandler((JSONObject) o1);
@@ -116,28 +117,47 @@ public class BeikeSkeletonController extends BeiKeBaseController {
 
                     // 按照小区为单位抓取骨架数据
                     bkSkeletonExecutor.submit(() -> {
+                        // 楼栋获取成功数量
+                        int bc = 0;
+                        // 楼栋目标数据 building total
+                        int bt = 0;
+                        // 单元获取成功数量
+                        int uc = 0;
+                        // 单元目标数量 unit total
+                        int ut = 0;
+                        JSONObject community = (JSONObject) o3;
                         // 小区楼栋信息抓取
-                        JSONArray buildingList = buildingHandler((JSONObject) o3);
+                        JSONArray buildingList = buildingHandler(community);
                         if (buildingList == null) {
                             return;
                         }
+                        bt = buildingList.size();
                         for (Object building : buildingList) {
                             // 小区单元信息抓取
                             JSONArray unitList = unitHandler((JSONObject) building);
                             if (unitList == null) {
                                 continue;
                             }
+
+                            bc++;
+                            ut += unitList.size();
                             for (Object unit : unitList) {
                                 JSONArray houseList = houseHandler((JSONObject) unit);
                                 if (houseList == null) {
                                     continue;
                                 }
+                                uc++;
                                 houseList.forEach(house -> {
                                     FileUtils.printFile(((JSONObject) house).toJSONString() + "\n",
                                             filePath, Thread.currentThread().getName() + ".txt", true);
                                 });
                             }
                         }
+                        log.info("{}/{}/{}, building_count:{}/{}, unit_count:{}/{};",
+                                community.get("district_name"),
+                                community.get("community_name"),
+                                community.get("community_id"),
+                                bc, bt, uc, ut);
                     });
                 }
             }
@@ -190,8 +210,6 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     }
 
     JSONArray buildingHandler(JSONObject community) {
-        log.info("区域：{},小区名：{},小区id：{}",
-                community.get("district_name"), community.get("community_name"), community.get("community_id"));
         RequestDto requestDto = RequestDto.builder()
                 .user(bkRedisService.getUser())
                 .requestParam("community_id", community.getString("community_id"))

@@ -1,7 +1,9 @@
 package com.qiusm.eju.crawler.parser.competitor.anjuke.app;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.entity.ajk.AjkUrlHistory;
+import com.qiusm.eju.crawler.enums.SourceTypeEnum;
 import com.qiusm.eju.crawler.parser.competitor.base.HttpBase;
 import com.qiusm.eju.crawler.parser.competitor.base.IHttpSearch;
 import com.qiusm.eju.crawler.service.ajk.IAjkUrlHistoryService;
@@ -25,8 +27,13 @@ public abstract class AjkAppBase
     @Resource
     private IAjkUrlHistoryService historyService;
 
+    @Override
+    protected String getSourceType() {
+        return SourceTypeEnum.AJK.getCode();
+    }
+
     protected void httpGet(RequestDto requestDto) {
-        AjkUrlHistory his = historyService.getAjkHistoryByUrl(requestDto.getUrl());
+        AjkUrlHistory his = historyService.getAjkHistoryByUrl(requestDto);
 
         if (his != null) {
             requestDto.setResponseStr(his.getResult());
@@ -39,7 +46,7 @@ public abstract class AjkAppBase
             his.setResult(requestDto.getResponseStr());
             his.setUrl(requestDto.getUrl());
             his.setClassHandler(this.getClass().getSimpleName());
-
+            his.setParams(JSONObject.toJSONString(requestDto.getRequestParam()));
             his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
             historyService.upHis(his);
         }
@@ -67,7 +74,7 @@ public abstract class AjkAppBase
                 && (
                 (StringUtils.contains(responseStr, "\"msg\":\"ok\",")
                         || StringUtils.contains(responseStr, "\"status\":\"0\","))
-                );
+        );
     }
 
     @Override

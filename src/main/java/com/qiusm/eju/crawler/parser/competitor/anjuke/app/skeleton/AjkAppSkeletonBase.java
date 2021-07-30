@@ -42,6 +42,5 @@ public abstract class AjkAppSkeletonBase extends AjkAppBase {
         JSONObject mainJson = JSONObject.parseObject(requestDto.getResponseStr());
         JSONArray list = JSONUtils.getJsonArrayByKey(mainJson, "data.list");
         responseDto.getResult().put("list", list);
-        log.info("{}", requestDto.getResponseStr());
     }
 }

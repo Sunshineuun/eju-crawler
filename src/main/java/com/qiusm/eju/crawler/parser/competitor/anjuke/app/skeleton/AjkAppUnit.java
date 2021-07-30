@@ -19,9 +19,6 @@ public class AjkAppUnit extends AjkAppSkeletonBase {
     @Override
     protected void parser(RequestDto requestDto, ResponseDto responseDto) {
         super.parser(requestDto, responseDto);
-        if (!responseDto.getSuccess()) {
-            return;
-        }
         JSONArray array = responseDto.getResult().getJSONArray("list");
         if (array == null) {
             return;

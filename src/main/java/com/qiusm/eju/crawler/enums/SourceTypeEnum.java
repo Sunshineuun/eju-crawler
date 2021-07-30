@@ -8,8 +8,8 @@ public enum SourceTypeEnum {
     /**
      * 请求来源
      */
-    SOURCE_00("0", "url"),
-    SOURCE_01("1", "datasource");
+    BK("bk", "贝壳"),
+    AJK("ajk", "安居客");
 
     private final String code;
     private final String des;

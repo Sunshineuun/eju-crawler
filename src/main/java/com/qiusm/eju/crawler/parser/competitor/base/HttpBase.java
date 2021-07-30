@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
+import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_LOG;
 import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 
 @Slf4j
@@ -70,7 +71,7 @@ public abstract class HttpBase implements IHttpSearch {
             log.error("{},url:{}", e.getMessage(), requestDto.getUrl());
             String msg = String.format("%s\n%s\n%s\n%s\n%s\n\n\n\n", DateUtils.formatDateTime(new Date()),
                     e.getMessage(), requestDto, responseDto, StringUtils.stackTraceInfoToStr(e));
-            FileUtils.printFile(msg, "source\\beike\\logs\\", "bk_msg.log", true);
+            FileUtils.printFile(msg, SOURCE_LOG + getSourceType(), this.getClass().getSimpleName() + ".log", true);
             requestDto.setResponseStr(e.getMessage());
         }
         //7. 判断结果状态
@@ -84,6 +85,8 @@ public abstract class HttpBase implements IHttpSearch {
         }
         return responseDto;
     }
+
+    protected abstract String getSourceType();
 
     /**
      * 检查参数是否符合要求

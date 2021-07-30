@@ -12,11 +12,14 @@ import java.util.Date;
  * @author qiushengming
  */
 @Data
-@TableName("ajk_url_history")
- @EqualsAndHashCode(callSuper = true)
+@TableName(value = "ajk_url_history")
+@EqualsAndHashCode(callSuper = true)
 public class AjkUrlHistory
         extends SuperEntity<AjkUrlHistory> {
     private String url;
+
+    @TableField(value = "params")
+    private String params;
 
     @TableField("class_handler")
     private String classHandler;
