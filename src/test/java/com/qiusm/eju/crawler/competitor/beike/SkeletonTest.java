@@ -7,13 +7,11 @@ import java.io.LineNumberReader;
 
 public class SkeletonTest {
     public static void main(String[] args) {
-//        count();
-        String sepa = System.getProperty("file.separator");
-        System.out.println(sepa);
+        count();
     }
 
     static void count() {
-        String filePath = "source/beike/skeleton/2021.07.28";
+        String filePath = "/Users/qiushengming/Documents/2021.07.30183953/";
         File file = new File(filePath);
         File[] files = file.listFiles();
         int count = 0;

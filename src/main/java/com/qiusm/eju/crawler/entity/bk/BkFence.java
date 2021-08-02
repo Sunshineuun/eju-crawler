@@ -33,4 +33,6 @@ public class BkFence extends SuperEntity<BkFence> {
     private String version;
 
     private String fence;
+
+    private String source;
 }

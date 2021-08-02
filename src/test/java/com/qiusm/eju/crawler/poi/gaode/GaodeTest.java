@@ -2,15 +2,18 @@ package com.qiusm.eju.crawler.poi.gaode;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.EjuCrawlerApplicationTests;
 import com.qiusm.eju.crawler.service.poi.gaode.impl.GaodeCrawlerService;
 import com.qiusm.eju.crawler.utils.poi.GaodeUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 高德POI测试
  *
  * @author qiushengming
  */
-public class GaodeTest {
+@Slf4j
+public class GaodeTest extends EjuCrawlerApplicationTests {
     static GaodeCrawlerService service = new GaodeCrawlerService();
 
     public static void main(String[] args) {
