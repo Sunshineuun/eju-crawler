@@ -1,3 +1,16 @@
+-- 常用查询sql
+-- 查询总量
+select count(id)
+from bk_url_history;
+-- 查询成功 & 失败的数据数据情况
+select count(IF(IS_SUCCESS = 0, 1, null)) f,
+       count(IF(IS_SUCCESS = 1, 1, null)) f
+from bk_url_history;
+-- 查询每日新增请求数量
+select count(id) c, date_format(create_time, '%Y-%m-%d') as create_time
+from bk_url_history
+group by date_format(create_time, '%Y-%m-%d');
+
 -- 区域、板块围栏数据
 drop table bk_fence;
 create table bk_fence

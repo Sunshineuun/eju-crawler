@@ -11,7 +11,7 @@ public class SkeletonTest {
     }
 
     static void count() {
-        String filePath = "/Users/qiushengming/Documents/2021.07.30183953/";
+        String filePath = "/Users/qiushengming/Documents/2021.08.02091310/";
         File file = new File(filePath);
         File[] files = file.listFiles();
         int count = 0;
@@ -26,6 +26,5 @@ public class SkeletonTest {
             }
         }
         System.out.println(count);
-
     }
 }
