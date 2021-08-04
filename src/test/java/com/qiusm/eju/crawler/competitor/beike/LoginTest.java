@@ -7,7 +7,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByPasswordV2
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.LoginByVerifyCode;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PhoneVerifyCode;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PicVerifyCode;
-import com.qiusm.eju.crawler.service.bk.IBkRedisService;
+import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CIT
 public class LoginTest {
 
     @Autowired
-    private IBkRedisService bkRedisService;
+    private IBkUserManagementService bkRedisService;
 
     @Autowired
     private LoginByPasswordV2 loginByPasswordV2;

@@ -8,7 +8,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PhoneVerifyCode;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.service.bk.IBeikeLoginService;
-import com.qiusm.eju.crawler.service.bk.IBkRedisService;
+import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CIT
 @RequestMapping("/bk/login")
 public class BeikeLoginController {
     @Resource
-    private IBkRedisService bkRedisService;
+    private IBkUserManagementService bkRedisService;
 
     @Resource
     private IBeikeLoginService beikeLoginService;
@@ -50,7 +50,7 @@ public class BeikeLoginController {
     private LoginByPasswordV2 loginByPasswordV2Service;
 
     @Resource
-    private IBkRedisService redisService;
+    private IBkUserManagementService redisService;
 
     @GetMapping("/get/picVerifyCodeByPhone")
     public void getPicVerifyCodeByPhone(

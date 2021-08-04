@@ -5,7 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.qiusm.eju.crawler.entity.bk.BkUser;
-import com.qiusm.eju.crawler.service.bk.IBkRedisService;
+import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import com.qiusm.eju.crawler.service.bk.IBkUserService;
 import com.qiusm.eju.crawler.utils.EmailUtil;
 import com.qiusm.eju.crawler.utils.StringUtils;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class BkRedisServiceImpl implements IBkRedisService {
+public class BkUserManagementServiceImpl implements IBkUserManagementService {
 
     public static final String BK_USER_RKEY = "hook:bk:user:";
 
@@ -128,9 +128,9 @@ public class BkRedisServiceImpl implements IBkRedisService {
     }
 
     @Override
-    public void updateToken(BkUser user) {
-        String userKey = BK_USER_RKEY + user.getPhoneNo();
-        valueOperations.set(userKey, JSONObject.toJSONString(user));
+    public void updateUser(BkUser user) {
+//        String userKey = BK_USER_RKEY + user.getPhoneNo();
+//        valueOperations.set(userKey, JSONObject.toJSONString(user));
         bkUserService.updateById(user);
     }
 

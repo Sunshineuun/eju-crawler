@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author qiushengming
  */
-public interface IBkRedisService {
+public interface IBkUserManagementService {
 
     /**
      * 通过手机号码获取用户对象
@@ -48,7 +48,7 @@ public interface IBkRedisService {
      *
      * @param user BkUser
      */
-    void updateToken(BkUser user);
+    void updateUser(BkUser user);
 
     /**
      * 备份用户

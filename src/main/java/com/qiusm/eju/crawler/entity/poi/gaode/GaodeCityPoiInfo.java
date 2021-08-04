@@ -14,7 +14,8 @@ import java.util.Date;
 @Data
 @TableName("gaode_city_poi_info")
 @EqualsAndHashCode(callSuper = true)
-public class GaodeCityPoiInfo extends SuperEntity<BkUser> {
+public class GaodeCityPoiInfo
+        extends SuperEntity<BkUser> {
 
     @TableField("city_code")
     private String cityCode;

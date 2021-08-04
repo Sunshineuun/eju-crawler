@@ -298,7 +298,7 @@ public class BeikeDistrictServiceImpl
      */
     @Override
     public List<String> loadCityList() {
-        String filePath = "source\\beike\\bk_city_list.json";
+        String filePath = "source/beike/bk_city_list.json";
         File file = new File(filePath);
         if (!file.exists()) {
             log.error("城市列表json文件不存在！");

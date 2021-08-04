@@ -8,4 +8,7 @@ import com.qiusm.eju.crawler.entity.task.CrawlerUrlHistory;
  */
 public interface ICrawlerUrlHistoryService
         extends IService<CrawlerUrlHistory> {
+    CrawlerUrlHistory getByUrl(String url);
+
+    void upHis(CrawlerUrlHistory his);
 }

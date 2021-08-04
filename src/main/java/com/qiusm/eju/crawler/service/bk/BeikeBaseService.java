@@ -16,7 +16,7 @@ import static com.qiusm.eju.crawler.constant.SymbolicConstant.COMMA;
  * @author qiushengming
  */
 public abstract class BeikeBaseService {
-    protected static final String BEIKE_FILE_ROOT = "source\\beike\\";
+    protected static final String BEIKE_FILE_ROOT = "source/beike/";
 
     protected OkHttpUtils httpUtils = OkHttpUtils.Builder().proxyUrl(PROXY_URL0).connectTimeout(60000).readTimeout(60000).charset(GBK).builderHttp();
     protected final List<String> ERROR_MSG = new ArrayList<>();

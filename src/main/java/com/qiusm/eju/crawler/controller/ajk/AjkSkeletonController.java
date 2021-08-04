@@ -119,7 +119,7 @@ public class AjkSkeletonController {
         params.put(PAGE, "1");
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
-                .requestMethod(RequestMethodEnum.POST_JSON)
+                .requestMethod(RequestMethodEnum.PROXY_POST_JSON)
                 .build();
 
         ResponseDto responseDto = unitService.execute(requestDto);
@@ -136,7 +136,7 @@ public class AjkSkeletonController {
         params.put(PAGE, "1");
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
-                .requestMethod(RequestMethodEnum.POST_JSON)
+                .requestMethod(RequestMethodEnum.PROXY_POST_JSON)
                 .build();
 
         ResponseDto responseDto = floorService.execute(requestDto);
@@ -154,7 +154,7 @@ public class AjkSkeletonController {
         params.put(FLOOR_ID, floor.getString(FLOOR_ID));
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
-                .requestMethod(RequestMethodEnum.POST_JSON)
+                .requestMethod(RequestMethodEnum.PROXY_POST_JSON)
                 .build();
 
         ResponseDto responseDto = houseService.execute(requestDto);

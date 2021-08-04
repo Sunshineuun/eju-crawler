@@ -135,7 +135,7 @@ public class DealTest extends BkTest {
      * 统计数据
      */
     static void statisticalData() {
-        String filePath = "source\\beike\\deal\\2021.07.29100240";
+        String filePath = "source/beike/deal/2021.07.29100240";
         File file = new File(filePath);
         File[] files = file.listFiles();
         int count = 0;

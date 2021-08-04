@@ -224,7 +224,7 @@ public class GaodeCrawlerService {
             while (tryCount++ < 10) {
                 //http://restapi.amap.com/v3/place/around?key=50fa7b34a8a07b5c46969979f260d109&location=116.473168,39.993015&keywords=&types=011100&radius=1000&offset=20&page=1&extensions=all
                 String poiUrl = "http://restapi.amap.com/v3/place/around?location="
-                        + point.getLongitude()
+                        + point.getLongitude() +"," + point.getLatitude()
                         + "&keywords=&types=" + tagCode
                         + "&radius=" + radius
                         + "&offset=" + pageSize

@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 高德、百度 key缓存
+ * @author qiushengming
+ */
 @Slf4j
 @Service
 public class LocationKeyServiceImpl

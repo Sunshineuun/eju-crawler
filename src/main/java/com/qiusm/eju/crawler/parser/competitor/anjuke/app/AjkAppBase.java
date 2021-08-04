@@ -29,7 +29,7 @@ public abstract class AjkAppBase
 
     @Override
     protected String getSourceType() {
-        return SourceTypeEnum.AJK.getCode();
+        return SourceTypeEnum.AJK_APP.getCode();
     }
 
     protected void httpGet(RequestDto requestDto) {

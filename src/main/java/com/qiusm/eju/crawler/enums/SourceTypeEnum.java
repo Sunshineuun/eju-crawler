@@ -8,8 +8,10 @@ public enum SourceTypeEnum {
     /**
      * 请求来源
      */
-    BK("bk", "贝壳"),
-    AJK("ajk", "安居客");
+    BK_APP("bk_app", "贝壳App"),
+    BK_PC("bk_pc", "贝壳Pc"),
+    AJK_APP("ajk_app", "安居客App"),
+    GAO_DE("gao_de", "高德");
 
     private final String code;
     private final String des;

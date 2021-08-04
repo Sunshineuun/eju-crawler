@@ -1,21 +1,32 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app.login;
 
+import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
-import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
+import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL5;
 import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
 import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 
 /**
  * @author qiushengming
  */
 public abstract class BkAppLoginBase extends BkAppBaseSearch {
+
+    private final OkHttpUtils httpClient = OkHttpUtils.Builder()
+            .proxyUrl(PROXY_URL5)
+            .addProxyRetryTag(getProxyRetryTag())
+            .builderHttp();
+
+    @Override
+    public OkHttpUtils getHttpClient() {
+        return httpClient;
+    }
 
     @Override
     protected void httpGet(RequestDto requestDto) {

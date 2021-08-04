@@ -3,10 +3,12 @@ package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +21,9 @@ import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
  */
 @Slf4j
 public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
+
+    @Resource
+    private IBkUserManagementService bkRedisService;
 
     @Override
     protected void buildingHeader(RequestDto dto) {
@@ -53,6 +58,7 @@ public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
         if (StringUtils.contains(responseStr, "请重新登录")) {
             requestDto.getUser().setState(99);
             log.warn("需要重新登录：{}", requestDto.getUser());
+            bkRedisService.updateUser(requestDto.getUser());
         }
         return super.viewCheck(requestDto);
     }

@@ -38,7 +38,7 @@ public abstract class BkAppBaseSearch
 
     @Override
     protected String getSourceType() {
-        return SourceTypeEnum.BK.getCode();
+        return SourceTypeEnum.BK_APP.getCode();
     }
 
     @Override

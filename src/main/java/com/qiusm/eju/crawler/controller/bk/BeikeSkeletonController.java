@@ -10,8 +10,9 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.HouseSearchV1;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.UnitSearchV1;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
-import com.qiusm.eju.crawler.service.bk.IBkRedisService;
+import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import com.qiusm.eju.crawler.utils.DateUtils;
+import com.qiusm.eju.crawler.utils.EmailUtil;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import io.swagger.annotations.Api;
@@ -56,7 +57,10 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     private HouseSearchV1 houseSearchV1;
 
     @Resource
-    private IBkRedisService bkRedisService;
+    private IBkUserManagementService bkUserManagementService;
+
+    @Resource
+    private EmailUtil emailUtil;
 
     private final ThreadPoolExecutor bkSkeletonExecutor = ThreadPoolUtils
             .newFixedThreadPool("bk-skeleton", 4, 20L);
@@ -166,6 +170,8 @@ public class BeikeSkeletonController extends BeiKeBaseController {
         synchronized (cityIdSet) {
             cityIdSet.remove(cityId);
         }
+
+        emailUtil.sendSimpleMail("583853240@qq.com", String.format("%s,运行完毕", cityId));
     }
 
     JSONArray pageListHandler(JSONObject biz) {
@@ -211,7 +217,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
 
     JSONArray buildingHandler(JSONObject community) {
         RequestDto requestDto = RequestDto.builder()
-                .user(bkRedisService.getUser())
+                .user(bkUserManagementService.getUser())
                 .requestParam("community_id", community.getString("community_id"))
                 .head(LIANJIA_CITY_ID, community.getString("city_id"))
                 .data(community)
@@ -223,7 +229,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
 
     private JSONArray unitHandler(JSONObject building) {
         RequestDto requestDto = RequestDto.builder()
-                .user(bkRedisService.getUser())
+                .user(bkUserManagementService.getUser())
                 .requestParam("building_id", building.getString("building_id"))
                 .head(LIANJIA_CITY_ID, building.getString("city_id"))
                 .data(building)
@@ -235,7 +241,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
 
     private JSONArray houseHandler(JSONObject unit) {
         RequestDto requestDto = RequestDto.builder()
-                .user(bkRedisService.getUser())
+                .user(bkUserManagementService.getUser())
                 .requestParam("unit_id", unit.getString("unit_id"))
                 .head(LIANJIA_CITY_ID, unit.getString("city_id"))
                 .data(unit)

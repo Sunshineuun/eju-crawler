@@ -79,7 +79,7 @@ public class CommunityTest {
         params.put(PAGE, "1");
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
-                .requestMethod(RequestMethodEnum.POST_JSON)
+                .requestMethod(RequestMethodEnum.PROXY_POST_JSON)
                 .build();
 
         ResponseDto responseDto = httpSearch.execute(requestDto);
@@ -98,7 +98,7 @@ public class CommunityTest {
         params.put(PAGE, "1");
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
-                .requestMethod(RequestMethodEnum.POST_JSON)
+                .requestMethod(RequestMethodEnum.PROXY_POST_JSON)
                 .build();
 
         ResponseDto responseDto = httpSearch.execute(requestDto);
@@ -118,7 +118,7 @@ public class CommunityTest {
         params.put(FLOOR_ID, floor.getString(FLOOR_ID));
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
-                .requestMethod(RequestMethodEnum.POST_JSON)
+                .requestMethod(RequestMethodEnum.PROXY_POST_JSON)
                 .build();
 
         ResponseDto responseDto = httpSearch.execute(requestDto);

@@ -71,7 +71,7 @@ public class RequestDto {
     }
 
     public static final class Builder {
-        RequestMethodEnum requestMethod = RequestMethodEnum.GET;
+        RequestMethodEnum requestMethod = RequestMethodEnum.PROXY_GET;
         String url;
         String charset = UTF8;
         Map<String, String> requestParam = new HashMap<>();

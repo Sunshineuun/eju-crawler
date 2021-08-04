@@ -6,7 +6,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.login.PicVerifyCode;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.service.bk.IBeikeLoginService;
-import com.qiusm.eju.crawler.service.bk.IBkRedisService;
+import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CIT
 public class BeikeLoginServiceImpl
         implements IBeikeLoginService {
     @Resource
-    private IBkRedisService redisService;
+    private IBkUserManagementService redisService;
 
     @Resource
     private PicVerifyCode picVerifyCodeService;

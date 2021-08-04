@@ -13,13 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Date;
 
 import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_LOG;
-import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 
 @Slf4j
 public abstract class HttpBase implements IHttpSearch {
 
-    protected OkHttpUtils httpClient = OkHttpUtils.Builder()
-            .proxyUrl(PROXY_URL0)
+    private final OkHttpUtils httpClient = OkHttpUtils.Builder()
+            .proxyUrl("http://crawler-ipproxy.ejudata.com/get/ip-list/13?key=4CZ5VH3TZSEYARFRSOVNLBOBH9NF6LW6XG5TADZS4LE=")
             .addProxyRetryTag(getProxyRetryTag())
             .builderHttp();
 
@@ -37,6 +36,11 @@ public abstract class HttpBase implements IHttpSearch {
      * @param responseDto response
      */
     protected abstract void parser(RequestDto requestDto, ResponseDto responseDto);
+
+
+    public OkHttpUtils getHttpClient() {
+        return httpClient;
+    }
 
     /**
      * 整体流程的管控
@@ -142,17 +146,17 @@ public abstract class HttpBase implements IHttpSearch {
         String htmlStr = null;
         byte[] imgByte = null;
         switch (requestDto.getRequestMethod()) {
-            case GET:
-                htmlStr = httpClient.proxyGet(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead());
+            case PROXY_GET:
+                htmlStr = getHttpClient().proxyGet(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead());
                 break;
             case IMG:
                 imgByte = ImageReaderUtils.imageToByteV2(requestDto.getUrl(), requestDto.getHead());
                 break;
             case POST_FORM:
-                htmlStr = httpClient.postFrom(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead(), requestDto.getRequestParam());
+                htmlStr = getHttpClient().postFrom(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead(), requestDto.getRequestParam());
                 break;
-            case POST_JSON:
-                htmlStr = httpClient.proxyPostJson(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead(), JSONObject.toJSONString(requestDto.getRequestParam()));
+            case PROXY_POST_JSON:
+                htmlStr = getHttpClient().proxyPostJson(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead(), JSONObject.toJSONString(requestDto.getRequestParam()));
                 break;
             default:
                 log.error("未知请求类型{}", requestDto.getRequestMethod());
