@@ -146,6 +146,9 @@ public abstract class HttpBase implements IHttpSearch {
         String htmlStr = null;
         byte[] imgByte = null;
         switch (requestDto.getRequestMethod()) {
+            case GET:
+                htmlStr = getHttpClient().get(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead());
+                break;
             case PROXY_GET:
                 htmlStr = getHttpClient().proxyGet(requestDto.getUrl(), requestDto.getCharset(), requestDto.getHead());
                 break;

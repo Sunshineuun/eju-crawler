@@ -8,12 +8,11 @@ import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.entity.poi.gaode.GaodePoi;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.service.poi.ILocationKeyService;
+import com.qiusm.eju.crawler.utils.poi.GaodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 import static com.qiusm.eju.crawler.constant.poi.GaodeField.*;
@@ -39,15 +38,12 @@ import static com.qiusm.eju.crawler.constant.poi.GaodeField.*;
 @Service
 public class GaodePoiPageListSearch extends GaodeBaseSearch {
 
-    private static final String URL_TEMPLATE = "http://mapdata-api.ejudata.com/inner/map/get?url=https://restapi.amap.com/v3/place/around?";
+    private static final String URL_TEMPLATE = "https://restapi.amap.com/v3/place/around?";
     /**
      * 必填参数
      */
     private String[] required = new String[]{"location"};
     private String[] unRequired = new String[]{"keywords", "types", "city", "radius", "sortrule", "offset", "page", "extensions", "sig", "output"};
-    @Resource
-    private ILocationKeyService locationKeyService;
-
 
     @Override
     protected void buildingUrl(RequestDto requestDto) {
@@ -66,7 +62,7 @@ public class GaodePoiPageListSearch extends GaodeBaseSearch {
                 throw new BusinessException(999, "关键参数缺失。key：" + k);
             }
         }
-        requestDto.setUrl(url.toString());
+        requestDto.setUrl(GaodeUtils.packageUrl(url.toString()));
         requestDto.setRequestMethod(RequestMethodEnum.GET);
     }
 
@@ -112,7 +108,7 @@ public class GaodePoiPageListSearch extends GaodeBaseSearch {
                 JSONArray poisJsonArray = JSON.parseArray(JSON.toJSONString(mainJson.get(POIS)));
                 poisJsonArray.forEach(var -> {
                     if (var instanceof JSONObject) {
-                        result.add((JSONObject) var);
+                        result.add(var);
                     } else {
                         log.warn("对象不是[JSONObject]类型，{}", var);
                     }

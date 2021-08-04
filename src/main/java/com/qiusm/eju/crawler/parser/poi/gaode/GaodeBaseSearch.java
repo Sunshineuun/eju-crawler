@@ -36,6 +36,7 @@ public abstract class GaodeBaseSearch
             his.setClassHandler(this.getClass().getSimpleName());
             his.setSource(SourceTypeEnum.GAO_DE.getCode());
             his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
+            his.setTaskId(0L);
             historyService.upHis(his);
         }
     }
