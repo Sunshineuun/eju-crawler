@@ -30,13 +30,17 @@ public abstract class GaodeBaseSearch
         }
 
         if (!viewCheck(requestDto)) {
+            long start = System.currentTimeMillis();
             httpGetA(requestDto);
+            long end = System.currentTimeMillis();
+
             his.setResult(requestDto.getResponseStr());
             his.setUrl(requestDto.getUrl());
             his.setClassHandler(this.getClass().getSimpleName());
             his.setSource(SourceTypeEnum.GAO_DE.getCode());
             his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
             his.setTaskId(0L);
+            his.setTimeConsuming(start - end);
             historyService.upHis(his);
         }
     }

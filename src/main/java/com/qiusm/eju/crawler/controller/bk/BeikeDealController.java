@@ -2,15 +2,15 @@ package com.qiusm.eju.crawler.controller.bk;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
+import com.qiusm.eju.crawler.entity.bk.BkDeal;
 import com.qiusm.eju.crawler.entity.task.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailPartSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealPageListSearch;
-import com.qiusm.eju.crawler.dto.RequestDto;
-import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.utils.DateUtils;
-import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -84,8 +84,10 @@ public class BeikeDealController extends BeiKeBaseController {
                         // detailPartHandler(detail);
 
                         if (detailPart != null) {
-                            FileUtils.printFile(detailPart.toJSONString() + "\n", filePath,
-                                    Thread.currentThread().getName() + ".txt", true);
+                            /*FileUtils.printFile(detailPart.toJSONString() + "\n", filePath,
+                                    Thread.currentThread().getName() + ".txt", true);*/
+                            BkDeal deal = JSONObject.parseObject(detailPart.toJSONString(), BkDeal.class);
+                            deal.insert();
                         }
                     });
                 }

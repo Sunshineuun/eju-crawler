@@ -63,8 +63,8 @@ public class BkAppDealDetailSearch extends BkAppDealBaseSearch {
         // 基本信息
         JSONObject basicInfo = data.getJSONObject("basic_info");
         if (basicInfo != null) {
-            result.put("house_name", basicInfo.getString("title"));
-            result.put("house_code", basicInfo.getString("house_code"));
+            result.put("goodes_name", basicInfo.getString("title"));
+            result.put("goodes_id", basicInfo.getString("house_code"));
             result.put("title_id", basicInfo.getString("community_id"));
             result.put("title", basicInfo.getString("community_name"));
             result.put("area", basicInfo.getString("area"));

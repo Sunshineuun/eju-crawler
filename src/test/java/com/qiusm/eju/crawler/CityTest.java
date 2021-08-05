@@ -16,6 +16,7 @@ import org.springframework.util.ResourceUtils;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,5 +90,31 @@ public class CityTest {
                 log.info("{}", name);
             }
         });
+    }
+
+    @Test
+    void ejCityCode() {
+        try {
+            File file = ResourceUtils.getFile("classpath:json/bk/eju_city_list.json");
+            String result = FileUtils.readFile(file);
+            JSONObject mainJson = JSONObject.parseObject(result);
+            JSONArray arrayList = mainJson.getJSONObject("result").getJSONArray("arrayList");
+            arrayList.forEach(o -> {
+                JSONObject var = (JSONObject) o;
+                EntityWrapper<City> entityWrapper = new EntityWrapper<>();
+                entityWrapper.eq("city", var.getString("cityName") + "市");
+                List<City> cityList = cityService.selectList(entityWrapper);
+                if (cityList.size() == 1) {
+                    City city = cityList.get(0);
+                    city.setCode(var.getString("cityCd"));
+                    city.updateById();
+                } else {
+                    log.info("{}", var.get("cityName"));
+                }
+            });
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 }
