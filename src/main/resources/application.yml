@@ -99,7 +99,7 @@ spring:
         principalCookieName: cookie_user_key
   redis:
     database: 10
-    host: 172.30.4.124
+    host: 10.122.139.29
     port: 6379
     jedis:
       pool:
@@ -121,6 +121,10 @@ spring:
     suffix: .html
     servlet:
       content-type: text/html
+  rabbitmq:
+    addresses: 10.122.151.20:5672
+    username: admin
+    password: mqadmin
 server:
   port: 8888
 # 爬虫配置
