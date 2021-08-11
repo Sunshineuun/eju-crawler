@@ -26,4 +26,5 @@ public class AjkFieldConstant {
     public static final String FLOOR_ID = "floor_id";
     public static final String PAGE = "page";
     public static final String TYPE = "type";
+    public static final String USER_NAME = "username";
 }
