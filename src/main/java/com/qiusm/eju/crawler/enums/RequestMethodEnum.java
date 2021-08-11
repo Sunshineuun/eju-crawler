@@ -15,6 +15,7 @@ public enum RequestMethodEnum {
     PROXY_GET("proxy-get"),
     POST_FORM("post-form"),
     PROXY_POST_JSON("proxy-post-json"),
+    PROXY_POST_FORM("proxy_-post-form"),
     CHROME_DRIVE("chrome-drive"),
     IMG("img");
 
