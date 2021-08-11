@@ -3,13 +3,26 @@
 select count(id)
 from bk_url_history;
 -- 查询成功 & 失败的数据数据情况
+/*
+  7503,1435958; 4日 pm 5：34
+*/
 select count(IF(IS_SUCCESS = 0, 1, null)) f,
-       count(IF(IS_SUCCESS = 1, 1, null)) f
-from bk_url_history;
--- 查询每日新增请求数量
-select count(id) c, date_format(create_time, '%Y-%m-%d') as create_time
+       count(IF(IS_SUCCESS = 1, 1, null)) s
 from bk_url_history
+where create_time > '2021-08-04 17:00'
+  and create_time < '2021-08-05 05:00';
+-- 查询每日新增请求数量
+select count(id)                               url_count,
+       date_format(create_time, '%Y-%m-%d') as create_time
+from bk_url_history
+where create_time > '2021-08-04 17:00'
 group by date_format(create_time, '%Y-%m-%d');
+
+-- 查询某个日期之后产生的数据
+select count(create_time)
+from bk_url_history
+where create_time > '2021-08-04 17:00'
+  and create_time < '2021-08-05 05:00';
 
 -- 区域、板块围栏数据
 drop table bk_fence;
