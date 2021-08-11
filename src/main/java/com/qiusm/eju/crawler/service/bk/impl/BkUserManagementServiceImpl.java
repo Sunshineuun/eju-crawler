@@ -76,8 +76,12 @@ public class BkUserManagementServiceImpl implements IBkUserManagementService {
         int count = 0;
         BkUser user = null;
         while (true) {
+            long startTime = System.currentTimeMillis();
             String userStr = listOperations.rightPop(userKey);
             bkUserIndex++;
+            if (System.currentTimeMillis() - startTime > 5000) {
+                log.warn("获取用户信息耗时异常！！！");
+            }
             Long maxIndex = listOperations.size(userKey);
             if (maxIndex != null && bkUserIndex > maxIndex) {
                 bkUserIndex = 0L;
