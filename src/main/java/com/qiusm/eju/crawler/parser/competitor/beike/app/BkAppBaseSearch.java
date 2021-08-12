@@ -46,9 +46,8 @@ public abstract class BkAppBaseSearch
         Map<String, String> requestParam = requestDto.getRequestParam();
         if (requestParam.containsKey(CITY_ID)) {
             String mpn = requestParam.get(CITY_ID).trim();
-            // 手机号码不为空 && 手机号码必须等于12位
             if (!(StringUtils.isNotBlank(mpn) && StringUtils.length(mpn) == 6)) {
-                throw new BusinessException(10000, "手机号码验证不通过." + mpn);
+                throw new BusinessException(10000, "城市id验证不通过." + mpn);
             }
         }
     }
@@ -83,6 +82,7 @@ public abstract class BkAppBaseSearch
             his.setResult(requestDto.getResponseStr());
             his.setUrl(requestDto.getUrl());
             his.setClassHandler(this.getClass().getSimpleName());
+            his.setCity(requestDto.getRequestParam().get(CITY_ID));
 
             his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
             historyService.upHis(his);

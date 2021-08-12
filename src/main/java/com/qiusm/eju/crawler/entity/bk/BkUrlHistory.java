@@ -31,4 +31,6 @@ public class BkUrlHistory
 
     @TableField("create_time")
     private Date createTime;
+
+    private String city;
 }

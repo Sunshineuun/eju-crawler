@@ -76,6 +76,18 @@ public class BkUserManagementServiceImpl implements IBkUserManagementService {
         int count = 0;
         BkUser user = null;
         while (true) {
+
+            // 当队列为空的时候，尝试从数据库中加载
+            Long keySize = listOperations.size(userKey);
+            if (keySize != null && keySize <= 0) {
+                EntityWrapper<BkUser> wrapper = new EntityWrapper<>();
+                wrapper.eq("state", 1);
+                List<BkUser> users = bkUserService.selectList(wrapper);
+                for (BkUser bkUser : users) {
+                    listOperations.leftPush(userKey, JSONObject.toJSONString(bkUser));
+                }
+            }
+
             long startTime = System.currentTimeMillis();
             String userStr = listOperations.rightPop(userKey);
             bkUserIndex++;
@@ -95,17 +107,6 @@ public class BkUserManagementServiceImpl implements IBkUserManagementService {
                 break;
             }
 
-
-            // 当队列为空的时候，尝试从数据库中加载
-            Long keySize = listOperations.size(userKey);
-            if (keySize != null && keySize <= 0) {
-                EntityWrapper<BkUser> wrapper = new EntityWrapper<>();
-                wrapper.eq("state", 1);
-                List<BkUser> users = bkUserService.selectList(wrapper);
-                for (BkUser bkUser : users) {
-                    listOperations.leftPush(userKey, JSONObject.toJSONString(bkUser));
-                }
-            }
 
             if (StringUtils.isBlank(userStr)) {
                 continue;

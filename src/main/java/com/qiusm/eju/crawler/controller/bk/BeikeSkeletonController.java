@@ -1,19 +1,19 @@
 package com.qiusm.eju.crawler.controller.bk;
 
+import cn.hutool.core.collection.ConcurrentHashSet;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.dto.RequestDto;
+import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.entity.task.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunityListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunityPageListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.BuildingSearchV1;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.HouseSearchV1;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.UnitSearchV1;
-import com.qiusm.eju.crawler.dto.RequestDto;
-import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.EmailUtil;
-import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +27,7 @@ import java.util.*;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_BK_SKELETON;
+import static com.qiusm.eju.crawler.constant.ajk.AjkFieldConstant.COMMUNITY_ID;
 import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
 
 
@@ -77,6 +78,8 @@ public class BeikeSkeletonController extends BeiKeBaseController {
         this.nowTask = crawlerTaskInstance;
     }
 
+    private Set<String> communityIdSet = new ConcurrentHashSet<>();
+
     /**
      * 获取板块信息
      *
@@ -118,51 +121,14 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                         log.info("{}:{},骨架数据，处理的数量：count={}。",
                                 city, cityId, count);
                     }
+                    JSONObject var1 = (JSONObject) o3;
+                    if (!communityIdSet.contains(var1.getString(COMMUNITY_ID))) {
+                        communityIdSet.add(var1.getString(COMMUNITY_ID));
+                        communityTaskSubmit(var1);
+                    }else{
+                        log.warn("发现重复小区：{}", var1);
+                    }
 
-                    // 按照小区为单位抓取骨架数据
-                    bkSkeletonExecutor.submit(() -> {
-                        // 楼栋获取成功数量
-                        int bc = 0;
-                        // 楼栋目标数据 building total
-                        int bt = 0;
-                        // 单元获取成功数量
-                        int uc = 0;
-                        // 单元目标数量 unit total
-                        int ut = 0;
-                        JSONObject community = (JSONObject) o3;
-                        // 小区楼栋信息抓取
-                        JSONArray buildingList = buildingHandler(community);
-                        if (buildingList == null) {
-                            return;
-                        }
-                        bt = buildingList.size();
-                        for (Object building : buildingList) {
-                            // 小区单元信息抓取
-                            JSONArray unitList = unitHandler((JSONObject) building);
-                            if (unitList == null) {
-                                continue;
-                            }
-
-                            bc++;
-                            ut += unitList.size();
-                            for (Object unit : unitList) {
-                                JSONArray houseList = houseHandler((JSONObject) unit);
-                                if (houseList == null) {
-                                    continue;
-                                }
-                                uc++;
-                                houseList.forEach(house -> {
-                                    FileUtils.printFile(((JSONObject) house).toJSONString() + "\n",
-                                            filePath, Thread.currentThread().getName() + ".txt", true);
-                                });
-                            }
-                        }
-                        log.info("{}/{}/{}, building_count:{}/{}, unit_count:{}/{};",
-                                community.get("district_name"),
-                                community.get("community_name"),
-                                community.get("community_id"),
-                                bc, bt, uc, ut);
-                    });
                 }
             }
         }
@@ -172,6 +138,53 @@ public class BeikeSkeletonController extends BeiKeBaseController {
         }
 
         emailUtil.sendSimpleMail("583853240@qq.com", String.format("%s,运行完毕", cityId));
+    }
+
+    private void communityTaskSubmit(JSONObject community){
+        // 按照小区为单位抓取骨架数据
+        bkSkeletonExecutor.submit(() -> {
+            // 楼栋获取成功数量
+            int bc = 0;
+            // 楼栋目标数据 building total
+            int bt = 0;
+            // 单元获取成功数量
+            int uc = 0;
+            // 单元目标数量 unit total
+            int ut = 0;
+            // 小区楼栋信息抓取
+            JSONArray buildingList = buildingHandler(community);
+            if (buildingList == null) {
+                return;
+            }
+            bt = buildingList.size();
+            for (Object building : buildingList) {
+                // 小区单元信息抓取
+                JSONArray unitList = unitHandler((JSONObject) building);
+                if (unitList == null) {
+                    continue;
+                }
+
+                bc++;
+                ut += unitList.size();
+                for (Object unit : unitList) {
+                    JSONArray houseList = houseHandler((JSONObject) unit);
+                    if (houseList == null) {
+                        continue;
+                    }
+                    uc++;
+                                /*houseList.forEach(house -> {
+                                    FileUtils.printFile(((JSONObject) house).toJSONString() + "\n",
+                                            filePath, Thread.currentThread().getName() + ".txt", true);
+                                });*/
+                }
+            }
+            log.info("{}/{}/{}, building_count:{}/{}, unit_count:{}/{};",
+                    community.get("district_name"),
+                    community.get("community_name"),
+                    community.get("community_id"),
+                    bc, bt, uc, ut);
+            communityIdSet.remove(community.getString(COMMUNITY_ID));
+        });
     }
 
     JSONArray pageListHandler(JSONObject biz) {
