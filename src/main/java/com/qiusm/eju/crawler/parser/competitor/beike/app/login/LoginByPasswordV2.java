@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.AUTHORIZATION;
+import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.AUTHORIZATION;
 
 /**
  * @author qiushengming
