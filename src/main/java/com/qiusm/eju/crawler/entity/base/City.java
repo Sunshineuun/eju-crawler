@@ -24,4 +24,8 @@ public class City
     private String ajkCode;
 
     private String ajkPinyinCode;
+
+    private String provinceCd;
+
+    private String provinceName;
 }
