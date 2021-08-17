@@ -38,7 +38,7 @@ public class BeikeDistrictServiceImpl
         extends BeikeBaseService
         implements IBeikeDistrictService {
 
-    private static final String BEIKE_JSON_ROOT = String.format("%s\\json\\district", BEIKE_FILE_ROOT);
+    private static final String BEIKE_JSON_ROOT = String.format("%s/json/district", BEIKE_FILE_ROOT);
 
     @Resource
     private IGaodeCityFenceService cityFenceService;
