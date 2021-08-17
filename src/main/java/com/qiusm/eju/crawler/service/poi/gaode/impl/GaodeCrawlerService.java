@@ -10,25 +10,29 @@ import com.qiusm.eju.crawler.entity.poi.gaode.GaodeCityPoiInfo;
 import com.qiusm.eju.crawler.entity.poi.gaode.GaodeCityPoint;
 import com.qiusm.eju.crawler.entity.poi.gaode.GaodePoi;
 import com.qiusm.eju.crawler.enums.poi.GaodePOIType;
-import com.qiusm.eju.crawler.utils.poi.GaodeUtils;
+import com.qiusm.eju.crawler.service.base.IProxyUrlService;
 import com.qiusm.eju.crawler.service.poi.gaode.IGaodeService;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
+import com.qiusm.eju.crawler.utils.poi.GaodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.awt.geom.Point2D;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
 import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
-import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 import static com.qiusm.eju.crawler.constant.SymbolicConstant.*;
 import static com.qiusm.eju.crawler.constant.poi.GaodeField.*;
 import static com.qiusm.eju.crawler.constant.poi.GaodeUrl.All_CITY_POI_URL;
@@ -40,9 +44,12 @@ import static java.math.BigDecimal.ROUND_UP;
  */
 @Slf4j
 @Service
-public class GaodeCrawlerService {
+public class GaodeCrawlerService implements InitializingBean {
 
-    protected static OkHttpUtils httpUtils = OkHttpUtils.Builder().proxyUrl(PROXY_URL0).connectTimeout(60000).readTimeout(60000).charset(GBK).builderHttp();
+    @Resource
+    private IProxyUrlService proxyUrlService;
+
+    protected static OkHttpUtils httpUtils;
 
     @Resource
     private IGaodeService gaodeService;
@@ -497,4 +504,13 @@ public class GaodeCrawlerService {
         return httpUtils.get(requestUrl, charset, 100_000, 50_000, null);
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        httpUtils = OkHttpUtils.Builder()
+                .proxyUrl(proxyUrlService.getHttpBaseProxyUrl())
+                .connectTimeout(60000)
+                .readTimeout(60000)
+                .charset(GBK)
+                .builderHttp();
+    }
 }

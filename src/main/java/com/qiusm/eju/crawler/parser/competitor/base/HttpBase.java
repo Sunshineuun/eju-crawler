@@ -3,28 +3,29 @@ package com.qiusm.eju.crawler.parser.competitor.base;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
+import com.qiusm.eju.crawler.service.base.IProxyUrlService;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.ImageReaderUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_LOG;
 
 @Slf4j
-public abstract class HttpBase implements IHttpSearch {
+public abstract class HttpBase implements IHttpSearch, InitializingBean {
 
-    @Value("${eju.proxy.httpbase}")
-    private String httpBaseProxyUrl = "http://crawler-ipproxy.ejudata.com/get/ip-list/13?key=4CZ5VH3TZSEYARFRSOVNLBOBH9NF6LW6XG5TADZS4LE=";
+    @Autowired
+    protected IProxyUrlService proxyUrlService;
 
-    private final OkHttpUtils httpClient = OkHttpUtils.Builder()
-            .proxyUrl(httpBaseProxyUrl)
-            .addProxyRetryTag(getProxyRetryTag())
-            .builderHttp();
+    private OkHttpUtils httpClient;
 
     /**
      * url构建的逻辑，由子类实现
@@ -197,4 +198,11 @@ public abstract class HttpBase implements IHttpSearch {
         return new String[]{"ejuResponseCode"};
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        httpClient = OkHttpUtils.Builder()
+                .proxyUrl(proxyUrlService.getHttpBaseProxyUrl())
+                .addProxyRetryTag(getProxyRetryTag())
+                .builderHttp();
+    }
 }
