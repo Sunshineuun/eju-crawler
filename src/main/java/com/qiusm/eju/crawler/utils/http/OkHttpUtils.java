@@ -2,6 +2,7 @@ package com.qiusm.eju.crawler.utils.http;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +35,7 @@ import static jdk.nashorn.internal.runtime.PropertyDescriptor.GET;
  * @author qiushengming
  * @date 2021年6月23日
  */
+@Slf4j
 public class OkHttpUtils {
 
     static Logger LOG = LoggerFactory.getLogger(OkHttpUtils.class);
@@ -164,7 +166,7 @@ public class OkHttpUtils {
         boolean flag = true;
         for (int i = 0; i <= cnt && flag; i++) {
             flag = false;
-            HttpHost httpHost = null;
+            HttpHost httpHost;
             if (hHost == null) {
                 httpHost = getHttpHost(headers);
             } else {
@@ -210,6 +212,7 @@ public class OkHttpUtils {
                     SingleOkHttpConfig.LOCK.lock();
                     if (SingleOkHttpConfig.IP_LIST.size() <= BUILDER.proxyLessThan) {
                         String body = get(BUILDER.proxyUrl);
+                        log.debug("proxyUrl:{},getBody:{}", BUILDER.proxyUrl, body);
                         if (StringUtils.isNotBlank(body) && body.contains(SingleOkHttpConfig.S) && !body.contains("html")) {
                             String[] ips = body.split(BUILDER.proxySeparator);
                             String[] ipAndPort = ips[0].split(SingleOkHttpConfig.S);
@@ -258,6 +261,8 @@ public class OkHttpUtils {
             }
 
         } while (httpHost == null && x < SingleOkHttpConfig.PROXY_RETRY_MAX);
+
+        log.debug("HttpHost:{}", httpHost);
         return httpHost;
     }
 
@@ -479,6 +484,9 @@ public class OkHttpUtils {
         String charset;
         String proxyJsonDefault;
         String proxyUrl;
+        /**
+         * 代理分隔符
+         */
         String proxySeparator;
         /**
          * 重试检测标签；只要响应的结果体重包含该列表中的字符，则进行重试操作。
@@ -549,6 +557,7 @@ public class OkHttpUtils {
             if (proxyUrl == null || "".equals(proxyUrl.trim())) {
                 throw new NullPointerException("proxyUrl == null");
             }
+            log.info("当前使用代理：{}", proxyUrl);
             this.proxyUrl = proxyUrl;
             return this;
         }
