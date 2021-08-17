@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.CITY_ID;
+
 /**
  * deal page list <br>
  * 面向URL: /house/chengjiao/searchV2?limit_offset=%s&condition=%s&city_id=%s&containerType=0&limit_count=100 <br>
