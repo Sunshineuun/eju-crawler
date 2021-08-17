@@ -84,6 +84,12 @@ public class BkAppDealListSearch
         Integer totalCount = Integer.valueOf(totalCountStr);
         JSONArray arrayResult = new JSONArray();
         if (totalCount > TOTAL_COUNT_LIMIT) {
+            if (totalCount > 2100) {
+                // TODO
+                // 需要进行优化：如果超过2100，需要再进行拆分。
+                log.info("板块下请求数据量过大：totalCount:{}, requestParams:{}", totalCount, requestDto.getRequestParam());
+                totalCount = 2100;
+            }
             int pageNum = totalCount % TOTAL_COUNT_LIMIT == 0 ? totalCount / TOTAL_COUNT_LIMIT : totalCount / TOTAL_COUNT_LIMIT + 1;
             for (int m = 1; m < pageNum; m++) {
                 JSONObject resultJson = new JSONObject();
@@ -91,9 +97,6 @@ public class BkAppDealListSearch
                 resultJson.put(LIMIT_OFFSET, m * 100);
                 arrayResult.add(resultJson);
             }
-        }
-        if (totalCount > 2100) {
-            log.info("totalCount:{}, requestParams:{}", totalCount, requestDto.getRequestParam());
         }
         return arrayResult;
     }
