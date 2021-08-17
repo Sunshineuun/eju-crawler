@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
+import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.*;
 import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.HOST;
 
