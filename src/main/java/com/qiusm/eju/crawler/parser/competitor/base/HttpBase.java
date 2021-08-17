@@ -9,6 +9,7 @@ import com.qiusm.eju.crawler.utils.ImageReaderUtils;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 
@@ -17,8 +18,11 @@ import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_LOG;
 @Slf4j
 public abstract class HttpBase implements IHttpSearch {
 
+    @Value("${eju.proxy.httpbase}")
+    private String httpBaseProxyUrl = "http://crawler-ipproxy.ejudata.com/get/ip-list/13?key=4CZ5VH3TZSEYARFRSOVNLBOBH9NF6LW6XG5TADZS4LE=";
+
     private final OkHttpUtils httpClient = OkHttpUtils.Builder()
-            .proxyUrl("http://crawler-ipproxy.ejudata.com/get/ip-list/13?key=4CZ5VH3TZSEYARFRSOVNLBOBH9NF6LW6XG5TADZS4LE=")
+            .proxyUrl(httpBaseProxyUrl)
             .addProxyRetryTag(getProxyRetryTag())
             .builderHttp();
 

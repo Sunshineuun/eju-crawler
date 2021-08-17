@@ -5,11 +5,11 @@ import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL5;
 import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
 import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 
@@ -18,8 +18,11 @@ import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
  */
 public abstract class BkAppLoginBase extends BkAppBaseSearch {
 
+    @Value("${eju.proxy.bklogin}")
+    private String bkLoginProxyUrl = "http://crawler-ipproxy.ejudata.com/get/ip-list/13?key=4CZ5VH3TZSEYARFRSOVNLBOBH9NF6LW6XG5TADZS4LE=";
+
     private final OkHttpUtils httpClient = OkHttpUtils.Builder()
-            .proxyUrl(PROXY_URL5)
+            .proxyUrl(bkLoginProxyUrl)
             .addProxyRetryTag(getProxyRetryTag())
             .builderHttp();
 
