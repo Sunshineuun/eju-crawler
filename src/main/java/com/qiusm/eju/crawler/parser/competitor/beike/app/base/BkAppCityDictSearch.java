@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.CITY;
+import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.CITY_ID;
+
 /**
  * 贝壳城市区域板块地铁线路基本信息 <br>
  * 面向URL:https://m.ke.com/sh/dict/city?city_id=310000 <br>
@@ -22,8 +25,6 @@ import java.util.Map;
 @Service
 public class BkAppCityDictSearch extends BkAppBaseSearch {
 
-
-    private static final String CITY = "city";
     private static final String URL_TEMPLATE = "https://m.ke.com/%s/dict/city?city_id=%s";
 
     @Override

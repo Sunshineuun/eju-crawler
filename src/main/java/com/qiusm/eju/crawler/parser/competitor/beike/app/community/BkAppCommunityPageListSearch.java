@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.*;
+
 /**
  * 小区翻页列表 <br>
  * 面向url: /house/community/searchv2?limit_offset=0&condition=&city_id=310000&containerType=0&limit_count=20 <br>
@@ -20,19 +22,6 @@ import java.util.Map;
  */
 @Service("bkAppCommunityPageListSearch")
 public class BkAppCommunityPageListSearch extends BkAppCommunityBaseSearch {
-
-    /**
-     * 区域id
-     */
-    private static final String DISTRICT_ID = "district_id";
-    /**
-     * 板块id
-     */
-    private static final String BIZCIRCLE_ID = "bizcircle_id";
-    /**
-     * 翻页偏移位
-     */
-    private static final String LIMIT_OFFSET = "limit_offset";
 
     private static final String URL_TEMPLATE = "%s/house/community/searchv2?limit_offset=%s&condition=%s&city_id=%s&containerType=0&limit_count=100";
 

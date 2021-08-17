@@ -12,8 +12,8 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
+import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.*;
+import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.LIANJIA_CITY_ID;
 import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 
 /**

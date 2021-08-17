@@ -7,8 +7,8 @@ import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_IM_VERSION;
+import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.*;
+import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.LIANJIA_IM_VERSION;
 import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 
 /**

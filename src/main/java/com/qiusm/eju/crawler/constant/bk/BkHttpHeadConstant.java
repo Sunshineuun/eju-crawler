@@ -1,9 +1,11 @@
-package com.qiusm.eju.crawler.constant.head;
+package com.qiusm.eju.crawler.constant.bk;
+
+import com.qiusm.eju.crawler.constant.head.HttpHeadConstant;
 
 /**
  * @author qiushengming
  */
-public final class BkHttpHeadConstant extends HttpHeadConstant{
+public final class BkHttpHeadConstant extends HttpHeadConstant {
     public static final String LIANJIA_CHANNEL = "Lianjia-Channel";
     public static final String LIANJIA_VERSION = "Lianjia-Version";
     public static final String LIANJIA_CITY_ID = "Lianjia-City-Id";

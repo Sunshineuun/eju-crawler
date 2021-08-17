@@ -17,18 +17,15 @@ import com.qiusm.eju.crawler.utils.EmailUtil;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_BK_SKELETON;
-import static com.qiusm.eju.crawler.constant.ajk.AjkFieldConstant.COMMUNITY_ID;
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
+import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.*;
+import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.LIANJIA_CITY_ID;
 
 
 /**
@@ -64,7 +61,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     private EmailUtil emailUtil;
 
     private final ThreadPoolExecutor bkSkeletonExecutor = ThreadPoolUtils
-            .newFixedThreadPool("bk-skeleton", 4, 20L);
+            .newFixedThreadPool("bk-skeleton", 16, 20L);
 
     private CrawlerTaskInstance nowTask;
 
@@ -80,16 +77,20 @@ public class BeikeSkeletonController extends BeiKeBaseController {
 
     private Set<String> communityIdSet = new ConcurrentHashSet<>();
 
+    private String filePath;
+
     /**
      * 获取板块信息
      *
-     * @param cityId 城市id
-     * @param city   城市拼音
+     * @param cityId                城市id
+     * @param city                  城市拼音
+     * @param isPrintCommunitDetail 是否在日志中输出去小区详情信息，默认不输出;等于1时输出。
      */
     @GetMapping("/start/{city}/{cityId}")
     public void start(
             @PathVariable String cityId,
-            @PathVariable String city) {
+            @PathVariable String city,
+            @RequestParam(required = false, defaultValue = "0") Integer isPrintCommunitDetail) {
 
         synchronized (cityIdSet) {
             if (!cityIdSet.contains(cityId)) {
@@ -101,7 +102,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
         }
 
         JSONArray bizArray = cityHandler(cityId, city);
-        String filePath = SOURCE_BK_SKELETON + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
+        filePath = SOURCE_BK_SKELETON + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
         int count = 0;
 
         for (Object o1 : bizArray) {
@@ -124,8 +125,8 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                     JSONObject var1 = (JSONObject) o3;
                     if (!communityIdSet.contains(var1.getString(COMMUNITY_ID))) {
                         communityIdSet.add(var1.getString(COMMUNITY_ID));
-                        communityTaskSubmit(var1);
-                    }else{
+                        communityTaskSubmit(var1, isPrintCommunitDetail);
+                    } else {
                         log.warn("发现重复小区：{}", var1);
                     }
 
@@ -137,10 +138,11 @@ public class BeikeSkeletonController extends BeiKeBaseController {
             cityIdSet.remove(cityId);
         }
 
-        emailUtil.sendSimpleMail("583853240@qq.com", String.format("%s,运行完毕", cityId));
+        log.info("骨架数据抓取：city:{},cityId:{},总计数量:{}", city, cityId, count);
+        // emailUtil.sendSimpleMail("583853240@qq.com", String.format("%s,运行完毕", cityId));
     }
 
-    private void communityTaskSubmit(JSONObject community){
+    private void communityTaskSubmit(JSONObject community, Integer isPrintCommunitDetail) {
         // 按照小区为单位抓取骨架数据
         bkSkeletonExecutor.submit(() -> {
             // 楼栋获取成功数量
@@ -172,27 +174,29 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                         continue;
                     }
                     uc++;
-                                /*houseList.forEach(house -> {
-                                    FileUtils.printFile(((JSONObject) house).toJSONString() + "\n",
-                                            filePath, Thread.currentThread().getName() + ".txt", true);
-                                });*/
+                    houseList.forEach(house -> {
+                        /*FileUtils.printFile(((JSONObject) house).toJSONString() + "\n",
+                                filePath, Thread.currentThread().getName() + ".txt", true);*/
+                    });
                 }
             }
-            log.info("{}/{}/{}, building_count:{}/{}, unit_count:{}/{};",
-                    community.get("district_name"),
-                    community.get("community_name"),
-                    community.get("community_id"),
-                    bc, bt, uc, ut);
+            if (isPrintCommunitDetail == 1) {
+                log.info("{}/{}/{}, building_count:{}/{}, unit_count:{}/{};",
+                        community.get("district_name"),
+                        community.get("community_name"),
+                        community.get(COMMUNITY_ID),
+                        bc, bt, uc, ut);
+            }
             communityIdSet.remove(community.getString(COMMUNITY_ID));
         });
     }
 
     JSONArray pageListHandler(JSONObject biz) {
         Map<String, String> params = new HashMap<>(8);
-        params.put("city_id", biz.getString("city_id"));
-        params.put("city", biz.getString("city"));
-        params.put("district_id", biz.getString("district_id"));
-        params.put("bizcircle_id", biz.getString("bizcircle_id"));
+        params.put(CITY_ID, biz.getString(CITY_ID));
+        params.put(CITY, biz.getString(CITY));
+        params.put(DISTRICT_ID, biz.getString(DISTRICT_ID));
+        params.put(BIZCIRCLE_ID, biz.getString(BIZCIRCLE_ID));
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(biz)
@@ -204,12 +208,12 @@ public class BeikeSkeletonController extends BeiKeBaseController {
 
     JSONArray pageHandler(JSONObject page) {
         Map<String, String> params = new HashMap<>(8);
-        params.put("city_id", page.getString("city_id"));
-        params.put("city", page.getString("city"));
-        params.put("district_id", page.getString("district_id"));
-        params.put("bizcircle_id", page.getString("bizcircle_id"));
-        if (page.containsKey("limit_offset")) {
-            params.put("limit_offset", page.getString("limit_offset"));
+        params.put(CITY_ID, page.getString(CITY_ID));
+        params.put(CITY, page.getString(CITY));
+        params.put(DISTRICT_ID, page.getString(DISTRICT_ID));
+        params.put(BIZCIRCLE_ID, page.getString(BIZCIRCLE_ID));
+        if (page.containsKey(LIMIT_OFFSET)) {
+            params.put(LIMIT_OFFSET, page.getString(LIMIT_OFFSET));
         }
         if (page.containsKey("price_bp")) {
             params.put("price_bp", page.getString("price_bp"));
@@ -231,8 +235,9 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     JSONArray buildingHandler(JSONObject community) {
         RequestDto requestDto = RequestDto.builder()
                 .user(bkUserManagementService.getUser())
-                .requestParam("community_id", community.getString("community_id"))
-                .head(LIANJIA_CITY_ID, community.getString("city_id"))
+                .requestParam(COMMUNITY_ID, community.getString(COMMUNITY_ID))
+                .requestParam(CITY_ID, community.getString(CITY_ID))
+                .head(LIANJIA_CITY_ID, community.getString(CITY_ID))
                 .data(community)
                 .isLoad(true)
                 .build();
@@ -243,8 +248,9 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     private JSONArray unitHandler(JSONObject building) {
         RequestDto requestDto = RequestDto.builder()
                 .user(bkUserManagementService.getUser())
-                .requestParam("building_id", building.getString("building_id"))
-                .head(LIANJIA_CITY_ID, building.getString("city_id"))
+                .requestParam(BUILDING_ID, building.getString(BUILDING_ID))
+                .requestParam(CITY_ID, building.getString(CITY_ID))
+                .head(LIANJIA_CITY_ID, building.getString(CITY_ID))
                 .data(building)
                 .isLoad(true)
                 .build();
@@ -255,8 +261,9 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     private JSONArray houseHandler(JSONObject unit) {
         RequestDto requestDto = RequestDto.builder()
                 .user(bkUserManagementService.getUser())
-                .requestParam("unit_id", unit.getString("unit_id"))
-                .head(LIANJIA_CITY_ID, unit.getString("city_id"))
+                .requestParam(UNIT_ID, unit.getString(UNIT_ID))
+                .requestParam(CITY_ID, unit.getString(CITY_ID))
+                .head(LIANJIA_CITY_ID, unit.getString(CITY_ID))
                 .data(unit)
                 .isLoad(true)
                 .build();

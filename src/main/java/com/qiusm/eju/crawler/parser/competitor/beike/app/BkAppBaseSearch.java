@@ -19,7 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.*;
+import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.CITY_ID;
+import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.*;
 
 /**
  * @author qiushengming
@@ -31,8 +32,6 @@ public abstract class BkAppBaseSearch
 
     @Autowired
     protected IBkUrlHistoryService historyService;
-
-    protected static final String CITY_ID = "city_id";
 
     protected static final String DOMAIN_NAME = "https://app.api.ke.com";
 
@@ -77,6 +76,7 @@ public abstract class BkAppBaseSearch
             his = new BkUrlHistory();
         }
 
+
         if (!viewCheck(requestDto)) {
             httpGetA(requestDto);
             his.setResult(requestDto.getResponseStr());
@@ -85,6 +85,11 @@ public abstract class BkAppBaseSearch
             his.setCity(requestDto.getRequestParam().get(CITY_ID));
 
             his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
+            historyService.upHis(his);
+        }
+
+        if (StringUtils.isBlank(his.getCity())) {
+            his.setCity(requestDto.getRequestParam().get(CITY_ID));
             historyService.upHis(his);
         }
     }

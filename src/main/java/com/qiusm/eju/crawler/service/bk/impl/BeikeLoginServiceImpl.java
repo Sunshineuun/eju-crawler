@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-import static com.qiusm.eju.crawler.constant.head.BkHttpHeadConstant.LIANJIA_CITY_ID;
+import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.LIANJIA_CITY_ID;
 
 /**
  * @author qiushengming
