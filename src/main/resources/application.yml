@@ -129,6 +129,9 @@ server:
   port: 8888
 # 爬虫配置
 eju:
+  bk:
+    skeleton:
+      threadNum: 8
   crawler:
     government:
       wuhan:
@@ -136,7 +139,8 @@ eju:
         error-html-path: D:\Temp\CRAWLER\WU_HAN
         max-thread-core-count: 16
   proxy:
-    httpbase: http://10.122.143.10:8890/get/ip-list/3?key=557F35CA07AE2470F80E5CFC710FE61E
+    # httpbase: http://10.122.143.10:8890/get/ip-list/3?key=557F35CA07AE2470F80E5CFC710FE61E
+    httpbase: http://crawler-ipproxy.ejudata.com/get/ip-list/13?key=4CZ5VH3TZSEYARFRSOVNLBOBH9NF6LW6XG5TADZS4LE=
     bklogin: http://10.122.143.10:8890/get/ip-list/13?key=4CZ5VH3TZSEYARFRSOVNLBOBH9NF6LW6XG5TADZS4LE=
     url5: http://10.122.143.10:8890/get/ip-list/28?key=533745E8DA6AD9F11FCD546C4A45691B
 mybatis-plus:

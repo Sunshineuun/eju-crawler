@@ -14,10 +14,10 @@ import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_BK_DEAL;
+import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.CITY_ID;
 
 /**
  * 成交
@@ -36,7 +37,10 @@ import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_BK_D
 @Slf4j
 @RestController
 @RequestMapping("/bk/deal")
-public class BeikeDealController extends BeiKeBaseController {
+public class BeikeDealController extends BeiKeBaseController implements InitializingBean {
+
+    @Value("${eju.bk.deal.threadNum:8}")
+    private Integer threadNum;
 
     @Resource(name = "bkAppDealPageListSearch")
     BkAppDealPageListSearch bkAppDealPageListSearch;
@@ -47,7 +51,7 @@ public class BeikeDealController extends BeiKeBaseController {
     @Resource
     BkAppDealDetailPartSearch bkAppDealDetailPartSearch;
 
-    private final ThreadPoolExecutor bkDealExecutor = ThreadPoolUtils.newFixedThreadPool("bk-deal", 16, 20L);
+    private ThreadPoolExecutor bkDealExecutor;
 
     private CrawlerTaskInstance nowTask;
 
@@ -56,10 +60,16 @@ public class BeikeDealController extends BeiKeBaseController {
         this.nowTask = crawlerTaskInstance;
     }
 
+    /**
+     * @param cityId 城市ID
+     * @param city   城市简拼
+     * @param isDb   是否将结果持久化到数据库
+     */
     @GetMapping("/start/{city}/{cityId}")
     public void startA(
             @PathVariable String cityId,
-            @PathVariable String city) {
+            @PathVariable String city,
+            @RequestParam(required = false, defaultValue = "0") String isDb) {
         JSONArray bizArray = cityHandler(cityId, city);
         String filePath = SOURCE_BK_DEAL + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
         int count = 0;
@@ -84,10 +94,10 @@ public class BeikeDealController extends BeiKeBaseController {
                         // detailPartHandler(detail);
 
                         if (detailPart != null) {
-                            /*FileUtils.printFile(detailPart.toJSONString() + "\n", filePath,
-                                    Thread.currentThread().getName() + ".txt", true);*/
-                            BkDeal deal = JSONObject.parseObject(detailPart.toJSONString(), BkDeal.class);
-                            deal.insert();
+                            if (StringUtils.equals("1", isDb)) {
+                                BkDeal deal = JSONObject.parseObject(detailPart.toJSONString(), BkDeal.class);
+                                deal.insert();
+                            }
                         }
                     });
                 }
@@ -156,6 +166,7 @@ public class BeikeDealController extends BeiKeBaseController {
         Map<String, String> params = new HashMap<>(8);
         params.put("house_code", detail.getString("house_code"));
         params.put("strategy_info", detail.getString("strategy_info"));
+        params.put(CITY_ID, detail.getString(CITY_ID));
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(detail)
@@ -173,6 +184,7 @@ public class BeikeDealController extends BeiKeBaseController {
 
         Map<String, String> params = new HashMap<>();
         params.put("house_code", detail.getString("house_code"));
+        params.put(CITY_ID, detail.getString(CITY_ID));
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(detail)
@@ -180,5 +192,10 @@ public class BeikeDealController extends BeiKeBaseController {
 
         ResponseDto responseDto = bkAppDealDetailPartSearch.execute(requestDto);
         return responseDto.getResult();
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        bkDealExecutor = ThreadPoolUtils.newFixedThreadPool("bk-deal", threadNum, 20L);
     }
 }

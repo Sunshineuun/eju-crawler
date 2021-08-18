@@ -17,6 +17,8 @@ import com.qiusm.eju.crawler.utils.EmailUtil;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -37,7 +39,10 @@ import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.LIANJIA_CITY_
 @Slf4j
 @RestController
 @RequestMapping("/bk/skeleton")
-public class BeikeSkeletonController extends BeiKeBaseController {
+public class BeikeSkeletonController extends BeiKeBaseController implements InitializingBean {
+
+    @Value("${eju.bk.skeleton.threadNum:8}")
+    private Integer threadNum;
 
     @Resource(name = "bkAppCommunityPageListSearch")
     private BkAppCommunityPageListSearch communityPageListSearch;
@@ -60,10 +65,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
     @Resource
     private EmailUtil emailUtil;
 
-    private final ThreadPoolExecutor bkSkeletonExecutor = ThreadPoolUtils
-            .newFixedThreadPool("bk-skeleton", 16, 20L);
-
-    private CrawlerTaskInstance nowTask;
+    private ThreadPoolExecutor bkSkeletonExecutor;
 
     /**
      * 用于存储cityId，如果运行中的任务存在列表中，则表示已经在执行了。
@@ -72,12 +74,9 @@ public class BeikeSkeletonController extends BeiKeBaseController {
 
     @Override
     public void start(CrawlerTaskInstance crawlerTaskInstance) {
-        this.nowTask = crawlerTaskInstance;
     }
 
-    private Set<String> communityIdSet = new ConcurrentHashSet<>();
-
-    private String filePath;
+    private final Set<String> communityIdSet = new ConcurrentHashSet<>();
 
     /**
      * 获取板块信息
@@ -102,7 +101,7 @@ public class BeikeSkeletonController extends BeiKeBaseController {
         }
 
         JSONArray bizArray = cityHandler(cityId, city);
-        filePath = SOURCE_BK_SKELETON + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
+        String filePath = SOURCE_BK_SKELETON + DateUtils.formatDate(new Date(), "yyyy.MM.ddHHmmss");
         int count = 0;
 
         for (Object o1 : bizArray) {
@@ -269,5 +268,11 @@ public class BeikeSkeletonController extends BeiKeBaseController {
                 .build();
         ResponseDto responseDto = houseSearchV1.execute(requestDto);
         return responseDto.getResult().getJSONArray("list");
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        bkSkeletonExecutor = ThreadPoolUtils
+                .newFixedThreadPool("bk-skeleton", threadNum, 20L);
     }
 }
