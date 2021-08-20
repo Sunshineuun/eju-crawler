@@ -10,14 +10,38 @@ import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppFloor;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppHouse;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppUnit;
 import com.qiusm.eju.crawler.parser.competitor.base.IHttpSearch;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.qiusm.eju.crawler.constant.ajk.AjkFieldConstant.*;
 
-public class CommunityTest {
+@Slf4j
+@SpringBootTest
+public class AjkCommunityTest {
+
+    @Resource
+    private AjkAppCommunitySearch communitySearch;
+
+    @Resource
+    private AjkAppUnit unitService;
+
+    @Resource
+    private AjkAppFloor floorService;
+
+    @Resource
+    private AjkAppHouse houseService;
+
     public static void main(String[] args) {
+
+    }
+
+    @Test
+    public void skeTest() {
         String key = "慧智湖花园";
         String cityId = "11";
         // 查询小区
@@ -46,10 +70,10 @@ public class CommunityTest {
 
     /**
      * 慧智湖花园；100043064；
+     *
      * @return 小区列表
      */
-    static JSONArray communitySearch(String key, String cityId) {
-        IHttpSearch httpSearch = new AjkAppCommunitySearch();
+    JSONArray communitySearch(String key, String cityId) {
         Map<String, String> params = new HashMap<>(4);
         params.put(COMMUNITY_SEARCH_KEY, key);
         params.put(CITY_ID, cityId);
@@ -57,7 +81,7 @@ public class CommunityTest {
                 .requestParam(params)
                 .build();
 
-        ResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = communitySearch.execute(requestDto);
         System.out.printf("communitySearch:%s\n", responseDto.getResult());
         return responseDto.getResult().getJSONArray("list");
     }
@@ -66,10 +90,10 @@ public class CommunityTest {
      * 单元
      * 100043064
      * {"community_id":100043064,"name_alias":"2","name":"2","id":173686,"type":2}
+     *
      * @return
      */
-    static JSONArray unitSearch(JSONObject json) {
-        IHttpSearch httpSearch = new AjkAppUnit();
+    JSONArray unitSearch(JSONObject json) {
         Map<String, String> params = new HashMap<>(8);
         params.put(COMMUNITY_ID, json.getString(COMMUNITY_ID));
         params.put(COMMUNITY_TYPE, json.getString(COMMUNITY_NUMBER_TYPE));
@@ -82,12 +106,12 @@ public class CommunityTest {
                 .requestMethod(RequestMethodEnum.PROXY_POST_JSON)
                 .build();
 
-        ResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = unitService.execute(requestDto);
         System.out.printf("buildingSearch:%s\n", responseDto);
         return responseDto.getResult().getJSONArray("list");
     }
 
-    static JSONArray floorSearch(JSONObject unit) {
+    JSONArray floorSearch(JSONObject unit) {
         IHttpSearch httpSearch = new AjkAppFloor();
         Map<String, String> params = new HashMap<>(8);
         params.put(COMMUNITY_ID, unit.getString(COMMUNITY_ID));
@@ -101,13 +125,12 @@ public class CommunityTest {
                 .requestMethod(RequestMethodEnum.PROXY_POST_JSON)
                 .build();
 
-        ResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = floorService.execute(requestDto);
         System.out.printf("unitSearch:%s\n", responseDto);
         return responseDto.getResult().getJSONArray("list");
     }
 
-    static JSONArray houseSearch(JSONObject floor) {
-        IHttpSearch httpSearch = new AjkAppHouse();
+    JSONArray houseSearch(JSONObject floor) {
         Map<String, String> params = new HashMap<>(8);
         params.put(COMMUNITY_ID, floor.getString(COMMUNITY_ID));
         params.put(COMMUNITY_TYPE, floor.getString(COMMUNITY_TYPE));
@@ -121,7 +144,7 @@ public class CommunityTest {
                 .requestMethod(RequestMethodEnum.PROXY_POST_JSON)
                 .build();
 
-        ResponseDto responseDto = httpSearch.execute(requestDto);
+        ResponseDto responseDto = houseService.execute(requestDto);
         System.out.printf("houseSearch:%s\n", responseDto);
         return responseDto.getResult().getJSONArray("list");
     }
