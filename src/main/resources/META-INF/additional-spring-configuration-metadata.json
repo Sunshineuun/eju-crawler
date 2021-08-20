@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "eju.bk.skeleton.threadNum",
+      "type": "java.lang.String",
+      "description": "Description for eju.bk.skeleton.threadNum."
+  }
+] }
