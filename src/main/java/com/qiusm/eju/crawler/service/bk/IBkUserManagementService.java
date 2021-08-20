@@ -62,4 +62,6 @@ public interface IBkUserManagementService {
      * @return 用户列表
      */
     List<? extends BkUser> getUserList(int startIndex);
+
+    void updateBkUser(BkUser user);
 }

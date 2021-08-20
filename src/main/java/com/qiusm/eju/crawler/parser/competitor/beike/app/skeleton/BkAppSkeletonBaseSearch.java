@@ -1,8 +1,8 @@
 package com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton;
 
+import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
-import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.*;
-import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.LIANJIA_CITY_ID;
 import static com.qiusm.eju.crawler.constant.head.HttpHeadConstant.CONNECTION;
 
 /**
@@ -24,6 +23,16 @@ public abstract class BkAppSkeletonBaseSearch extends BkAppBaseSearch {
 
     @Resource
     private IBkUserManagementService bkRedisService;
+
+    /*protected void httpGet(RequestDto requestDto) {
+        BkUrlHistory his = historyService.getBkHistoryByUrl(requestDto.getUrl());
+
+        if (his != null) {
+            requestDto.setResponseStr(his.getResult());
+        } else {
+            requestDto.setResponseStr("");
+        }
+    }*/
 
     @Override
     protected void buildingHeader(RequestDto dto) {

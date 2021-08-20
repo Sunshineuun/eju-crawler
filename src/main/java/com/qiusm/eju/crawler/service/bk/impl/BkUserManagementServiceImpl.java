@@ -160,6 +160,13 @@ public class BkUserManagementServiceImpl implements IBkUserManagementService {
         return getUserList(startIndex, 50);
     }
 
+    @Override
+    public void updateBkUser(BkUser user) {
+        String userKey = BK_USER_RKEY + user.getPhoneNo();
+        valueOperations.set(userKey, JSONObject.toJSONString(user));
+        bkUserService.updateById(user);
+    }
+
     private List<? extends BkUser> getUserList(int startIndex, int limit) {
         String userKey = BK_USER_RKEY + "list";
         List<BkUser> bkUsers = new ArrayList<>();

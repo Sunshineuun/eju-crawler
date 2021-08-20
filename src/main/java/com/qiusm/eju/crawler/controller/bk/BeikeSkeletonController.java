@@ -5,12 +5,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
+import com.qiusm.eju.crawler.entity.base.CommunitySkeletonTask;
 import com.qiusm.eju.crawler.entity.task.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunityListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunityPageListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.BuildingSearchV1;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.HouseSearchV1;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.UnitSearchV1;
+import com.qiusm.eju.crawler.service.base.ICommunitySkeletonTaskService;
 import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import com.qiusm.eju.crawler.utils.DateUtils;
 import com.qiusm.eju.crawler.utils.EmailUtil;
@@ -49,19 +51,16 @@ public class BeikeSkeletonController extends BeiKeBaseController implements Init
 
     @Resource
     private BkAppCommunityListSearch communityListSearch;
-
     @Resource
     private BuildingSearchV1 buildingSearchV1;
-
     @Resource
     private UnitSearchV1 unitSearchV1;
-
     @Resource
     private HouseSearchV1 houseSearchV1;
-
     @Resource
     private IBkUserManagementService bkUserManagementService;
-
+    @Resource
+    private ICommunitySkeletonTaskService communitySkeletonTaskService;
     @Resource
     private EmailUtil emailUtil;
 
@@ -138,6 +137,61 @@ public class BeikeSkeletonController extends BeiKeBaseController implements Init
         }
 
         log.info("骨架数据抓取：city:{},cityId:{},总计数量:{}", city, cityId, count);
+        // emailUtil.sendSimpleMail("583853240@qq.com", String.format("%s,运行完毕", cityId));
+    }
+
+    @GetMapping("/communityList/{city}/{cityId}")
+    public void communityList(
+            @PathVariable String cityId,
+            @PathVariable String city,
+            @RequestParam(required = false, defaultValue = "0") Integer isPrintCommunitDetail) {
+
+        synchronized (cityIdSet) {
+            if (!cityIdSet.contains(cityId)) {
+                cityIdSet.add(cityId);
+            } else {
+                log.info("{},{},已经在抓取了。", city, cityId);
+                return;
+            }
+        }
+
+        JSONArray bizArray = cityHandler(cityId, city);
+        int count = 0;
+
+        for (Object o1 : bizArray) {
+            // 小区页面列表
+            JSONArray pageListArray = pageListHandler((JSONObject) o1);
+            if (pageListArray == null) {
+                continue;
+            }
+            for (Object o2 : pageListArray) {
+                // 小区列表
+                JSONArray communityList = pageHandler((JSONObject) o2);
+                if (communityList == null) {
+                    continue;
+                }
+                for (Object o3 : communityList) {
+                    if (count++ % 100 == 0) {
+                        log.info("{}:{},骨架数据，处理的数量：count={}。",
+                                city, cityId, count);
+                    }
+                    JSONObject var1 = (JSONObject) o3;
+                    // 将小区信息存储到数据库中去
+                    CommunitySkeletonTask task = new CommunitySkeletonTask();
+                    task.setCommunityId(var1.getString(COMMUNITY_ID));
+                    task.setCommunityName(var1.getString(COMMUNITY_NAME));
+                    task.setCityId(cityId);
+                    task.setCreateTime(new Date());
+                    communitySkeletonTaskService.checkAndAdd(task);
+                }
+            }
+        }
+
+        synchronized (cityIdSet) {
+            cityIdSet.remove(cityId);
+        }
+
+        log.info("小区数据抓取：city:{},cityId:{},总计小区数量:{}", city, cityId, count);
         // emailUtil.sendSimpleMail("583853240@qq.com", String.format("%s,运行完毕", cityId));
     }
 

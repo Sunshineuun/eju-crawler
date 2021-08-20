@@ -78,10 +78,18 @@ public abstract class BkAppBaseSearch
 
 
         if (!viewCheck(requestDto)) {
+            long s = System.currentTimeMillis();
             httpGetA(requestDto);
+            long e = System.currentTimeMillis();
             his.setResult(requestDto.getResponseStr());
             his.setUrl(requestDto.getUrl());
-            his.setClassHandler(this.getClass().getSimpleName());
+            String phone = "";
+            if (requestDto.getUser() != null) {
+                phone = requestDto.getUser().getPhoneNo();
+            }
+            his.setClassHandler(String.format("%s,%s,%s", this.getClass().getSimpleName(),
+                    e - s, phone));
+
             his.setCity(requestDto.getRequestParam().get(CITY_ID));
 
             his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
