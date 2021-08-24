@@ -267,7 +267,7 @@ public class OkHttpUtils {
     }
 
     /**
-     * send OK_HTTP_UTILS request
+     * 发送请求
      *
      * @param url
      * @param type
@@ -283,24 +283,30 @@ public class OkHttpUtils {
         try {
             charset = charset == null ? BUILDER.charset : charset;
             Request.Builder requestBuilder = new Request.Builder().url(url);
+            // 请求头处理
             if (headers != null) {
                 headers.remove(RESPONSE_HEADERS);
                 headers.forEach(requestBuilder::addHeader);
             }
+
+            // 针对请求类型进行参数组装
             if (GET.equals(type)) {
             } else if (POST_FROM.equals(type)) {
+                // 表单提交方式
                 FormBody.Builder builder = new FormBody.Builder(Charset.forName(charset));
                 if (argus instanceof Map) {
-                    Map<String, String> map = (Map<String, String>) argus;
+                    Map<String, String> map = (Map) argus;
                     map.forEach(builder::add);
                 }
                 requestBuilder.post(builder.build());
             } else if (POST_JSON.equals(type)) {
+                // json提交方式
                 RequestBody body = FormBody.create(MediaType.parse(SingleOkHttpConfig.APPLICATION_JSON_CHARSET + charset), argus + "");
                 requestBuilder.post(body);
             } else {
                 throw new UnsupportedOperationException(SingleOkHttpConfig.NO_SUPPORT_REQUEST_OK_HTTP_UTILS_TYPE + type);
             }
+
             okhttp3.OkHttpClient okHttp;
             if (httpHost != null) {
                 okHttp = new okhttp3.OkHttpClient.Builder()
@@ -387,15 +393,16 @@ public class OkHttpUtils {
     }
 
     /**
-     * get OK_HTTP_UTILS code
+     * 获取当前url的响应状态 <br>
+     * 响应状态：{@link SingleOkHttpConfig}
      *
-     * @param url
-     * @param headers
-     * @param httpHost
-     * @return
+     * @param url      url
+     * @param headers  请求头
+     * @param httpHost 代理
+     * @return 响应状态
      */
     public Integer getStatusCode(String url, Integer conTimeout, Integer readTimeout, Map<String, String> headers, HttpHost httpHost) {
-        Integer resultBody = SingleOkHttpConfig.INT999;
+        int resultBody = SingleOkHttpConfig.INT999;
         Response response = null;
         try {
             Request.Builder requestBuilder = new Request.Builder().url(url);
@@ -447,7 +454,6 @@ public class OkHttpUtils {
         try {
             if (response != null) {
                 response.close();
-                response = null;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -635,7 +641,7 @@ public class OkHttpUtils {
         private static final int WAIL_PROXY_TIMEOUT = 200;
         private static final ReentrantLock LOCK = new ReentrantLock();
         private static final List<String> pcList = new ArrayList<>();
-        /*private static final List<String> mbList = new ArrayList<>();*/
+        private static final List<String> mbList = new ArrayList<>();
         private static final OkHttpUtils OK_HTTP_UTILS = new OkHttpUtils();
         private static final ConcurrentLinkedQueue<HttpHost> IP_LIST = new ConcurrentLinkedQueue<>();
 
@@ -671,7 +677,7 @@ public class OkHttpUtils {
             pcList.add("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.90 Safari/537.36 2345Explorer/9.5.3.18599");
             pcList.add("Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9b4) Gecko/2008030317 Firefox/3.0b4");
 
-            /*
+
             mbList.add("Mozilla/5.0 (Linux; U; Android 8.1.0; zh-CN; EML-AL00 Build/HUAWEIEML-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.108 UCBrowser/11.9.4.974 UWS/2.13.1.48 Mobile Safari/537.36 AliApp(DingTalk/4.5.11) com.alibaba.android.rimet/10487439 Channel/227200 language/zh-CN");
             mbList.add("Mozilla/5.0 (Linux; U; Android 8.0.0; zh-CN; MI 5 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.108 UCBrowser/11.8.9.969 Mobile Safari/537.36");
             mbList.add("Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; SM-N9500 Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/8.8 Mobile Safari/537.36");
@@ -684,16 +690,16 @@ public class OkHttpUtils {
             mbList.add("Mozilla/5.0 (Linux; U; Android 8.1.0; zh-cn; Redmi 6 Pro Build/OPM1.171019.019) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/9.8.7");
             mbList.add("Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4X Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/6.2 TBS/044304 Mobile Safari/537.36 MicroMessenger/6.7.3.1360(0x26070333) NetType/WIFI Language/zh_CN Process/tools");
             mbList.add("Mozilla/5.0 (Linux; U; Android 7.0; zh-cn; FRD-AL10 Build/HUAWEIFRD-AL10) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/8.8 Mobile Safari/537.36");
-            */
+
         }
 
         public static String randomPC() {
             return pcList.get(RANDOM.nextInt(pcList.size()));
         }
 
-        /*public static String randomMOBILE(){
+        public static String randomMOBILE() {
             return mbList.get(RANDOM.nextInt(mbList.size()));
-        }*/
+        }
 
         //获取这个SSLSocketFactory
         private static SSLSocketFactory createTrustAllSSLFactory(X509TrustManager trustAllManager) {
@@ -740,43 +746,12 @@ public class OkHttpUtils {
 
     }
 
-    public HttpHost getProxyHttpHost() {
-        HttpHost httpHost = null;
-        try {
-            httpHost = getHttpHost(null);
-        } catch (Exception e) {
-            LOG.error("获取ip出错！");
-        }
-        return httpHost;
-    }
-
     public static void main(String[] args) {
-        //HttpHost proxy = new HttpHost("transfer.mogumiao.com", 9001, "OK_HTTP_UTILS");
-        //Map<String, String> header = new HashMap<>();
-        //QzNjSEpJMVpXOUVxOGpRQTpGZzZvQmczd05tTjJwc1JO
-        //header.put("Authorization", "Basic QzNjSEpJMVpXOUVxOGpRQTpGZzZvQmczd05tTjJwc1JO");
-        /*header.put("Host", "sh.house.zhuge.com");
-        header.put("Accept-Language", "zh-CN,zh;q=0.9");
-        header.put("Accept-Encoding", "gzip, deflate");
-        header.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,;q=0.8");
-        header.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
-        **/
-        //String url = "https://www.baidu.com";
         OkHttpUtils httpClient = OkHttpUtils.Builder()
                 .proxyUrl("http://crawler-ipproxy.ejudata.com/get/ip-list/14?key=7CD7CC040B837F8D91A23CDCF0011D85")
                 .builderHttp();
-        //.addProxyRetryTag("null").BUILDER();
-        String url = "https://cms.51xuetang.com/m/school?page=1&cityId=101&limit=100&openid=";
-
-//        String url = "https://hz.lianjia.com/asdfasfasdfsdafasdfs";
-        //HttpHost proxy = new HttpHost("113.122.173.217", 36410);
-        Map<String, String> header = new HashMap<>();
-        String body = httpClient.proxyGet(url, null, header);
-        JSONObject object = JSONObject.parseObject(body);
-
-
-        System.out.println("close . . . .. .  . ");
-
-
+        OkHttpUtils httpClient1 = OkHttpUtils.Builder()
+                .proxyUrl("AAAA http://crawler-ipproxy.ejudata.com/get/ip-list/14?key=7CD7CC040B837F8D91A23CDCF0011D85")
+                .builderHttp();
     }
 }
