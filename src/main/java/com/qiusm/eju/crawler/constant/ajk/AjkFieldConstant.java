@@ -9,7 +9,7 @@ public class AjkFieldConstant {
     public static final String CITY_ID = "city_id";
     public static final String COMMUNITY_SEARCH_KEY = "community_search_key";
     public static final String COMMUNITY_ID = "community_id";
-    public static final String COMMUNITY_TYPE = "community_type";
+    public static final String COMMUNITY_TYPE = "community_number_type";
     public static final String COMMUNITY_NUMBER_TYPE = "community_number_type";
     public static final String COMMUNITY_NAME = "community_name";
     /**

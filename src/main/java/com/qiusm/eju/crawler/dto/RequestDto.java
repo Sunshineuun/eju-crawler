@@ -1,6 +1,7 @@
 package com.qiusm.eju.crawler.dto;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.entity.base.CommunitySkeletonTask;
 import com.qiusm.eju.crawler.entity.bk.BkUser;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.utils.StringUtils;
@@ -55,6 +56,8 @@ public class RequestDto {
      */
     private BkUser user;
 
+    CommunitySkeletonTask task;
+
     private RequestDto(Builder builder) {
         this.url = builder.url;
         this.charset = builder.charset;
@@ -64,6 +67,7 @@ public class RequestDto {
         this.user = builder.user;
         this.isLoad = builder.isLoad;
         this.requestMethod = builder.requestMethod;
+        this.task = builder.task;
     }
 
     public static Builder builder() {
@@ -79,6 +83,7 @@ public class RequestDto {
         Map<String, Object> data = new HashMap<>();
         BkUser user;
         Boolean isLoad = false;
+        CommunitySkeletonTask task;
 
         public Builder url(String url) {
             this.url = url;
@@ -139,6 +144,11 @@ public class RequestDto {
 
         public Builder requestMethod(RequestMethodEnum requestMethod) {
             this.requestMethod = requestMethod;
+            return this;
+        }
+
+        public Builder task(CommunitySkeletonTask task) {
+            this.task = task;
             return this;
         }
     }

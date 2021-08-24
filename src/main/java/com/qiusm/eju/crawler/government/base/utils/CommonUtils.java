@@ -5,10 +5,10 @@ import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.GBK;
-import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 
 /**
  * 在政府源数据采集过程中，常用的工具方法 <br>
@@ -19,7 +19,7 @@ import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL0;
 public class CommonUtils {
     public static OkHttpUtils createHttpClient() {
         return OkHttpUtils.Builder()
-                .proxyUrl(PROXY_URL0)
+                .proxyUrl("http://10.122.143.10:8890/get/ip-list/3?key=557F35CA07AE2470F80E5CFC710FE61E")
                 .connectTimeout(60000)
                 .readTimeout(60000)
                 .charset(GBK)

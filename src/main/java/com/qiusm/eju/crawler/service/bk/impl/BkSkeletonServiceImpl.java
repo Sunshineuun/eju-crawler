@@ -16,7 +16,6 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.skeleton.UnitSearchV1;
 import com.qiusm.eju.crawler.service.base.ICommunitySkeletonTaskService;
 import com.qiusm.eju.crawler.service.bk.IBkSkeletonService;
 import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
-import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -129,19 +128,11 @@ public class BkSkeletonServiceImpl
         // 返回结果
         JSONArray result = new JSONArray();
 
-        StringBuilder desc = new StringBuilder();
-        if (StringUtils.isNotBlank(task.getDesc())) {
-            desc.append(task.getDesc());
-        }
-
         // 骨架数据抓取开始 -----------------------------------------------------------------------------------------------
 
         // 用小区信息，请求楼栋列表
         JSONArray buildingList = buildingHandlerToArray(task);
         if (CollectionUtils.isEmpty(buildingList)) {
-            /*task.setStateEnum(CommunitySkeletonTaskStateEnum.EXCEPTION);
-            desc.append("楼;");
-            return null;*/
         } else {
             // 楼栋列表
             buildingTargetCount += buildingList.size();
@@ -168,8 +159,6 @@ public class BkSkeletonServiceImpl
             for (JSON unit : unitList) {
                 // 小区单元信息抓取
                 if (unit instanceof JSONObject) {
-                    desc.append(((JSONObject) unit).getString(BUILDING)).append("单;");
-                    task.setStateEnum(CommunitySkeletonTaskStateEnum.EXCEPTION);
                 } else if (unit instanceof JSONArray) {
                     // 楼栋获取单元成功
                     buildingCount++;
@@ -202,8 +191,6 @@ public class BkSkeletonServiceImpl
             // 对抓取逻辑进行统计
             for (JSON house : houseList) {
                 if (house instanceof JSONObject) {
-                    desc.append(((JSONObject) house).getString(UNIT_NAME)).append("房;");
-                    task.setStateEnum(CommunitySkeletonTaskStateEnum.EXCEPTION);
                 } else if (house instanceof JSONArray) {
                     // 单元获取房号成功
                     unitCount++;
@@ -215,26 +202,23 @@ public class BkSkeletonServiceImpl
         }
         result.addAll(houseResult);
 
-        // 统计异常情况
-        log.info("{}/{}/{}.楼栋：{}/{};单元：{}/{}", task.getId(), task.getCommunityName(), task.getCommunityId(),
-                buildingCount, buildingTargetCount,
-                unitCount, unitTargetCount);
-        // 因为异常信息会一直拼接，但是为了保障最新异常信息的存储，进行截取操作。
-        desc.append(String.format("楼栋：%s/%s，单元：%s/%s。\n", buildingCount, buildingTargetCount,
-                unitCount, unitTargetCount));
-        if (desc.length() > 200) {
-            task.setDesc(desc.substring(desc.length() - 100));
-        } else {
-            task.setDesc(desc.toString());
-        }
-
         // 任务状态设置
-        if (!task.isException()) {
+        if (buildingCount + unitCount == buildingTargetCount + unitTargetCount) {
             task.setStateEnum(CommunitySkeletonTaskStateEnum.COMPLETE);
+        } else {
+            task.setStateEnum(CommunitySkeletonTaskStateEnum.EXCEPTION);
         }
 
         // 记录任务结束时间
         task.setEndTime(new Date());
+
+        StringBuilder desc = new StringBuilder();
+        // 因为异常信息会一直拼接，但是为了保障最新异常信息的存储，进行截取操作。
+        desc.append(String.format("楼栋：%s/%s;单元：%s/%s。", buildingCount, buildingTargetCount,
+                unitCount, unitTargetCount));
+        task.setDesc(desc.toString());
+        // 统计异常情况
+        log.info("{}/{}/{}.{}", task.getId(), task.getCommunityName(), task.getCommunityId(), desc);
 
         // log.info("处理结果：{}", result.toJSONString());
         return result;

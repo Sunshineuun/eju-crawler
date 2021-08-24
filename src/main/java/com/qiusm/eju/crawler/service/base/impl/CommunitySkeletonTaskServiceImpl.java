@@ -32,7 +32,6 @@ public class CommunitySkeletonTaskServiceImpl
         } else {
             log.debug("发现重复小区：{}", task);
         }
-
     }
 
     @Override
@@ -40,7 +39,7 @@ public class CommunitySkeletonTaskServiceImpl
         Page<CommunitySkeletonTask> page = new Page<>(1, 1000);
         EntityWrapper<CommunitySkeletonTask> entityWrapper = new EntityWrapper<>();
         entityWrapper.in("state", state)
-                .orderBy("id");
+                .orderBy("level,id");
 
         this.selectPage(page, entityWrapper);
         return page.getRecords();
