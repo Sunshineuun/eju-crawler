@@ -126,5 +126,6 @@ public class BkAppDealPageListSearch extends BkAppDealBaseSearch {
         }
 
         responseDto.getResult().put("list", arrayResult);
+        responseDto.getResult().put("total_count", totalCount);
     }
 }
