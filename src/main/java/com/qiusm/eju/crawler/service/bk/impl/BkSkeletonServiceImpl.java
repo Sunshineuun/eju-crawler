@@ -21,12 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.*;
@@ -52,16 +55,27 @@ public class BkSkeletonServiceImpl
     private UnitSearchV1 unitSearchV1;
     @Resource
     private HouseSearchV1 houseSearchV1;
+    @Resource
+    private ValueOperations<String, String> valueOperations;
+
     final private ThreadsUtils urlThreadsUtils = new ThreadsUtils();
     final private ThreadsUtils communityThreadsUtils = new ThreadsUtils();
     private boolean isRunning = false;
     private static final Set<String> COMMUNITY_ID_SET = new ConcurrentHashSet<>();
     private final AtomicInteger submitTaskNum = new AtomicInteger(0);
 
-    public void scheduledTasks() {
+    @Scheduled(cron = "0 */30 * * * ?")
+    public synchronized void scheduledTasks() {
+        boolean success = Boolean.TRUE.equals(valueOperations.setIfAbsent("crawler:bk:skeleton", "正在运行中", 2, TimeUnit.HOURS));
+        if (!success) {
+            return;
+        }
+
         new Thread(() -> {
             List<CommunitySkeletonTask> list;
+            int i = 0;
             while ((list = communitySkeletonTaskService.getByInState("0,1")).size() != 0) {
+
                 log.info("定时任务开始处理, list:{}", list.size());
 
                 for (CommunitySkeletonTask task : list) {
