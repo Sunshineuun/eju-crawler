@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.qiusm.eju.crawler.entity.bk.BkDealUrlHistory;
 import com.qiusm.eju.crawler.mapper.bk.BkDealUrlHistoryMapper;
 import com.qiusm.eju.crawler.service.bk.IBkDealUrlHistoryService;
+import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,18 @@ public class BkDealUrlHistoryServiceImpl
     public BkDealUrlHistory getBkHistoryByUrl(String url) {
         EntityWrapper<BkDealUrlHistory> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("url_base64", BeikeUtils.toBase64(url));
+        BkDealUrlHistory dealUrl = this.selectOne(entityWrapper);
+
+        // 大文本解压
+        dealUrl.setResult(StringUtils.gunzip(dealUrl.getResult()));
         return this.selectOne(entityWrapper);
     }
 
     @Override
     public void upHis(BkDealUrlHistory his) {
         his.setCreateTime(new Date());
+        // 大文本压缩
+        his.setResult(StringUtils.gzip(his.getResult()));
         if (his.getId() == null) {
             his.setUrlBase64(BeikeUtils.toBase64(his.getUrl()));
             this.insert(his);

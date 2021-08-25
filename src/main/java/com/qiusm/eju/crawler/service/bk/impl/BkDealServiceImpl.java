@@ -66,6 +66,7 @@ public class BkDealServiceImpl
     // @Scheduled(cron = "0 */30 * * * ?")
     private synchronized void scheduledTasks() {
         EntityWrapper<BkDealTask> wrapper = new EntityWrapper<>();
+        wrapper.eq("state", "0");
         wrapper.orderBy("id");
         List<BkDealTask> task = this.selectList(wrapper);
         task.forEach(this::dealHandler);
