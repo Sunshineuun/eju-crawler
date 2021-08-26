@@ -72,6 +72,10 @@ public abstract class BkAppBaseSearch
 
         if (his != null) {
             requestDto.setResponseStr(his.getResult());
+            // 将历史数据进行压缩
+            if (StringUtils.startsWith(his.getResult(), "{")) {
+                historyService.upHis(his);
+            }
         } else {
             his = new BkUrlHistory();
         }
@@ -93,11 +97,6 @@ public abstract class BkAppBaseSearch
             his.setCity(requestDto.getRequestParam().get(CITY_ID));
 
             his.setIsSuccess(viewCheck(requestDto) ? 1 : 0);
-            historyService.upHis(his);
-        }
-
-        if (StringUtils.isBlank(his.getCity())) {
-            his.setCity(requestDto.getRequestParam().get(CITY_ID));
             historyService.upHis(his);
         }
     }
