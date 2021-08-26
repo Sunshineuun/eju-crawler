@@ -25,18 +25,22 @@ public class BkDealUrlHistoryServiceImpl
     public BkDealUrlHistory getBkHistoryByUrl(String url) {
         EntityWrapper<BkDealUrlHistory> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("url_base64", BeikeUtils.toBase64(url));
-        BkDealUrlHistory dealUrl = this.selectOne(entityWrapper);
+        BkDealUrlHistory his = this.selectOne(entityWrapper);
 
         // 大文本解压
-        dealUrl.setResult(StringUtils.gunzip(dealUrl.getResult()));
-        return this.selectOne(entityWrapper);
+        if (his != null && his.getIsSuccess() == 1) {
+            his.setResult(StringUtils.gunzip(his.getResult()));
+        }
+        return his;
     }
 
     @Override
     public void upHis(BkDealUrlHistory his) {
         his.setCreateTime(new Date());
-        // 大文本压缩
-        his.setResult(StringUtils.gzip(his.getResult()));
+        // 大文本压缩 已{开头的都认为是json，需要进行压缩
+        if (his.getIsSuccess() == 1) {
+            his.setResult(StringUtils.gzip(his.getResult()));
+        }
         if (his.getId() == null) {
             his.setUrlBase64(BeikeUtils.toBase64(his.getUrl()));
             this.insert(his);
