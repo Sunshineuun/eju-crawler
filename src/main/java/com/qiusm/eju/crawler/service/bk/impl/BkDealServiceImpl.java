@@ -76,7 +76,11 @@ public class BkDealServiceImpl
         int count = 0;
         int totalCount = 0;
 
-        JSONArray bizArray = cityHandler(task.getCityId(), task.getCity());
+        JSONArray bizArray = cityHandler(task.getCityId(), task.getCityPy());
+        if (bizArray == null) {
+            log.warn("获取不到板块信息：{}", task);
+            return;
+        }
         for (Object o1 : bizArray) {
             JSONArray pageListArray = pageListHandler((JSONObject) o1);
             if (pageListArray == null) {
@@ -113,10 +117,10 @@ public class BkDealServiceImpl
         task.updateById();
     }
 
-    private JSONArray cityHandler(String cityId, String city) {
+    private JSONArray cityHandler(String cityId, String cityPy) {
         Map<String, String> params = new HashMap<>(8);
         params.put("city_id", cityId);
-        params.put("city", city);
+        params.put("city", cityPy);
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .build();
@@ -215,7 +219,7 @@ public class BkDealServiceImpl
 
     @Override
     public void run(String... args) throws Exception {
-        scheduledTasks();
+        // scheduledTasks();
     }
 
     @Override
