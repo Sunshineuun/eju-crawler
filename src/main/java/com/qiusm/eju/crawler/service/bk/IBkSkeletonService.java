@@ -10,6 +10,8 @@ import com.qiusm.eju.crawler.entity.base.CommunitySkeletonTask;
  */
 public interface IBkSkeletonService {
 
+    void scheduledTasks();
+
     /**
      * 小区骨架数据抓取
      *

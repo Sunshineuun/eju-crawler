@@ -20,9 +20,7 @@ import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,7 +39,7 @@ import static com.qiusm.eju.crawler.constant.bk.BkHttpHeadConstant.LIANJIA_CITY_
 @Slf4j
 @Service
 public class BkSkeletonServiceImpl
-        implements IBkSkeletonService, CommandLineRunner {
+        implements IBkSkeletonService {
     @Value("${eju.bk.skeleton.threadNum:8}")
     private Integer threadNum;
 
@@ -64,9 +62,11 @@ public class BkSkeletonServiceImpl
     private static final Set<String> COMMUNITY_ID_SET = new ConcurrentHashSet<>();
     private final AtomicInteger submitTaskNum = new AtomicInteger(0);
 
-    @Scheduled(cron = "0 */30 * * * ?")
+    private String lockKey = "crawler:bk:skeleton";
+
+    @Override
     public synchronized void scheduledTasks() {
-        boolean success = Boolean.TRUE.equals(valueOperations.setIfAbsent("crawler:bk:skeleton", "正在运行中", 2, TimeUnit.HOURS));
+        boolean success = Boolean.TRUE.equals(valueOperations.setIfAbsent(lockKey, "正在运行中", 2, TimeUnit.HOURS));
         if (!success) {
             return;
         }
@@ -116,6 +116,7 @@ public class BkSkeletonServiceImpl
             task.updateById();
             COMMUNITY_ID_SET.remove(task.getCommunityId());
             submitTaskNum.decrementAndGet();
+            valueOperations.getOperations().expire(lockKey, 2, TimeUnit.HOURS);
         });
 
         return "任务提交成功，任务id：" + task.getId();
@@ -333,11 +334,6 @@ public class BkSkeletonServiceImpl
         if (user.getState() != 1) {
             bkUserManagementService.updateBkUser(user);
         }
-    }
-
-    @Override
-    public void run(String... args) {
-        scheduledTasks();
     }
 
     private void sleep() {
