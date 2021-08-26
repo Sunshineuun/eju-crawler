@@ -563,7 +563,7 @@ public class OkHttpUtils {
             if (proxyUrl == null || "".equals(proxyUrl.trim())) {
                 throw new NullPointerException("proxyUrl == null");
             }
-            log.info("当前使用代理：{}", proxyUrl);
+            // log.info("当前使用代理：{}", proxyUrl);
             this.proxyUrl = proxyUrl;
             return this;
         }
