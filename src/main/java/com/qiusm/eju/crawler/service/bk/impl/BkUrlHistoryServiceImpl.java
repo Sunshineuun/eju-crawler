@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.qiusm.eju.crawler.entity.bk.BkUrlHistory;
 import com.qiusm.eju.crawler.mapper.bk.BkUrlHistoryMapper;
 import com.qiusm.eju.crawler.service.bk.IBkUrlHistoryService;
+import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -31,12 +31,22 @@ public class BkUrlHistoryServiceImpl
     public BkUrlHistory getBkHistoryByUrl(String url) {
         EntityWrapper<BkUrlHistory> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("url_base64", BeikeUtils.toBase64(url));
-        return this.selectOne(entityWrapper);
+        BkUrlHistory his = this.selectOne(entityWrapper);
+        // 大文本解压
+        if (his != null && his.getIsSuccess() == 1
+                && StringUtils.startsWith(his.getResult(), "{")) {
+            his.setResult(StringUtils.gunzip(his.getResult()));
+        }
+        return his;
     }
 
     @Override
     public void upHis(BkUrlHistory his) {
         his.setCreateTime(new Date());
+        // 大文本压缩 已{开头的都认为是json，需要进行压缩
+        if (his.getIsSuccess() == 1) {
+            his.setResult(StringUtils.gzip(his.getResult()));
+        }
         if (his.getId() == null) {
             his.setUrlBase64(BeikeUtils.toBase64(his.getUrl()));
             this.insert(his);
