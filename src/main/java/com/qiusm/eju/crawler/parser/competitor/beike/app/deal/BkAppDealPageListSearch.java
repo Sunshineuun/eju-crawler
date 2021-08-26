@@ -123,6 +123,7 @@ public class BkAppDealPageListSearch extends BkAppDealBaseSearch {
             }
         } else {
             log.info("{},{}:板块下无成交", data.get("region"), data.get("plate"));
+            totalCount = 0;
         }
 
         responseDto.getResult().put("list", arrayResult);
