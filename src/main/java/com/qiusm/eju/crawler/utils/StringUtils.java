@@ -1,9 +1,18 @@
 package com.qiusm.eju.crawler.utils;
 
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * @author qiushengming
@@ -64,5 +73,70 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
                 .collect(Collectors.joining("\n"));
         errorMsg.append(stackTraceInfo);
         return errorMsg.toString();
+    }
+
+    public static String gunzip(String str) {
+        if (str == null) {
+            return null;
+        }
+
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ByteArrayInputStream byteIn = null;
+        GZIPInputStream gzipIn = null;
+        byte[] compressed = null;
+        String deCompressed = null;
+
+        try {
+            compressed = new BASE64Decoder().decodeBuffer(str);
+            byteIn = new ByteArrayInputStream(compressed);
+            gzipIn = new GZIPInputStream(byteIn);
+            byte[] buffer = new byte[1024];
+            int offset = -1;
+            while ((offset = gzipIn.read(buffer)) != -1) {
+                byteOut.write(buffer, 0, offset);
+            }
+            deCompressed = byteOut.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                byteOut.close();
+                if (byteIn != null) {
+                    byteIn.close();
+                }
+                if (gzipIn != null) {
+                    gzipIn.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return deCompressed;
+    }
+
+    public static String gzip(String str) {
+        if (isBlank(str)) {
+            return str;
+        }
+
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        GZIPOutputStream gzipOut = null;
+        try {
+            gzipOut = new GZIPOutputStream(byteOut);
+            gzipOut.write(str.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (gzipOut != null) {
+                try {
+                    gzipOut.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return new BASE64Encoder().encode(byteOut.toByteArray());
     }
 }
