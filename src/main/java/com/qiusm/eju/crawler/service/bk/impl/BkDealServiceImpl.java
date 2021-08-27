@@ -10,11 +10,11 @@ import com.qiusm.eju.crawler.entity.bk.BkDeal;
 import com.qiusm.eju.crawler.entity.bk.BkDealTask;
 import com.qiusm.eju.crawler.enums.CommunitySkeletonTaskStateEnum;
 import com.qiusm.eju.crawler.mapper.bk.BkDealTaskMapper;
-import com.qiusm.eju.crawler.parser.competitor.beike.app.base.BkAppCityDictSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailPartSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealDetailSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.deal.BkAppDealPageListSearch;
+import com.qiusm.eju.crawler.service.bk.IBkCityInoService;
 import com.qiusm.eju.crawler.service.bk.IBkDealTaskService;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import com.qiusm.eju.crawler.utils.ThreadsUtils;
@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +41,7 @@ import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.CITY_ID;
 @Service
 public class BkDealServiceImpl
         extends ServiceImpl<BkDealTaskMapper, BkDealTask>
-        implements IBkDealTaskService, CommandLineRunner, InitializingBean {
+        implements IBkDealTaskService, InitializingBean {
 
     @Resource(name = "bkAppDealPageListSearch")
     private BkAppDealPageListSearch bkAppDealPageListSearch;
@@ -53,7 +52,7 @@ public class BkDealServiceImpl
     @Resource
     private BkAppDealDetailPartSearch bkAppDealDetailPartSearch;
     @Resource
-    private BkAppCityDictSearch bkAppCityDictSearch;
+    private IBkCityInoService bkCityInoService;
     @Resource
     private ListOperations<String, String> listOperations;
 
@@ -64,7 +63,8 @@ public class BkDealServiceImpl
 
 
     // @Scheduled(cron = "0 */30 * * * ?")
-    private synchronized void scheduledTasks() {
+    @Override
+    public synchronized void scheduledTasks() {
         EntityWrapper<BkDealTask> wrapper = new EntityWrapper<>();
         wrapper.eq("state", "0");
         wrapper.orderBy("id");
@@ -76,7 +76,7 @@ public class BkDealServiceImpl
         int count = 0;
         int totalCount = 0;
 
-        JSONArray bizArray = cityHandler(task.getCityId(), task.getCityPy());
+        JSONArray bizArray = bkCityInoService.getBizByCity(task.getCityId(), task.getCityPy());
         if (bizArray == null) {
             log.warn("获取不到板块信息：{}", task);
             return;
@@ -115,18 +115,6 @@ public class BkDealServiceImpl
 
         task.setDesc(desc);
         task.updateById();
-    }
-
-    private JSONArray cityHandler(String cityId, String cityPy) {
-        Map<String, String> params = new HashMap<>(8);
-        params.put("city_id", cityId);
-        params.put("city", cityPy);
-        RequestDto requestDto = RequestDto.builder()
-                .requestParam(params)
-                .build();
-
-        ResponseDto responseDto = bkAppCityDictSearch.execute(requestDto);
-        return responseDto.getResult().getJSONArray("list");
     }
 
     private JSONArray pageListHandler(JSONObject biz) {
@@ -215,11 +203,6 @@ public class BkDealServiceImpl
 
         ResponseDto responseDto = bkAppDealDetailPartSearch.execute(requestDto);
         return responseDto.getResult();
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-        // scheduledTasks();
     }
 
     @Override
