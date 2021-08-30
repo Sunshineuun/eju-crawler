@@ -195,7 +195,7 @@ public abstract class HttpBase implements IHttpSearch, InitializingBean {
      * @return 标签列表
      */
     protected String[] getProxyRetryTag() {
-        return new String[]{"ejuResponseCode"};
+        return new String[]{"ejuResponseCode", "ResponseError="};
     }
 
     @Override
