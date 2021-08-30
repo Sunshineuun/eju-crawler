@@ -72,6 +72,15 @@ public class BkDealServiceImpl
         task.forEach(this::dealHandler);
     }
 
+    @Override
+    public synchronized void toDb() {
+        EntityWrapper<BkDealTask> wrapper = new EntityWrapper<>();
+        wrapper.eq("state", "3");
+        wrapper.orderBy("id");
+        List<BkDealTask> task = this.selectList(wrapper);
+        task.forEach(this::dealHandler);
+    }
+
     private void dealHandler(BkDealTask task) {
         int count = 0;
         int totalCount = 0;

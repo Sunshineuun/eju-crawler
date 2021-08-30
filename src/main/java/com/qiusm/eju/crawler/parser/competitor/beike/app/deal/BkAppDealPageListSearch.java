@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
-import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.CITY_ID;
+import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.*;
 
 /**
  * deal page list <br>
@@ -27,26 +27,7 @@ import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.CITY_ID;
 @Slf4j
 @Service("bkAppDealPageListSearch")
 public class BkAppDealPageListSearch extends BkAppDealBaseSearch {
-    /**
-     * 区域id
-     */
-    private static final String DISTRICT_ID = "district_id";
-    /**
-     * 板块id
-     */
-    private static final String BIZCIRCLE_ID = "bizcircle_id";
-    /**
-     * 翻页偏移位
-     */
-    protected static final String LIMIT_OFFSET = "limit_offset";
-    /**
-     * 价格下限
-     */
-    private static final String PRICE_BP = "price_bp";
-    /**
-     * 价格上限
-     */
-    private static final String PRICE_EP = "price_ep";
+
     private static final String URL_TEMPLATE = "%s/house/chengjiao/searchV2?limit_offset=%s&condition=%s&city_id=%s&containerType=0&limit_count=100";
 
     @Override

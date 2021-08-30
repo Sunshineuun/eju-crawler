@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.LIMIT_OFFSET;
+
 /**
  * 如果当前请求响应结果中的【total_count】是否大于100，如果大于100则需要进行分页。
  *

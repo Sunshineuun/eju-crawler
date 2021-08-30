@@ -4,8 +4,9 @@ import com.qiusm.eju.crawler.entity.task.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.service.bk.IBkDealTaskService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -19,9 +20,6 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/bk/deal")
 public class BeikeDealController extends BeiKeBaseController {
-
-    @Value("${eju.bk.deal.threadNum:8}")
-    private Integer threadNum;
     @Resource
     private IBkDealTaskService bkDealTaskService;
 
@@ -33,15 +31,18 @@ public class BeikeDealController extends BeiKeBaseController {
     }
 
     /**
-     * @param cityId 城市ID
-     * @param city   城市简拼
-     * @param isDb   是否将结果持久化到数据库
+     * 开始执行任务，任务配置在表中
      */
-    @GetMapping("/start/{city}/{cityId}")
-    public void startA(
-            @PathVariable String cityId,
-            @PathVariable String city,
-            @RequestParam(required = false, defaultValue = "0") String isDb) {
+    @GetMapping("/start/task")
+    public void startTask() {
         bkDealTaskService.scheduledTasks();
+    }
+
+    /**
+     * 将数据解析到db中
+     */
+    @GetMapping("/start/toDb")
+    public void startToDb() {
+        bkDealTaskService.toDb();
     }
 }

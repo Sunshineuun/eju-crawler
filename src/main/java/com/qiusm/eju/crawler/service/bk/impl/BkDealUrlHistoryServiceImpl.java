@@ -28,7 +28,7 @@ public class BkDealUrlHistoryServiceImpl
         BkDealUrlHistory his = this.selectOne(entityWrapper);
 
         // 大文本解压
-        if (his != null && his.getIsSuccess() == 1) {
+        if (his != null && his.getIsSuccess() == 1 && !StringUtils.startsWith(his.getResult(), "{")) {
             his.setResult(StringUtils.gunzip(his.getResult()));
         }
         return his;
