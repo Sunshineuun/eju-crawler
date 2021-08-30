@@ -1,5 +1,6 @@
 package com.qiusm.eju.crawler.service.ajk.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
@@ -9,11 +10,13 @@ import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.community.CommunityListHandler;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.community.CommunityPageListHandler;
 import com.qiusm.eju.crawler.service.ajk.IAjkCommunityService;
+import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.qiusm.eju.crawler.constant.ajk.AjkFieldConstant.*;
@@ -30,6 +33,9 @@ public class AjkCommunityServiceImpl
     @Resource
     private CommunityListHandler communityListHandler;
 
+    private ThreadsUtils threadUtils = new ThreadsUtils();
+    private Integer threadNum = 8;
+
     @Override
     public JSONArray communityList(JSONObject area) {
         JSONArray result = new JSONArray();
@@ -38,7 +44,13 @@ public class AjkCommunityServiceImpl
         if (pageListArray == null) {
             return new JSONArray();
         }
-        for (Object o2 : pageListArray) {
+        List<JSON> future = threadUtils.executeFutures(pageListArray,
+                (e) -> {
+                    // 如果执行成功返回JSONArray；否则返回楼栋信息。
+                    return pageHandler((JSONObject) e);
+                }, threadNum);
+
+        for (Object o2 : future) {
             // 小区列表
             JSONArray communityList = pageHandler((JSONObject) o2);
             if (communityList != null) {
