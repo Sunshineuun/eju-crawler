@@ -51,7 +51,7 @@ public class WiwjCommunityServiceImpl implements IWiwjCommunityService {
                 }, threadNum);
         for (Object o2 : future) {
             // 小区列表
-            JSONArray communityList = pageHandler((JSONObject) o2);
+            JSONArray communityList = (JSONArray) o2;
             if (communityList != null) {
                 result.addAll(communityList);
             }
