@@ -6,7 +6,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,7 +13,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author qiushengming
@@ -39,7 +37,7 @@ public class SuperEntity<T extends Model<?>>
     @JsonIgnore
     @JSONField(serialize = false)
     @TableField(exist = false)
-    protected Pagination page;
+    protected Pagination pagination;
 
     @Override
     public String toString() {
