@@ -4,12 +4,17 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
+import com.qiusm.eju.crawler.entity.ajk.AjkCommunityInfo;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.community.AjkAppCommunitySearch;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppFloor;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppHouse;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppUnit;
 import com.qiusm.eju.crawler.parser.competitor.base.IHttpSearch;
+import com.qiusm.eju.crawler.service.ajk.IAjkCommunityService;
+import com.qiusm.eju.crawler.utils.FileUtils;
+import com.qiusm.eju.crawler.utils.ajk.AjkUtils;
+import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,10 +40,6 @@ public class AjkCommunityTest {
 
     @Resource
     private AjkAppHouse houseService;
-
-    public static void main(String[] args) {
-
-    }
 
     @Test
     public void skeTest() {
@@ -148,4 +149,51 @@ public class AjkCommunityTest {
         System.out.printf("houseSearch:%s\n", responseDto);
         return responseDto.getResult().getJSONArray("list");
     }
+
+    @Resource
+    private IAjkCommunityService ajkCommunityService;
+
+    @Test
+    void communityList() {
+        String areasStr = "1806,滨江#1804,西湖#1801,拱墅#1803,上城#1807,萧山#1808,余杭#21429,临平#20069,钱塘#1810,富阳#1809,临安#1813,淳安#1811,建德#1812,桐庐";
+        for (String area : areasStr.split("#")) {
+            String[] var1 = area.split(",");
+            JSONObject areaJson = new JSONObject();
+            areaJson.put(AREA_ID, var1[0]);
+            areaJson.put(AREA_NAME, var1[1]);
+            areaJson.put(CITY_ID, "18");
+            areaJson.put(CITY_NAME, "杭州");
+            JSONArray result = ajkCommunityService.communityList(areaJson);
+            result.forEach(o -> {
+                FileUtils.printFile(((JSONObject) o).toJSONString() + "\n", "source/ajk", "hangzhou_community_list.txt", true);
+            });
+        }
+    }
+
+    public static void main(String[] args) {
+        String str = "{\"area_name\":\"滨江\",\"detail_url\":\"https://api.anjuke.com/community/list?page=1&area_id=1806&city_id=18&page_size=100&app=a-ajk&ajk_city_id=18\",\"plate\":\"长河\",\"green_rate\":\"40.0\",\"area_id\":\"1806\",\"title\":\"南岸晶都花园\",\"city_name\":\"杭州\",\"build_year\":\"2007\",\"property_company\":\"\",\"build_type\":\"小高层\",\"lat\":\"30.179864\",\"property_price\":\"\",\"address\":\"平安路72号\",\"lng\":\"120.195018\",\"title_id\":\"160343\",\"average_price\":\"39294\",\"average_price_month\":\"8\",\"page\":\"1\",\"trading_rights\":\"商品房住宅\",\"region\":\"滨江\",\"city_id\":\"18\",\"total_house_hold_num\":\"1543\"}";
+        AjkCommunityInfo comm = JSONObject.parseObject(str, AjkCommunityInfo.class);
+        System.out.println(comm);
+    }
+
+    static void communityListA() {
+        OkHttpUtils httpClient = OkHttpUtils.Builder()
+                .builderHttp();
+        AjkUtils.createJniHookHandler("ajk");
+
+        String url = "https://api.anjuke.com/community/list?page=2&area_id=13&city_id=11&page_size=100&app=a-ajk&ajk_city_id=11";
+        String jsonStr;
+        Map<String, String> map = new HashMap<>();
+        try {
+            map.put("memberid", "0");
+            map.put("clouduid", "0");
+            map.put("user-agent", "a-ajk/15.13/Android-MI 6/android/9");
+            map.put("nsign", AjkUtils.nsignOfGet(url));
+            jsonStr = httpClient.get(url, null, map);
+            System.out.println(jsonStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
