@@ -27,7 +27,6 @@ public class BkCommunityTest extends EjuCrawlerApplicationTests {
             for (Object o2 : communityList) {
                 JSONObject var1 = (JSONObject) o2;
                 // 将小区信息存储到数据库中去
-
             }
         }
     }
