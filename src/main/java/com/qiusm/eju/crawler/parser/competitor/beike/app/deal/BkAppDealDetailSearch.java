@@ -60,6 +60,8 @@ public class BkAppDealDetailSearch extends BkAppDealBaseSearch {
 
         Map<String, Object> result = new HashMap<>(requestDto.getData());
         JSONObject data = mainJson.getJSONObject("data");
+        result.put("detail_url", requestDto.getUrl());
+        result.put("citycode", result.get("city_id"));
         // 基本信息
         JSONObject basicInfo = data.getJSONObject("basic_info");
         if (basicInfo != null) {
