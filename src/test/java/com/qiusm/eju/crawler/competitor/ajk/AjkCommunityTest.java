@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
-import com.qiusm.eju.crawler.entity.ajk.AjkCommunityInfo;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.community.AjkAppCommunitySearch;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppFloor;

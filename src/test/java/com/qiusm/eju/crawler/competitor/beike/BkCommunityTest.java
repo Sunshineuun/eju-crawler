@@ -3,6 +3,7 @@ package com.qiusm.eju.crawler.competitor.beike;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.EjuCrawlerApplicationTests;
+import com.qiusm.eju.crawler.entity.base.CommunityInfo;
 import com.qiusm.eju.crawler.service.bk.IBkCityInoService;
 import com.qiusm.eju.crawler.service.bk.IBkCommunityService;
 import org.junit.jupiter.api.Test;
@@ -25,8 +26,11 @@ public class BkCommunityTest extends EjuCrawlerApplicationTests {
         for (Object o1 : bizArray) {
             JSONArray communityList = bkCommunityService.communityList((JSONObject) o1);
             for (Object o2 : communityList) {
-                JSONObject var1 = (JSONObject) o2;
+                JSONObject var = (JSONObject) o2;
                 // 将小区信息存储到数据库中去
+                var.put("source", "BK");
+                CommunityInfo communityInfo = JSONObject.parseObject(var.toJSONString(), CommunityInfo.class);
+                communityInfo.insert();
             }
         }
     }

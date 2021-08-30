@@ -1,16 +1,17 @@
-package com.qiusm.eju.crawler.entity.ajk;
+package com.qiusm.eju.crawler.entity.base;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.qiusm.eju.crawler.entity.base.SuperEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
-@TableName("ajk_community_info")
-public class AjkCommunityInfo extends SuperEntity<AjkCommunityInfo> {
+@TableName("community_info")
+public class CommunityInfo extends SuperEntity<CommunityInfo> {
     @JsonProperty("area_name")
     private String areaName;
     @JsonProperty("detail_url")
@@ -54,4 +55,6 @@ public class AjkCommunityInfo extends SuperEntity<AjkCommunityInfo> {
     private String cityId;
     @JsonProperty("total_house_hold_num")
     private String totalHouseHoldNum;
+    @JsonProperty("source")
+    private String source;
 }
