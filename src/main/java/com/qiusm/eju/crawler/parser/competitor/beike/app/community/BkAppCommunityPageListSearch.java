@@ -53,10 +53,11 @@ public class BkAppCommunityPageListSearch extends BkAppCommunityBaseSearch {
         JSONArray arrayResult = new JSONArray();
 
         JSONObject mainJson = JSON.parseObject(requestDto.getResponseStr());
-
         JSONObject dataJson = mainJson.getJSONObject("data");
-
         Integer totalCount = dataJson.getInteger("total_count");
+        if (totalCount == null) {
+            totalCount = 0;
+        }
 
         // 总数小于2100
         if (totalCount > 0) {
@@ -71,6 +72,6 @@ public class BkAppCommunityPageListSearch extends BkAppCommunityBaseSearch {
         }
 
         responseDto.getResult().put("list", arrayResult);
-
+        responseDto.getResult().put("totalCount", totalCount);
     }
 }

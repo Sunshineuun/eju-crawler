@@ -65,6 +65,14 @@ public class BkBaseConstant {
      * 翻页偏移位
      */
     public static final String LIMIT_OFFSET = "limit_offset";
+    /**
+     * 价格下限
+     */
+    public static final String PRICE_BP = "price_bp";
+    /**
+     * 价格上限
+     */
+    public static final String PRICE_EP = "price_ep";
 
 
 }
