@@ -27,7 +27,7 @@ import static com.qiusm.eju.crawler.constant.wiwj.WiwjFieldConstant.CITY_ID;
 @Service("wiwjCommunityPageListHandler")
 public class CommunityPageListHandler extends WiwjAppHandler {
 
-    protected static final String URL_TEMPLATE = DOMAIN + "appapi/community/%s/v1/list?pcount=50&page=%s";
+    protected static final String URL_TEMPLATE = DOMAIN + "appapi/community/%s/v1/list?pcount=15&page=%s";
 
     /**
      * page=1&pcount=15&qyid=&sqid=&price=&distance=&psort=&buildage=&communityid=&communitytype=&keywords=
@@ -62,7 +62,8 @@ public class CommunityPageListHandler extends WiwjAppHandler {
 
         if (totalCount > 0) {
             // 翻页
-            int pageNum = totalCount % 50 == 0 ? totalCount / 50 : totalCount / 50 + 1;
+            int pageCount = 15;
+            int pageNum = totalCount % pageCount == 0 ? totalCount / pageCount : totalCount / pageCount + 1;
             for (int m = 1; m <= pageNum; m++) {
                 JSONObject resultJson = new JSONObject();
                 resultJson.putAll(requestDto.getData());
