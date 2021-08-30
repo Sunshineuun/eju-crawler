@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
+import com.qiusm.eju.crawler.entity.base.CommunityInfo;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.community.AjkAppCommunitySearch;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppFloor;
@@ -171,7 +172,7 @@ public class AjkCommunityTest {
 
     public static void main(String[] args) {
         String str = "{\"area_name\":\"滨江\",\"detail_url\":\"https://api.anjuke.com/community/list?page=1&area_id=1806&city_id=18&page_size=100&app=a-ajk&ajk_city_id=18\",\"plate\":\"长河\",\"green_rate\":\"40.0\",\"area_id\":\"1806\",\"title\":\"南岸晶都花园\",\"city_name\":\"杭州\",\"build_year\":\"2007\",\"property_company\":\"\",\"build_type\":\"小高层\",\"lat\":\"30.179864\",\"property_price\":\"\",\"address\":\"平安路72号\",\"lng\":\"120.195018\",\"title_id\":\"160343\",\"average_price\":\"39294\",\"average_price_month\":\"8\",\"page\":\"1\",\"trading_rights\":\"商品房住宅\",\"region\":\"滨江\",\"city_id\":\"18\",\"total_house_hold_num\":\"1543\"}";
-        AjkCommunityInfo comm = JSONObject.parseObject(str, AjkCommunityInfo.class);
+        CommunityInfo comm = JSONObject.parseObject(str, CommunityInfo.class);
         System.out.println(comm);
     }
 
