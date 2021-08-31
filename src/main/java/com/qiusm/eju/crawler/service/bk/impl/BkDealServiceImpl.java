@@ -19,7 +19,6 @@ import com.qiusm.eju.crawler.service.bk.IBkDealTaskService;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ListOperations;
@@ -110,8 +109,8 @@ public class BkDealServiceImpl
                         JSONObject detail = detailHandler((JSONObject) o3);
                         JSONObject detailPart = detail;
                         // detailPartHandler(detail);
-
-                        if (detailPart != null && StringUtils.equals("3", task.getState())) {
+                        // && StringUtils.equals("3", task.getState())
+                        if (detailPart != null ) {
                             BkDeal deal = JSONObject.parseObject(detailPart.toJSONString(), BkDeal.class);
                             if (!deal.insert()) {
                                 log.error("插入失败：{}", deal);
@@ -126,7 +125,7 @@ public class BkDealServiceImpl
 
         task.setDesc(desc);
         task.setState("4");
-        task.setState("数据推送完毕");
+        task.setStateDesc("数据推送完毕");
         task.updateById();
     }
 
