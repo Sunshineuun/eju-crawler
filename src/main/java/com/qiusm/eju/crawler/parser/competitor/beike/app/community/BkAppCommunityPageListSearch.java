@@ -40,9 +40,18 @@ public class BkAppCommunityPageListSearch extends BkAppCommunityBaseSearch {
         }
 
         // d%sb%s
-        String condition = String.format("d%sb%s", requestParam.get(DISTRICT_ID), requestParam.get(BIZCIRCLE_ID));
+        StringBuilder conditionSb = new StringBuilder();
+        String dis = requestParam.get(DISTRICT_ID);
+        if (StringUtils.isNotBlank(dis)) {
+            conditionSb.append("d").append(dis);
+        }
 
-        String url = String.format(URL_TEMPLATE, DOMAIN_NAME, limitOffset, condition, requestParam.get(CITY_ID));
+        String biz = requestParam.get(BIZCIRCLE_ID);
+        if (StringUtils.isNotBlank(dis)) {
+            conditionSb.append("b").append(biz);
+        }
+
+        String url = String.format(URL_TEMPLATE, DOMAIN_NAME, limitOffset, conditionSb, requestParam.get(CITY_ID));
         requestDto.setUrl(url);
     }
 

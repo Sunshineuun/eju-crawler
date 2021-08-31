@@ -31,6 +31,7 @@ public class BkAppCommunityListSearch extends BkAppCommunityPageListSearch {
             result.put(DETAIL_URL, requestDto.getUrl());
             result.putAll(requestDto.getData());
 
+            result.putAll(community);
             result.put("title", community.get("community_name"));
             result.put("title_id", community.get("community_id"));
             result.put("average_price", community.get("avg_unit_price"));

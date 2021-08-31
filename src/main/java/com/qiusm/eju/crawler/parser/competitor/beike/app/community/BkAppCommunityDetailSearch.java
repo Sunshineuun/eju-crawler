@@ -144,7 +144,7 @@ public class BkAppCommunityDetailSearch extends BkAppCommunityBaseSearch impleme
             result.put(v, JSONUtils.getStringByKey(mainData, k));
         });
 
-        JSONArray buttonListArr = mainData.getJSONArray("buttonList");
+        JSONArray buttonListArr = mainData.getJSONObject("quotation").getJSONArray("buttonList");
         buttonListArr.forEach(o -> {
             JSONObject var = (JSONObject) o;
             String title = var.getString("title");
@@ -157,6 +157,7 @@ public class BkAppCommunityDetailSearch extends BkAppCommunityBaseSearch impleme
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        super.afterPropertiesSet();
         // 小区基础信息
         communityBaseInfoKeyMapping.put("name", "title");
         communityBaseInfoKeyMapping.put("id", "title_id");
@@ -185,7 +186,7 @@ public class BkAppCommunityDetailSearch extends BkAppCommunityBaseSearch impleme
         communityOtherInfoKeyMapping.put("surroundings.desc", "address");
         communityOtherInfoKeyMapping.put("surroundings.centerLng", "lng");
         communityOtherInfoKeyMapping.put("surroundings.centerLat", "lat");
-        communityOtherInfoKeyMapping.put("quotation.transPrice", "average_price");
+        communityOtherInfoKeyMapping.put("quotation.consultant.title", "average_price");
         communityOtherInfoKeyMapping.put("在售房源", "num_for_sale");
         communityOtherInfoKeyMapping.put("在租房源", "rent_num");
 

@@ -20,7 +20,7 @@ import java.util.Map;
 public class BkCityInoServiceImpl implements IBkCityInoService {
 
     @Resource
-    BkAppCityDictSearch bkAppCityDictSearch;
+    private BkAppCityDictSearch bkAppCityDictSearch;
 
     /**
      * 获取城市下板块和区域的信息

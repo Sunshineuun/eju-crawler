@@ -4,10 +4,15 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
+import com.qiusm.eju.crawler.entity.base.CommunityDetail;
+import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunityDetailSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunityListSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunityPageListSearch;
+import com.qiusm.eju.crawler.service.base.ICommunityDetailService;
 import com.qiusm.eju.crawler.service.bk.IBkCommunityService;
+import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,9 +29,16 @@ import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.*;
 public class BkCommunityServiceImpl implements IBkCommunityService {
 
     @Resource(name = "bkAppCommunityPageListSearch")
-    private BkAppCommunityPageListSearch communityPageListSearch;
+    private BkAppCommunityPageListSearch pageListSearch;
     @Resource
-    private BkAppCommunityListSearch communityListSearch;
+    private BkAppCommunityListSearch listSearch;
+    @Resource
+    private BkAppCommunityDetailSearch detailSearch;
+    @Resource
+    private ICommunityDetailService communityDetailService;
+    @Resource
+    private ListOperations<String, String> listOperations;
+    final private ThreadsUtils urlThreadsUtils = new ThreadsUtils();
 
     /**
      * 贝壳小区列表抓取，抓取板块下的列表信息。后续可以转换为城市的。那么需要将结果存储起来，不能放在内存里面。<br>
@@ -51,6 +63,20 @@ public class BkCommunityServiceImpl implements IBkCommunityService {
         return result;
     }
 
+    @Override
+    public boolean communityDetail(JSONObject community) {
+        JSONObject communityDetail = detailHandler(community);
+        communityDetail.putAll(community);
+        communityDetail.put("region_code", community.getString("district_id"));
+        communityDetail.put("plate_code", community.getString("bizcircle_id"));
+        communityDetail.put("current_base_url", community.getString("detail_url"));
+        communityDetail.put("sale", community.getString("num_for_sale"));
+        communityDetail.put("rent", community.getString("rent_num"));
+
+        CommunityDetail communityDetailObj = JSONObject.parseObject(communityDetail.toJSONString(), CommunityDetail.class);
+        return communityDetailService.insertIfAbsent(communityDetailObj);
+    }
+
     JSONArray pageListHandler(JSONObject biz) {
         Map<String, String> params = new HashMap<>(8);
         params.put(CITY_ID, biz.getString(CITY_ID));
@@ -62,7 +88,7 @@ public class BkCommunityServiceImpl implements IBkCommunityService {
                 .data(biz)
                 .build();
 
-        ResponseDto responseDto = communityPageListSearch.execute(requestDto);
+        ResponseDto responseDto = pageListSearch.execute(requestDto);
         return responseDto.getResult().getJSONArray("list");
     }
 
@@ -87,8 +113,17 @@ public class BkCommunityServiceImpl implements IBkCommunityService {
                 .data(page)
                 .build();
 
-        ResponseDto responseDto = communityListSearch.execute(requestDto);
+        ResponseDto responseDto = listSearch.execute(requestDto);
 
         return responseDto.getResult().getJSONArray("list");
+    }
+
+    JSONObject detailHandler(JSONObject community) {
+        RequestDto requestDto = RequestDto.builder()
+                .requestParam(COMMUNITY_ID, community.getString(COMMUNITY_ID))
+                .build();
+
+        ResponseDto responseDto = detailSearch.execute(requestDto);
+        return responseDto.getResult();
     }
 }

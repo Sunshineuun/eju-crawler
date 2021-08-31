@@ -135,6 +135,7 @@ public class CommunityListHandler extends CommunityPageListHandler {
         // 小区其它信息
         propInfoKey.put("price", "average_price");
         propInfoKey.put("month", "average_price_month");
+        propInfoKey.put("month_change", "monthChange");
         /*communityOverviewKeyMapping.put("产权年限", "property_year");
         communityOverviewKeyMapping.put("供暖类型", "heating");
 

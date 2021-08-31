@@ -1,15 +1,20 @@
-package com.qiusm.eju.crawler.competitor.beike;
+package com.qiusm.eju.crawler.controller.bk;
 
 import cn.hutool.core.collection.ConcurrentHashSet;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.EjuCrawlerApplicationTests;
-import com.qiusm.eju.crawler.entity.base.CommunityInfo;
+import com.qiusm.eju.crawler.entity.base.City;
+import com.qiusm.eju.crawler.service.base.ICityService;
 import com.qiusm.eju.crawler.service.bk.IBkCityInoService;
 import com.qiusm.eju.crawler.service.bk.IBkCommunityService;
+import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.ThreadsUtils;
-import org.junit.jupiter.api.Test;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Set;
@@ -18,41 +23,30 @@ import java.util.stream.IntStream;
 
 import static com.qiusm.eju.crawler.constant.bk.BkBaseConstant.COMMUNITY_ID;
 
-public class BkCommunityTest extends EjuCrawlerApplicationTests {
+@Slf4j
+@RestController
+@RequestMapping("/bk/community/")
+public class BeikeCommunityController {
 
     @Resource
     private IBkCommunityService bkCommunityService;
     @Resource
     private IBkCityInoService bkCityInoService;
-
-    @Test
-    public void communityList() {
-        String cityId = "330100";
-        String city = "hz";
-        JSONArray bizArray = bkCityInoService.getBizByCity(cityId, city);
-
-        for (Object biz : bizArray) {
-            JSONArray communityList = bkCommunityService.communityList((JSONObject) biz);
-            for (Object o2 : communityList) {
-                JSONObject var = (JSONObject) o2;
-                // 将小区信息存储到数据库中去
-                var.put("source", "BK");
-                CommunityInfo communityInfo = JSONObject.parseObject(var.toJSONString(), CommunityInfo.class);
-                communityInfo.insert();
-            }
-        }
-    }
-
+    @Resource
+    private ICityService cityService;
     @Resource
     private ListOperations<String, String> listOperations;
-    private String communityListKey = "eju-crawler:bk:community:list";
-    private ThreadsUtils threadsUtils = new ThreadsUtils();
+    private final String communityListKey = "eju-crawler:bk:community:list";
+    private final ThreadsUtils threadsUtils = new ThreadsUtils();
 
-    @Test
-    public void communityListHz() {
-        String cityId = "330100";
-        String city = "hz";
-        JSONArray bizArray = bkCityInoService.getBizByCity(cityId, city);
+    @GetMapping("/list/{cityCode}")
+    public void communityList(@PathVariable String cityCode) {
+        City city = cityService.selectByBkCityCode(cityCode);
+        if (city == null) {
+            log.error("贝壳中无该编码城市：{}", cityCode);
+            return;
+        }
+        JSONArray bizArray = bkCityInoService.getBizByCity(city.getBkCode(), city.getBkPinyinCode());
         Set<String> disSet = new ConcurrentHashSet<>();
         listOperations.getOperations().delete(communityListKey);
         threadsUtils.executeFutures(bizArray, (e) -> {
@@ -63,26 +57,27 @@ public class BkCommunityTest extends EjuCrawlerApplicationTests {
             } else {
                 disSet.add(districtId);
             }
-            String bizcircleId = bizJson.getString("bizcircle_id");
-            bizJson.remove("bizcircle_id");
+            String bizcircleId = "";
+            if (StringUtils.equals(city.getBkCode(), "330100")) {
+                bizcircleId = bizJson.getString("bizcircle_id");
+                bizJson.remove("bizcircle_id");
+            }
 
             JSONArray communityList = bkCommunityService.communityList(bizJson);
-            communityList.forEach(o -> {
+            for (Object o : communityList) {
                 JSONObject community = (JSONObject) o;
                 community.put("bizcircle_id", bizcircleId);
-                community.put("city", "杭州");
-                community.put("city_code", cityId);
+                community.put("city", city.getCity());
+                community.put("city_code", city.getBkCode());
                 listOperations.leftPush(communityListKey, JSONObject.toJSONString(community));
-            });
+            }
             return null;
         }, 8);
     }
 
-    @Test
+    @GetMapping("detail")
     public void communityDetail() {
-        communityListHz();
         Set<String> communityIdSet = new ConcurrentHashSet<>();
-
         int threadNum = 8;
         threadsUtils.executeFutures(IntStream.range(1, threadNum).boxed().collect(Collectors.toList()),
                 (e) -> {
@@ -107,5 +102,4 @@ public class BkCommunityTest extends EjuCrawlerApplicationTests {
                     return null;
                 }, 8);
     }
-
 }

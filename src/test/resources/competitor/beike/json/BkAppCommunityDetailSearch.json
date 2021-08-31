@@ -1,0 +1,480 @@
+{
+  "request_id": "ca924ff5-be04-448e-a4da-4cdec802d3d4",
+  "uniqid": "010ACA160DD903019B7B01AEF7DC78B3",
+  "errno": 0,
+  "error": "",
+  "data": {
+    "share": {
+      "title": "湖墅北路77号",
+      "summary": "湖墅北路77号小区，最新二手房均价元，位于信义坊",
+      "mUrl": "https:\/\/m.ke.com\/hz\/xiaoqu\/1811056877260\/",
+      "headPic": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/c767e3e4-9e80-4a2c-b3be-00b47c66be72.jpg.280x210.jpg?from=ke.com",
+      "sms": "湖墅北路77号小区，最新二手房均价元，详细 https:\/\/m.ke.com\/hz\/xiaoqu\/1811056877260\/ 来自【贝壳找房APP】"
+    },
+    "basicInfo": {
+      "id": "1811056877260",
+      "cityId": "330100",
+      "districtName": "拱墅",
+      "bizcircleName": "信义坊",
+      "schema": "lianjiabeike:\/\/community\/detailv4?communityid=1811056877260",
+      "ershoufangSourceCount": 0,
+      "headPic": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/c767e3e4-9e80-4a2c-b3be-00b47c66be72.jpg.280x210.jpg?from=ke.com",
+      "name": "湖墅北路77号",
+      "address": "信义坊",
+      "hasImCard": 0,
+      "mUrl": "https:\/\/m.ke.com\/hz\/xiaoqu\/1811056877260\/"
+    },
+    "focusArea": {
+      "info": {
+        "name": "湖墅北路77号",
+        "resblockId": 1811056877260,
+        "bizcircleName": "信义坊",
+        "address": "信义坊",
+        "favoriteCount": 0
+      },
+      "pictureList": [
+        {
+          "imgUrlList": [
+            {
+              "url": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/c767e3e4-9e80-4a2c-b3be-00b47c66be72.jpg.1000x750.jpg?from=ke.com",
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_8287b3c73cd9d13bb8a5aa79f79d69e2"
+            },
+            {
+              "url": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/10deee83-b4c3-4848-8b00-35851d977d61.jpg.1000x750.jpg?from=ke.com",
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_ad06cc7d9ddc69e1f6d12ce6fa09e5cc"
+            },
+            {
+              "url": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/ea9eafcd-7c4a-4d43-a514-25e8183c9129.jpg.1000x750.jpg?from=ke.com",
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_e7268a95835257d49d8b4bdea84a47d4"
+            },
+            {
+              "url": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/9b51413e-9562-44cb-a936-ce9597995838.jpg.1000x750.jpg?from=ke.com",
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_444977b949971fbec8cbf72636dfdece"
+            },
+            {
+              "url": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/d685e600-fb26-4aae-b9b9-0de41dbf589b.jpg.1000x750.jpg?from=ke.com",
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_e111a078ae6e266c08c301802776c185"
+            },
+            {
+              "url": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/c32c2201-90e5-4643-a476-0fa029c6ea5d.jpg.1000x750.jpg?from=ke.com",
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_5b471987882e79b6d388a7cdc8a799e1"
+            },
+            {
+              "url": "http:\/\/ke-image.ljcdn.com\/hdic-resblock\/1cc890b3-4428-4698-9f4c-bd8c6b11c4a5.jpg.1000x750.jpg?from=ke.com",
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_87b669b3b4ca0f693126aefeca70dad6"
+            }
+          ],
+          "groupName": "实景图",
+          "groupId": 1,
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_09bec2d3065bcb68aa09c7856a66c090"
+        }
+      ]
+    },
+    "introduceInfo": {
+      "title": "小区概况",
+      "list": [
+        {
+          "name": "建成年代:",
+          "value": "暂无",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_0b5230e88567b45fb37b05a0d19ee705"
+        },
+        {
+          "name": "建筑类型:",
+          "value": "板楼",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_13ba24873aed28a550ffedf7590e2591"
+        },
+        {
+          "name": "开发企业:",
+          "value": "杭州市湖墅路改造工程指挥部",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_dfd8aec9adb2e47b7d32864679a01061"
+        },
+        {
+          "name": "交易权属:",
+          "value": "商品房",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_22eeb340d6583081bf6abb26be4a9117"
+        },
+        {
+          "name": "供暖类型:",
+          "value": "自采暖",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_38830d6664f247264dc3a8cc835370de"
+        },
+        {
+          "name": "用水类型:",
+          "value": "民水",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_02ed0d9741bd6832781ace30045924a2"
+        },
+        {
+          "name": "用电类型:",
+          "value": "民电",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_efaf60eb94c608a197574782da0aab23"
+        },
+        {
+          "name": "固定车位数:",
+          "value": "暂无",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_f638556a8d78b93b27519a44dea596c7"
+        },
+        {
+          "name": "停车费用:",
+          "value": "150",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_e7fad090a8834b3b4e25c6b35233518f"
+        },
+        {
+          "name": "燃气费用:",
+          "value": "3.1元\/月\/m³",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_04a97b70a532cb391eaea67226b2b317"
+        },
+        {
+          "name": "容积率:",
+          "value": 2.8,
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_77ea3c4c68f8c21b93c15e61b252fc2c"
+        },
+        {
+          "name": "绿化率:",
+          "value": "30%",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_0604fee80eb3787aaff68cf4111aa075"
+        },
+        {
+          "name": "物业公司:",
+          "value": "暂无",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_03704ac7cd920e681fefd58079daaea7"
+        },
+        {
+          "name": "物业费用:",
+          "value": "1元\/月\/㎡ ",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_fa64e660c3928966d5fcd8b9cafdfca3"
+        },
+        {
+          "name": "物业电话:",
+          "value": "暂无",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_58f2e533aefd2d767a02f93cb6fd0538"
+        }
+      ]
+    },
+    "surroundings": {
+      "title": "周边配套",
+      "centerLat": 30.307656,
+      "centerLng": 120.148187,
+      "desc": "湖墅北路77号",
+      "list": [
+        {
+          "title": "交通",
+          "actionUrl": "lianjiabeike:\/\/web\/main?login=false&url=https%3A%2F%2Fm.ke.com%2Fhz%2Fxiaoqu%2F1811056877260%2Fnearby%2Fsubway",
+          "list": [
+            {
+              "title": "地铁",
+              "desc": "距离善贤2384米,距离拱宸桥东1813米,距离大运河2215米",
+              "actionUrl": "lianjiabeike:\/\/web\/main?login=false&url=https%3A%2F%2Fm.ke.com%2Fhz%2Fxiaoqu%2F1811056877260%2Fnearby%2Fsubway",
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_ca921329671eaa73e10e59d28f4f39ef"
+            }
+          ],
+          "locationList": [
+            {
+              "name": "善贤",
+              "pointLat": 30.322474,
+              "pointLng": 120.166162,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_a4848a7a87283af240f4b11dc747672b"
+            },
+            {
+              "name": "拱宸桥东",
+              "pointLat": 30.323064,
+              "pointLng": 120.154413,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_36f18004b7879b022308e5369d8a924c"
+            },
+            {
+              "name": "大运河",
+              "pointLat": 30.325635,
+              "pointLng": 120.138224,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_ab111f0de7d29b918f3b0c4e91636bcf"
+            }
+          ],
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_8ecedf7d0b6190c0bd08dcfaab351291"
+        },
+        {
+          "title": "医疗",
+          "actionUrl": "lianjiabeike:\/\/web\/main?login=false&url=https%3A%2F%2Fm.ke.com%2Fhz%2Fxiaoqu%2F1811056877260%2Fnearby%2Fhospital",
+          "locationList": [
+            {
+              "name": "杭州市拱墅区米...",
+              "pointLat": 30.295044,
+              "pointLng": 120.157663,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_46cfd713ede40b3b275615b1575d257e"
+            },
+            {
+              "name": "杭州市拱墅区和...",
+              "pointLat": 30.315625,
+              "pointLng": 120.128106,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_085c9649336f65c35cdb548f90d73dbf"
+            },
+            {
+              "name": "杭州陈再璋骨病...",
+              "pointLat": 30.314095,
+              "pointLng": 120.132994,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_0c0864a301bd7be8a0fe5ef8bbf89377"
+            },
+            {
+              "name": "杭州市朝晖人民...",
+              "pointLat": 30.290543,
+              "pointLng": 120.168113,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_e1cbd6c78d3242b1b205ff43d138a73c"
+            },
+            {
+              "name": "西湖区妇幼保健...",
+              "pointLat": 30.291972,
+              "pointLng": 120.135345,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_33e528a2985adb14c1528f86056e6131"
+            },
+            {
+              "name": "杭州九洲中西医...",
+              "pointLat": 30.309091,
+              "pointLng": 120.165628,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_38b5c38eb03281790416a1ce72b1d7a6"
+            },
+            {
+              "name": "浙江老年关怀医...",
+              "pointLat": 30.322184,
+              "pointLng": 120.148356,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_b5ed3d34e46d9b13f2b00a10c4a4abda"
+            },
+            {
+              "name": "浙江省新华医院",
+              "pointLat": 30.29051,
+              "pointLng": 120.154887,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_47defab5bebd48b1e6b74920649cfdfe"
+            },
+            {
+              "name": "杭州博雅整形医...",
+              "pointLat": 30.290477,
+              "pointLng": 120.158131,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_09ab95cd668a01e21dba61b1ec98b6ca"
+            },
+            {
+              "name": "杭州仁德妇产医...",
+              "pointLat": 30.317553,
+              "pointLng": 120.161244,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_4a08a555d5a5a6100359a7ecb31848a1"
+            }
+          ],
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_c1f5822ba2a2eebfc7217c60976bb71d"
+        },
+        {
+          "title": "生活",
+          "actionUrl": "lianjiabeike:\/\/web\/main?login=false&url=https%3A%2F%2Fm.ke.com%2Fhz%2Fxiaoqu%2F1811056877260%2Fnearby%2Flife",
+          "locationList": [
+            {
+              "name": "铂澜大象城",
+              "pointLat": 30.294459,
+              "pointLng": 120.130741,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_9056666489196176e2efb0b3d493761c"
+            },
+            {
+              "name": "运河上街购物中...",
+              "pointLat": 30.324153,
+              "pointLng": 120.148078,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_39afd8ab3b7d1411c47a8b5f264ba420"
+            },
+            {
+              "name": "天阳D32时尚...",
+              "pointLat": 30.320844,
+              "pointLng": 120.144448,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_04afd72b21e0af1145ba7097096ef6f1"
+            },
+            {
+              "name": "绿地中央广场",
+              "pointLat": 30.30996,
+              "pointLng": 120.150037,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_2d469b5b4a7effd832623f5721bd40f1"
+            },
+            {
+              "name": "汇和城(翠苑店...",
+              "pointLat": 30.294549,
+              "pointLng": 120.129135,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_91e4cfe6f741b422404fe23e175710b9"
+            },
+            {
+              "name": "水晶城购物中心",
+              "pointLat": 30.310587,
+              "pointLng": 120.158317,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_f86399d8d8bc2494972cb45d3dea837f"
+            },
+            {
+              "name": "远洋乐堤港",
+              "pointLat": 30.310771,
+              "pointLng": 120.148387,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_3e2f8097fee077c571dd0cdf45008db3"
+            },
+            {
+              "name": "世纪联华(杨家...",
+              "pointLat": 30.304483,
+              "pointLng": 120.147072,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_d79651af8e6d8ca7806be711465368fb"
+            },
+            {
+              "name": "世纪联华(朝晖...",
+              "pointLat": 30.290398,
+              "pointLng": 120.168941,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_b379811d9efc43483ab48fd5ee6c17c2"
+            },
+            {
+              "name": "联华（杭州德新...",
+              "pointLat": 30.303132,
+              "pointLng": 120.168658,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_95161109a3d496d55d1e36fcbb322875"
+            },
+            {
+              "name": "联华（杭州学院...",
+              "pointLat": 30.299873,
+              "pointLng": 120.134964,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_ddc146e951594d423fc3af84a57ff675"
+            },
+            {
+              "name": "世纪联华(运河...",
+              "pointLat": 30.324048,
+              "pointLng": 120.148048,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_92ddf7714cd212399d6f6d95851f6143"
+            },
+            {
+              "name": "永辉超市(登云...",
+              "pointLat": 30.320809,
+              "pointLng": 120.142698,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_f933798906e0a0fbaf5351cc028cdba5"
+            },
+            {
+              "name": "永辉bravo...",
+              "pointLat": 30.310478,
+              "pointLng": 120.148372,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_2621715a82151ec6c3cf1edcbfa9d619"
+            },
+            {
+              "name": "联华（杭州嘉泰...",
+              "pointLat": 30.318677,
+              "pointLng": 120.139735,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_40751c534f69be82adeb0427661067c1"
+            },
+            {
+              "name": "联华（杭州假山...",
+              "pointLat": 30.300716,
+              "pointLng": 120.159866,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_22708248b1caa56a50a39b566d7fa9b7"
+            },
+            {
+              "name": "联华（杭州运河...",
+              "pointLat": 30.300472,
+              "pointLng": 120.153521,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_ad5fb2bf993967c019fd0a731f4846e2"
+            }
+          ],
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_28a528e1acee2339a8c73208db2b43fa"
+        },
+        {
+          "title": "休闲",
+          "actionUrl": "lianjiabeike:\/\/web\/main?login=false&url=https%3A%2F%2Fm.ke.com%2Fhz%2Fxiaoqu%2F1811056877260%2Fnearby%2Ffun",
+          "locationList": [
+            {
+              "name": "青莎公园",
+              "pointLat": 30.315448,
+              "pointLng": 120.14531,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_01b8225d173a23d5efa977f4cd70b68b"
+            },
+            {
+              "name": "江墅铁路遗址公...",
+              "pointLat": 30.319353,
+              "pointLng": 120.149632,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_2a4ef27ad1060ffd4c22b178867a16eb"
+            },
+            {
+              "name": "和睦公园",
+              "pointLat": 30.316798,
+              "pointLng": 120.13111,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_25b14496fee4ce2b908e0dbe83cc7b73"
+            },
+            {
+              "name": "大关公园",
+              "pointLat": 30.309048,
+              "pointLng": 120.16258,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_2df263d9aedd019fac1ee5f5fd389504"
+            },
+            {
+              "name": "杭州城北体育公...",
+              "pointLat": 30.317327,
+              "pointLng": 120.167838,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_fe162d9461576482d2f862b7386201ce"
+            },
+            {
+              "name": "紫荆公园",
+              "pointLat": 30.314298,
+              "pointLng": 120.146608,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_4a543ecb66e0474fdab6db0fb253db94"
+            },
+            {
+              "name": "夹城夜月文化公...",
+              "pointLat": 30.294985,
+              "pointLng": 120.159749,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_6a0f3d4a1bc770f4d38090516bd4a59a"
+            },
+            {
+              "name": "德胜公园",
+              "pointLat": 30.303552,
+              "pointLng": 120.168603,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_944c207bc2b9b0b1ecec3a9ed86430f8"
+            },
+            {
+              "name": "华浙.银马公园",
+              "pointLat": 30.294099,
+              "pointLng": 120.142798,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_e659ed3ef456dcf29f1a5cd359adde51"
+            },
+            {
+              "name": "大关科普公园",
+              "pointLat": 30.307295,
+              "pointLng": 120.166931,
+              "eleid": "010ACA160DD903019B7B01AEF7DC78B3_931bcab5a6c1e0cc86a9faecbe2b6db4"
+            }
+          ],
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_7c66559db318770eb2105faa05f8ab63"
+        }
+      ]
+    },
+    "quotation": {
+      "consultant": {
+        "title": "暂无均价"
+      },
+      "buttonList": [
+        {
+          "title": "在售房源",
+          "unit": "套",
+          "desc": "--",
+          "actionUrl": "lianjiabeike:\/\/ershou\/community_list?city_id=330100&community_id=1811056877260&title=湖墅北路77号",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_7731335c142936a4f05040bae18ca399"
+        },
+        {
+          "title": "在租房源",
+          "unit": "套",
+          "desc": "--",
+          "eleid": "010ACA160DD903019B7B01AEF7DC78B3_c7345092043352d57c915baeeaf6fe6d"
+        }
+      ]
+    },
+    "nav": [
+      {
+        "name": "基础信息",
+        "key": "focusArea",
+        "eleid": "010ACA160DD903019B7B01AEF7DC78B3_8c61b83990048ef76f31a6de3a425dc8"
+      },
+      {
+        "name": "小区概况",
+        "key": "introduceInfo",
+        "eleid": "010ACA160DD903019B7B01AEF7DC78B3_e6dcc562aff7940b3500ba9675416952"
+      },
+      {
+        "name": "周边配套",
+        "key": "surroundings",
+        "eleid": "010ACA160DD903019B7B01AEF7DC78B3_670b01d3a7ac64cd581b58515eccf339"
+      }
+    ],
+    "yezhuCard": {
+      "imgUrl": "http:\/\/ke-image.ljcdn.com\/beike\/banner\/1554868843007.png",
+      "actionUrl": "lianjiabeike:\/\/houseowner\/homepage"
+    }
+  },
+  "cost": 678
+}
