@@ -113,7 +113,9 @@ public class BkDealServiceImpl
 
                         if (detailPart != null && StringUtils.equals("3", task.getState())) {
                             BkDeal deal = JSONObject.parseObject(detailPart.toJSONString(), BkDeal.class);
-                            deal.insert();
+                            if (!deal.insert()) {
+                                log.error("插入失败：{}", deal);
+                            }
                         }
                     });
                 }
@@ -123,6 +125,8 @@ public class BkDealServiceImpl
         task.setStateEnum(CommunitySkeletonTaskStateEnum.COMPLETE);
 
         task.setDesc(desc);
+        task.setState("4");
+        task.setState("数据推送完毕");
         task.updateById();
     }
 
