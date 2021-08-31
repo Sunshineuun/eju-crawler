@@ -25,6 +25,6 @@ public class CommunityDetailServiceImpl
         if (ifDetail == null) {
             return this.insert(detail);
         }
-        return false;
+        return true;
     }
 }
