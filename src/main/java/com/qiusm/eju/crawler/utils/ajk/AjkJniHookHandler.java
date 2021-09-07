@@ -9,6 +9,9 @@ import com.github.unidbg.linux.android.AndroidResolver;
 import com.github.unidbg.linux.android.dvm.*;
 import com.github.unidbg.memory.Memory;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,9 +29,10 @@ public class AjkJniHookHandler extends AbstractJni {
     private final Module module;
     private final DvmClass cNative;
     private final VM vm;
+    private final boolean initSuccess;
 
     public AjkJniHookHandler() {
-        this("ajk/libsignutil.so");
+        this(null);
     }
 
     public AjkJniHookHandler(String osPath) {
@@ -38,18 +42,41 @@ public class AjkJniHookHandler extends AbstractJni {
 
         vm = emulator.createDalvikVM();
         vm.setJni(this);
-        vm.setVerbose(true);
+        vm.setVerbose(false);
 
 
-        File file = new File(osPath + "/libsignutil.so");
+        File file;
+        if (osPath == null) {
+            ClassPathResource resource = new ClassPathResource("ajk/libsignutil.so");
+            String path = System.getProperty("catalina.home");
+            if (StringUtils.isNotBlank(path)) {
+                path += "/libsignutil01.so";
+            } else {
+                path = "ajk/libsignutil01.so";
+            }
+            file = new File(path + "/libsignutil01.so");
+            try {
+                FileUtils.copyToFile(resource.getInputStream(), file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            file = new File(osPath + "/libsignutil.so");
+        }
         if (!file.exists()) {
             log.error("文件不存在，{}" + osPath);
+            module = null;
+            cNative = null;
+            initSuccess = false;
+            return;
         }
+
         DalvikModule dm = vm.loadLibrary(file, false);
         dm.callJNI_OnLoad(emulator);
         module = dm.getModule();
 
         cNative = vm.resolveClass("com/anjuke/mobile/sign/SignUtil");
+        initSuccess = true;
     }
 
     /**
@@ -82,10 +109,12 @@ public class AjkJniHookHandler extends AbstractJni {
      * 调用ajk so中的getSign0方法
      */
     public String getSign0(String args1, String args2, HashMap hashMap, String args4, int args5) {
+        if (!initSuccess) {
+            log.info("虚拟环境初始化失败");
+            return null;
+        }
         String methodSign = "getSign0(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Ljava/lang/String;";
-        //        String methodSign = "setCacheFilePath(Ljava/lang/String;)V";
         HashMapObject object = new HashMapObject(vm, hashMap);
-        // UnidbgPointer pointer = UnidbgPointer.pointer(emulator, hashMap.hashCode());
         StringObject ret = cNative.callStaticJniMethodObject(emulator, methodSign, args1, args2, object, args4, args5);
         return ret.getValue();
     }

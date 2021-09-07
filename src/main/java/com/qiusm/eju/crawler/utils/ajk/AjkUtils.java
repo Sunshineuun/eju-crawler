@@ -4,7 +4,6 @@ import okhttp3.FormBody;
 import okhttp3.RequestBody;
 import okio.Buffer;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -20,14 +19,7 @@ import java.util.regex.Pattern;
 @Component
 public class AjkUtils implements InitializingBean {
 
-    @Value("${eju.ajk.osPath:ajk}")
-    private String osPath;
-
     private static AjkJniHookHandler AJK_JNI_HOOK_HANDLER;
-
-    public static void createJniHookHandler(String osPath) {
-        AJK_JNI_HOOK_HANDLER = new AjkJniHookHandler(osPath);
-    }
 
     /**
      * 虚拟环境会抛出未知异常，注意捕获
@@ -114,7 +106,7 @@ public class AjkUtils implements InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        AJK_JNI_HOOK_HANDLER = new AjkJniHookHandler(osPath);
+    public void afterPropertiesSet() {
+        AJK_JNI_HOOK_HANDLER = new AjkJniHookHandler();
     }
 }
