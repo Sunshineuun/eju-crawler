@@ -68,6 +68,11 @@ public abstract class BkAppBaseSearch
      * @param requestDto requestDto
      */
     protected void httpGet(RequestDto requestDto) {
+        if (!requestDto.isLoadCache()) {
+            httpGetA(requestDto);
+            return;
+        }
+
         BkUrlHistory his = historyService.getBkHistoryByUrl(requestDto.getUrl());
 
         if (his != null) {

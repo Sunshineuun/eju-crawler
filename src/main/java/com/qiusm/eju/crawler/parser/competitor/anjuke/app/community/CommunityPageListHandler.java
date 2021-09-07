@@ -26,7 +26,7 @@ import static com.qiusm.eju.crawler.constant.ajk.AjkFieldConstant.*;
 @Slf4j
 @Service
 public class CommunityPageListHandler extends AjkAppBase {
-    protected static final String URL_TEMPLATE = "https://api.anjuke.com/community/list?page=%s&area_id=%s&city_id=%s&page_size=100&app=a-ajk&ajk_city_id=%s";
+    protected static final String URL_TEMPLATE = "https://api.anjuke.com/community/list?page=%s&area_id=%s&city_id=%s&page_size=100&app=a-ajk";
 
     @Override
     protected void buildingUrl(RequestDto requestDto) {
@@ -42,7 +42,7 @@ public class CommunityPageListHandler extends AjkAppBase {
             page = "1";
             requestParam.put(PAGE, page);
         }
-        requestDto.setUrl(String.format(URL_TEMPLATE, page, areaId, cityId, cityId));
+        requestDto.setUrl(String.format(URL_TEMPLATE, page, areaId, cityId));
     }
 
     @Override

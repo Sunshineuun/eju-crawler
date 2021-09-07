@@ -41,6 +41,11 @@ public abstract class BkAppDealBaseSearch extends BkAppBaseSearch {
     }
 
     protected void httpGet(RequestDto requestDto) {
+        if (!requestDto.isLoadCache()) {
+            httpGetA(requestDto);
+            return;
+        }
+
         BkDealUrlHistory his = bkDealUrlHistoryService.getBkHistoryByUrl(requestDto.getUrl());
 
         if (his != null) {

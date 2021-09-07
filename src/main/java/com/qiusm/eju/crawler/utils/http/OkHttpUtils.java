@@ -503,7 +503,7 @@ public class OkHttpUtils {
             this.proxyLessThan = 3;
             this.connectTimeout = 3000;
             this.readTimeout = 3000;
-            this.retryMax = 3;
+            this.retryMax = 6;
             this.retryEnable = true;
             this.charset = "utf-8";
             this.proxyJsonDefault = PROXY_JSON_DEFAULT;

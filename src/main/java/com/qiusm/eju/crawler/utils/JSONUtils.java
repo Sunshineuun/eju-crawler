@@ -3,11 +3,11 @@ package com.qiusm.eju.crawler.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.utils.excel.WriteExcel;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.File;
+import java.util.*;
 
 
 /**
@@ -102,5 +102,24 @@ public class JSONUtils {
             }
 
         }
+    }
+
+    public static void jsonToCsv() {
+        String s = FileUtils.readFile(new File("source/community_list_utf8.txt"));
+        Set<String> key = new HashSet<>();
+        List<Map> list = new ArrayList<>();
+        for (String s1 : s.split("\n")) {
+            JSONObject jsonObject = JSONObject.parseObject(s1);
+            jsonObject.forEach((k, v) -> {
+                key.add(k);
+            });
+            list.add(jsonObject);
+        }
+
+        WriteExcel.writeExcel(key, list, "source/com.xlsx");
+    }
+
+    public static void main(String[] args) {
+        jsonToCsv();
     }
 }
