@@ -3,19 +3,25 @@ package com.qiusm.eju.crawler.poi.gaode;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qiusm.eju.crawler.HttpTest;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.parser.poi.gaode.GaodePoiPageListSearch;
-import com.qiusm.eju.crawler.service.poi.gaode.impl.GaodeCrawlerService;
+import com.qiusm.eju.crawler.utils.FileUtils;
 import com.qiusm.eju.crawler.utils.JSONUtils;
+import com.qiusm.eju.crawler.utils.excel.ReadExcel;
+import com.qiusm.eju.crawler.utils.excel.WriteExcel;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import com.qiusm.eju.crawler.utils.poi.GaodeUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,11 +31,67 @@ import java.util.Map;
  */
 @Slf4j
 @SpringBootTest
-public class GaodeTest {
-    static GaodeCrawlerService service = new GaodeCrawlerService();
+public class GaodeTest extends HttpTest {
+
+    public static Map<String, String> r = new HashMap<>();
 
     public static void main(String[] args) {
-        updateTest();
+        initAddress();
+        addressToLocation();
+        // searchPoiByKey("合肥长丰双凤开发区双墩路S26");
+    }
+
+    public static void initAddress() {
+        String content = FileUtils.readFile(new File("source/poi/门店请求.txt"));
+        for (String line : content.split("\n")) {
+            String[] var = line.split("#");
+            r.put(var[0], var[1]);
+        }
+    }
+
+    public static void addressToLocation() {
+
+        String filePath = "source/file/门店数据.xlsx";
+        String sheetName = "Sheet1";
+        String[] title = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
+        List<Map<String, Object>> list = ReadExcel.readExcel(filePath, sheetName, title);
+        list.forEach(varMap -> {
+            JSONArray poiArray = searchPoiByKey(String.format("%s|%s", varMap.get("A"), varMap.get("F")));
+            if (poiArray == null) {
+                log.info("{}", varMap.get("F"));
+                return;
+            }
+            if (poiArray.size() >= 1) {
+                JSONObject varJson = (JSONObject) poiArray.get(0);
+                String location = varJson.getString("location");
+                varMap.put("H", location);
+            } else {
+                log.info("{}", varMap.get("F"));
+            }
+        });
+        WriteExcel.writeExcel(title, list, "source/file/门店数据_带坐标1.xlsx");
+    }
+
+    public static JSONArray searchPoiByKey(String key) {
+        String response = r.get(key);
+        if (!StringUtils.contains(response, "{\"code\":\"1\",")) {
+            String k = key.split("#")[0];
+            String url = "https://restapi.amap.com/v3/place/text?keywords=" + k;
+            response = httpUtils.get(GaodeUtils.packageUrl(url));
+            FileUtils.printFile(key + "#" + response, "source/poi", "门店请求.txt", true);
+        }
+
+        if (!StringUtils.contains(response, "{\"code\":\"1\",")) {
+            return null;
+        }
+
+        JSONObject mainJson = JSONObject.parseObject(response);
+        String resultVo = mainJson.getString("resultVo");
+        JSONObject resultJson = JSONObject.parseObject(resultVo);
+        if (resultJson == null) {
+            return null;
+        }
+        return resultJson.getJSONArray("pois");
     }
 
     /**
