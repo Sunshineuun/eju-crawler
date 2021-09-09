@@ -56,7 +56,9 @@ public class RequestDto {
      */
     private BkUser user;
 
-    CommunitySkeletonTask task;
+    private CommunitySkeletonTask task;
+
+    private boolean isLoadCache;
 
     private RequestDto(Builder builder) {
         this.url = builder.url;
@@ -68,6 +70,7 @@ public class RequestDto {
         this.isLoad = builder.isLoad;
         this.requestMethod = builder.requestMethod;
         this.task = builder.task;
+        this.isLoadCache = builder.isLoadCache;
     }
 
     public static Builder builder() {
@@ -84,6 +87,7 @@ public class RequestDto {
         BkUser user;
         Boolean isLoad = false;
         CommunitySkeletonTask task;
+        boolean isLoadCache = true;
 
         public Builder url(String url) {
             this.url = url;
@@ -149,6 +153,11 @@ public class RequestDto {
 
         public Builder task(CommunitySkeletonTask task) {
             this.task = task;
+            return this;
+        }
+
+        public Builder loadCache(boolean isLoad) {
+            this.isLoadCache = isLoad;
             return this;
         }
     }
