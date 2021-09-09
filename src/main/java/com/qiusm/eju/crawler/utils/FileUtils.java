@@ -1,8 +1,6 @@
 package com.qiusm.eju.crawler.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -17,31 +15,8 @@ import java.nio.charset.StandardCharsets;
 public class FileUtils {
 
     public static void printFile(String fileContent, String filePath, String fileName, boolean append) {
-        OutputStream os = null;
-        try {
-            File fileDir = new File(filePath);
-            if (!fileDir.exists()) {
-                fileDir.mkdirs();
-            }
-            File file = new File(filePath + File.separator + fileName);
-            os = new FileOutputStream(file, append);
-            byte[] data = fileContent.getBytes();
-            os.write(data, 0, data.length);
-            os.flush();
-            // log.info("文件写入" + filePath + File.separator + fileName + "结束");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (os != null) {
-                try {
-                    os.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        printFile((fileContent + "\n").getBytes(StandardCharsets.UTF_8), filePath, fileName, append);
     }
-
 
     public static void printFile(byte[] data, String filePath, String fileName, boolean append) {
         File fileDir = new File(filePath);
