@@ -14,19 +14,7 @@ public class WriteExcel {
     private static final String EXCEL_XLS = "xls";
     private static final String EXCEL_XLSX = "xlsx";
 
-    public static void main(String[] args) {
-
-        Map<String, String> dataMap = new HashMap<String, String>();
-        dataMap.put("BankName", "BankName");
-        dataMap.put("Addr", "Addr");
-        dataMap.put("Phone", "Phone");
-        List<Map> list = new ArrayList<Map>();
-        list.add(dataMap);
-        //writeExcel(list, 3, "D:/writeExcel.xlsx");
-
-    }
-
-    public static void writeExcel(Set<String> title, List<Map> dataList, String finalXlsxPath) {
+    public static void writeExcel(String[] title, List<Map<String, Object>> dataList, String finalXlsxPath) {
         OutputStream out = null;
         try {
             // 读取Excel文档
