@@ -35,7 +35,7 @@ public class AjkCommunityController {
         List<Integer> future = threadsUtils.executeFutures(areas,
                 (var) -> {
                     String value = hashOperations.get(key, String.valueOf(var.getId()));
-                    if (!StringUtils.equals("0", value) || value != null) {
+                    if (!StringUtils.equals("0", value) && value != null) {
                         return 0;
                     }
 
