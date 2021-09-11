@@ -10,6 +10,7 @@ import com.qiusm.eju.crawler.service.bk.IBkCommunityService;
 import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -36,8 +38,38 @@ public class BeikeCommunityController {
     private ICityService cityService;
     @Resource
     private ListOperations<String, String> listOperations;
+    @Resource
+    private HashOperations<String, String, String> hashOperations;
     private final String communityListKey = "eju-crawler:bk:community:list";
     private final ThreadsUtils threadsUtils = new ThreadsUtils();
+
+    /**
+     * 抓取贝壳所有城市的小区列表，完成的城市，将推送到redis中已做缓存。
+     */
+    @GetMapping("all")
+    public void communityAll() {
+        List<City> citys = cityService.selectAllByBk();
+        final String key = "crawler:community:bk";
+        citys.forEach(o -> {
+            if (hashOperations.hasKey(key, o.getBkCode())) {
+                return;
+            }
+            JSONArray bizArray = bkCityInoService.getBizByCity(o.getBkCode(), o.getBkPinyinCode());
+            List<Integer> future = threadsUtils.executeFutures(bizArray,
+                    (e) -> {
+                        JSONArray communityList = bkCommunityService.communityList((JSONObject) e);
+                        return communityList.size();
+                    }, 8);
+
+            int communityCount = 0;
+            for (Integer integer : future) {
+                communityCount += integer;
+            }
+            hashOperations.put(key,
+                    o.getBkCode(), String.valueOf(communityCount));
+
+        });
+    }
 
     @GetMapping("/list/{cityCode}")
     public void communityList(@PathVariable String cityCode) {

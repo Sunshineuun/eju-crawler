@@ -7,6 +7,7 @@ import com.qiusm.eju.crawler.mapper.base.CityMapper;
 import com.qiusm.eju.crawler.service.base.ICityService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,5 +27,19 @@ public class CityServiceImpl
         EntityWrapper<City> wrapper = new EntityWrapper<>();
         condition.forEach(wrapper::eq);
         return this.selectOne(wrapper);
+    }
+
+    @Override
+    public List<City> selectAllByBk() {
+        EntityWrapper<City> wrapper = new EntityWrapper<>();
+        wrapper.isNotNull("bk_code");
+        return this.selectList(wrapper);
+    }
+
+    @Override
+    public List<City> selectAllByAjk() {
+        EntityWrapper<City> wrapper = new EntityWrapper<>();
+        wrapper.isNotNull("ajk_code");
+        return this.selectList(wrapper);
     }
 }

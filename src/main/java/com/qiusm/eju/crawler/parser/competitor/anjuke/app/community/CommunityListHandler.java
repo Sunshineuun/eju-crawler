@@ -31,8 +31,6 @@ import static com.qiusm.eju.crawler.constant.ajk.AjkFieldConstant.DETAIL_URL;
 public class CommunityListHandler extends CommunityPageListHandler {
 
     private final Map<String, String> baseInfoKey = new HashMap<>();
-    private final Map<String, String> extendKey = new HashMap<>();
-    private final Map<String, String> propInfoKey = new HashMap<>();
 
     @Override
     protected void parser(RequestDto requestDto, ResponseDto responseDto) {
@@ -46,14 +44,9 @@ public class CommunityListHandler extends CommunityPageListHandler {
             result.put(DETAIL_URL, requestDto.getUrl());
             result.putAll(requestDto.getData());
 
-            // base
-            parserInfo(community.getJSONObject("base"), result, baseInfoKey);
-            // extend
-            parserInfo(community.getJSONObject("extend"), result, extendKey);
-            // propInfo
-            parserInfo(community.getJSONObject("propInfo"), result, propInfoKey);
-            // priceInfo
-            parserInfo(community.getJSONObject("priceInfo"), result, propInfoKey);
+            parserInfo(community, result, baseInfoKey);
+            result.put("gd", String.format("%s,%s", result.get("gd_lng"), result.get("gd_lat")));
+            result.put("bd", String.format("%s,%s", result.get("bd_lat"), result.get("bd_lat")));
 
             // 获取新的小区id用于获取骨架数据
             getNewCommunityId(community.getJSONObject("propInfo"), result);
@@ -86,62 +79,41 @@ public class CommunityListHandler extends CommunityPageListHandler {
     }
 
     private void parserInfo(JSONObject data, JSONObject result, Map<String, String> keyMapping) {
-        keyMapping.forEach((k, v) -> {
-            result.put(v, data.getString(k));
-        });
+        keyMapping.forEach((k, v) -> result.put(k, JSONUtils.getStringByKey(data, v)));
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();
-        // 小区基础信息
-        baseInfoKey.put("name", "title");
-        baseInfoKey.put("id", "title_id");
+        baseInfoKey.put("community", "base.name");
+        baseInfoKey.put("community_id", "base.id");
+        baseInfoKey.put("community_add", "base.address");
         baseInfoKey.put("lng", "lng");
         baseInfoKey.put("lat", "lat");
-        // 小区地址
-        baseInfoKey.put("address", "address");
-        // 区域
-        baseInfoKey.put("areaName", "region");
-        // 商圈
-        baseInfoKey.put("tradingAreaName", "plate");
-        baseInfoKey.put("completionTime", "build_year");
-        // 建筑类型
-        baseInfoKey.put("buildTypeStr", "build_type");
-        // 权属类别
-        baseInfoKey.put("shipTypeStr", "trading_rights");
 
-        // 小区概要信息
-        extendKey.put("propertyCompany", "property_company");
-        extendKey.put("propertyMoney", "property_price");
-        extendKey.put("物业电话", "property_phone");
-        extendKey.put("developer", "build_developers");
-        // 总面积
-        // extendKey.put("totalArea", "total_area");
-        // 容积率
-        extendKey.put("plotRatio", "plot_rate");
-        // 总户数
-        extendKey.put("totalHouseHoldNum", "total_house_hold_num");
-        // 停车位
-        extendKey.put("parking", "park_num");
-        // m端url
-        extendKey.put("twUrl", "tw_url");
-        extendKey.put("landscapingRatio", "green_rate");
+        baseInfoKey.put("city_id", "base.cityId");
+        baseInfoKey.put("region", "base.areaName");
+        baseInfoKey.put("region_id", "base.areaId");
+        baseInfoKey.put("plate", "base.tradingAreaName");
+        baseInfoKey.put("plate_id", "base.tradingAreaId");
+        baseInfoKey.put("gd_lng", "base.lng");
+        baseInfoKey.put("gd_lat", "base.lat");
+        baseInfoKey.put("bd_lng", "base.blng");
+        baseInfoKey.put("bd_lat", "base.blat");
+        baseInfoKey.put("build_year", "base.completionTime");
+        baseInfoKey.put("build_type", "base.buildTypeStr");
 
-        // propInfo
-        propInfoKey.put("saleNum", "num_for_sale");
-        propInfoKey.put("rentNum", "rent_num");
-
-        // 小区其它信息
-        propInfoKey.put("price", "average_price");
-        propInfoKey.put("month", "average_price_month");
-        propInfoKey.put("month_change", "monthChange");
-        /*communityOverviewKeyMapping.put("产权年限", "property_year");
-        communityOverviewKeyMapping.put("供暖类型", "heating");
-
-        communityOverviewKeyMapping.put("用水类型", "water");
-        communityOverviewKeyMapping.put("用电类型", "supply_electricity");
-        communityOverviewKeyMapping.put("停车费用", "fixed_charge");
-        communityOverviewKeyMapping.put("燃气费用", "gas");*/
+        baseInfoKey.put("greend_rate", "extend.landscapingRatio");
+        baseInfoKey.put("property_company", "extend.propertyCompany");
+        baseInfoKey.put("property_expenses", "extend.propertyMoney");
+        baseInfoKey.put("property_type", "extend.type");
+        baseInfoKey.put("trade_ownership", "base.shipTypeStr");
+        baseInfoKey.put("area_total", "extend.totalArea");
+        baseInfoKey.put("house_total", "extend.totalHouseHoldNum");
+        baseInfoKey.put("sale", "propInfo.saleNum");
+        baseInfoKey.put("rent", "propInfo.rentNum");
+        baseInfoKey.put("avg_price", "priceInfo.price");
+        baseInfoKey.put("avg_price_month", "priceInfo.month");
+        baseInfoKey.put("avg_price_month_change", "priceInfo.monthChange");
     }
 }

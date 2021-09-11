@@ -25,11 +25,6 @@ public class BeikeDealController extends BeiKeBaseController {
 
     private CrawlerTaskInstance nowTask;
 
-    @Override
-    public void start(CrawlerTaskInstance crawlerTaskInstance) {
-        this.nowTask = crawlerTaskInstance;
-    }
-
     /**
      * 开始执行任务，任务配置在表中
      */

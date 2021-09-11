@@ -69,9 +69,9 @@ public class JSONUtils {
                 var = (JSONObject) var1;
             }
             return getJsonByKey(var, keys);
+        } else {
+            return "";
         }
-
-        return var;
     }
 
     private static void getJsonArrayByKey(Object var, List<String> keys, Integer index, JSONArray array) {

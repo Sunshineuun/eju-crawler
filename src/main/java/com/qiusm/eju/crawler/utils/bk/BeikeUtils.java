@@ -39,7 +39,7 @@ public class BeikeUtils {
      * @return 请求参数
      */
     public static Map<String, String> urlToParams(String url) {
-        Map<String, String> resMap = new HashMap<>(8);
+        Map<String, String> resMap = new LinkedHashMap<>(8);
         String[] split = url.split("\\?");
         if (split.length == NUM2) {
             for (String s : split[NUM1].split(AMPERSAND)) {

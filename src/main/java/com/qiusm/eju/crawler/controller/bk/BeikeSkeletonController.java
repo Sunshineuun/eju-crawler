@@ -3,7 +3,6 @@ package com.qiusm.eju.crawler.controller.bk;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.entity.base.CommunitySkeletonTask;
-import com.qiusm.eju.crawler.entity.task.CrawlerTaskInstance;
 import com.qiusm.eju.crawler.service.base.ICommunitySkeletonTaskService;
 import com.qiusm.eju.crawler.service.bk.IBkCityInoService;
 import com.qiusm.eju.crawler.service.bk.IBkCommunityService;
@@ -48,10 +47,6 @@ public class BeikeSkeletonController extends BeiKeBaseController {
      * 用于存储cityId，如果运行中的任务存在列表中，则表示已经在执行了。
      */
     private final Set<String> cityIdSet = new HashSet<>();
-
-    @Override
-    public void start(CrawlerTaskInstance crawlerTaskInstance) {
-    }
 
     /**
      * 获取板块信息

@@ -3,6 +3,7 @@ package com.qiusm.eju.crawler.service.base;
 import com.baomidou.mybatisplus.service.IService;
 import com.qiusm.eju.crawler.entity.base.City;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ICityService
@@ -10,4 +11,9 @@ public interface ICityService
     City selectByBkCityCode(String cityCode);
 
     City selectCityByEqMap(Map<String, String> condition);
+
+    List<City> selectAllByBk();
+
+    List<City> selectAllByAjk();
+
 }
