@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.entity.ajk.AjkArea;
 import com.qiusm.eju.crawler.mapper.ajk.AjkAreaMapper;
 import com.qiusm.eju.crawler.service.ajk.IAjkCommunityService;
+import com.qiusm.eju.crawler.utils.StringUtils;
 import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,8 @@ public class AjkCommunityController {
         final String key = "crawler:community:ajk";
         List<Integer> future = threadsUtils.executeFutures(areas,
                 (var) -> {
-                    if (hashOperations.hasKey(key, String.valueOf(var.getId()))) {
+                    String value = hashOperations.get(key, String.valueOf(var.getId()));
+                    if (!StringUtils.equals("0", value)) {
                         return 0;
                     }
 
