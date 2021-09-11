@@ -46,7 +46,7 @@ public class CommunityListHandler extends CommunityPageListHandler {
 
             parserInfo(community, result, baseInfoKey);
             result.put("gd", String.format("%s,%s", result.get("gd_lng"), result.get("gd_lat")));
-            result.put("bd", String.format("%s,%s", result.get("bd_lat"), result.get("bd_lat")));
+            result.put("bd", String.format("%s,%s", result.get("bd_lng"), result.get("bd_lat")));
 
             // 获取新的小区id用于获取骨架数据
             getNewCommunityId(community.getJSONObject("propInfo"), result);
