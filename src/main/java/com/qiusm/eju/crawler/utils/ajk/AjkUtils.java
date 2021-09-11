@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 @Component
 public class AjkUtils implements InitializingBean {
 
-    private static AjkJniHookHandler AJK_JNI_HOOK_HANDLER;
+    private static AjkJniHookHandler AJK_JNI_HOOK_HANDLER =new AjkJniHookHandler();
 
     /**
      * 虚拟环境会抛出未知异常，注意捕获

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
-import com.qiusm.eju.crawler.entity.base.CommunityInfo;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.community.AjkAppCommunitySearch;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppFloor;
@@ -171,17 +170,16 @@ public class AjkCommunityTest {
     }
 
     public static void main(String[] args) {
-        String str = "{\"area_name\":\"滨江\",\"detail_url\":\"https://api.anjuke.com/community/list?page=1&area_id=1806&city_id=18&page_size=100&app=a-ajk&ajk_city_id=18\",\"plate\":\"长河\",\"green_rate\":\"40.0\",\"area_id\":\"1806\",\"title\":\"南岸晶都花园\",\"city_name\":\"杭州\",\"build_year\":\"2007\",\"property_company\":\"\",\"build_type\":\"小高层\",\"lat\":\"30.179864\",\"property_price\":\"\",\"address\":\"平安路72号\",\"lng\":\"120.195018\",\"title_id\":\"160343\",\"average_price\":\"39294\",\"average_price_month\":\"8\",\"page\":\"1\",\"trading_rights\":\"商品房住宅\",\"region\":\"滨江\",\"city_id\":\"18\",\"total_house_hold_num\":\"1543\"}";
-        CommunityInfo comm = JSONObject.parseObject(str, CommunityInfo.class);
-        System.out.println(comm);
+        communityListA();
     }
 
     static void communityListA() {
         OkHttpUtils httpClient = OkHttpUtils.Builder()
                 .builderHttp();
-        AjkUtils.createJniHookHandler("ajk");
 
-        String url = "https://api.anjuke.com/community/list?page=2&area_id=13&city_id=11&page_size=100&app=a-ajk&ajk_city_id=11";
+        //String url = "https://api.anjuke.com/mobile/v5/sale/property/list?page=1&area_id=1806&city_id=18&page_size=100&app=a-ajk&macid=e101a87abcf15692&cv=15.13";
+        // String url = "https://api.anjuke.com/mobile/v5/sale/property/list?page=36&city_id=18&page_size=100&app=a-ajk&macid=e101a87abcf15692&cv=15.13&area_id=1809";
+        String url = "https://api.anjuke.com/community/list?page=1&area_id=19&city_id=11&page_size=100&app=a-ajk";
         String jsonStr;
         Map<String, String> map = new HashMap<>();
         try {
@@ -189,7 +187,7 @@ public class AjkCommunityTest {
             map.put("clouduid", "0");
             map.put("user-agent", "a-ajk/15.13/Android-MI 6/android/9");
             map.put("nsign", AjkUtils.nsignOfGet(url));
-            jsonStr = httpClient.get(url, null, map);
+            jsonStr = httpClient.proxyGet(url, null, map);
             System.out.println(jsonStr);
         } catch (Exception e) {
             e.printStackTrace();

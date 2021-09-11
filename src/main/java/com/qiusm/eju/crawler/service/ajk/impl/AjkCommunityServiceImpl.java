@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.entity.base.Community;
-import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.community.CommunityListHandler;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.community.CommunityPageListHandler;
 import com.qiusm.eju.crawler.service.ajk.IAjkCommunityService;
@@ -67,7 +66,7 @@ public class AjkCommunityServiceImpl
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
                 .data(area)
-                .requestMethod(RequestMethodEnum.GET)
+                // .requestMethod(RequestMethodEnum.GET)
                 .build();
 
         ResponseDto responseDto = communityPageListHandler.execute(requestDto);
@@ -91,7 +90,7 @@ public class AjkCommunityServiceImpl
 
         RequestDto requestDto = RequestDto.builder()
                 .requestParam(params)
-                .requestMethod(RequestMethodEnum.GET)
+                // .requestMethod(RequestMethodEnum.GET)
                 .data(page)
                 .build();
 
