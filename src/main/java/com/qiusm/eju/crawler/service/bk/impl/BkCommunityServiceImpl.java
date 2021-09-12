@@ -12,7 +12,7 @@ import com.qiusm.eju.crawler.parser.competitor.beike.app.community.BkAppCommunit
 import com.qiusm.eju.crawler.service.base.ICommunityDetailService;
 import com.qiusm.eju.crawler.service.base.ICommunityService;
 import com.qiusm.eju.crawler.service.bk.IBkCommunityService;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Service;

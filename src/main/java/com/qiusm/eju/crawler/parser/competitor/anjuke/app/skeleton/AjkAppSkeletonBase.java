@@ -6,7 +6,7 @@ import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.exception.BusinessException;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.AjkAppBase;
-import com.qiusm.eju.crawler.utils.JSONUtils;
+import com.qiusm.eju.crawler.utils.lang.JSONUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;

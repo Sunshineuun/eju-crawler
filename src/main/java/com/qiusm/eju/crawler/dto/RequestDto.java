@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.entity.base.CommunitySkeletonTask;
 import com.qiusm.eju.crawler.entity.bk.BkUser;
 import com.qiusm.eju.crawler.enums.RequestMethodEnum;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import lombok.Data;
 
 import java.util.HashMap;

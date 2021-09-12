@@ -7,7 +7,7 @@ import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.secondhand.SecondHandHouseListHandler;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.secondhand.SecondHandHousePageListHandler;
 import com.qiusm.eju.crawler.service.bk.ISecondHandHouseService;
-import com.qiusm.eju.crawler.utils.FileUtils;
+import com.qiusm.eju.crawler.utils.lang.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

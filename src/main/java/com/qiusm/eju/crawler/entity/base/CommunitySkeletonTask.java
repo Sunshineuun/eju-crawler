@@ -3,7 +3,7 @@ package com.qiusm.eju.crawler.entity.base;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.qiusm.eju.crawler.enums.CommunitySkeletonTaskStateEnum;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

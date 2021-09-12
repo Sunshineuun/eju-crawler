@@ -2,7 +2,7 @@ package com.qiusm.eju.crawler.parser.competitor.anjuke.pc;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 

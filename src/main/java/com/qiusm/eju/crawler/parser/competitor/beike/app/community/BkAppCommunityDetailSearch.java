@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.utils.JSONUtils;
+import com.qiusm.eju.crawler.utils.lang.JSONUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;

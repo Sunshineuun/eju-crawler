@@ -1,4 +1,4 @@
-package com.qiusm.eju.crawler.utils;
+package com.qiusm.eju.crawler.utils.lang;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

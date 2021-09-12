@@ -12,8 +12,8 @@ import com.qiusm.eju.crawler.service.bk.IBeikeDistrictService;
 import com.qiusm.eju.crawler.service.bk.IBkFenceService;
 import com.qiusm.eju.crawler.service.poi.gaode.IGaodeCityFenceService;
 import com.qiusm.eju.crawler.service.poi.gaode.IGaodeCityPoiInfoService;
-import com.qiusm.eju.crawler.utils.FileUtils;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.FileUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

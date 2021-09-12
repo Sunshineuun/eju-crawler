@@ -7,7 +7,7 @@ import com.qiusm.eju.crawler.enums.SourceTypeEnum;
 import com.qiusm.eju.crawler.parser.competitor.base.HttpBase;
 import com.qiusm.eju.crawler.parser.competitor.base.IHttpSearch;
 import com.qiusm.eju.crawler.service.ajk.IAjkUrlHistoryService;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;

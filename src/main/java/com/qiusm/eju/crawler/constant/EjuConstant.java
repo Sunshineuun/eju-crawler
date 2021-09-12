@@ -13,7 +13,7 @@ public class EjuConstant {
     /**
      * 产线EJU爬虫平台客户端
      */
-    public static final String PROXY_URL1 = "http://10.122.143.10:8890/get/ip-list/13?key=4CZ5VH3TZSEYARFRSOVNLBOBH9NF6LW6XG5TADZS4LE=";
+    public static final String PROXY_URL1 = "http://crawler-ipproxy.ejudata.com/get/ip-list/13?key=4CZ5VH3TZSEYARFRSOVNLBOBH9NF6LW6XG5TADZS4LE=";
     /**
      * 办公网络爬虫客户端
      */

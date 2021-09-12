@@ -11,7 +11,7 @@ import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppHouse;
 import com.qiusm.eju.crawler.parser.competitor.anjuke.app.skeleton.AjkAppUnit;
 import com.qiusm.eju.crawler.parser.competitor.base.IHttpSearch;
 import com.qiusm.eju.crawler.service.ajk.IAjkCommunityService;
-import com.qiusm.eju.crawler.utils.FileUtils;
+import com.qiusm.eju.crawler.utils.lang.FileUtils;
 import com.qiusm.eju.crawler.utils.ajk.AjkUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;

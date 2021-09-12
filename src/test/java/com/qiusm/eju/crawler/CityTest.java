@@ -10,7 +10,7 @@ import com.qiusm.eju.crawler.enums.RequestMethodEnum;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.base.BkAppCityDictSearch;
 import com.qiusm.eju.crawler.parser.competitor.beike.pc.base.BkPcCityPinyinSearch;
 import com.qiusm.eju.crawler.service.base.ICityService;
-import com.qiusm.eju.crawler.utils.FileUtils;
+import com.qiusm.eju.crawler.utils.lang.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

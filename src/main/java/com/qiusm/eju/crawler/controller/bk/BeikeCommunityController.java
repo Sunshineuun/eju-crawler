@@ -7,7 +7,7 @@ import com.qiusm.eju.crawler.entity.base.City;
 import com.qiusm.eju.crawler.service.base.ICityService;
 import com.qiusm.eju.crawler.service.bk.IBkCityInoService;
 import com.qiusm.eju.crawler.service.bk.IBkCommunityService;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;

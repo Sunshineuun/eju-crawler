@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.qiusm.eju.crawler.entity.bk.BkDealUrlHistory;
 import com.qiusm.eju.crawler.mapper.bk.BkDealUrlHistoryMapper;
 import com.qiusm.eju.crawler.service.bk.IBkDealUrlHistoryService;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

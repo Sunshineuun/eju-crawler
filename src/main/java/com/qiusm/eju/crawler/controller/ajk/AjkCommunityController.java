@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.entity.ajk.AjkArea;
 import com.qiusm.eju.crawler.mapper.ajk.AjkAreaMapper;
 import com.qiusm.eju.crawler.service.ajk.IAjkCommunityService;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.web.bind.annotation.GetMapping;

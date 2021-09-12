@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.qiusm.eju.crawler.entity.bk.BkUrlHistory;
 import com.qiusm.eju.crawler.mapper.bk.BkUrlHistoryMapper;
 import com.qiusm.eju.crawler.service.bk.IBkUrlHistoryService;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import com.qiusm.eju.crawler.utils.ThreadPoolUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 import lombok.extern.slf4j.Slf4j;

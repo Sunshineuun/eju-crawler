@@ -8,7 +8,7 @@ import com.qiusm.eju.crawler.entity.bk.BkUser;
 import com.qiusm.eju.crawler.service.bk.IBkUserManagementService;
 import com.qiusm.eju.crawler.service.bk.IBkUserService;
 import com.qiusm.eju.crawler.utils.EmailUtil;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.ValueOperations;

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
-import com.qiusm.eju.crawler.utils.JSONUtils;
+import com.qiusm.eju.crawler.utils.lang.JSONUtils;
 import org.springframework.stereotype.Service;
 
 import static com.qiusm.eju.crawler.constant.ajk.AjkFieldConstant.DETAIL_URL;

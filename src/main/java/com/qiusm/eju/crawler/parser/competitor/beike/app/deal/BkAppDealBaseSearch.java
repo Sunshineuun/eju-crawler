@@ -4,7 +4,7 @@ import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.entity.bk.BkDealUrlHistory;
 import com.qiusm.eju.crawler.parser.competitor.beike.app.BkAppBaseSearch;
 import com.qiusm.eju.crawler.service.bk.IBkDealUrlHistoryService;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import com.qiusm.eju.crawler.utils.bk.BeikeUtils;
 
 import javax.annotation.Resource;
