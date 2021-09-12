@@ -6,7 +6,7 @@ import com.qiusm.eju.crawler.entity.government.nj.FdNanJinUnit;
 import com.qiusm.eju.crawler.government.GovernmentBaseService;
 import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
 import com.qiusm.eju.crawler.government.nj.dao.NanJinDao;
-import com.qiusm.eju.crawler.utils.FileUtils;
+import com.qiusm.eju.crawler.utils.lang.FileUtils;
 import com.qiusm.eju.crawler.utils.ImageReaderUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

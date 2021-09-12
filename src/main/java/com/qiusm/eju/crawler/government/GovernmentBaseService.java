@@ -4,7 +4,7 @@ import com.qiusm.eju.crawler.constant.CharacterSet;
 import com.qiusm.eju.crawler.entity.base.CrawlerUrl;
 import com.qiusm.eju.crawler.government.base.utils.CommonUtils;
 import com.qiusm.eju.crawler.service.base.ICrawlerUrlService;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StopWatch;

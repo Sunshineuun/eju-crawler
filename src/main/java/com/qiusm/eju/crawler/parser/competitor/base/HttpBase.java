@@ -4,17 +4,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
 import com.qiusm.eju.crawler.service.base.IProxyUrlService;
-import com.qiusm.eju.crawler.utils.DateUtils;
-import com.qiusm.eju.crawler.utils.FileUtils;
+import com.qiusm.eju.crawler.utils.lang.DateUtils;
+import com.qiusm.eju.crawler.utils.lang.FileUtils;
 import com.qiusm.eju.crawler.utils.ImageReaderUtils;
-import com.qiusm.eju.crawler.utils.StringUtils;
+import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Date;
 
 import static com.qiusm.eju.crawler.constant.CrawlerDataPathConstant.SOURCE_LOG;
