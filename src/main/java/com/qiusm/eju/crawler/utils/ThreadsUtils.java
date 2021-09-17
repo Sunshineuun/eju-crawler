@@ -8,22 +8,25 @@ package com.qiusm.eju.crawler.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ThreadsUtils {
     private static final Logger log = LoggerFactory.getLogger(ThreadsUtils.class);
     private ExecutorService executorService;
-    private String poolName;
+    private final String poolName;
+    private final AtomicInteger poolIndex = new AtomicInteger(0);
 
     public ThreadsUtils() {
+        this.poolName = "onion-head-";
     }
 
     public ThreadsUtils(String poolName) {
-        this.poolName = poolName;
+        this.poolName = poolName + "-";
     }
 
     public ExecutorService getExecutorService() {
@@ -37,6 +40,7 @@ public class ThreadsUtils {
             log.info("active thread num:" + num);
             this.executorService = Executors.newFixedThreadPool(num, (r) -> {
                 Thread t = Executors.defaultThreadFactory().newThread(r);
+                t.setName(poolName + poolIndex.getAndIncrement());
                 t.setDaemon(true);
                 return t;
             });
@@ -61,7 +65,7 @@ public class ThreadsUtils {
                 }
             }
         } catch (InterruptedException var4) {
-            log.error("awaitTermination exception", var4.getMessage());
+            log.error("awaitTermination exception.{}", var4.getMessage());
             this.executorService.shutdownNow();
         }
 
@@ -72,7 +76,7 @@ public class ThreadsUtils {
     }
 
     public <T, R> List<R> executeFutures(List<T> list, Function<T, R> execute, boolean isShutdown) {
-        return this.executeFutures(list, execute, isShutdown, (Integer)null);
+        return this.executeFutures(list, execute, isShutdown, null);
     }
 
     public <T, R> List<R> executeFutures(List<T> list, Function<T, R> execute, Integer threadNum) {
@@ -83,24 +87,25 @@ public class ThreadsUtils {
         if (execute == null) {
             return null;
         } else {
-            List rs = null;
+            List<R> rs = null;
 
             try {
-                List<CompletableFuture<R>> executeFutures = (List)list.parallelStream().filter((e) -> {
-                    return e != null;
-                }).map((e) -> {
-                    return CompletableFuture.supplyAsync(() -> {
-                        try {
-                            return execute.apply(e);
-                        } catch (Exception var3) {
-                            log.error("executeFutures error:{}", var3.getMessage(), var3);
-                            return null;
-                        }
-                    }, this.getExecutorService(threadNum));
-                }).collect(Collectors.toList());
-                rs = (List)executeFutures.stream().map(CompletableFuture::join).filter((e) -> {
-                    return e != null;
-                }).collect(Collectors.toList());
+                List<CompletableFuture<R>> executeFutures = list.parallelStream()
+                        .filter(Objects::nonNull)
+                        .map((e) -> CompletableFuture.supplyAsync(() -> {
+                            try {
+                                return execute.apply(e);
+                            } catch (Exception var3) {
+                                log.error("executeFutures error:{}", var3.getMessage(), var3);
+                                return null;
+                            }
+                        }, this.getExecutorService(threadNum)))
+                        .collect(Collectors.toList());
+
+                rs = executeFutures.stream().map(CompletableFuture::join)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList());
+
             } catch (RejectedExecutionException var10) {
                 log.error("Shutting down");
             } finally {
@@ -112,19 +117,5 @@ public class ThreadsUtils {
 
             return rs;
         }
-    }
-
-    public static void main(String[] args) {
-        List<Integer> list = new ArrayList();
-
-        for(int i = 0; i < 100; ++i) {
-            list.add(i);
-        }
-
-        List<Integer> rs = (new ThreadsUtils()).executeFutures(list, (e) -> {
-            System.out.println(e);
-            return e;
-        });
-        System.out.println(rs);
     }
 }
