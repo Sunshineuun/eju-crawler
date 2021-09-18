@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qiusm.eju.crawler.dto.RequestDto;
 import com.qiusm.eju.crawler.dto.ResponseDto;
-import com.qiusm.eju.crawler.parser.competitor.anjuke.app.AjkAppBase;
 import com.qiusm.eju.crawler.utils.lang.JSONUtils;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ import java.util.Map;
  * https://api.anjuke.com/community/info?comm_id=363841&city_id=18&origin_mac=&app=a-ajk&_pid=14873&_guid=c079b21c-3a71-4704-b1bc-7b1fecd342e1&macid=e101a87abcf15692&version_code=322064&i=654967177695721&m=Android-MI%206&uuid=c3f381bd-1530-4bea-a483-b6dda974801d&manufacturer=Xiaomi&o=sagit-user%209%20PKQ1.190118.001%20V11.0.5.0.PCACNXM%20release-keys&qtime=20210918181747&cv=15.13&origin_imei=654967177695721&v=9&ajk_city_id=18&from=mobile&pm=b135&androidid=e101a87abcf15692&_chat_id=&oaid=60dcdbf28fc62fbe&cid=11
  */
 @Service
-public class CommunityDetailHandler extends AjkAppBase {
+public class CommunityDetailHandler extends CommunityPageListHandler {
     private final static String URL_TEMPLATE = "https://api.anjuke.com/community/info?comm_id=%s&city_id=%s&origin_mac=&app=a-ajk&cv=15.13";
     private final static Map<String, String> mappingKey = new HashMap<>();
 
