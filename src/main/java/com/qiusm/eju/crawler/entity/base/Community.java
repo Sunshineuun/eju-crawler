@@ -28,6 +28,10 @@ public class Community extends SuperEntity<Community> {
      */
     private String communityId;
     /**
+     * ajk另一个小区id，用来查询骨架数据的
+     */
+    private String ajkCommunityId;
+    /**
      * 小区均价
      */
     private String avgPrice;
@@ -159,6 +163,14 @@ public class Community extends SuperEntity<Community> {
      * 周边配套
      */
     private String support;
+    /**
+     * 总户数
+     */
+    private String totalHouse;
+    /**
+     * 总面积
+     */
+    private String totalArea;
     /**
      * 创建
      */
