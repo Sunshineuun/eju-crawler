@@ -3,8 +3,8 @@ package com.qiusm.eju.crawler.utils;
 
 import com.qiusm.eju.crawler.enums.ResponseStatusCode;
 import com.qiusm.eju.crawler.exception.BusinessException;
-import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
 import okhttp3.Call;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.apache.commons.io.output.ByteArrayOutputStream;
@@ -134,12 +134,12 @@ public class ImageReaderUtils {
 
             Request.Builder requestBuilder = new Request.Builder();
             headers.forEach((key, value) -> {
-                if (!"responseHeaders" .equals(key)) {
+                if (!"responseHeaders".equals(key)) {
                     requestBuilder.addHeader(key, value);
                 }
             });
 
-            Call call = OkHttpUtils.SingleOkHttpConfig.OK_HTT.newBuilder()
+            Call call = new OkHttpClient.Builder().build().newBuilder()
                     .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxy.getHostName(), proxy.getPort())))
                     .connectTimeout(6000L, TimeUnit.MILLISECONDS).readTimeout(6000L, TimeUnit.MILLISECONDS)
                     .writeTimeout(6000L, TimeUnit.MILLISECONDS)
