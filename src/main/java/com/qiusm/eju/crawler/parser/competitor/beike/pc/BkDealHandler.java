@@ -135,7 +135,7 @@ public class BkDealHandler {
             if (cjCount > 3000) {
                 log.error("当前请求下的成交数据大于3000。{}", map);
             }
-            int page = cjCount / 30;
+            int page = (int) Math.ceil((double) cjCount / 30);
             if (page > 1) {
                 String baseUrl = map.get(BASE_URL);
                 if (StringUtils.isEmpty(baseUrl)) {
