@@ -69,26 +69,29 @@ public class AjkCommunityController {
     }
 
     @GetMapping("/price")
-    public void communityPriceHistory(String city) {
-        List<Community> communityList = communityService.getCommunityByCity(city, SourceTypeEnum.AJK.getCode());
-        ThreadsUtils threadUtils = new ThreadsUtils();
-        final String key = "crawler:community:price:ajk_" + city;
-        log.info("{},共计小区数量：{}", city, communityList.size());
-        threadUtils.executeFutures(communityList, (community) -> {
-            // 判断当前key的hash中是否有对应的key，有则return
-            String value = hashOperations.get(key, community.getCommunityId());
-            if (StringUtils.isNotBlank(value)) {
-                log.info("已执行：{},{}", community.getCommunity(), community.getCommunityId());
+    public void communityPriceHistory(String citys) {
+        for (String c : citys.split(",")) {
+            List<Community> communityList = communityService.getCommunityByCity(c, SourceTypeEnum.AJK.getCode());
+            ThreadsUtils threadUtils = new ThreadsUtils();
+            final String key = "crawler:community:price:ajk_" + c;
+            log.info("{},共计小区数量：{}", c, communityList.size());
+            threadUtils.executeFutures(communityList, (community) -> {
+                // 判断当前key的hash中是否有对应的key，有则return
+                String value = hashOperations.get(key, community.getCommunityId());
+                if (StringUtils.isNotBlank(value)) {
+                    log.info("已执行：{},{}", community.getCommunity(), community.getCommunityId());
+                    return null;
+                } else {
+                    long s = DateUtils.getCurrentTimeMillis();
+                    communityAvgPrice(community);
+                    long e = DateUtils.getCurrentTimeMillis();
+                    log.info("执行结束:{},{},耗时:{}", community.getCommunity(), community.getCommunityId(), e - s);
+                    hashOperations.put(key, community.getCommunityId(), community.getCommunity());
+                }
                 return null;
-            } else {
-                long s = DateUtils.getCurrentTimeMillis();
-                communityAvgPrice(community);
-                long e = DateUtils.getCurrentTimeMillis();
-                log.info("执行结束:{},{},耗时:{}", community.getCommunity(), community.getCommunityId(), e - s);
-                hashOperations.put(key, community.getCommunityId(), community.getCommunity());
-            }
-            return null;
-        }, 16);
+            }, 16);
+
+        }
     }
 
     private final OkHttpUtils httpUtils = OkHttpUtils.Builder()
