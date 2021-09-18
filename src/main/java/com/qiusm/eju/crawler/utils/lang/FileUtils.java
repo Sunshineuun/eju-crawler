@@ -56,6 +56,10 @@ public class FileUtils {
         }
     }
 
+    public static String readFile(String fileName) {
+        return readFile(new File(fileName));
+    }
+
     public static String readFile(File file) {
         try {
             return org.apache.commons.io.FileUtils.readFileToString(file, StandardCharsets.UTF_8);
