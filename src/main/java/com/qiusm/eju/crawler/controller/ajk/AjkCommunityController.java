@@ -16,6 +16,7 @@ import com.qiusm.eju.crawler.utils.lang.FileUtils;
 import com.qiusm.eju.crawler.utils.lang.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,8 @@ public class AjkCommunityController {
     private ICommunityService communityService;
     @Resource
     private HashOperations<String, String, String> hashOperations;
+    @Resource
+    private ListOperations<String, Object> listOperations;
     private final ThreadsUtils threadsUtils = new ThreadsUtils();
 
     @GetMapping("/all")
@@ -66,6 +69,33 @@ public class AjkCommunityController {
                             String.valueOf(var.getId()), String.valueOf(result.size()));
                     return 1;
                 }, 8);
+    }
+
+    @GetMapping("/detail/all")
+    public void communityDetail() {
+        String rk = "crawler:community:detail:ajk";
+        // 0. 判断key是否存在，如果存在则不推送
+        if (listOperations.size(rk) == null
+                || listOperations.size(rk) == 0) {
+            // 1. 将69w小区推送到redis中
+            List<Community> communityList = communityService.getCommunityAjkNotDetail();
+            communityList.forEach(c -> {
+                listOperations.leftPush(rk, JSONObject.toJSONString(c));
+            });
+        }
+
+        // 2. 从redis中消费数据
+        String communityStr;
+        do {
+            communityStr = (String) listOperations.leftPop(rk);
+            Community community = JSONObject.parseObject(communityStr, Community.class);
+            threadsUtils.getExecutorService(16).submit(() -> {
+                if (community != null) {
+                    ajkCommunityService.communityDetail(community);
+                    community.updateById();
+                }
+            });
+        } while (communityStr != null);
     }
 
     @GetMapping("/price")
