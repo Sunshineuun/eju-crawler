@@ -13,7 +13,7 @@ import java.util.Date;
  * @author qiushengming
  */
 @Data
-@TableName("bk_deal_url_his")
+@TableName("bk_deal_url_his1")
 @EqualsAndHashCode(callSuper = true)
 public class BkDealUrlHistory
         extends SuperEntity<BkDealUrlHistory> {
