@@ -35,9 +35,10 @@ public class OkHttpUtils {
     static Logger LOG = LoggerFactory.getLogger(OkHttpUtils.class);
 
     public final okhttp3.OkHttpClient OK_HTT;
-    private Builder builder;
+    private final Builder builder;
 
-    public OkHttpUtils() {
+    public OkHttpUtils(Builder builder) {
+        this.builder = builder;
         OK_HTT = new OkHttpClient.Builder()
                 .hostnameVerifier(HOSTNAME_VERIFIER)
                 .sslSocketFactory(SSL_SOCKET_FACTORY, TRUST_ALL_MANAGER)
@@ -598,9 +599,7 @@ public class OkHttpUtils {
         }
 
         public OkHttpUtils builderHttp() {
-            OkHttpUtils okHttpUtils = new OkHttpUtils();
-            okHttpUtils.builder = this;
-            return okHttpUtils;
+            return new OkHttpUtils(this);
         }
     }
 }
