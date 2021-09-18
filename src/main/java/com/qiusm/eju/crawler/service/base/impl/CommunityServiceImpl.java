@@ -7,6 +7,8 @@ import com.qiusm.eju.crawler.mapper.base.CommunityMapper;
 import com.qiusm.eju.crawler.service.base.ICommunityService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 小区信息服务实现层
  *
@@ -26,5 +28,13 @@ public class CommunityServiceImpl
         if (count == 0) {
             this.insert(community);
         }
+    }
+
+    @Override
+    public List<Community> getCommunityByCity(String city, String source) {
+        EntityWrapper<Community> wrapper = new EntityWrapper<>();
+        wrapper.eq("source", source)
+                .eq("city", city);
+        return this.selectList(wrapper);
     }
 }
