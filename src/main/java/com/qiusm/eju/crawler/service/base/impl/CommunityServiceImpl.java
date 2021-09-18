@@ -37,4 +37,13 @@ public class CommunityServiceImpl
                 .eq("city", city);
         return this.selectList(wrapper);
     }
+
+    @Override
+    public List<Community> getCommunityAjkNotDetail() {
+        EntityWrapper<Community> wrapper = new EntityWrapper<>();
+        wrapper.eq("source", "AJK")
+                .isNull("property_company");
+        return this.selectList(wrapper);
+
+    }
 }
