@@ -8,6 +8,7 @@ import com.qiusm.eju.crawler.enums.SourceTypeEnum;
 import com.qiusm.eju.crawler.mapper.ajk.AjkAreaMapper;
 import com.qiusm.eju.crawler.service.ajk.IAjkCommunityService;
 import com.qiusm.eju.crawler.service.base.ICommunityService;
+import com.qiusm.eju.crawler.utils.ThreadUtils;
 import com.qiusm.eju.crawler.utils.ThreadsUtils;
 import com.qiusm.eju.crawler.utils.ajk.AjkUtils;
 import com.qiusm.eju.crawler.utils.http.OkHttpUtils;
@@ -26,6 +27,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
 import static com.qiusm.eju.crawler.constant.EjuConstant.PROXY_URL1;
@@ -85,16 +87,27 @@ public class AjkCommunityController {
         }
 
         // 2. 从redis中消费数据
+        AtomicInteger tasking = new AtomicInteger();
+        // 完成
+        AtomicInteger communityFinish = new AtomicInteger();
         String communityStr;
         do {
             communityStr = (String) listOperations.leftPop(rk);
             Community community = JSONObject.parseObject(communityStr, Community.class);
+            tasking.getAndIncrement();
             threadsUtils.getExecutorService(16).submit(() -> {
                 if (community != null) {
                     ajkCommunityService.communityDetail(community);
                     community.updateById();
                 }
+                tasking.getAndDecrement();
+                if (communityFinish.getAndIncrement() % 1000 == 0) {
+                    log.info("目前所处位置：{}", communityFinish.get());
+                }
             });
+            while (tasking.get() > 100) {
+                ThreadUtils.sleep(10);
+            }
         } while (communityStr != null);
     }
 
