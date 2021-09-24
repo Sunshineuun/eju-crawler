@@ -1,6 +1,7 @@
 package com.qiusm.eju.crawler.service.base.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.qiusm.eju.crawler.entity.base.Community;
 import com.qiusm.eju.crawler.mapper.base.CommunityMapper;
@@ -39,11 +40,11 @@ public class CommunityServiceImpl
     }
 
     @Override
-    public List<Community> getCommunityAjkNotDetail() {
+    public Page<Community> getCommunityAjkNotDetail(int currPage) {
         EntityWrapper<Community> wrapper = new EntityWrapper<>();
         wrapper.eq("source", "AJK")
                 .isNull("property_company");
-        return this.selectList(wrapper);
-
+        Page<Community> page = new Page<>(currPage, 1000, "id");
+        return this.selectPage(page, wrapper);
     }
 }
