@@ -10,6 +10,7 @@ public enum SourceTypeEnum {
      */
     BK_APP("bk_app", "贝壳App"),
     BK_PC("bk_pc", "贝壳Pc"),
+    AJK("AJK", "安居客"),
     AJK_APP("ajk_app", "安居客App"),
     WIWJ_APP("wiwj_app", "我爱我家App"),
     GAO_DE("gao_de", "高德");
