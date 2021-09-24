@@ -165,6 +165,7 @@ public class BkSkeletonServiceImpl
                         JSONObject building = (JSONObject) e;
                         JSONArray unitArray = unitHandlerToArray(task, building);
                         if (unitArray != null) {
+                            building.put("unit", unitArray);
                             return unitArray;
                         } else {
                             return building;
@@ -198,6 +199,7 @@ public class BkSkeletonServiceImpl
                         JSONObject unit = (JSONObject) e;
                         JSONArray houseArray = houseHandlerToArray(task, unit);
                         if (houseArray != null) {
+                            unit.put("house", houseArray);
                             return houseArray;
                         } else {
                             return unit;
@@ -236,6 +238,7 @@ public class BkSkeletonServiceImpl
         log.info("{}/{}/{}.{}", task.getId(), task.getCommunityName(), task.getCommunityId(), desc);
 
         // log.info("处理结果：{}", result.toJSONString());
+        log.info("小区骨架数据：{}", buildingList);
         return result;
     }
 
