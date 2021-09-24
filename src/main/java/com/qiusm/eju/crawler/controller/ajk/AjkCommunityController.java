@@ -2,6 +2,7 @@ package com.qiusm.eju.crawler.controller.ajk;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.qiusm.eju.crawler.entity.ajk.AjkArea;
 import com.qiusm.eju.crawler.entity.base.Community;
 import com.qiusm.eju.crawler.enums.SourceTypeEnum;
@@ -23,10 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.qiusm.eju.crawler.constant.CharacterSet.UTF8;
@@ -76,39 +74,51 @@ public class AjkCommunityController {
     @GetMapping("/detail/all")
     public void communityDetail() {
         String rk = "crawler:community:detail:ajk";
+        AtomicInteger lock = new AtomicInteger(0);
         // 0. 判断key是否存在，如果存在则不推送
-        if (listOperations.size(rk) == null
-                || listOperations.size(rk) == 0) {
-            // 1. 将69w小区推送到redis中
-            List<Community> communityList = communityService.getCommunityAjkNotDetail();
-            communityList.forEach(c -> {
-                listOperations.leftPush(rk, JSONObject.toJSONString(c));
-            });
+        threadsUtils.getExecutorService(16).submit(() -> {
+            if (listOperations.size(rk) == null
+                    || listOperations.size(rk) == 0) {
+                // 1. 将69w小区推送到redis中
+                int page = 1;
+                do {
+                    Page<Community> communityPage = communityService.getCommunityAjkNotDetail(page);
+                    communityPage.getRecords().forEach(c -> listOperations.leftPush(rk, JSONObject.toJSONString(c)));
+                    if (communityPage.getSize() <= 0) {
+                        break;
+                    } else {
+                        page++;
+                    }
+                    lock.getAndIncrement();
+                } while (true);
+            }
+        });
+
+        while (listOperations.size(rk) <= 0) {
+            ThreadUtils.sleep(10);
         }
 
         // 2. 从redis中消费数据
-        AtomicInteger tasking = new AtomicInteger();
-        // 完成
+        // 完成 数量统计
         AtomicInteger communityFinish = new AtomicInteger();
-        String communityStr;
-        do {
-            communityStr = (String) listOperations.leftPop(rk);
-            Community community = JSONObject.parseObject(communityStr, Community.class);
-            tasking.getAndIncrement();
-            threadsUtils.getExecutorService(16).submit(() -> {
+        List<String> list = new ArrayList<>(Arrays.asList("1234567890ABCDEFG".split("")));
+        List<String> futures = threadsUtils.executeFutures(list, (e) -> {
+            String communityStr;
+            do {
+                communityStr = (String) listOperations.leftPop(rk);
+                Community community = JSONObject.parseObject(communityStr, Community.class);
                 if (community != null) {
                     ajkCommunityService.communityDetail(community);
                     community.updateById();
                 }
-                tasking.getAndDecrement();
                 if (communityFinish.getAndIncrement() % 1000 == 0) {
                     log.info("目前所处位置：{}", communityFinish.get());
                 }
-            });
-            while (tasking.get() > 100) {
-                ThreadUtils.sleep(10);
-            }
-        } while (communityStr != null);
+            } while (StringUtils.isNotBlank(communityStr));
+
+            return e;
+        });
+        futures.forEach(System.out::println);
     }
 
     @GetMapping("/price")

@@ -117,7 +117,7 @@ public class AjkCommunityServiceImpl
                 .build();
         ResponseDto responseDto = communityDetailHandler.execute(requestDto);
         JSONObject json = responseDto.getResult();
-        if (json != null) {
+        if (json != null && json.size() != 0) {
             community.setPropertyCompany(json.getString("property_company"));
             community.setPropertyExpenses(json.getString("property_money"));
             community.setVolumeRate(json.getString("plot_ratio"));
@@ -127,6 +127,7 @@ public class AjkCommunityServiceImpl
             community.setBuildYear(json.getString("completion_time"));
             community.setTotalArea(json.getString("total_area"));
             community.setTotalHouse(json.getString("total_house_hold_num"));
+        } else {
         }
     }
 
