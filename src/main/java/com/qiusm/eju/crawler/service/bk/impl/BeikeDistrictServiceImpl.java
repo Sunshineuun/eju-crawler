@@ -322,7 +322,7 @@ public class BeikeDistrictServiceImpl
 
     private GaodeCityPoiInfo loadCityPoiInfo(String cityCode) {
         EntityWrapper<GaodeCityPoiInfo> entityWrapper = new EntityWrapper<>();
-        entityWrapper.eq("adcode", cityCode);
+        entityWrapper.eq("ad_code", cityCode);
         List<GaodeCityPoiInfo> infos = cityPoiInfoService.selectList(entityWrapper);
 
         if (infos.size() <= 0) {
