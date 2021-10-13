@@ -29,9 +29,7 @@ public class BeikeDistrictController {
     @GetMapping("/cityAll")
     public void cityAll() {
         List<String> cityCode = districtService.loadCityList();
-        cityCode.forEach(o -> {
-            districtService.city(o);
-        });
+        cityCode.forEach(o -> districtService.city(o));
         log.info("所有城市跑完！");
     }
 
