@@ -29,6 +29,7 @@ import static java.math.BigDecimal.ROUND_UP;
 
 /**
  * 贝壳区域 围栏信息
+ * https://map.ke.com/proxyApi/i.c-pc-webapi.ke.com/map/initdata?cityId=310000&dataSource=ESF
  *
  * @author qiushengming
  */
@@ -107,7 +108,11 @@ public class BeikeDistrictServiceImpl
         if (info == null) {
             return;
         }
+        log.info("{}-{}-区域商圈围栏数据开始处理！", info.getName(), info.getAdCode());
+
         districtPrivate(info, arg);
+
+        log.info("{}-{}-区域商圈围栏数据处理完毕！", info.getName(), info.getAdCode());
     }
 
     /**
@@ -167,11 +172,11 @@ public class BeikeDistrictServiceImpl
         // 计算最大最小
         BigDecimal[][] mm = calculateMaxMin(fenceStr);
 
-        BigDecimal minLng = mm[0][1];
-        BigDecimal minLat = mm[1][1];
+        BigDecimal minLng = mm[0][0];
+        BigDecimal maxLng = mm[0][1];
 
-        BigDecimal maxLng = mm[0][0];
-        BigDecimal maxLat = mm[1][0];
+        BigDecimal minLat = mm[1][0];
+        BigDecimal maxLat = mm[1][1];
 
         // 如果按照当前步长，走的步数超过3次，则步长进行调整。步长 = 长度 / 步数(3)
         if (maxLng.subtract(minLng).divide(longitudeStep, ROUND_UP).compareTo(maxStepNum) > 0) {
