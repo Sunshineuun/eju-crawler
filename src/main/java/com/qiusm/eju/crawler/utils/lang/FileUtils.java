@@ -6,6 +6,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 
 /**
@@ -257,6 +258,24 @@ public class FileUtils {
         } else {
             return "_" + parentFile.getName().substring(1, 5) + "_"
                     + System.currentTimeMillis() + ".do";
+        }
+    }
+
+    /**
+     * 按行遍历文件
+     *
+     * @param filePath example source/er_fang_list.txt
+     * @param consumer 对行的处理方式
+     */
+    public static void traverseLine(String filePath, Consumer<String> consumer) {
+        try {
+            LineNumberReader lnr = new LineNumberReader(new FileReader(filePath));
+            String str;
+            while ((str = lnr.readLine()) != null) {
+                consumer.accept(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
