@@ -8,13 +8,14 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public abstract class EsAbstractApi {
     protected static RestHighLevelClient client = new RestHighLevelClient(
             RestClient.builder(
-                    //        new HttpHost("localhost", 9201, "http"),
-                    new HttpHost("172.29.28.235", 9200, "http")
+                    new HttpHost("10.122.143.11", 9200, "http")
+//                    new HttpHost("172.29.28.235", 9200, "http")
             ));
     private static BulkProcessor.Listener listener = new BulkProcessor.Listener() {
         @Override
@@ -48,5 +49,14 @@ public abstract class EsAbstractApi {
 
     public static BulkProcessor getBulkProcessor() {
         return bulkProcessor;
+    }
+
+    public static void close() {
+        try {
+            getClient().close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
