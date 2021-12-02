@@ -104,8 +104,8 @@ public class JSONUtils {
         }
     }
 
-    public static void jsonToCsv() {
-        String s = FileUtils.readFile(new File("source/community_list_utf8.txt"));
+    public static void jsonToExcel() {
+        String s = FileUtils.readFile(new File("source/er_fang_list.txt"));
         Set<String> key = new LinkedHashSet<>();
         List<Map<String, Object>> list = new ArrayList<>();
         for (String s1 : s.split("\n")) {
@@ -115,10 +115,10 @@ public class JSONUtils {
             });
             list.add(jsonObject);
         }
-        WriteExcel.writeExcel((String[]) key.toArray(), list, "source/com.xlsx");
+        WriteExcel.writeExcel(new String[]{"community_name", "community_id", "community_id2" }, list, "source/ajk_esf_list.xlsx");
     }
 
     public static void main(String[] args) {
-        jsonToCsv();
+        jsonToExcel();
     }
 }
